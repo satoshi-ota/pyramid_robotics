@@ -1,0 +1,58 @@
+<?xml version="1.0" ?>
+<robot name="{{robot_name}}" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <property name="pi" value="3.14159265359"/>
+
+    <material name="red">
+        <color rgba="1.0 0.0 0.0 1.0"/>
+    </material>
+    <material name="green">
+        <color rgba="0.0 1.0 0.0 1.0"/>
+    </material>
+    <material name="blue">
+        <color rgba="0.0 0.0 1.0 1.0"/>
+    </material>
+
+{% for spec in spec_list %}
+{% if 'world' in spec.link %}
+    <!-- {{spec.link}} -->
+    <link name="{{spec.link}}"/>
+{% elif spec.children_num < 2 %}
+    <!-- {{spec.link}} -->
+    <link name="{{spec.link}}">
+        <collision>
+            <origin rpy="{{spec.link_rpy}}" xyz="{{spec.link_xyz}}"/>
+            <geometry>
+                <{{sample.link_size}}/>
+            </geometry>
+        </collision>
+        <visual>
+            <origin rpy="{{spec.link_rpy}}" xyz="{{spec.link_xyz}}"/>
+            <geometry>
+                <{{spec.link_size}}/>
+            </geometry>
+            <material name="{{spec.link_color}}"/>
+        </visual>
+        <inertial>
+            <origin rpy="{{spec.link_rpy}}" xyz="{{spec.link_xyz}}"/>
+            <mass value="{{spec.link_mass}}"/>
+            <inertia ixx="{{spec.link_ixx}}" ixy="{{spec.link_ixy}}" ixz="{{spec.link_ixz}}" iyy="{{spec.link_iyy}}" iyz="{{spec.link_iyz}}" izz="{{spec.link_izz}}"/>
+        </inertial>
+    </link>
+
+    <link name="{{spec.link}}_psi" />
+    <link name="{{spec.link}}_theta" />
+{% endif %}
+    {% if '0' not in sample.child_link  %}
+    <joint name="{{sample.link}}_2_{{sample.child_link}}" type="{{sample.joint_type}}">
+        <parent link="{{sample.link}}"/>
+        <child link="{{sample.child_link}}"/>
+        <origin rpy="{{sample.joint_rpy}}" xyz="{{sample.joint_xyz}}"/>
+        {% if sample.joint_type != 'fixed' %}
+        <axis xyz="{{sample.joint_axis}}"/>
+        <limit effort="{{sample.joint_effort}}" lower="{{sample.joint_lower}}" upper="{{sample.joint_upper}}" velocity="{{sample.joint_velocity}}"/>
+        {% endif %}
+    </joint>
+    {% endif %}
+    {% endfor %}
+</robot>
