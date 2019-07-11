@@ -1,0 +1,112 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <property name="pi" value="3.14159265359"/>
+
+    <material name="red">
+        <color rgba="1.0 0.0 0.0 1.0"/>
+    </material>
+    <material name="green">
+        <color rgba="0.0 1.0 0.0 1.0"/>
+    </material>
+    <material name="blue">
+        <color rgba="0.0 0.0 1.0 1.0"/>
+    </material>
+    <material name="black">
+        <color rgba="0 0 0 1"/>
+    </material>
+
+    <!--tether model-->
+    <xacro:macro name="tether">
+        
+        {%- set pi = 3.141592 -%}
+        {%- set cyl_r = 0.001 -%}
+        {%- set cyl_l = 0.03 -%}
+        {%- set cyl_m = 0.0005 -%}
+        {%- set cyl_i = 1/12*cyl_m*(3*cyl_r**2+cyl_l**2) -%}
+        {%- set cyl_iz = 1/2*cyl_m*cyl_r**2 -%}
+        <!--small link inatial-->
+        {%- set small_link_mass = 5.0e-4 -%}
+        {%- set small_link_ixx = 5.0e-4 -%}
+        {%- set small_link_iyy = 5.0e-4 -%}
+        {%- set small_link_izz = 5.0e-4 -%}
+        {%- set small_link_ixy = 0.0 -%}
+        {%- set small_link_iyz = 0.0 -%}
+        {%- set small_link_izx = 0.0 -%}
+        <!--link number-->
+        {%- set tether_fragments = 50 -%}
+
+        {%- macro tether_fragment(n) -%}
+        <link name="tether_fragment_{{n}}">
+            <visual>
+                <geometry>
+                    <cylinder length="{{cyl_l}}" radius="{{cyl_r}}"/>
+                </geometry>
+                <material name="black"/>
+            </visual>
+            <inertial>
+                <mass value="{{cyl_m}}"/>
+                <inertia ixx="{{cyl_i}}" iyy="{{cyl_i}}" izz="{{cyl_iz}}" ixy="0" ixz="0" iyz="0"/>
+            </inertial>
+        </link>
+        {%- endmacro -%}
+
+        <!--tether_cylinder_joint-->
+        {%- macro tether_joint(n) -%}
+        <!--link between two tether fragments-->
+        <link name="small_link_1_{{n}}">
+            <inertial>
+                <mass value="{{small_link_mass}}"/>
+                <inertia ixx="{{small_link_ixx}}" iyy="{{small_link_iyy}}" izz="{{small_link_izz}}" ixy="{{small_link_ixy}}" iyz="{{small_link_iyz}}" izz="{{small_link_izx}}"/>
+            </inertial>
+        </link>
+        <link name="small_link_2_{{n}}">
+            <inertial>
+                <mass value="{{small_link_mass}}"/>
+                <inertia ixx="{{small_link_ixx}}" iyy="{{small_link_iyy}}" izz="{{small_link_izz}}" ixy="{{small_link_ixy}}" iyz="{{small_link_iyz}}" izz="{{small_link_izx}}"/>
+            </inertial>
+        </link>
+
+        <!--tether world joint-->
+        <link name="world"/>
+        <joint name="joint_world" type="fixed">
+            <parent link="world"/>
+            <child link="tether_fragment_{{n}}"/>
+            <origin rpy="0 0 0" xyz="0 0 -{{cyl_l/2}}"/>
+        </joint>
+
+        <!--tether fragment joint-->
+        <joint name="joint_1_{{n}}" type="continuous">
+            <parent link="tether_fragment_{{n-1}}"/>
+            <child link="small_link_1_{{n}}"/>
+            <axis xyz="1 0 0" />
+        </joint>
+        <joint name="joint_2_{{n}}" type="continuous">
+            <parent link="small_link_1_{{n}}"/>
+            <child link="small_link_2_{{n}}"/>
+            <axis xyz="0 1 0" />
+        </joint>
+        <joint name="joint_1_{{n}}_" type="continuous">
+            <parent link="small_link_2_{{n}}"/>
+            <child link="tether_fragment_{{n}}"/>
+            <axis xyz="0 0 1" />
+        </joint>
+        {%- endmacro -%}
+
+        <!-- main-->
+        {% for n in range(0,tether_fragments) -%}
+            {{tether_fragment(n)}}
+            {% if n == 0 %}
+                {{joint_world(n)}}
+            {% else %}
+                {{tether_joint(n)}}
+            {% endif %}
+        {% endfor -%}
+    </xacro:macro>
+
+    <gazebo>
+        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+            <robotNamespace>tether</robotNamespace>
+        </plugin>
+    </gazebo>
+</robot>
