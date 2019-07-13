@@ -1,18 +1,6 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
-
-    <material name="red">
-        <color rgba="1.0 0.0 0.0 1.0"/>
-    </material>
-    <material name="green">
-        <color rgba="0.0 1.0 0.0 1.0"/>
-    </material>
-    <material name="blue">
-        <color rgba="0.0 0.0 1.0 1.0"/>
-    </material>
-    <material name="black">
-        <color rgba="0 0 0 1"/>
-    </material>
+    <xacro:include filename="$(find world_description)/urdf/common_properties.xacro"/>
 
     <!--tether model-->
     <xacro:macro name="tether">

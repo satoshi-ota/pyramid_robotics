@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot name="tether" xmlns:xacro="http://ros.org/wiki/xacro">
     <xacro:include filename="$(find tether_description)/urdf/tether.xacro"/>
+    <xacro:include filename="$(find ugv_description)/urdf/pyramid_robotics_turtlebot3.urdf.xacro"/>
 
+    <xacro:turtlebot3_burger />
     <xacro:tether />
 </robot>
