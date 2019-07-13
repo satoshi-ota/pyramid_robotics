@@ -2,8 +2,6 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
     <!--tether model-->
     <xacro:macro name="tether">
-
-        {%- set pi = 3.141592 -%}
         <!--tether fragment param-->
         {%- set cyl_r = 0.001 -%}
         {%- set cyl_l = 0.03 -%}
@@ -85,6 +83,6 @@
                 <robotNamespace>tether</robotNamespace>
             </plugin>
         </gazebo>
-        
+
     </xacro:macro>
 </robot>

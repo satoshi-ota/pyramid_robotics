@@ -1,7 +1,8 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
     <!--tether model-->
-    <xacro:macro name="tether"><!--tether fragment param--><!--small link inatial--><!--link number--><!--tether_cylinder_joint--><!-- main-->
+    <xacro:macro name="tether">
+        <!--tether fragment param--><!--small link inatial--><!--link number--><!--tether_cylinder_joint--><!-- main-->
         <link name="tether_fragment_0">
             <visual>
                 <origin rpy="0 0 0" xyz="0 0 0.015"/>
@@ -2275,5 +2276,6 @@
                 <robotNamespace>tether</robotNamespace>
             </plugin>
         </gazebo>
+
     </xacro:macro>
 </robot>

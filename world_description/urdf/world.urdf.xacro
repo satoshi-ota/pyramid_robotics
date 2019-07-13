@@ -4,12 +4,59 @@
     <xacro:include filename="$(find tether_description)/urdf/tether.xacro"/>
     <xacro:include filename="$(find ugv_description)/urdf/pyramid_robotics_turtlebot3.urdf.xacro"/>
 
-    <joint name="ugv_tether_joint" type="fixed">
-        <parent link="base_link"/>
+    <link name="ugv_tether_link_1">
+        <inertial>
+            <mass value="0.00001"/>
+            <inertia ixx="0.00001" iyy="0.00001" izz="0.00001" ixy="0.00001" ixz="0.00001" iyz="0.00001"/>
+        </inertial>
+    </link>
+    <link name="ugv_tether_link_2">
+        <inertial>
+            <mass value="0.00001"/>
+            <inertia ixx="0.00001" iyy="0.00001" izz="0.00001" ixy="0.00001" ixz="0.00001" iyz="0.00001"/>
+        </inertial>
+    </link>
+
+    <joint name="ugv_tether_joint_1" type="continuous">
+        <parent link="base_footprint"/>
+        <child link="ugv_tether_link_1"/>
+        <axis xyz="1 0 0" />
+    </joint>
+    <joint name="ugv_tether_joint_2" type="continuous">
+        <parent link="ugv_tether_link_1"/>
+        <child link="ugv_tether_link_2"/>
+        <axis xyz="0 1 0" />
+    </joint>
+    <joint name="ugv_tether_joint_3" type="continuous">
+        <parent link="ugv_tether_link_2"/>
         <child link="tether_fragment_0"/>
-        <origin xyz="0.0 0.0 0.2" rpy="0 0 0"/>
+        <axis xyz="0 0 1" />
+        <origin xyz="0.0 0.0 0.0" rpy="0 ${pi/2} 0"/>
     </joint>
 
+    <joint name="uav_tether_joint_4" type="fixed">
+        <parent link="tether_fragment_49"/>
+        <child link="pesudo_uav"/>
+    </joint>
+
+    <link name="pesudo_uav">
+        <visual>
+            <geometry>
+                <box size="0.1 0.1 0.1"/>
+            </geometry>
+        </visual>
+        <inertial>
+            <mass value="1"/>
+            <inertia ixx="1" iyy="1" izz="1" ixy="1" ixz="1" iyz="1"/>
+        </inertial>
+        <collision>
+            <geometry>
+                <box size="0.1 0.1 0.1"/>
+            </geometry>
+        </collision>
+    </link>
+
     <xacro:turtlebot3_burger />
+    <!--xacro:turtlebot3_burger prefix="2nd" /-->
     <xacro:tether />
 </robot>
