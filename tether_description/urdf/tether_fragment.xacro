@@ -1,8 +1,6 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
 
-    <property name="pi" value="3.14159265359"/>
-
     <material name="red">
         <color rgba="1.0 0.0 0.0 1.0"/>
     </material>
@@ -32,8 +30,8 @@
         {%- set small_link_iyy = 0.0005 -%}
         {%- set small_link_izz = 0.0005 -%}
         {%- set small_link_ixy = 0.0 -%}
+        {%- set small_link_ixz = 0.0 -%}
         {%- set small_link_iyz = 0.0 -%}
-        {%- set small_link_izx = 0.0 -%}
         <!--link number-->
         {%- set tether_fragments = 50 -%}
 
@@ -47,7 +45,7 @@
             </visual>
             <inertial>
                 <mass value="{{cyl_m}}"/>
-                <inertia ixx="{{cyl_i}}" iyy="{{cyl_i}}" izz="{{cyl_iz}}" ixy="0" ixz="0" iyz="0"/>
+                <inertia ixx="{{cyl_i}}" iyy="{{cyl_i}}" izz="{{cyl_iz}}" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
         </link>
         {%- endmacro -%}
@@ -71,13 +69,13 @@
         <link name="small_link_1_{{n}}">
             <inertial>
                 <mass value="{{small_link_mass}}"/>
-                <inertia ixx="{{small_link_ixx}}" iyy="{{small_link_iyy}}" izz="{{small_link_izz}}" ixy="{{small_link_ixy}}" iyz="{{small_link_iyz}}" izz="{{small_link_izx}}"/>
+                <inertia ixx="{{small_link_ixx}}" iyy="{{small_link_iyy}}" izz="{{small_link_izz}}" ixy="{{small_link_ixy}}" ixz="{{small_link_ixz}}" iyz="{{small_link_iyz}}"/>
             </inertial>
         </link>
         <link name="small_link_2_{{n}}">
             <inertial>
                 <mass value="{{small_link_mass}}"/>
-                <inertia ixx="{{small_link_ixx}}" iyy="{{small_link_iyy}}" izz="{{small_link_izz}}" ixy="{{small_link_ixy}}" iyz="{{small_link_iyz}}" izz="{{small_link_izx}}"/>
+                <inertia ixx="{{small_link_ixx}}" iyy="{{small_link_iyy}}" izz="{{small_link_izz}}" ixy="{{small_link_ixy}}" ixz="{{small_link_ixz}}" iyz="{{small_link_iyz}}"/>
             </inertial>
         </link>
 
@@ -108,11 +106,10 @@
                 {{tether_joint(n)}}
             {% endif %}
         {% endfor -%}
+        <gazebo>
+            <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+                <robotNamespace>tether</robotNamespace>
+            </plugin>
+        </gazebo>
     </xacro:macro>
-
-    <gazebo>
-        <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-            <robotNamespace>tether</robotNamespace>
-        </plugin>
-    </gazebo>
 </robot>
