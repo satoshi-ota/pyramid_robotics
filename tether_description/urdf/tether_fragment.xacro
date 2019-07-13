@@ -38,6 +38,7 @@
         {%- macro tether_fragment(n) -%}
         <link name="tether_fragment_{{n}}">
             <visual>
+                <origin rpy="0 0 0" xyz="0 0 {{cyl_l/2}}"/>
                 <geometry>
                     <cylinder length="{{cyl_l}}" radius="{{cyl_r}}"/>
                 </geometry>
@@ -59,7 +60,7 @@
         <joint name="joint_world" type="fixed">
             <parent link="world"/>
             <child link="tether_fragment_{{n}}"/>
-            <origin rpy="0 0 0" xyz="0 0 -{{cyl_l/2}}"/>
+            <origin rpy="0 0 0" xyz="0 0 {{cyl_l/2}}"/>
         </joint>
         {%- endmacro -%}
 
@@ -81,6 +82,7 @@
 
         <!--tether fragment joint-->
         <joint name="joint_1_{{n}}" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 {{cyl_l}}"/>
             <parent link="tether_fragment_{{n-1}}"/>
             <child link="small_link_1_{{n}}"/>
             <axis xyz="1 0 0" />
