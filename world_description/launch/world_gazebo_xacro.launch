@@ -1,7 +1,13 @@
 <launch>
     <arg name="model" default="$(find world_description)/urdf/world.urdf.xacro" />
     <arg name="gui" default="False" />
-    <include file="$(find gazebo_ros)/launch/empty_world.launch"/>
+    <arg name="paused" default="true"/>
+    <arg name="verbose" default="false"/>
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="paused" value="$(arg paused)" />
+        <arg name="verbose" value="$(arg verbose)"/>
+    </include>
     <param name="robot_description" command="$(find xacro)/xacro '$(arg model)'" />
     <param name="use_gui" value="$(arg gui)"/>
     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
