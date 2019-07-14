@@ -2,7 +2,13 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
     <!--tether model-->
     <xacro:macro name="tether">
-        <!--tether fragment param--><!--small link inatial--><!--link number--><!--tether_cylinder_joint--><!-- main-->
+        <!--tether fragment param--><!--small link inatial--><!--link number--><!--tether_cylinder_joint--><joint name="uav_tether_joint" type="fixed">
+            <parent link="tether_fragment_49"/>
+            <child link="${namespace}/base_link"/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+        </joint>
+
+        <!-- main-->
         <link name="tether_fragment_0">
             <visual>
                 <origin rpy="0 0 0" xyz="0 0 0.05"/>
@@ -888,6 +894,1386 @@
         <joint name="joint_1_19_" type="continuous">
             <parent link="small_link_2_19"/>
             <child link="tether_fragment_19"/>
+            <axis xyz="0 0 1" />
+        </joint>
+            
+        <link name="tether_fragment_20">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.05"/>
+                <geometry>
+                    <cylinder length="0.1" radius="0.001"/>
+                </geometry>
+                <!--material name="black"/-->
+            </visual>
+            <inertial>
+                <mass value="0.0001"/>
+                <inertia ixx="8.33583333333e-08" iyy="8.33583333333e-08" izz="5e-11" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+            
+                <!--link between two tether fragments-->
+        <link name="small_link_1_20">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <link name="small_link_2_20">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+
+        <!--tether fragment joint-->
+        <joint name="joint_1_20" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0.1"/>
+            <parent link="tether_fragment_19"/>
+            <child link="small_link_1_20"/>
+            <axis xyz="1 0 0" />
+        </joint>
+        <joint name="joint_2_20" type="continuous">
+            <parent link="small_link_1_20"/>
+            <child link="small_link_2_20"/>
+            <axis xyz="0 1 0" />
+        </joint>
+        <joint name="joint_1_20_" type="continuous">
+            <parent link="small_link_2_20"/>
+            <child link="tether_fragment_20"/>
+            <axis xyz="0 0 1" />
+        </joint>
+            
+        <link name="tether_fragment_21">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.05"/>
+                <geometry>
+                    <cylinder length="0.1" radius="0.001"/>
+                </geometry>
+                <!--material name="black"/-->
+            </visual>
+            <inertial>
+                <mass value="0.0001"/>
+                <inertia ixx="8.33583333333e-08" iyy="8.33583333333e-08" izz="5e-11" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+            
+                <!--link between two tether fragments-->
+        <link name="small_link_1_21">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <link name="small_link_2_21">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+
+        <!--tether fragment joint-->
+        <joint name="joint_1_21" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0.1"/>
+            <parent link="tether_fragment_20"/>
+            <child link="small_link_1_21"/>
+            <axis xyz="1 0 0" />
+        </joint>
+        <joint name="joint_2_21" type="continuous">
+            <parent link="small_link_1_21"/>
+            <child link="small_link_2_21"/>
+            <axis xyz="0 1 0" />
+        </joint>
+        <joint name="joint_1_21_" type="continuous">
+            <parent link="small_link_2_21"/>
+            <child link="tether_fragment_21"/>
+            <axis xyz="0 0 1" />
+        </joint>
+            
+        <link name="tether_fragment_22">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.05"/>
+                <geometry>
+                    <cylinder length="0.1" radius="0.001"/>
+                </geometry>
+                <!--material name="black"/-->
+            </visual>
+            <inertial>
+                <mass value="0.0001"/>
+                <inertia ixx="8.33583333333e-08" iyy="8.33583333333e-08" izz="5e-11" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+            
+                <!--link between two tether fragments-->
+        <link name="small_link_1_22">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <link name="small_link_2_22">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+
+        <!--tether fragment joint-->
+        <joint name="joint_1_22" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0.1"/>
+            <parent link="tether_fragment_21"/>
+            <child link="small_link_1_22"/>
+            <axis xyz="1 0 0" />
+        </joint>
+        <joint name="joint_2_22" type="continuous">
+            <parent link="small_link_1_22"/>
+            <child link="small_link_2_22"/>
+            <axis xyz="0 1 0" />
+        </joint>
+        <joint name="joint_1_22_" type="continuous">
+            <parent link="small_link_2_22"/>
+            <child link="tether_fragment_22"/>
+            <axis xyz="0 0 1" />
+        </joint>
+            
+        <link name="tether_fragment_23">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.05"/>
+                <geometry>
+                    <cylinder length="0.1" radius="0.001"/>
+                </geometry>
+                <!--material name="black"/-->
+            </visual>
+            <inertial>
+                <mass value="0.0001"/>
+                <inertia ixx="8.33583333333e-08" iyy="8.33583333333e-08" izz="5e-11" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+            
+                <!--link between two tether fragments-->
+        <link name="small_link_1_23">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <link name="small_link_2_23">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+
+        <!--tether fragment joint-->
+        <joint name="joint_1_23" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0.1"/>
+            <parent link="tether_fragment_22"/>
+            <child link="small_link_1_23"/>
+            <axis xyz="1 0 0" />
+        </joint>
+        <joint name="joint_2_23" type="continuous">
+            <parent link="small_link_1_23"/>
+            <child link="small_link_2_23"/>
+            <axis xyz="0 1 0" />
+        </joint>
+        <joint name="joint_1_23_" type="continuous">
+            <parent link="small_link_2_23"/>
+            <child link="tether_fragment_23"/>
+            <axis xyz="0 0 1" />
+        </joint>
+            
+        <link name="tether_fragment_24">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.05"/>
+                <geometry>
+                    <cylinder length="0.1" radius="0.001"/>
+                </geometry>
+                <!--material name="black"/-->
+            </visual>
+            <inertial>
+                <mass value="0.0001"/>
+                <inertia ixx="8.33583333333e-08" iyy="8.33583333333e-08" izz="5e-11" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+            
+                <!--link between two tether fragments-->
+        <link name="small_link_1_24">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <link name="small_link_2_24">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+
+        <!--tether fragment joint-->
+        <joint name="joint_1_24" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0.1"/>
+            <parent link="tether_fragment_23"/>
+            <child link="small_link_1_24"/>
+            <axis xyz="1 0 0" />
+        </joint>
+        <joint name="joint_2_24" type="continuous">
+            <parent link="small_link_1_24"/>
+            <child link="small_link_2_24"/>
+            <axis xyz="0 1 0" />
+        </joint>
+        <joint name="joint_1_24_" type="continuous">
+            <parent link="small_link_2_24"/>
+            <child link="tether_fragment_24"/>
+            <axis xyz="0 0 1" />
+        </joint>
+            
+        <link name="tether_fragment_25">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.05"/>
+                <geometry>
+                    <cylinder length="0.1" radius="0.001"/>
+                </geometry>
+                <!--material name="black"/-->
+            </visual>
+            <inertial>
+                <mass value="0.0001"/>
+                <inertia ixx="8.33583333333e-08" iyy="8.33583333333e-08" izz="5e-11" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+            
+                <!--link between two tether fragments-->
+        <link name="small_link_1_25">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <link name="small_link_2_25">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+
+        <!--tether fragment joint-->
+        <joint name="joint_1_25" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0.1"/>
+            <parent link="tether_fragment_24"/>
+            <child link="small_link_1_25"/>
+            <axis xyz="1 0 0" />
+        </joint>
+        <joint name="joint_2_25" type="continuous">
+            <parent link="small_link_1_25"/>
+            <child link="small_link_2_25"/>
+            <axis xyz="0 1 0" />
+        </joint>
+        <joint name="joint_1_25_" type="continuous">
+            <parent link="small_link_2_25"/>
+            <child link="tether_fragment_25"/>
+            <axis xyz="0 0 1" />
+        </joint>
+            
+        <link name="tether_fragment_26">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.05"/>
+                <geometry>
+                    <cylinder length="0.1" radius="0.001"/>
+                </geometry>
+                <!--material name="black"/-->
+            </visual>
+            <inertial>
+                <mass value="0.0001"/>
+                <inertia ixx="8.33583333333e-08" iyy="8.33583333333e-08" izz="5e-11" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+            
+                <!--link between two tether fragments-->
+        <link name="small_link_1_26">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <link name="small_link_2_26">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+
+        <!--tether fragment joint-->
+        <joint name="joint_1_26" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0.1"/>
+            <parent link="tether_fragment_25"/>
+            <child link="small_link_1_26"/>
+            <axis xyz="1 0 0" />
+        </joint>
+        <joint name="joint_2_26" type="continuous">
+            <parent link="small_link_1_26"/>
+            <child link="small_link_2_26"/>
+            <axis xyz="0 1 0" />
+        </joint>
+        <joint name="joint_1_26_" type="continuous">
+            <parent link="small_link_2_26"/>
+            <child link="tether_fragment_26"/>
+            <axis xyz="0 0 1" />
+        </joint>
+            
+        <link name="tether_fragment_27">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.05"/>
+                <geometry>
+                    <cylinder length="0.1" radius="0.001"/>
+                </geometry>
+                <!--material name="black"/-->
+            </visual>
+            <inertial>
+                <mass value="0.0001"/>
+                <inertia ixx="8.33583333333e-08" iyy="8.33583333333e-08" izz="5e-11" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+            
+                <!--link between two tether fragments-->
+        <link name="small_link_1_27">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <link name="small_link_2_27">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+
+        <!--tether fragment joint-->
+        <joint name="joint_1_27" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0.1"/>
+            <parent link="tether_fragment_26"/>
+            <child link="small_link_1_27"/>
+            <axis xyz="1 0 0" />
+        </joint>
+        <joint name="joint_2_27" type="continuous">
+            <parent link="small_link_1_27"/>
+            <child link="small_link_2_27"/>
+            <axis xyz="0 1 0" />
+        </joint>
+        <joint name="joint_1_27_" type="continuous">
+            <parent link="small_link_2_27"/>
+            <child link="tether_fragment_27"/>
+            <axis xyz="0 0 1" />
+        </joint>
+            
+        <link name="tether_fragment_28">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.05"/>
+                <geometry>
+                    <cylinder length="0.1" radius="0.001"/>
+                </geometry>
+                <!--material name="black"/-->
+            </visual>
+            <inertial>
+                <mass value="0.0001"/>
+                <inertia ixx="8.33583333333e-08" iyy="8.33583333333e-08" izz="5e-11" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+            
+                <!--link between two tether fragments-->
+        <link name="small_link_1_28">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <link name="small_link_2_28">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+
+        <!--tether fragment joint-->
+        <joint name="joint_1_28" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0.1"/>
+            <parent link="tether_fragment_27"/>
+            <child link="small_link_1_28"/>
+            <axis xyz="1 0 0" />
+        </joint>
+        <joint name="joint_2_28" type="continuous">
+            <parent link="small_link_1_28"/>
+            <child link="small_link_2_28"/>
+            <axis xyz="0 1 0" />
+        </joint>
+        <joint name="joint_1_28_" type="continuous">
+            <parent link="small_link_2_28"/>
+            <child link="tether_fragment_28"/>
+            <axis xyz="0 0 1" />
+        </joint>
+            
+        <link name="tether_fragment_29">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.05"/>
+                <geometry>
+                    <cylinder length="0.1" radius="0.001"/>
+                </geometry>
+                <!--material name="black"/-->
+            </visual>
+            <inertial>
+                <mass value="0.0001"/>
+                <inertia ixx="8.33583333333e-08" iyy="8.33583333333e-08" izz="5e-11" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+            
+                <!--link between two tether fragments-->
+        <link name="small_link_1_29">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <link name="small_link_2_29">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+
+        <!--tether fragment joint-->
+        <joint name="joint_1_29" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0.1"/>
+            <parent link="tether_fragment_28"/>
+            <child link="small_link_1_29"/>
+            <axis xyz="1 0 0" />
+        </joint>
+        <joint name="joint_2_29" type="continuous">
+            <parent link="small_link_1_29"/>
+            <child link="small_link_2_29"/>
+            <axis xyz="0 1 0" />
+        </joint>
+        <joint name="joint_1_29_" type="continuous">
+            <parent link="small_link_2_29"/>
+            <child link="tether_fragment_29"/>
+            <axis xyz="0 0 1" />
+        </joint>
+            
+        <link name="tether_fragment_30">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.05"/>
+                <geometry>
+                    <cylinder length="0.1" radius="0.001"/>
+                </geometry>
+                <!--material name="black"/-->
+            </visual>
+            <inertial>
+                <mass value="0.0001"/>
+                <inertia ixx="8.33583333333e-08" iyy="8.33583333333e-08" izz="5e-11" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+            
+                <!--link between two tether fragments-->
+        <link name="small_link_1_30">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <link name="small_link_2_30">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+
+        <!--tether fragment joint-->
+        <joint name="joint_1_30" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0.1"/>
+            <parent link="tether_fragment_29"/>
+            <child link="small_link_1_30"/>
+            <axis xyz="1 0 0" />
+        </joint>
+        <joint name="joint_2_30" type="continuous">
+            <parent link="small_link_1_30"/>
+            <child link="small_link_2_30"/>
+            <axis xyz="0 1 0" />
+        </joint>
+        <joint name="joint_1_30_" type="continuous">
+            <parent link="small_link_2_30"/>
+            <child link="tether_fragment_30"/>
+            <axis xyz="0 0 1" />
+        </joint>
+            
+        <link name="tether_fragment_31">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.05"/>
+                <geometry>
+                    <cylinder length="0.1" radius="0.001"/>
+                </geometry>
+                <!--material name="black"/-->
+            </visual>
+            <inertial>
+                <mass value="0.0001"/>
+                <inertia ixx="8.33583333333e-08" iyy="8.33583333333e-08" izz="5e-11" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+            
+                <!--link between two tether fragments-->
+        <link name="small_link_1_31">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <link name="small_link_2_31">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+
+        <!--tether fragment joint-->
+        <joint name="joint_1_31" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0.1"/>
+            <parent link="tether_fragment_30"/>
+            <child link="small_link_1_31"/>
+            <axis xyz="1 0 0" />
+        </joint>
+        <joint name="joint_2_31" type="continuous">
+            <parent link="small_link_1_31"/>
+            <child link="small_link_2_31"/>
+            <axis xyz="0 1 0" />
+        </joint>
+        <joint name="joint_1_31_" type="continuous">
+            <parent link="small_link_2_31"/>
+            <child link="tether_fragment_31"/>
+            <axis xyz="0 0 1" />
+        </joint>
+            
+        <link name="tether_fragment_32">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.05"/>
+                <geometry>
+                    <cylinder length="0.1" radius="0.001"/>
+                </geometry>
+                <!--material name="black"/-->
+            </visual>
+            <inertial>
+                <mass value="0.0001"/>
+                <inertia ixx="8.33583333333e-08" iyy="8.33583333333e-08" izz="5e-11" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+            
+                <!--link between two tether fragments-->
+        <link name="small_link_1_32">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <link name="small_link_2_32">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+
+        <!--tether fragment joint-->
+        <joint name="joint_1_32" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0.1"/>
+            <parent link="tether_fragment_31"/>
+            <child link="small_link_1_32"/>
+            <axis xyz="1 0 0" />
+        </joint>
+        <joint name="joint_2_32" type="continuous">
+            <parent link="small_link_1_32"/>
+            <child link="small_link_2_32"/>
+            <axis xyz="0 1 0" />
+        </joint>
+        <joint name="joint_1_32_" type="continuous">
+            <parent link="small_link_2_32"/>
+            <child link="tether_fragment_32"/>
+            <axis xyz="0 0 1" />
+        </joint>
+            
+        <link name="tether_fragment_33">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.05"/>
+                <geometry>
+                    <cylinder length="0.1" radius="0.001"/>
+                </geometry>
+                <!--material name="black"/-->
+            </visual>
+            <inertial>
+                <mass value="0.0001"/>
+                <inertia ixx="8.33583333333e-08" iyy="8.33583333333e-08" izz="5e-11" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+            
+                <!--link between two tether fragments-->
+        <link name="small_link_1_33">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <link name="small_link_2_33">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+
+        <!--tether fragment joint-->
+        <joint name="joint_1_33" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0.1"/>
+            <parent link="tether_fragment_32"/>
+            <child link="small_link_1_33"/>
+            <axis xyz="1 0 0" />
+        </joint>
+        <joint name="joint_2_33" type="continuous">
+            <parent link="small_link_1_33"/>
+            <child link="small_link_2_33"/>
+            <axis xyz="0 1 0" />
+        </joint>
+        <joint name="joint_1_33_" type="continuous">
+            <parent link="small_link_2_33"/>
+            <child link="tether_fragment_33"/>
+            <axis xyz="0 0 1" />
+        </joint>
+            
+        <link name="tether_fragment_34">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.05"/>
+                <geometry>
+                    <cylinder length="0.1" radius="0.001"/>
+                </geometry>
+                <!--material name="black"/-->
+            </visual>
+            <inertial>
+                <mass value="0.0001"/>
+                <inertia ixx="8.33583333333e-08" iyy="8.33583333333e-08" izz="5e-11" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+            
+                <!--link between two tether fragments-->
+        <link name="small_link_1_34">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <link name="small_link_2_34">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+
+        <!--tether fragment joint-->
+        <joint name="joint_1_34" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0.1"/>
+            <parent link="tether_fragment_33"/>
+            <child link="small_link_1_34"/>
+            <axis xyz="1 0 0" />
+        </joint>
+        <joint name="joint_2_34" type="continuous">
+            <parent link="small_link_1_34"/>
+            <child link="small_link_2_34"/>
+            <axis xyz="0 1 0" />
+        </joint>
+        <joint name="joint_1_34_" type="continuous">
+            <parent link="small_link_2_34"/>
+            <child link="tether_fragment_34"/>
+            <axis xyz="0 0 1" />
+        </joint>
+            
+        <link name="tether_fragment_35">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.05"/>
+                <geometry>
+                    <cylinder length="0.1" radius="0.001"/>
+                </geometry>
+                <!--material name="black"/-->
+            </visual>
+            <inertial>
+                <mass value="0.0001"/>
+                <inertia ixx="8.33583333333e-08" iyy="8.33583333333e-08" izz="5e-11" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+            
+                <!--link between two tether fragments-->
+        <link name="small_link_1_35">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <link name="small_link_2_35">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+
+        <!--tether fragment joint-->
+        <joint name="joint_1_35" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0.1"/>
+            <parent link="tether_fragment_34"/>
+            <child link="small_link_1_35"/>
+            <axis xyz="1 0 0" />
+        </joint>
+        <joint name="joint_2_35" type="continuous">
+            <parent link="small_link_1_35"/>
+            <child link="small_link_2_35"/>
+            <axis xyz="0 1 0" />
+        </joint>
+        <joint name="joint_1_35_" type="continuous">
+            <parent link="small_link_2_35"/>
+            <child link="tether_fragment_35"/>
+            <axis xyz="0 0 1" />
+        </joint>
+            
+        <link name="tether_fragment_36">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.05"/>
+                <geometry>
+                    <cylinder length="0.1" radius="0.001"/>
+                </geometry>
+                <!--material name="black"/-->
+            </visual>
+            <inertial>
+                <mass value="0.0001"/>
+                <inertia ixx="8.33583333333e-08" iyy="8.33583333333e-08" izz="5e-11" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+            
+                <!--link between two tether fragments-->
+        <link name="small_link_1_36">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <link name="small_link_2_36">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+
+        <!--tether fragment joint-->
+        <joint name="joint_1_36" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0.1"/>
+            <parent link="tether_fragment_35"/>
+            <child link="small_link_1_36"/>
+            <axis xyz="1 0 0" />
+        </joint>
+        <joint name="joint_2_36" type="continuous">
+            <parent link="small_link_1_36"/>
+            <child link="small_link_2_36"/>
+            <axis xyz="0 1 0" />
+        </joint>
+        <joint name="joint_1_36_" type="continuous">
+            <parent link="small_link_2_36"/>
+            <child link="tether_fragment_36"/>
+            <axis xyz="0 0 1" />
+        </joint>
+            
+        <link name="tether_fragment_37">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.05"/>
+                <geometry>
+                    <cylinder length="0.1" radius="0.001"/>
+                </geometry>
+                <!--material name="black"/-->
+            </visual>
+            <inertial>
+                <mass value="0.0001"/>
+                <inertia ixx="8.33583333333e-08" iyy="8.33583333333e-08" izz="5e-11" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+            
+                <!--link between two tether fragments-->
+        <link name="small_link_1_37">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <link name="small_link_2_37">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+
+        <!--tether fragment joint-->
+        <joint name="joint_1_37" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0.1"/>
+            <parent link="tether_fragment_36"/>
+            <child link="small_link_1_37"/>
+            <axis xyz="1 0 0" />
+        </joint>
+        <joint name="joint_2_37" type="continuous">
+            <parent link="small_link_1_37"/>
+            <child link="small_link_2_37"/>
+            <axis xyz="0 1 0" />
+        </joint>
+        <joint name="joint_1_37_" type="continuous">
+            <parent link="small_link_2_37"/>
+            <child link="tether_fragment_37"/>
+            <axis xyz="0 0 1" />
+        </joint>
+            
+        <link name="tether_fragment_38">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.05"/>
+                <geometry>
+                    <cylinder length="0.1" radius="0.001"/>
+                </geometry>
+                <!--material name="black"/-->
+            </visual>
+            <inertial>
+                <mass value="0.0001"/>
+                <inertia ixx="8.33583333333e-08" iyy="8.33583333333e-08" izz="5e-11" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+            
+                <!--link between two tether fragments-->
+        <link name="small_link_1_38">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <link name="small_link_2_38">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+
+        <!--tether fragment joint-->
+        <joint name="joint_1_38" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0.1"/>
+            <parent link="tether_fragment_37"/>
+            <child link="small_link_1_38"/>
+            <axis xyz="1 0 0" />
+        </joint>
+        <joint name="joint_2_38" type="continuous">
+            <parent link="small_link_1_38"/>
+            <child link="small_link_2_38"/>
+            <axis xyz="0 1 0" />
+        </joint>
+        <joint name="joint_1_38_" type="continuous">
+            <parent link="small_link_2_38"/>
+            <child link="tether_fragment_38"/>
+            <axis xyz="0 0 1" />
+        </joint>
+            
+        <link name="tether_fragment_39">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.05"/>
+                <geometry>
+                    <cylinder length="0.1" radius="0.001"/>
+                </geometry>
+                <!--material name="black"/-->
+            </visual>
+            <inertial>
+                <mass value="0.0001"/>
+                <inertia ixx="8.33583333333e-08" iyy="8.33583333333e-08" izz="5e-11" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+            
+                <!--link between two tether fragments-->
+        <link name="small_link_1_39">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <link name="small_link_2_39">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+
+        <!--tether fragment joint-->
+        <joint name="joint_1_39" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0.1"/>
+            <parent link="tether_fragment_38"/>
+            <child link="small_link_1_39"/>
+            <axis xyz="1 0 0" />
+        </joint>
+        <joint name="joint_2_39" type="continuous">
+            <parent link="small_link_1_39"/>
+            <child link="small_link_2_39"/>
+            <axis xyz="0 1 0" />
+        </joint>
+        <joint name="joint_1_39_" type="continuous">
+            <parent link="small_link_2_39"/>
+            <child link="tether_fragment_39"/>
+            <axis xyz="0 0 1" />
+        </joint>
+            
+        <link name="tether_fragment_40">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.05"/>
+                <geometry>
+                    <cylinder length="0.1" radius="0.001"/>
+                </geometry>
+                <!--material name="black"/-->
+            </visual>
+            <inertial>
+                <mass value="0.0001"/>
+                <inertia ixx="8.33583333333e-08" iyy="8.33583333333e-08" izz="5e-11" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+            
+                <!--link between two tether fragments-->
+        <link name="small_link_1_40">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <link name="small_link_2_40">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+
+        <!--tether fragment joint-->
+        <joint name="joint_1_40" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0.1"/>
+            <parent link="tether_fragment_39"/>
+            <child link="small_link_1_40"/>
+            <axis xyz="1 0 0" />
+        </joint>
+        <joint name="joint_2_40" type="continuous">
+            <parent link="small_link_1_40"/>
+            <child link="small_link_2_40"/>
+            <axis xyz="0 1 0" />
+        </joint>
+        <joint name="joint_1_40_" type="continuous">
+            <parent link="small_link_2_40"/>
+            <child link="tether_fragment_40"/>
+            <axis xyz="0 0 1" />
+        </joint>
+            
+        <link name="tether_fragment_41">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.05"/>
+                <geometry>
+                    <cylinder length="0.1" radius="0.001"/>
+                </geometry>
+                <!--material name="black"/-->
+            </visual>
+            <inertial>
+                <mass value="0.0001"/>
+                <inertia ixx="8.33583333333e-08" iyy="8.33583333333e-08" izz="5e-11" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+            
+                <!--link between two tether fragments-->
+        <link name="small_link_1_41">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <link name="small_link_2_41">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+
+        <!--tether fragment joint-->
+        <joint name="joint_1_41" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0.1"/>
+            <parent link="tether_fragment_40"/>
+            <child link="small_link_1_41"/>
+            <axis xyz="1 0 0" />
+        </joint>
+        <joint name="joint_2_41" type="continuous">
+            <parent link="small_link_1_41"/>
+            <child link="small_link_2_41"/>
+            <axis xyz="0 1 0" />
+        </joint>
+        <joint name="joint_1_41_" type="continuous">
+            <parent link="small_link_2_41"/>
+            <child link="tether_fragment_41"/>
+            <axis xyz="0 0 1" />
+        </joint>
+            
+        <link name="tether_fragment_42">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.05"/>
+                <geometry>
+                    <cylinder length="0.1" radius="0.001"/>
+                </geometry>
+                <!--material name="black"/-->
+            </visual>
+            <inertial>
+                <mass value="0.0001"/>
+                <inertia ixx="8.33583333333e-08" iyy="8.33583333333e-08" izz="5e-11" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+            
+                <!--link between two tether fragments-->
+        <link name="small_link_1_42">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <link name="small_link_2_42">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+
+        <!--tether fragment joint-->
+        <joint name="joint_1_42" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0.1"/>
+            <parent link="tether_fragment_41"/>
+            <child link="small_link_1_42"/>
+            <axis xyz="1 0 0" />
+        </joint>
+        <joint name="joint_2_42" type="continuous">
+            <parent link="small_link_1_42"/>
+            <child link="small_link_2_42"/>
+            <axis xyz="0 1 0" />
+        </joint>
+        <joint name="joint_1_42_" type="continuous">
+            <parent link="small_link_2_42"/>
+            <child link="tether_fragment_42"/>
+            <axis xyz="0 0 1" />
+        </joint>
+            
+        <link name="tether_fragment_43">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.05"/>
+                <geometry>
+                    <cylinder length="0.1" radius="0.001"/>
+                </geometry>
+                <!--material name="black"/-->
+            </visual>
+            <inertial>
+                <mass value="0.0001"/>
+                <inertia ixx="8.33583333333e-08" iyy="8.33583333333e-08" izz="5e-11" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+            
+                <!--link between two tether fragments-->
+        <link name="small_link_1_43">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <link name="small_link_2_43">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+
+        <!--tether fragment joint-->
+        <joint name="joint_1_43" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0.1"/>
+            <parent link="tether_fragment_42"/>
+            <child link="small_link_1_43"/>
+            <axis xyz="1 0 0" />
+        </joint>
+        <joint name="joint_2_43" type="continuous">
+            <parent link="small_link_1_43"/>
+            <child link="small_link_2_43"/>
+            <axis xyz="0 1 0" />
+        </joint>
+        <joint name="joint_1_43_" type="continuous">
+            <parent link="small_link_2_43"/>
+            <child link="tether_fragment_43"/>
+            <axis xyz="0 0 1" />
+        </joint>
+            
+        <link name="tether_fragment_44">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.05"/>
+                <geometry>
+                    <cylinder length="0.1" radius="0.001"/>
+                </geometry>
+                <!--material name="black"/-->
+            </visual>
+            <inertial>
+                <mass value="0.0001"/>
+                <inertia ixx="8.33583333333e-08" iyy="8.33583333333e-08" izz="5e-11" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+            
+                <!--link between two tether fragments-->
+        <link name="small_link_1_44">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <link name="small_link_2_44">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+
+        <!--tether fragment joint-->
+        <joint name="joint_1_44" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0.1"/>
+            <parent link="tether_fragment_43"/>
+            <child link="small_link_1_44"/>
+            <axis xyz="1 0 0" />
+        </joint>
+        <joint name="joint_2_44" type="continuous">
+            <parent link="small_link_1_44"/>
+            <child link="small_link_2_44"/>
+            <axis xyz="0 1 0" />
+        </joint>
+        <joint name="joint_1_44_" type="continuous">
+            <parent link="small_link_2_44"/>
+            <child link="tether_fragment_44"/>
+            <axis xyz="0 0 1" />
+        </joint>
+            
+        <link name="tether_fragment_45">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.05"/>
+                <geometry>
+                    <cylinder length="0.1" radius="0.001"/>
+                </geometry>
+                <!--material name="black"/-->
+            </visual>
+            <inertial>
+                <mass value="0.0001"/>
+                <inertia ixx="8.33583333333e-08" iyy="8.33583333333e-08" izz="5e-11" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+            
+                <!--link between two tether fragments-->
+        <link name="small_link_1_45">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <link name="small_link_2_45">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+
+        <!--tether fragment joint-->
+        <joint name="joint_1_45" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0.1"/>
+            <parent link="tether_fragment_44"/>
+            <child link="small_link_1_45"/>
+            <axis xyz="1 0 0" />
+        </joint>
+        <joint name="joint_2_45" type="continuous">
+            <parent link="small_link_1_45"/>
+            <child link="small_link_2_45"/>
+            <axis xyz="0 1 0" />
+        </joint>
+        <joint name="joint_1_45_" type="continuous">
+            <parent link="small_link_2_45"/>
+            <child link="tether_fragment_45"/>
+            <axis xyz="0 0 1" />
+        </joint>
+            
+        <link name="tether_fragment_46">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.05"/>
+                <geometry>
+                    <cylinder length="0.1" radius="0.001"/>
+                </geometry>
+                <!--material name="black"/-->
+            </visual>
+            <inertial>
+                <mass value="0.0001"/>
+                <inertia ixx="8.33583333333e-08" iyy="8.33583333333e-08" izz="5e-11" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+            
+                <!--link between two tether fragments-->
+        <link name="small_link_1_46">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <link name="small_link_2_46">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+
+        <!--tether fragment joint-->
+        <joint name="joint_1_46" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0.1"/>
+            <parent link="tether_fragment_45"/>
+            <child link="small_link_1_46"/>
+            <axis xyz="1 0 0" />
+        </joint>
+        <joint name="joint_2_46" type="continuous">
+            <parent link="small_link_1_46"/>
+            <child link="small_link_2_46"/>
+            <axis xyz="0 1 0" />
+        </joint>
+        <joint name="joint_1_46_" type="continuous">
+            <parent link="small_link_2_46"/>
+            <child link="tether_fragment_46"/>
+            <axis xyz="0 0 1" />
+        </joint>
+            
+        <link name="tether_fragment_47">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.05"/>
+                <geometry>
+                    <cylinder length="0.1" radius="0.001"/>
+                </geometry>
+                <!--material name="black"/-->
+            </visual>
+            <inertial>
+                <mass value="0.0001"/>
+                <inertia ixx="8.33583333333e-08" iyy="8.33583333333e-08" izz="5e-11" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+            
+                <!--link between two tether fragments-->
+        <link name="small_link_1_47">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <link name="small_link_2_47">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+
+        <!--tether fragment joint-->
+        <joint name="joint_1_47" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0.1"/>
+            <parent link="tether_fragment_46"/>
+            <child link="small_link_1_47"/>
+            <axis xyz="1 0 0" />
+        </joint>
+        <joint name="joint_2_47" type="continuous">
+            <parent link="small_link_1_47"/>
+            <child link="small_link_2_47"/>
+            <axis xyz="0 1 0" />
+        </joint>
+        <joint name="joint_1_47_" type="continuous">
+            <parent link="small_link_2_47"/>
+            <child link="tether_fragment_47"/>
+            <axis xyz="0 0 1" />
+        </joint>
+            
+        <link name="tether_fragment_48">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.05"/>
+                <geometry>
+                    <cylinder length="0.1" radius="0.001"/>
+                </geometry>
+                <!--material name="black"/-->
+            </visual>
+            <inertial>
+                <mass value="0.0001"/>
+                <inertia ixx="8.33583333333e-08" iyy="8.33583333333e-08" izz="5e-11" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+            
+                <!--link between two tether fragments-->
+        <link name="small_link_1_48">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <link name="small_link_2_48">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+
+        <!--tether fragment joint-->
+        <joint name="joint_1_48" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0.1"/>
+            <parent link="tether_fragment_47"/>
+            <child link="small_link_1_48"/>
+            <axis xyz="1 0 0" />
+        </joint>
+        <joint name="joint_2_48" type="continuous">
+            <parent link="small_link_1_48"/>
+            <child link="small_link_2_48"/>
+            <axis xyz="0 1 0" />
+        </joint>
+        <joint name="joint_1_48_" type="continuous">
+            <parent link="small_link_2_48"/>
+            <child link="tether_fragment_48"/>
+            <axis xyz="0 0 1" />
+        </joint>
+            
+        <link name="tether_fragment_49">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.05"/>
+                <geometry>
+                    <cylinder length="0.1" radius="0.001"/>
+                </geometry>
+                <!--material name="black"/-->
+            </visual>
+            <inertial>
+                <mass value="0.0001"/>
+                <inertia ixx="8.33583333333e-08" iyy="8.33583333333e-08" izz="5e-11" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+            
+                <!--link between two tether fragments-->
+        <link name="small_link_1_49">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <link name="small_link_2_49">
+            <inertial>
+                <mass value="1e-05"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+
+        <!--tether fragment joint-->
+        <joint name="joint_1_49" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0.1"/>
+            <parent link="tether_fragment_48"/>
+            <child link="small_link_1_49"/>
+            <axis xyz="1 0 0" />
+        </joint>
+        <joint name="joint_2_49" type="continuous">
+            <parent link="small_link_1_49"/>
+            <child link="small_link_2_49"/>
+            <axis xyz="0 1 0" />
+        </joint>
+        <joint name="joint_1_49_" type="continuous">
+            <parent link="small_link_2_49"/>
+            <child link="tether_fragment_49"/>
             <axis xyz="0 0 1" />
         </joint>
             

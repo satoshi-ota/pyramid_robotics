@@ -17,7 +17,7 @@
         {%- set small_link_ixz = 0.0 -%}
         {%- set small_link_iyz = 0.0 -%}
         <!--link number-->
-        {%- set tether_fragments = 20 -%}
+        {%- set tether_fragments = 50 -%}
 
         {%- macro tether_fragment(n) -%}
         <link name="tether_fragment_{{n}}">
@@ -69,6 +69,12 @@
             <axis xyz="0 0 1" />
         </joint>
         {%- endmacro -%}
+
+        <joint name="uav_tether_joint" type="fixed">
+            <parent link="tether_fragment_{{tether_fragments-1}}"/>
+            <child link="${namespace}/base_link"/>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+        </joint>
 
         <!-- main-->
         {% for n in range(0,tether_fragments) -%}

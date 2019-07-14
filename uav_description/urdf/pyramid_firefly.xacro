@@ -201,11 +201,6 @@
     <xacro:insert_block name="rotor_inertia" />
   </xacro:vertical_rotor>
 
-  <joint name="uav_tether_joint_4" type="fixed">
-      <parent link="${namespace}/base_link"/>
-      <child link="tether_fragment_0"/>
-  </joint>
-
   <xacro:tether />
 
 </robot>
