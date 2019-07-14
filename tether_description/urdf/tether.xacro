@@ -2277,11 +2277,5 @@
             <axis xyz="0 0 1" />
         </joint>
             
-        <gazebo>
-            <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
-                <robotNamespace>tether</robotNamespace>
-            </plugin>
-        </gazebo>
-
-    </xacro:macro>
+        </xacro:macro>
 </robot>
