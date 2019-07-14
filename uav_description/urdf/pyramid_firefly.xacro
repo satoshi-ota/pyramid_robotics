@@ -55,6 +55,9 @@
   <!-- Included URDF Files -->
   <xacro:include filename="$(find uav_description)/urdf/pyramid_multirotor_base.xacro" />
 
+  <!-- Included URDF Files -->
+  <xacro:include filename="$(find tether_description)/urdf/tether.xacro" />
+
   <!-- Instantiate multirotor_base_macro once -->
   <xacro:multirotor_base_macro
     robot_namespace="${namespace}"
@@ -197,5 +200,12 @@
     <origin xyz="${cos30*arm_length} -${sin30*arm_length} ${rotor_offset_top}" rpy="0 0 0" />
     <xacro:insert_block name="rotor_inertia" />
   </xacro:vertical_rotor>
+
+  <!--joint name="uav_tether_joint_4" type="fixed">
+      <parent link="${namespace}/base_link"/>
+      <child link="tether_fragment_0"/>
+  </joint>
+
+  <xacro:tether /-->
 
 </robot>
