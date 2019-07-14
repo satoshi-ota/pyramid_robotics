@@ -4,7 +4,7 @@
     <xacro:macro name="tether">
         <!--tether fragment param-->
         {%- set cyl_r = 0.001 -%}
-        {%- set cyl_l = 0.03 -%}
+        {%- set cyl_l = 0.1 -%}
         {%- set cyl_m = 0.0001 -%}
         {%- set cyl_i = 1/12*cyl_m*(3*cyl_r**2+cyl_l**2) -%}
         {%- set cyl_iz = 1/2*cyl_m*cyl_r**2 -%}
@@ -17,7 +17,7 @@
         {%- set small_link_ixz = 0.0 -%}
         {%- set small_link_iyz = 0.0 -%}
         <!--link number-->
-        {%- set tether_fragments = 50 -%}
+        {%- set tether_fragments = 20 -%}
 
         {%- macro tether_fragment(n) -%}
         <link name="tether_fragment_{{n}}">
