@@ -18,9 +18,15 @@
         {%- set small_link_iyz = 0.0 -%}
         <!--link number-->
         {%- set tether_fragments = 50 -%}
+        {%- set tether_number = 4 -%}
+        <!--box inertial-->
+        {%- set box_m = 0.5 -%}
+        {%- set box_x = 0.1 -%}
+        {%- set box_y = 0.1 -%}
+        {%- set box_z = 0.1 -%}
 
-        {%- macro tether_fragment(n) -%}
-        <link name="tether_fragment_{{n}}">
+        {%- macro tether_fragment(dirc, n) -%}
+        <link name="tether_{{dirc}}/fragment_{{n}}">
             <visual>
                 <origin rpy="0 0 0" xyz="0 0 {{cyl_l/2}}"/>
                 <geometry>
@@ -36,15 +42,15 @@
         {%- endmacro -%}
 
         <!--tether_cylinder_joint-->
-        {%- macro tether_joint(n) -%}
+        {%- macro tether_joint(dirc, n) -%}
         <!--link between two tether fragments-->
-        <link name="small_link_1_{{n}}">
+        <link name="tether_{{dirc}}/small_link_1_{{n}}">
             <inertial>
                 <mass value="{{small_link_mass}}"/>
                 <inertia ixx="{{small_link_ixx}}" iyy="{{small_link_iyy}}" izz="{{small_link_izz}}" ixy="{{small_link_ixy}}" ixz="{{small_link_ixz}}" iyz="{{small_link_iyz}}"/>
             </inertial>
         </link>
-        <link name="small_link_2_{{n}}">
+        <link name="tether_{{dirc}}/small_link_2_{{n}}">
             <inertial>
                 <mass value="{{small_link_mass}}"/>
                 <inertia ixx="{{small_link_ixx}}" iyy="{{small_link_iyy}}" izz="{{small_link_izz}}" ixy="{{small_link_ixy}}" ixz="{{small_link_ixz}}" iyz="{{small_link_iyz}}"/>
@@ -52,36 +58,81 @@
         </link>
 
         <!--tether fragment joint-->
-        <joint name="joint_1_{{n}}" type="continuous">
+        <joint name="tether_{{dirc}}/joint_1_{{n}}" type="continuous">
             <origin rpy="0 0 0" xyz="0 0 {{cyl_l}}"/>
-            <parent link="tether_fragment_{{n-1}}"/>
-            <child link="small_link_1_{{n}}"/>
+            <parent link="tether_{{dirc}}/fragment_{{n-1}}"/>
+            <child link="tether_{{dirc}}/small_link_1_{{n}}"/>
             <axis xyz="1 0 0" />
         </joint>
-        <joint name="joint_2_{{n}}" type="continuous">
-            <parent link="small_link_1_{{n}}"/>
-            <child link="small_link_2_{{n}}"/>
+        <joint name="tether_{{dirc}}/joint_2_{{n}}" type="continuous">
+            <parent link="tether_{{dirc}}/small_link_1_{{n}}"/>
+            <child link="tether_{{dirc}}/small_link_2_{{n}}"/>
             <axis xyz="0 1 0" />
         </joint>
-        <joint name="joint_1_{{n}}_" type="continuous">
-            <parent link="small_link_2_{{n}}"/>
-            <child link="tether_fragment_{{n}}"/>
+        <joint name="tether_{{dirc}}/joint_1_{{n}}_" type="continuous">
+            <parent link="tether_{{dirc}}/small_link_2_{{n}}"/>
+            <child link="tether_{{dirc}}/fragment_{{n}}"/>
             <axis xyz="0 0 1" />
         </joint>
         {%- endmacro -%}
 
-        <joint name="uav_tether_joint" type="fixed">
-            <parent link="tether_fragment_{{tether_fragments-1}}"/>
-            <child link="${namespace}/base_link"/>
-            <origin rpy="0 0 0" xyz="0 0 0"/>
+        {%- macro uav_joint(dirc) -%}
+        <!--uav => tether joint-->
+        <joint name="tether_{{dirc}}/uav_joint" type="fixed">
+            <parent link="${namespace}/base_link"/>
+            <child link="tether_{{dirc}}/fragment_0"/>
+            {% if dirc == 0 %}
+                <origin rpy="0 ${pi/2} 0" xyz="0 0 0"/>
+            {% elif dirc == 1 %}
+                <origin rpy="${pi/2} 0 0" xyz="0 0 0"/>
+            {% elif dirc == 2 %}
+                <origin rpy="0 ${-pi/2} 0" xyz="0 0 0"/>
+            {% elif dirc == 3 %}
+                <origin rpy="${-pi/2} 0 0" xyz="0 0 0"/>
+            {% endif %}
         </joint>
+        {%- endmacro -%}
+
+        {%- macro pesudo_ugv(dirc) -%}
+        <link name="pesudo_ugv_{{dirc}}">
+            <visual>
+                <geometry>
+                    <box size="{{box_x}} {{box_y}} {{box_z}}"/>
+                </geometry>
+                <material name="silver">
+                    <color rgba="0.75 0.75 0.75 1"/>
+                </material>
+            </visual>
+            <collision>
+                <geometry>
+                    <box size="{{box_x}} {{box_y}} {{box_z}}"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <mass value="{{box_m}}"/>
+                {%- set box_ix = 1/12*box_m*(box_y**2+box_z**2) -%}
+                {%- set box_iy = 1/12*box_m*(box_x**2+box_z**2) -%}
+                {%- set box_iz = 1/12*box_m*(box_x**2+box_y**2) -%}
+                <inertia ixx="{{box_ix}}" iyy="{{box_iy}}" izz="{{box_iz}}" ixy="0" ixz="0" iyz="0"/>
+            </inertial>
+        </link>
+
+        <joint name="tether_{{dirc}}/pesudo_ugv_joint" type="fixed">
+            <parent link="tether_{{dirc}}/fragment_{{tether_fragments-1}}"/>
+            <child link="pesudo_ugv_{{dirc}}"/>
+        </joint>
+        {%- endmacro -%}
 
         <!-- main-->
-        {% for n in range(0,tether_fragments) -%}
-            {{tether_fragment(n)}}
-            {% if n != 0 %}
-                {{tether_joint(n)}}
-            {% endif %}
+        {% for dirc in range(0,tether_number) %}
+            {% for n in range(0,tether_fragments) -%}
+                {{tether_fragment(dirc, n)}}
+                {% if n != 0 %}
+                    {{tether_joint(dirc, n)}}
+                {% endif %}
+            {% endfor -%}
+            {{uav_joint(dirc)}}
+            {{pesudo_ugv(dirc)}}
         {% endfor -%}
 
     </xacro:macro>
