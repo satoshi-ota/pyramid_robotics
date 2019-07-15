@@ -202,6 +202,6 @@
   </xacro:vertical_rotor>
 
   <!--tether model-->
-  <!--xacro:tether /-->
+  <xacro:tether />
 
 </robot>

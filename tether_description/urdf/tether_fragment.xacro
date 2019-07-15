@@ -20,7 +20,7 @@
         {%- set tether_fragments = 50 -%}
         {%- set tether_number = 4 -%}
         <!--box inertial-->
-        {%- set box_m = 0.5 -%}
+        {%- set box_m = 50 -%}
         {%- set box_x = 0.1 -%}
         {%- set box_y = 0.1 -%}
         {%- set box_z = 0.1 -%}
