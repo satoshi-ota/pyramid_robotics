@@ -17,10 +17,10 @@
         {%- set small_link_ixz = 0.0 -%}
         {%- set small_link_iyz = 0.0 -%}
         <!--link number-->
-        {%- set tether_fragments = 50 -%}
+        {%- set tether_fragments = 30 -%}
         {%- set tether_number = 4 -%}
         <!--box inertial-->
-        {%- set box_m = 50 -%}
+        {%- set box_m = 0.50 -%}
         {%- set box_x = 0.1 -%}
         {%- set box_y = 0.1 -%}
         {%- set box_z = 0.1 -%}
