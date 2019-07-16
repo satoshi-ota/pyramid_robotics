@@ -202,6 +202,8 @@
   </xacro:vertical_rotor>
 
   <!--tether model-->
-  <xacro:tether />
+  <xacro:if value="$(arg use_tether)">
+      <xacro:tether />
+  </xacro:if>
 
 </robot>
