@@ -52,11 +52,11 @@
     <xacro:box_inertia x="${radius_rotor}" y="0.015" z="0.003" mass="${mass_rotor*rotor_velocity_slowdown_sim}" />
   </xacro:property>
 
-  <!-- Included URDF Files -->
+  <!-- Included UAV_URDF Files -->
   <xacro:include filename="$(find uav_description)/urdf/pyramid_multirotor_base.xacro" />
 
-  <!-- Included URDF Files -->
-  <xacro:include filename="$(find tether_description)/urdf/tether.xacro" />
+  <!-- Included TETHER_URDF Files -->
+  <!--xacro:include filename="$(find tether_description)/urdf/tether.xacro" /-->
 
   <!-- Instantiate multirotor_base_macro once -->
   <xacro:multirotor_base_macro
@@ -200,10 +200,4 @@
     <origin xyz="${cos30*arm_length} -${sin30*arm_length} ${rotor_offset_top}" rpy="0 0 0" />
     <xacro:insert_block name="rotor_inertia" />
   </xacro:vertical_rotor>
-
-  <!--tether model-->
-  <xacro:if value="$(arg use_tether)">
-      <xacro:tether />
-  </xacro:if>
-
 </robot>

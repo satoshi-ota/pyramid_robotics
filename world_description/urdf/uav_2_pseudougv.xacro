@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="uav_2_pseudougv" xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:include filename="$(find world_description)/urdf/common_properties.xacro"/>
+    <!--xacro:include filename="$(find tether_description)/urdf/tether.xacro"/-->
+
+    <xacro:if value="$(arg enable_wind)">
+        <xacro:include filename="$(find uav_description)/urdf/pyramid_mav_with_wind_gust.gazebo" />
+    </xacro:if>
+
+    <xacro:unless value="$(arg enable_wind)">
+        <xacro:include filename="$(find uav_description)/urdf/pyramid_mav_generic_odometry_sensor.gazebo" />
+    </xacro:unless>
+
+
+    <!--tether model-->
+    <xacro:if value="$(arg use_tether)">
+        <xacro:include filename="$(find tether_description)/urdf/tether.xacro"/>
+        <xacro:tether />
+    </xacro:if>
+</robot>
