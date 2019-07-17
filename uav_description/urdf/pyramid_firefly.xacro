@@ -55,9 +55,6 @@
   <!-- Included UAV_URDF Files -->
   <xacro:include filename="$(find uav_description)/urdf/pyramid_multirotor_base.xacro" />
 
-  <!-- Included TETHER_URDF Files -->
-  <!--xacro:include filename="$(find tether_description)/urdf/tether.xacro" /-->
-
   <!-- Instantiate multirotor_base_macro once -->
   <xacro:multirotor_base_macro
     robot_namespace="${namespace}"
