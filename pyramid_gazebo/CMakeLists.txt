@@ -117,9 +117,9 @@ include_directories(
  ${catkin_INCLUDE_DIRS}
 )
 
-add_executable(pyramid_hovering_example src/pyramid_hovering_example.cpp)
-target_link_libraries(pyramid_hovering_example ${catkin_LIBRARIES})
-add_dependencies(pyramid_hovering_example ${catkin_EXPORTED_TARGETS})
+#add_executable(pyramid_hovering_example src/pyramid_hovering_example.cpp)
+#target_link_libraries(pyramid_hovering_example ${catkin_LIBRARIES})
+#add_dependencies(pyramid_hovering_example ${catkin_EXPORTED_TARGETS})
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
