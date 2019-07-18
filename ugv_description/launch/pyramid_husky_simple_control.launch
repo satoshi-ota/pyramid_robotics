@@ -60,7 +60,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
     <!-- For single master bringup, run robot control on the gazebo master -->
     <!-- Note that husky_description/description.launch is already included in husky_control/control.launch. -->
     <group unless="$(arg multimaster)">
-      <include file="$(find husky_control)/launch/control.launch">
+      <include file="$(find ugv_control)/launch/pyramid_simple_control.launch">
         <arg name="multimaster" value="$(arg multimaster)"/>
         <arg name="laser_enabled" value="$(arg laser_enabled)"/>
         <arg name="kinect_enabled" value="$(arg kinect_enabled)"/>
