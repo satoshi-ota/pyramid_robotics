@@ -1,5 +1,6 @@
 <launch>
     <arg name="mav_name" default="firefly"/>
+    <arg name="ugv_name" default="mp_500"/>
     <arg name="world_name" default="basic"/>
     <arg name="enable_logging" default="false"/>
     <arg name="enable_ground_truth" default="true"/>
@@ -35,4 +36,66 @@
         <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
         <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
     </group>
+
+    <group ns="$(arg ugv_name)_1">
+        <include file="$(find ugv_description)/launch/pyramid_mp_500/pyramid_spawn_mp_500.launch">
+            <arg name="x" value="1.0"/>
+            <arg name="namespace" value="$(arg ugv_name)_1" />
+        </include>
+
+        <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+            <param name="rate" value="20.0"/>
+        </node>
+
+        <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+            <param name="publish_frequency" value="20.0"/>
+        </node>
+    </group>
+
+    <group ns="$(arg ugv_name)_2">
+        <include file="$(find ugv_description)/launch/pyramid_mp_500/pyramid_spawn_mp_500.launch">
+            <arg name="y" value="1.0"/>
+            <arg name="namespace" value="$(arg ugv_name)_2" />
+        </include>
+
+        <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+            <param name="rate" value="20.0"/>
+        </node>
+
+        <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+            <param name="publish_frequency" value="20.0"/>
+        </node>
+    </group>
+
+    <group ns="$(arg ugv_name)_3">
+        <include file="$(find ugv_description)/launch/pyramid_mp_500/pyramid_spawn_mp_500.launch">
+            <arg name="x" value="-1.0"/>
+            <arg name="namespace" value="$(arg ugv_name)_3" />
+        </include>
+
+        <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+            <param name="rate" value="20.0"/>
+        </node>
+
+        <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+            <param name="publish_frequency" value="20.0"/>
+        </node>
+    </group>
+
+    <group ns="$(arg ugv_name)_4">
+        <include file="$(find ugv_description)/launch/pyramid_mp_500/pyramid_spawn_mp_500.launch">
+            <arg name="y" value="-1.0"/>
+            <arg name="namespace" value="$(arg ugv_name)_4" />
+        </include>
+
+        <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
+            <param name="rate" value="20.0"/>
+        </node>
+
+        <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher">
+            <param name="publish_frequency" value="20.0"/>
+        </node>
+    </group>
+
+    <node pkg="ugv_control" type="pyramid_teleop_keyboard.py" name="teleop_keyboard"  output="screen"/>
 </launch>
