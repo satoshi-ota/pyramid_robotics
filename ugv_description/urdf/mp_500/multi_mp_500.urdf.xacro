@@ -4,6 +4,6 @@
 
 <xacro:include filename="$(find ugv_description)/urdf/mp_500/mp_500.urdf.xacro" />
 
-<xacro:mp_500 />
+<xacro:mp_500 namespace="ugv_0"/>
 
 </robot>
