@@ -20,7 +20,7 @@ int main(int argc, char **argv)
   geometry_msgs::Twist vel;
   // geometry_msgs::Twist　この型は並進速度と回転速度(vector3:3次元ベクトル) を合わせたもので、速度指令によく使われる
 
-  pub= nh.advertise<geometry_msgs::Twist>("/cmd_vel", 10);
+  pub= nh.advertise<geometry_msgs::Twist>("/husky_velocity_controller/cmd_vel", 10);
   // マスターにgeometry_msgs::Twist型のデータを送ることを伝える
   // マスターは/cmd_vel_mux/input/teleopトピック(1番目の引数）を購読する
   // 全てのノードにトピックができたことを知らせる(advertise)。
