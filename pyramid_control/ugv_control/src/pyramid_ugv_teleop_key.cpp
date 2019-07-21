@@ -36,10 +36,10 @@ while (ros::ok()) // このノードが使える間は無限ループ
       cout << key << endl;
 
       switch (key) {
-      case 'f': vel.linear.x  =  0.5; break;
-      case 'b': vel.linear.x  = -0.5; break;
-      case 'l': vel.angular.z =  1.0; break;
-      case 'r': vel.angular.z = -1.0; break;
+      case 'f': vel.linear.x  =  0.8; break;
+      case 'b': vel.linear.x  = -0.8; break;
+      case 'l': vel.angular.z =  0.8; break;
+      case 'r': vel.angular.z = -0.8; break;
         // linear.xは前後方向の並進速度(m/s)
         // angular.zは回転速度(rad/s)
       }
