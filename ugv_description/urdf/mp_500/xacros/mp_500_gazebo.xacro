@@ -43,8 +43,8 @@
         <updateRate>100</updateRate>
         <legacyMode>false</legacyMode>
         <torque>2.5</torque>
-        <leftJoint>wheel_left_joint</leftJoint>
-        <rightJoint>wheel_right_joint</rightJoint>
+        <leftJoint>${namespace}/wheel_left_joint</leftJoint>
+        <rightJoint>${namespace}/wheel_right_joint</rightJoint>
         <wheelSeparation>0.592</wheelSeparation>
         <wheelDiameter>0.260</wheelDiameter>
         <commandTopic>cmd_vel</commandTopic>
@@ -64,11 +64,9 @@
 
 <!-- <gazebo>
   <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
- <legacyModeNS> false </legacyModeNS> 
+ <legacyModeNS> false </legacyModeNS>
   <robotParam>/robot_description</robotParam>
        <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
   </plugin>
 </gazebo> -->
 </robot>
-
-
