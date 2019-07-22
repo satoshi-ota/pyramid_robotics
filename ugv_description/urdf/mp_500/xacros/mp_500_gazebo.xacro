@@ -47,7 +47,7 @@
         <rightJoint>${namespace}/wheel_right_joint</rightJoint>
         <wheelSeparation>0.592</wheelSeparation>
         <wheelDiameter>0.260</wheelDiameter>
-        <commandTopic>cmd_vel</commandTopic>
+        <commandTopic>${namespace}/cmd_vel</commandTopic>
         <rosDebugLevel>na</rosDebugLevel>
         <odometryTopic>odom</odometryTopic>
         <odometryFrame>odom</odometryFrame>

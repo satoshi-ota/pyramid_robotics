@@ -74,10 +74,10 @@ def vels(speed,turn):
 if __name__=="__main__":
     settings = termios.tcgetattr(sys.stdin)
 
-    pub1 = rospy.Publisher('/firefly/cmd_vel', Twist, queue_size = 1)
-    #pub2 = rospy.Publisher('/firefly/mp_500_2/cmd_vel', Twist, queue_size = 1)
-    #pub3 = rospy.Publisher('/firefly/mp_500_3/cmd_vel', Twist, queue_size = 1)
-    #pub4 = rospy.Publisher('/firefly/mp_500_4/cmd_vel', Twist, queue_size = 1)
+    pub0 = rospy.Publisher('/firefly/mp_500_0/cmd_vel', Twist, queue_size = 1)
+    pub1 = rospy.Publisher('/firefly/mp_500_1/cmd_vel', Twist, queue_size = 1)
+    pub2 = rospy.Publisher('/firefly/mp_500_2/cmd_vel', Twist, queue_size = 1)
+    pub3 = rospy.Publisher('/firefly/mp_500_3/cmd_vel', Twist, queue_size = 1)
     rospy.init_node('teleop_twist_keyboard')
 
     speed = rospy.get_param("~speed", 0.5)
@@ -92,35 +92,162 @@ if __name__=="__main__":
         print(msg)
         print(vels(speed,turn))
         while(1):
-            key = getKey()
-            if key in moveBindings.keys():
-                x = moveBindings[key][0]
-                y = moveBindings[key][1]
-                z = moveBindings[key][2]
-                th = moveBindings[key][3]
-            elif key in speedBindings.keys():
-                speed = speed * speedBindings[key][0]
-                turn = turn * speedBindings[key][1]
+            ugv_num = raw_input("select control ugv: ")
+            if ugv_num == "0":
+                while(1):
+                    print("now controlling ugv_%s" %ugv_num)
+                    key = getKey()
+                    if key in moveBindings.keys():
+                        x = moveBindings[key][0]
+                        y = moveBindings[key][1]
+                        z = moveBindings[key][2]
+                        th = moveBindings[key][3]
+                    elif key in speedBindings.keys():
+                        speed = speed * speedBindings[key][0]
+                        turn = turn * speedBindings[key][1]
 
-                print(vels(speed,turn))
-                if (status == 14):
-                    print(msg)
-                status = (status + 1) % 15
-            else:
-                x = 0
-                y = 0
-                z = 0
-                th = 0
-                if (key == '\x03'):
-                    break
+                        print(vels(speed,turn))
+                        if (status == 14):
+                            print(msg)
+                        status = (status + 1) % 15
+                    else:
+                        x = 0
+                        y = 0
+                        z = 0
+                        th = 0
+                        if (key == '\x03'):
+                            break
 
-            twist = Twist()
-            twist.linear.x = x*speed; twist.linear.y = y*speed; twist.linear.z = z*speed;
-            twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = th*turn
-            pub1.publish(twist)
-            #pub2.publish(twist)
-            #pub3.publish(twist)
-            #pub4.publish(twist)
+                    twist = Twist()
+                    twist.linear.x = x*speed; twist.linear.y = y*speed; twist.linear.z = z*speed;
+                    twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = th*turn
+                    pub0.publish(twist)
+
+            if ugv_num == "1":
+                while(1):
+                    print("now controlling ugv_%s" %ugv_num)
+                    key = getKey()
+                    if key in moveBindings.keys():
+                        x = moveBindings[key][0]
+                        y = moveBindings[key][1]
+                        z = moveBindings[key][2]
+                        th = moveBindings[key][3]
+                    elif key in speedBindings.keys():
+                        speed = speed * speedBindings[key][0]
+                        turn = turn * speedBindings[key][1]
+
+                        print(vels(speed,turn))
+                        if (status == 14):
+                            print(msg)
+                        status = (status + 1) % 15
+                    else:
+                        x = 0
+                        y = 0
+                        z = 0
+                        th = 0
+                        if (key == '\x03'):
+                            break
+
+                    twist = Twist()
+                    twist.linear.x = x*speed; twist.linear.y = y*speed; twist.linear.z = z*speed;
+                    twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = th*turn
+                    pub1.publish(twist)
+
+            if ugv_num == "2":
+                while(1):
+                    print("now controlling ugv_%s" %ugv_num)
+                    key = getKey()
+                    if key in moveBindings.keys():
+                        x = moveBindings[key][0]
+                        y = moveBindings[key][1]
+                        z = moveBindings[key][2]
+                        th = moveBindings[key][3]
+                    elif key in speedBindings.keys():
+                        speed = speed * speedBindings[key][0]
+                        turn = turn * speedBindings[key][1]
+
+                        print(vels(speed,turn))
+                        if (status == 14):
+                            print(msg)
+                        status = (status + 1) % 15
+                    else:
+                        x = 0
+                        y = 0
+                        z = 0
+                        th = 0
+                        if (key == '\x03'):
+                            break
+
+                    twist = Twist()
+                    twist.linear.x = x*speed; twist.linear.y = y*speed; twist.linear.z = z*speed;
+                    twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = th*turn
+                    pub2.publish(twist)
+
+            if ugv_num == "3":
+                while(1):
+                    print("now controlling ugv_%s" %ugv_num)
+                    key = getKey()
+                    if key in moveBindings.keys():
+                        x = moveBindings[key][0]
+                        y = moveBindings[key][1]
+                        z = moveBindings[key][2]
+                        th = moveBindings[key][3]
+                    elif key in speedBindings.keys():
+                        speed = speed * speedBindings[key][0]
+                        turn = turn * speedBindings[key][1]
+
+                        print(vels(speed,turn))
+                        if (status == 14):
+                            print(msg)
+                        status = (status + 1) % 15
+                    else:
+                        x = 0
+                        y = 0
+                        z = 0
+                        th = 0
+                        if (key == '\x03'):
+                            break
+
+                    twist = Twist()
+                    twist.linear.x = x*speed; twist.linear.y = y*speed; twist.linear.z = z*speed;
+                    twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = th*turn
+                    pub3.publish(twist)
+
+            if ugv_num == "all":
+                while(1):
+                    print("now controlling ALL ugv")
+                    key = getKey()
+                    if key in moveBindings.keys():
+                        x = moveBindings[key][0]
+                        y = moveBindings[key][1]
+                        z = moveBindings[key][2]
+                        th = moveBindings[key][3]
+                    elif key in speedBindings.keys():
+                        speed = speed * speedBindings[key][0]
+                        turn = turn * speedBindings[key][1]
+
+                        print(vels(speed,turn))
+                        if (status == 14):
+                            print(msg)
+                        status = (status + 1) % 15
+                    else:
+                        x = 0
+                        y = 0
+                        z = 0
+                        th = 0
+                        if (key == '\x03'):
+                            break
+
+                    twist = Twist()
+                    twist.linear.x = x*speed; twist.linear.y = y*speed; twist.linear.z = z*speed;
+                    twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = th*turn
+                    pub0.publish(twist)
+                    pub1.publish(twist)
+                    pub2.publish(twist)
+                    pub3.publish(twist)
+
+            elif ugv_num == "exit":
+                break
 
     except Exception as e:
         print(e)
@@ -129,9 +256,9 @@ if __name__=="__main__":
         twist = Twist()
         twist.linear.x = 0; twist.linear.y = 0; twist.linear.z = 0
         twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = 0
+        pub0.publish(twist)
         pub1.publish(twist)
-        #pub2.publish(twist)
-        #pub3.publish(twist)
-        #pub4.publish(twist)
+        pub2.publish(twist)
+        pub3.publish(twist)
 
         termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
