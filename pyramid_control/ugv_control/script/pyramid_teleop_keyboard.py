@@ -74,10 +74,10 @@ def vels(speed,turn):
 if __name__=="__main__":
     settings = termios.tcgetattr(sys.stdin)
 
-    pub1 = rospy.Publisher('/mp_500_1/cmd_vel', Twist, queue_size = 1)
-    pub2 = rospy.Publisher('/mp_500_2/cmd_vel', Twist, queue_size = 1)
-    pub3 = rospy.Publisher('/mp_500_3/cmd_vel', Twist, queue_size = 1)
-    pub4 = rospy.Publisher('/mp_500_4/cmd_vel', Twist, queue_size = 1)
+    pub1 = rospy.Publisher('/firefly/cmd_vel', Twist, queue_size = 1)
+    #pub2 = rospy.Publisher('/firefly/mp_500_2/cmd_vel', Twist, queue_size = 1)
+    #pub3 = rospy.Publisher('/firefly/mp_500_3/cmd_vel', Twist, queue_size = 1)
+    #pub4 = rospy.Publisher('/firefly/mp_500_4/cmd_vel', Twist, queue_size = 1)
     rospy.init_node('teleop_twist_keyboard')
 
     speed = rospy.get_param("~speed", 0.5)
@@ -118,9 +118,9 @@ if __name__=="__main__":
             twist.linear.x = x*speed; twist.linear.y = y*speed; twist.linear.z = z*speed;
             twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = th*turn
             pub1.publish(twist)
-            pub2.publish(twist)
-            pub3.publish(twist)
-            pub4.publish(twist)
+            #pub2.publish(twist)
+            #pub3.publish(twist)
+            #pub4.publish(twist)
 
     except Exception as e:
         print(e)
@@ -130,8 +130,8 @@ if __name__=="__main__":
         twist.linear.x = 0; twist.linear.y = 0; twist.linear.z = 0
         twist.angular.x = 0; twist.angular.y = 0; twist.angular.z = 0
         pub1.publish(twist)
-        pub2.publish(twist)
-        pub3.publish(twist)
-        pub4.publish(twist)
+        #pub2.publish(twist)
+        #pub3.publish(twist)
+        #pub4.publish(twist)
 
         termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)

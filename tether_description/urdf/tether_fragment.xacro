@@ -121,7 +121,15 @@
 
         <!--tether end joint-->
         <joint name="tether_{{dirc}}/ugv_joint_1" type="continuous">
-            <origin rpy="0 ${-pi/2} 0" xyz="0 0 0"/>
+            {% if dirc == 0 %}
+                <origin rpy="0 ${-pi/2} 0" xyz="0 0 0"/>
+            {% elif dirc == 1 %}
+                <origin rpy="${-pi/2} 0 0" xyz="0 0 0"/>
+            {% elif dirc == 2 %}
+                <origin rpy="0 ${pi/2} 0" xyz="0 0 0"/>
+            {% elif dirc == 3 %}
+                <origin rpy="${pi/2} 0 0" xyz="0 0 0"/>
+            {% endif %}
             <parent link="tether_{{dirc}}/fragment_{{tether_fragments-1}}"/>
             <child link="tether_{{dirc}}/end_link_1"/>
             <axis xyz="1 0 0" />
