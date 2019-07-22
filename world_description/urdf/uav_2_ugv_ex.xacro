@@ -15,12 +15,4 @@
         <xacro:include filename="$(find tether_description)/urdf/tether.xacro"/>
         <xacro:tether />
     </xacro:if>
-
-    <xacro:include filename="$(find ugv_description)/urdf/mp_500/mp_500_tether.urdf.xacro"/>
-
-    <xacro:mp_500_tether namespace="mp_500_0"/>
-    <xacro:mp_500_tether namespace="mp_500_1"/>
-    <xacro:mp_500_tether namespace="mp_500_2"/>
-    <xacro:mp_500_tether namespace="mp_500_3"/>
-
 </robot>

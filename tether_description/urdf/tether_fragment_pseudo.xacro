@@ -104,40 +104,33 @@
         </joint>
         {%- endmacro -%}
 
-        {%- macro ugv_joint(dirc) -%}
-        <!--link between tether and ugv-->
-        <link name="tether_{{dirc}}/end_link_1">
+        {%- macro pesudo_ugv(dirc) -%}
+        <link name="pesudo_ugv_{{dirc}}">
+            <visual>
+                <geometry>
+                    <box size="{{box_x}} {{box_y}} {{box_z}}"/>
+                </geometry>
+                <material name="silver">
+                    <color rgba="0.75 0.75 0.75 1"/>
+                </material>
+            </visual>
+            <collision>
+                <geometry>
+                    <box size="{{box_x}} {{box_y}} {{box_z}}"/>
+                </geometry>
+            </collision>
             <inertial>
-                <mass value="{{small_link_mass}}"/>
-                <inertia ixx="{{small_link_ixx}}" iyy="{{small_link_iyy}}" izz="{{small_link_izz}}" ixy="{{small_link_ixy}}" ixz="{{small_link_ixz}}" iyz="{{small_link_iyz}}"/>
-            </inertial>
-        </link>
-        <link name="tether_{{dirc}}/end_link_2">
-            <inertial>
-                <mass value="{{small_link_mass}}"/>
-                <inertia ixx="{{small_link_ixx}}" iyy="{{small_link_iyy}}" izz="{{small_link_izz}}" ixy="{{small_link_ixy}}" ixz="{{small_link_ixz}}" iyz="{{small_link_iyz}}"/>
+                <mass value="{{box_m}}"/>
+                {%- set box_ix = 1/12*box_m*(box_y**2+box_z**2) -%}
+                {%- set box_iy = 1/12*box_m*(box_x**2+box_z**2) -%}
+                {%- set box_iz = 1/12*box_m*(box_x**2+box_y**2) -%}
+                <inertia ixx="{{box_ix}}" iyy="{{box_iy}}" izz="{{box_iz}}" ixy="0" ixz="0" iyz="0"/>
             </inertial>
         </link>
 
-        <!--tether end joint-->
-        <joint name="tether_{{dirc}}/ugv_joint_1" type="continuous">
-            <origin rpy="0 ${-pi/2} 0" xyz="0 0 0"/>
+        <joint name="tether_{{dirc}}/pesudo_ugv_joint" type="fixed">
             <parent link="tether_{{dirc}}/fragment_{{tether_fragments-1}}"/>
-            <child link="tether_{{dirc}}/end_link_1"/>
-            <axis xyz="1 0 0" />
-            <dynamics damping="{{damping}}" friction="{{friction}}"/>
-        </joint>
-        <joint name="tether_{{dirc}}/ugv_joint_2" type="continuous">
-            <parent link="tether_{{dirc}}/end_link_1"/>
-            <child link="tether_{{dirc}}/end_link_2"/>
-            <axis xyz="0 1 0" />
-            <dynamics damping="{{damping}}" friction="{{friction}}"/>
-        </joint>
-        <joint name="tether_{{dirc}}/ugv_joint_3" type="continuous">
-            <parent link="tether_{{dirc}}/end_link_2"/>
-            <child link="mp_500_{{dirc}}/tether_end"/>
-            <axis xyz="0 0 1" />
-            <dynamics damping="{{damping}}" friction="{{friction}}"/>
+            <child link="pesudo_ugv_{{dirc}}"/>
         </joint>
         {%- endmacro -%}
 
@@ -150,7 +143,7 @@
                 {% endif %}
             {% endfor -%}
             {{uav_joint(dirc)}}
-            {{ugv_joint(dirc)}}
+            {{pesudo_ugv(dirc)}}
         {% endfor -%}
 
     </xacro:macro>

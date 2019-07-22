@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+    <arg name="ugv_name" default="mp_500"/>
+    <arg name="namespace" default="$(arg ugv_name)" />
+
+    <param name="robot_description"
+        command=
+            "$(find xacro)/xacro '$(find ugv_description)/urdf/mp_500/mp_500_tether_ex.urdf.xacro'
+             namespace:=$(arg namespace)"/>
+
+    <node name="mp_500_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"
+        args=
+            "-urdf
+             -param robot_description
+             -model $(arg namespace)" >
+    </node>
+
+</launch>

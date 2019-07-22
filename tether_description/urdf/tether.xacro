@@ -1597,28 +1597,39 @@
                 <origin rpy="0 ${pi/2} 0" xyz="0 0 0"/>
             
         </joint>
-            <link name="pesudo_ugv_0">
-            <visual>
-                <geometry>
-                    <box size="0.1 0.1 0.1"/>
-                </geometry>
-                <material name="silver">
-                    <color rgba="0.75 0.75 0.75 1"/>
-                </material>
-            </visual>
-            <collision>
-                <geometry>
-                    <box size="0.1 0.1 0.1"/>
-                </geometry>
-            </collision>
+            <!--link between tether and ugv-->
+        <link name="tether_0/end_link_1">
             <inertial>
-                <mass value="50"/><inertia ixx="0.0833333333333" iyy="0.0833333333333" izz="0.0833333333333" ixy="0" ixz="0" iyz="0"/>
+                <mass value="0.001"/>
+                <inertia ixx="0.001" iyy="0.001" izz="0.001" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <link name="tether_0/end_link_2">
+            <inertial>
+                <mass value="0.001"/>
+                <inertia ixx="0.001" iyy="0.001" izz="0.001" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
         </link>
 
-        <joint name="tether_0/pesudo_ugv_joint" type="fixed">
+        <!--tether end joint-->
+        <joint name="tether_0/ugv_joint_1" type="continuous">
+            <origin rpy="0 ${-pi/2} 0" xyz="0 0 0"/>
             <parent link="tether_0/fragment_29"/>
-            <child link="pesudo_ugv_0"/>
+            <child link="tether_0/end_link_1"/>
+            <axis xyz="1 0 0" />
+            <dynamics damping="0.01" friction="0.15"/>
+        </joint>
+        <joint name="tether_0/ugv_joint_2" type="continuous">
+            <parent link="tether_0/end_link_1"/>
+            <child link="tether_0/end_link_2"/>
+            <axis xyz="0 1 0" />
+            <dynamics damping="0.01" friction="0.15"/>
+        </joint>
+        <joint name="tether_0/ugv_joint_3" type="continuous">
+            <parent link="tether_0/end_link_2"/>
+            <child link="mp_500_0/tether_end"/>
+            <axis xyz="0 0 1" />
+            <dynamics damping="0.01" friction="0.15"/>
         </joint>
         
             <link name="tether_1/fragment_0">
@@ -3214,28 +3225,39 @@
                 <origin rpy="${pi/2} 0 0" xyz="0 0 0"/>
             
         </joint>
-            <link name="pesudo_ugv_1">
-            <visual>
-                <geometry>
-                    <box size="0.1 0.1 0.1"/>
-                </geometry>
-                <material name="silver">
-                    <color rgba="0.75 0.75 0.75 1"/>
-                </material>
-            </visual>
-            <collision>
-                <geometry>
-                    <box size="0.1 0.1 0.1"/>
-                </geometry>
-            </collision>
+            <!--link between tether and ugv-->
+        <link name="tether_1/end_link_1">
             <inertial>
-                <mass value="50"/><inertia ixx="0.0833333333333" iyy="0.0833333333333" izz="0.0833333333333" ixy="0" ixz="0" iyz="0"/>
+                <mass value="0.001"/>
+                <inertia ixx="0.001" iyy="0.001" izz="0.001" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <link name="tether_1/end_link_2">
+            <inertial>
+                <mass value="0.001"/>
+                <inertia ixx="0.001" iyy="0.001" izz="0.001" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
         </link>
 
-        <joint name="tether_1/pesudo_ugv_joint" type="fixed">
+        <!--tether end joint-->
+        <joint name="tether_1/ugv_joint_1" type="continuous">
+            <origin rpy="0 ${-pi/2} 0" xyz="0 0 0"/>
             <parent link="tether_1/fragment_29"/>
-            <child link="pesudo_ugv_1"/>
+            <child link="tether_1/end_link_1"/>
+            <axis xyz="1 0 0" />
+            <dynamics damping="0.01" friction="0.15"/>
+        </joint>
+        <joint name="tether_1/ugv_joint_2" type="continuous">
+            <parent link="tether_1/end_link_1"/>
+            <child link="tether_1/end_link_2"/>
+            <axis xyz="0 1 0" />
+            <dynamics damping="0.01" friction="0.15"/>
+        </joint>
+        <joint name="tether_1/ugv_joint_3" type="continuous">
+            <parent link="tether_1/end_link_2"/>
+            <child link="mp_500_1/tether_end"/>
+            <axis xyz="0 0 1" />
+            <dynamics damping="0.01" friction="0.15"/>
         </joint>
         
             <link name="tether_2/fragment_0">
@@ -4831,28 +4853,39 @@
                 <origin rpy="0 ${-pi/2} 0" xyz="0 0 0"/>
             
         </joint>
-            <link name="pesudo_ugv_2">
-            <visual>
-                <geometry>
-                    <box size="0.1 0.1 0.1"/>
-                </geometry>
-                <material name="silver">
-                    <color rgba="0.75 0.75 0.75 1"/>
-                </material>
-            </visual>
-            <collision>
-                <geometry>
-                    <box size="0.1 0.1 0.1"/>
-                </geometry>
-            </collision>
+            <!--link between tether and ugv-->
+        <link name="tether_2/end_link_1">
             <inertial>
-                <mass value="50"/><inertia ixx="0.0833333333333" iyy="0.0833333333333" izz="0.0833333333333" ixy="0" ixz="0" iyz="0"/>
+                <mass value="0.001"/>
+                <inertia ixx="0.001" iyy="0.001" izz="0.001" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <link name="tether_2/end_link_2">
+            <inertial>
+                <mass value="0.001"/>
+                <inertia ixx="0.001" iyy="0.001" izz="0.001" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
         </link>
 
-        <joint name="tether_2/pesudo_ugv_joint" type="fixed">
+        <!--tether end joint-->
+        <joint name="tether_2/ugv_joint_1" type="continuous">
+            <origin rpy="0 ${-pi/2} 0" xyz="0 0 0"/>
             <parent link="tether_2/fragment_29"/>
-            <child link="pesudo_ugv_2"/>
+            <child link="tether_2/end_link_1"/>
+            <axis xyz="1 0 0" />
+            <dynamics damping="0.01" friction="0.15"/>
+        </joint>
+        <joint name="tether_2/ugv_joint_2" type="continuous">
+            <parent link="tether_2/end_link_1"/>
+            <child link="tether_2/end_link_2"/>
+            <axis xyz="0 1 0" />
+            <dynamics damping="0.01" friction="0.15"/>
+        </joint>
+        <joint name="tether_2/ugv_joint_3" type="continuous">
+            <parent link="tether_2/end_link_2"/>
+            <child link="mp_500_2/tether_end"/>
+            <axis xyz="0 0 1" />
+            <dynamics damping="0.01" friction="0.15"/>
         </joint>
         
             <link name="tether_3/fragment_0">
@@ -6448,28 +6481,39 @@
                 <origin rpy="${-pi/2} 0 0" xyz="0 0 0"/>
             
         </joint>
-            <link name="pesudo_ugv_3">
-            <visual>
-                <geometry>
-                    <box size="0.1 0.1 0.1"/>
-                </geometry>
-                <material name="silver">
-                    <color rgba="0.75 0.75 0.75 1"/>
-                </material>
-            </visual>
-            <collision>
-                <geometry>
-                    <box size="0.1 0.1 0.1"/>
-                </geometry>
-            </collision>
+            <!--link between tether and ugv-->
+        <link name="tether_3/end_link_1">
             <inertial>
-                <mass value="50"/><inertia ixx="0.0833333333333" iyy="0.0833333333333" izz="0.0833333333333" ixy="0" ixz="0" iyz="0"/>
+                <mass value="0.001"/>
+                <inertia ixx="0.001" iyy="0.001" izz="0.001" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <link name="tether_3/end_link_2">
+            <inertial>
+                <mass value="0.001"/>
+                <inertia ixx="0.001" iyy="0.001" izz="0.001" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
         </link>
 
-        <joint name="tether_3/pesudo_ugv_joint" type="fixed">
+        <!--tether end joint-->
+        <joint name="tether_3/ugv_joint_1" type="continuous">
+            <origin rpy="0 ${-pi/2} 0" xyz="0 0 0"/>
             <parent link="tether_3/fragment_29"/>
-            <child link="pesudo_ugv_3"/>
+            <child link="tether_3/end_link_1"/>
+            <axis xyz="1 0 0" />
+            <dynamics damping="0.01" friction="0.15"/>
+        </joint>
+        <joint name="tether_3/ugv_joint_2" type="continuous">
+            <parent link="tether_3/end_link_1"/>
+            <child link="tether_3/end_link_2"/>
+            <axis xyz="0 1 0" />
+            <dynamics damping="0.01" friction="0.15"/>
+        </joint>
+        <joint name="tether_3/ugv_joint_3" type="continuous">
+            <parent link="tether_3/end_link_2"/>
+            <child link="mp_500_3/tether_end"/>
+            <axis xyz="0 0 1" />
+            <dynamics damping="0.01" friction="0.15"/>
         </joint>
         </xacro:macro>
 </robot>
