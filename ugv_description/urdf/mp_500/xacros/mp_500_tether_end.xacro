@@ -24,7 +24,7 @@
                     <cylinder length="0.2" radius="0.02"/>
                 </geometry>
             </collision>
-            </link>
+        </link>
 
         </xacro:macro>
 

@@ -37,6 +37,5 @@
         <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
     </group>
 
-
     <node pkg="ugv_control" type="pyramid_teleop_keyboard.py" name="teleop_keyboard"  output="screen"/>
 </launch>

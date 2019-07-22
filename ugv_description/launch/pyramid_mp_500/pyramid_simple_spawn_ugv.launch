@@ -6,7 +6,7 @@
 
     <param name="robot_description"
         command=
-            "$(find xacro)/xacro '$(find ugv_description)/urdf/mp_500/mp_500_tether_ex.urdf.xacro'
+            "$(find xacro)/xacro '$(find ugv_description)/urdf/mp_500/mp_500_tether.urdf.xacro'
              namespace:=$(arg namespace)"/>
 
     <node name="mp_500_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"

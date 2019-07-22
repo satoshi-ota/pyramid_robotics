@@ -62,19 +62,19 @@
             <parent link="tether_0/fragment_0"/>
             <child link="tether_0/small_link_1_1"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_2_1" type="continuous">
             <parent link="tether_0/small_link_1_1"/>
             <child link="tether_0/small_link_2_1"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_1_1_" type="continuous">
             <parent link="tether_0/small_link_2_1"/>
             <child link="tether_0/fragment_1"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_0/fragment_2">
@@ -116,19 +116,19 @@
             <parent link="tether_0/fragment_1"/>
             <child link="tether_0/small_link_1_2"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_2_2" type="continuous">
             <parent link="tether_0/small_link_1_2"/>
             <child link="tether_0/small_link_2_2"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_1_2_" type="continuous">
             <parent link="tether_0/small_link_2_2"/>
             <child link="tether_0/fragment_2"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_0/fragment_3">
@@ -170,19 +170,19 @@
             <parent link="tether_0/fragment_2"/>
             <child link="tether_0/small_link_1_3"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_2_3" type="continuous">
             <parent link="tether_0/small_link_1_3"/>
             <child link="tether_0/small_link_2_3"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_1_3_" type="continuous">
             <parent link="tether_0/small_link_2_3"/>
             <child link="tether_0/fragment_3"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_0/fragment_4">
@@ -224,19 +224,19 @@
             <parent link="tether_0/fragment_3"/>
             <child link="tether_0/small_link_1_4"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_2_4" type="continuous">
             <parent link="tether_0/small_link_1_4"/>
             <child link="tether_0/small_link_2_4"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_1_4_" type="continuous">
             <parent link="tether_0/small_link_2_4"/>
             <child link="tether_0/fragment_4"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_0/fragment_5">
@@ -278,19 +278,19 @@
             <parent link="tether_0/fragment_4"/>
             <child link="tether_0/small_link_1_5"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_2_5" type="continuous">
             <parent link="tether_0/small_link_1_5"/>
             <child link="tether_0/small_link_2_5"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_1_5_" type="continuous">
             <parent link="tether_0/small_link_2_5"/>
             <child link="tether_0/fragment_5"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_0/fragment_6">
@@ -332,19 +332,19 @@
             <parent link="tether_0/fragment_5"/>
             <child link="tether_0/small_link_1_6"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_2_6" type="continuous">
             <parent link="tether_0/small_link_1_6"/>
             <child link="tether_0/small_link_2_6"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_1_6_" type="continuous">
             <parent link="tether_0/small_link_2_6"/>
             <child link="tether_0/fragment_6"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_0/fragment_7">
@@ -386,19 +386,19 @@
             <parent link="tether_0/fragment_6"/>
             <child link="tether_0/small_link_1_7"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_2_7" type="continuous">
             <parent link="tether_0/small_link_1_7"/>
             <child link="tether_0/small_link_2_7"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_1_7_" type="continuous">
             <parent link="tether_0/small_link_2_7"/>
             <child link="tether_0/fragment_7"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_0/fragment_8">
@@ -440,19 +440,19 @@
             <parent link="tether_0/fragment_7"/>
             <child link="tether_0/small_link_1_8"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_2_8" type="continuous">
             <parent link="tether_0/small_link_1_8"/>
             <child link="tether_0/small_link_2_8"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_1_8_" type="continuous">
             <parent link="tether_0/small_link_2_8"/>
             <child link="tether_0/fragment_8"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_0/fragment_9">
@@ -494,19 +494,19 @@
             <parent link="tether_0/fragment_8"/>
             <child link="tether_0/small_link_1_9"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_2_9" type="continuous">
             <parent link="tether_0/small_link_1_9"/>
             <child link="tether_0/small_link_2_9"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_1_9_" type="continuous">
             <parent link="tether_0/small_link_2_9"/>
             <child link="tether_0/fragment_9"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_0/fragment_10">
@@ -548,19 +548,19 @@
             <parent link="tether_0/fragment_9"/>
             <child link="tether_0/small_link_1_10"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_2_10" type="continuous">
             <parent link="tether_0/small_link_1_10"/>
             <child link="tether_0/small_link_2_10"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_1_10_" type="continuous">
             <parent link="tether_0/small_link_2_10"/>
             <child link="tether_0/fragment_10"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_0/fragment_11">
@@ -602,19 +602,19 @@
             <parent link="tether_0/fragment_10"/>
             <child link="tether_0/small_link_1_11"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_2_11" type="continuous">
             <parent link="tether_0/small_link_1_11"/>
             <child link="tether_0/small_link_2_11"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_1_11_" type="continuous">
             <parent link="tether_0/small_link_2_11"/>
             <child link="tether_0/fragment_11"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_0/fragment_12">
@@ -656,19 +656,19 @@
             <parent link="tether_0/fragment_11"/>
             <child link="tether_0/small_link_1_12"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_2_12" type="continuous">
             <parent link="tether_0/small_link_1_12"/>
             <child link="tether_0/small_link_2_12"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_1_12_" type="continuous">
             <parent link="tether_0/small_link_2_12"/>
             <child link="tether_0/fragment_12"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_0/fragment_13">
@@ -710,19 +710,19 @@
             <parent link="tether_0/fragment_12"/>
             <child link="tether_0/small_link_1_13"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_2_13" type="continuous">
             <parent link="tether_0/small_link_1_13"/>
             <child link="tether_0/small_link_2_13"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_1_13_" type="continuous">
             <parent link="tether_0/small_link_2_13"/>
             <child link="tether_0/fragment_13"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_0/fragment_14">
@@ -764,19 +764,19 @@
             <parent link="tether_0/fragment_13"/>
             <child link="tether_0/small_link_1_14"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_2_14" type="continuous">
             <parent link="tether_0/small_link_1_14"/>
             <child link="tether_0/small_link_2_14"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_1_14_" type="continuous">
             <parent link="tether_0/small_link_2_14"/>
             <child link="tether_0/fragment_14"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_0/fragment_15">
@@ -818,19 +818,19 @@
             <parent link="tether_0/fragment_14"/>
             <child link="tether_0/small_link_1_15"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_2_15" type="continuous">
             <parent link="tether_0/small_link_1_15"/>
             <child link="tether_0/small_link_2_15"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_1_15_" type="continuous">
             <parent link="tether_0/small_link_2_15"/>
             <child link="tether_0/fragment_15"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_0/fragment_16">
@@ -872,19 +872,19 @@
             <parent link="tether_0/fragment_15"/>
             <child link="tether_0/small_link_1_16"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_2_16" type="continuous">
             <parent link="tether_0/small_link_1_16"/>
             <child link="tether_0/small_link_2_16"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_1_16_" type="continuous">
             <parent link="tether_0/small_link_2_16"/>
             <child link="tether_0/fragment_16"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_0/fragment_17">
@@ -926,19 +926,19 @@
             <parent link="tether_0/fragment_16"/>
             <child link="tether_0/small_link_1_17"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_2_17" type="continuous">
             <parent link="tether_0/small_link_1_17"/>
             <child link="tether_0/small_link_2_17"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_1_17_" type="continuous">
             <parent link="tether_0/small_link_2_17"/>
             <child link="tether_0/fragment_17"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_0/fragment_18">
@@ -980,19 +980,19 @@
             <parent link="tether_0/fragment_17"/>
             <child link="tether_0/small_link_1_18"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_2_18" type="continuous">
             <parent link="tether_0/small_link_1_18"/>
             <child link="tether_0/small_link_2_18"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_1_18_" type="continuous">
             <parent link="tether_0/small_link_2_18"/>
             <child link="tether_0/fragment_18"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_0/fragment_19">
@@ -1034,19 +1034,19 @@
             <parent link="tether_0/fragment_18"/>
             <child link="tether_0/small_link_1_19"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_2_19" type="continuous">
             <parent link="tether_0/small_link_1_19"/>
             <child link="tether_0/small_link_2_19"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_1_19_" type="continuous">
             <parent link="tether_0/small_link_2_19"/>
             <child link="tether_0/fragment_19"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_0/fragment_20">
@@ -1088,19 +1088,19 @@
             <parent link="tether_0/fragment_19"/>
             <child link="tether_0/small_link_1_20"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_2_20" type="continuous">
             <parent link="tether_0/small_link_1_20"/>
             <child link="tether_0/small_link_2_20"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_1_20_" type="continuous">
             <parent link="tether_0/small_link_2_20"/>
             <child link="tether_0/fragment_20"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_0/fragment_21">
@@ -1142,19 +1142,19 @@
             <parent link="tether_0/fragment_20"/>
             <child link="tether_0/small_link_1_21"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_2_21" type="continuous">
             <parent link="tether_0/small_link_1_21"/>
             <child link="tether_0/small_link_2_21"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_1_21_" type="continuous">
             <parent link="tether_0/small_link_2_21"/>
             <child link="tether_0/fragment_21"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_0/fragment_22">
@@ -1196,19 +1196,19 @@
             <parent link="tether_0/fragment_21"/>
             <child link="tether_0/small_link_1_22"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_2_22" type="continuous">
             <parent link="tether_0/small_link_1_22"/>
             <child link="tether_0/small_link_2_22"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_1_22_" type="continuous">
             <parent link="tether_0/small_link_2_22"/>
             <child link="tether_0/fragment_22"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_0/fragment_23">
@@ -1250,19 +1250,19 @@
             <parent link="tether_0/fragment_22"/>
             <child link="tether_0/small_link_1_23"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_2_23" type="continuous">
             <parent link="tether_0/small_link_1_23"/>
             <child link="tether_0/small_link_2_23"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_1_23_" type="continuous">
             <parent link="tether_0/small_link_2_23"/>
             <child link="tether_0/fragment_23"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_0/fragment_24">
@@ -1304,19 +1304,19 @@
             <parent link="tether_0/fragment_23"/>
             <child link="tether_0/small_link_1_24"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_2_24" type="continuous">
             <parent link="tether_0/small_link_1_24"/>
             <child link="tether_0/small_link_2_24"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_1_24_" type="continuous">
             <parent link="tether_0/small_link_2_24"/>
             <child link="tether_0/fragment_24"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_0/fragment_25">
@@ -1358,19 +1358,19 @@
             <parent link="tether_0/fragment_24"/>
             <child link="tether_0/small_link_1_25"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_2_25" type="continuous">
             <parent link="tether_0/small_link_1_25"/>
             <child link="tether_0/small_link_2_25"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_1_25_" type="continuous">
             <parent link="tether_0/small_link_2_25"/>
             <child link="tether_0/fragment_25"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_0/fragment_26">
@@ -1412,19 +1412,19 @@
             <parent link="tether_0/fragment_25"/>
             <child link="tether_0/small_link_1_26"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_2_26" type="continuous">
             <parent link="tether_0/small_link_1_26"/>
             <child link="tether_0/small_link_2_26"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_1_26_" type="continuous">
             <parent link="tether_0/small_link_2_26"/>
             <child link="tether_0/fragment_26"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_0/fragment_27">
@@ -1466,19 +1466,19 @@
             <parent link="tether_0/fragment_26"/>
             <child link="tether_0/small_link_1_27"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_2_27" type="continuous">
             <parent link="tether_0/small_link_1_27"/>
             <child link="tether_0/small_link_2_27"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_1_27_" type="continuous">
             <parent link="tether_0/small_link_2_27"/>
             <child link="tether_0/fragment_27"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_0/fragment_28">
@@ -1520,19 +1520,19 @@
             <parent link="tether_0/fragment_27"/>
             <child link="tether_0/small_link_1_28"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_2_28" type="continuous">
             <parent link="tether_0/small_link_1_28"/>
             <child link="tether_0/small_link_2_28"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_1_28_" type="continuous">
             <parent link="tether_0/small_link_2_28"/>
             <child link="tether_0/fragment_28"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_0/fragment_29">
@@ -1574,19 +1574,19 @@
             <parent link="tether_0/fragment_28"/>
             <child link="tether_0/small_link_1_29"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_2_29" type="continuous">
             <parent link="tether_0/small_link_1_29"/>
             <child link="tether_0/small_link_2_29"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/joint_1_29_" type="continuous">
             <parent link="tether_0/small_link_2_29"/>
             <child link="tether_0/fragment_29"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <!--uav => tether joint-->
@@ -1619,19 +1619,19 @@
             <parent link="tether_0/fragment_29"/>
             <child link="tether_0/end_link_1"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/ugv_joint_2" type="continuous">
             <parent link="tether_0/end_link_1"/>
             <child link="tether_0/end_link_2"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_0/ugv_joint_3" type="continuous">
             <parent link="tether_0/end_link_2"/>
             <child link="mp_500_0/tether_end"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         
             <link name="tether_1/fragment_0">
@@ -1692,19 +1692,19 @@
             <parent link="tether_1/fragment_0"/>
             <child link="tether_1/small_link_1_1"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_2_1" type="continuous">
             <parent link="tether_1/small_link_1_1"/>
             <child link="tether_1/small_link_2_1"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_1_1_" type="continuous">
             <parent link="tether_1/small_link_2_1"/>
             <child link="tether_1/fragment_1"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_1/fragment_2">
@@ -1746,19 +1746,19 @@
             <parent link="tether_1/fragment_1"/>
             <child link="tether_1/small_link_1_2"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_2_2" type="continuous">
             <parent link="tether_1/small_link_1_2"/>
             <child link="tether_1/small_link_2_2"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_1_2_" type="continuous">
             <parent link="tether_1/small_link_2_2"/>
             <child link="tether_1/fragment_2"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_1/fragment_3">
@@ -1800,19 +1800,19 @@
             <parent link="tether_1/fragment_2"/>
             <child link="tether_1/small_link_1_3"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_2_3" type="continuous">
             <parent link="tether_1/small_link_1_3"/>
             <child link="tether_1/small_link_2_3"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_1_3_" type="continuous">
             <parent link="tether_1/small_link_2_3"/>
             <child link="tether_1/fragment_3"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_1/fragment_4">
@@ -1854,19 +1854,19 @@
             <parent link="tether_1/fragment_3"/>
             <child link="tether_1/small_link_1_4"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_2_4" type="continuous">
             <parent link="tether_1/small_link_1_4"/>
             <child link="tether_1/small_link_2_4"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_1_4_" type="continuous">
             <parent link="tether_1/small_link_2_4"/>
             <child link="tether_1/fragment_4"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_1/fragment_5">
@@ -1908,19 +1908,19 @@
             <parent link="tether_1/fragment_4"/>
             <child link="tether_1/small_link_1_5"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_2_5" type="continuous">
             <parent link="tether_1/small_link_1_5"/>
             <child link="tether_1/small_link_2_5"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_1_5_" type="continuous">
             <parent link="tether_1/small_link_2_5"/>
             <child link="tether_1/fragment_5"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_1/fragment_6">
@@ -1962,19 +1962,19 @@
             <parent link="tether_1/fragment_5"/>
             <child link="tether_1/small_link_1_6"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_2_6" type="continuous">
             <parent link="tether_1/small_link_1_6"/>
             <child link="tether_1/small_link_2_6"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_1_6_" type="continuous">
             <parent link="tether_1/small_link_2_6"/>
             <child link="tether_1/fragment_6"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_1/fragment_7">
@@ -2016,19 +2016,19 @@
             <parent link="tether_1/fragment_6"/>
             <child link="tether_1/small_link_1_7"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_2_7" type="continuous">
             <parent link="tether_1/small_link_1_7"/>
             <child link="tether_1/small_link_2_7"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_1_7_" type="continuous">
             <parent link="tether_1/small_link_2_7"/>
             <child link="tether_1/fragment_7"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_1/fragment_8">
@@ -2070,19 +2070,19 @@
             <parent link="tether_1/fragment_7"/>
             <child link="tether_1/small_link_1_8"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_2_8" type="continuous">
             <parent link="tether_1/small_link_1_8"/>
             <child link="tether_1/small_link_2_8"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_1_8_" type="continuous">
             <parent link="tether_1/small_link_2_8"/>
             <child link="tether_1/fragment_8"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_1/fragment_9">
@@ -2124,19 +2124,19 @@
             <parent link="tether_1/fragment_8"/>
             <child link="tether_1/small_link_1_9"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_2_9" type="continuous">
             <parent link="tether_1/small_link_1_9"/>
             <child link="tether_1/small_link_2_9"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_1_9_" type="continuous">
             <parent link="tether_1/small_link_2_9"/>
             <child link="tether_1/fragment_9"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_1/fragment_10">
@@ -2178,19 +2178,19 @@
             <parent link="tether_1/fragment_9"/>
             <child link="tether_1/small_link_1_10"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_2_10" type="continuous">
             <parent link="tether_1/small_link_1_10"/>
             <child link="tether_1/small_link_2_10"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_1_10_" type="continuous">
             <parent link="tether_1/small_link_2_10"/>
             <child link="tether_1/fragment_10"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_1/fragment_11">
@@ -2232,19 +2232,19 @@
             <parent link="tether_1/fragment_10"/>
             <child link="tether_1/small_link_1_11"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_2_11" type="continuous">
             <parent link="tether_1/small_link_1_11"/>
             <child link="tether_1/small_link_2_11"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_1_11_" type="continuous">
             <parent link="tether_1/small_link_2_11"/>
             <child link="tether_1/fragment_11"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_1/fragment_12">
@@ -2286,19 +2286,19 @@
             <parent link="tether_1/fragment_11"/>
             <child link="tether_1/small_link_1_12"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_2_12" type="continuous">
             <parent link="tether_1/small_link_1_12"/>
             <child link="tether_1/small_link_2_12"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_1_12_" type="continuous">
             <parent link="tether_1/small_link_2_12"/>
             <child link="tether_1/fragment_12"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_1/fragment_13">
@@ -2340,19 +2340,19 @@
             <parent link="tether_1/fragment_12"/>
             <child link="tether_1/small_link_1_13"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_2_13" type="continuous">
             <parent link="tether_1/small_link_1_13"/>
             <child link="tether_1/small_link_2_13"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_1_13_" type="continuous">
             <parent link="tether_1/small_link_2_13"/>
             <child link="tether_1/fragment_13"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_1/fragment_14">
@@ -2394,19 +2394,19 @@
             <parent link="tether_1/fragment_13"/>
             <child link="tether_1/small_link_1_14"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_2_14" type="continuous">
             <parent link="tether_1/small_link_1_14"/>
             <child link="tether_1/small_link_2_14"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_1_14_" type="continuous">
             <parent link="tether_1/small_link_2_14"/>
             <child link="tether_1/fragment_14"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_1/fragment_15">
@@ -2448,19 +2448,19 @@
             <parent link="tether_1/fragment_14"/>
             <child link="tether_1/small_link_1_15"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_2_15" type="continuous">
             <parent link="tether_1/small_link_1_15"/>
             <child link="tether_1/small_link_2_15"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_1_15_" type="continuous">
             <parent link="tether_1/small_link_2_15"/>
             <child link="tether_1/fragment_15"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_1/fragment_16">
@@ -2502,19 +2502,19 @@
             <parent link="tether_1/fragment_15"/>
             <child link="tether_1/small_link_1_16"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_2_16" type="continuous">
             <parent link="tether_1/small_link_1_16"/>
             <child link="tether_1/small_link_2_16"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_1_16_" type="continuous">
             <parent link="tether_1/small_link_2_16"/>
             <child link="tether_1/fragment_16"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_1/fragment_17">
@@ -2556,19 +2556,19 @@
             <parent link="tether_1/fragment_16"/>
             <child link="tether_1/small_link_1_17"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_2_17" type="continuous">
             <parent link="tether_1/small_link_1_17"/>
             <child link="tether_1/small_link_2_17"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_1_17_" type="continuous">
             <parent link="tether_1/small_link_2_17"/>
             <child link="tether_1/fragment_17"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_1/fragment_18">
@@ -2610,19 +2610,19 @@
             <parent link="tether_1/fragment_17"/>
             <child link="tether_1/small_link_1_18"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_2_18" type="continuous">
             <parent link="tether_1/small_link_1_18"/>
             <child link="tether_1/small_link_2_18"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_1_18_" type="continuous">
             <parent link="tether_1/small_link_2_18"/>
             <child link="tether_1/fragment_18"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_1/fragment_19">
@@ -2664,19 +2664,19 @@
             <parent link="tether_1/fragment_18"/>
             <child link="tether_1/small_link_1_19"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_2_19" type="continuous">
             <parent link="tether_1/small_link_1_19"/>
             <child link="tether_1/small_link_2_19"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_1_19_" type="continuous">
             <parent link="tether_1/small_link_2_19"/>
             <child link="tether_1/fragment_19"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_1/fragment_20">
@@ -2718,19 +2718,19 @@
             <parent link="tether_1/fragment_19"/>
             <child link="tether_1/small_link_1_20"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_2_20" type="continuous">
             <parent link="tether_1/small_link_1_20"/>
             <child link="tether_1/small_link_2_20"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_1_20_" type="continuous">
             <parent link="tether_1/small_link_2_20"/>
             <child link="tether_1/fragment_20"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_1/fragment_21">
@@ -2772,19 +2772,19 @@
             <parent link="tether_1/fragment_20"/>
             <child link="tether_1/small_link_1_21"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_2_21" type="continuous">
             <parent link="tether_1/small_link_1_21"/>
             <child link="tether_1/small_link_2_21"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_1_21_" type="continuous">
             <parent link="tether_1/small_link_2_21"/>
             <child link="tether_1/fragment_21"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_1/fragment_22">
@@ -2826,19 +2826,19 @@
             <parent link="tether_1/fragment_21"/>
             <child link="tether_1/small_link_1_22"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_2_22" type="continuous">
             <parent link="tether_1/small_link_1_22"/>
             <child link="tether_1/small_link_2_22"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_1_22_" type="continuous">
             <parent link="tether_1/small_link_2_22"/>
             <child link="tether_1/fragment_22"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_1/fragment_23">
@@ -2880,19 +2880,19 @@
             <parent link="tether_1/fragment_22"/>
             <child link="tether_1/small_link_1_23"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_2_23" type="continuous">
             <parent link="tether_1/small_link_1_23"/>
             <child link="tether_1/small_link_2_23"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_1_23_" type="continuous">
             <parent link="tether_1/small_link_2_23"/>
             <child link="tether_1/fragment_23"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_1/fragment_24">
@@ -2934,19 +2934,19 @@
             <parent link="tether_1/fragment_23"/>
             <child link="tether_1/small_link_1_24"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_2_24" type="continuous">
             <parent link="tether_1/small_link_1_24"/>
             <child link="tether_1/small_link_2_24"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_1_24_" type="continuous">
             <parent link="tether_1/small_link_2_24"/>
             <child link="tether_1/fragment_24"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_1/fragment_25">
@@ -2988,19 +2988,19 @@
             <parent link="tether_1/fragment_24"/>
             <child link="tether_1/small_link_1_25"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_2_25" type="continuous">
             <parent link="tether_1/small_link_1_25"/>
             <child link="tether_1/small_link_2_25"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_1_25_" type="continuous">
             <parent link="tether_1/small_link_2_25"/>
             <child link="tether_1/fragment_25"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_1/fragment_26">
@@ -3042,19 +3042,19 @@
             <parent link="tether_1/fragment_25"/>
             <child link="tether_1/small_link_1_26"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_2_26" type="continuous">
             <parent link="tether_1/small_link_1_26"/>
             <child link="tether_1/small_link_2_26"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_1_26_" type="continuous">
             <parent link="tether_1/small_link_2_26"/>
             <child link="tether_1/fragment_26"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_1/fragment_27">
@@ -3096,19 +3096,19 @@
             <parent link="tether_1/fragment_26"/>
             <child link="tether_1/small_link_1_27"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_2_27" type="continuous">
             <parent link="tether_1/small_link_1_27"/>
             <child link="tether_1/small_link_2_27"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_1_27_" type="continuous">
             <parent link="tether_1/small_link_2_27"/>
             <child link="tether_1/fragment_27"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_1/fragment_28">
@@ -3150,19 +3150,19 @@
             <parent link="tether_1/fragment_27"/>
             <child link="tether_1/small_link_1_28"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_2_28" type="continuous">
             <parent link="tether_1/small_link_1_28"/>
             <child link="tether_1/small_link_2_28"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_1_28_" type="continuous">
             <parent link="tether_1/small_link_2_28"/>
             <child link="tether_1/fragment_28"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_1/fragment_29">
@@ -3204,19 +3204,19 @@
             <parent link="tether_1/fragment_28"/>
             <child link="tether_1/small_link_1_29"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_2_29" type="continuous">
             <parent link="tether_1/small_link_1_29"/>
             <child link="tether_1/small_link_2_29"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/joint_1_29_" type="continuous">
             <parent link="tether_1/small_link_2_29"/>
             <child link="tether_1/fragment_29"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <!--uav => tether joint-->
@@ -3249,19 +3249,19 @@
             <parent link="tether_1/fragment_29"/>
             <child link="tether_1/end_link_1"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/ugv_joint_2" type="continuous">
             <parent link="tether_1/end_link_1"/>
             <child link="tether_1/end_link_2"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_1/ugv_joint_3" type="continuous">
             <parent link="tether_1/end_link_2"/>
             <child link="mp_500_1/tether_end"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         
             <link name="tether_2/fragment_0">
@@ -3322,19 +3322,19 @@
             <parent link="tether_2/fragment_0"/>
             <child link="tether_2/small_link_1_1"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_2_1" type="continuous">
             <parent link="tether_2/small_link_1_1"/>
             <child link="tether_2/small_link_2_1"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_1_1_" type="continuous">
             <parent link="tether_2/small_link_2_1"/>
             <child link="tether_2/fragment_1"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_2/fragment_2">
@@ -3376,19 +3376,19 @@
             <parent link="tether_2/fragment_1"/>
             <child link="tether_2/small_link_1_2"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_2_2" type="continuous">
             <parent link="tether_2/small_link_1_2"/>
             <child link="tether_2/small_link_2_2"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_1_2_" type="continuous">
             <parent link="tether_2/small_link_2_2"/>
             <child link="tether_2/fragment_2"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_2/fragment_3">
@@ -3430,19 +3430,19 @@
             <parent link="tether_2/fragment_2"/>
             <child link="tether_2/small_link_1_3"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_2_3" type="continuous">
             <parent link="tether_2/small_link_1_3"/>
             <child link="tether_2/small_link_2_3"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_1_3_" type="continuous">
             <parent link="tether_2/small_link_2_3"/>
             <child link="tether_2/fragment_3"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_2/fragment_4">
@@ -3484,19 +3484,19 @@
             <parent link="tether_2/fragment_3"/>
             <child link="tether_2/small_link_1_4"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_2_4" type="continuous">
             <parent link="tether_2/small_link_1_4"/>
             <child link="tether_2/small_link_2_4"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_1_4_" type="continuous">
             <parent link="tether_2/small_link_2_4"/>
             <child link="tether_2/fragment_4"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_2/fragment_5">
@@ -3538,19 +3538,19 @@
             <parent link="tether_2/fragment_4"/>
             <child link="tether_2/small_link_1_5"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_2_5" type="continuous">
             <parent link="tether_2/small_link_1_5"/>
             <child link="tether_2/small_link_2_5"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_1_5_" type="continuous">
             <parent link="tether_2/small_link_2_5"/>
             <child link="tether_2/fragment_5"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_2/fragment_6">
@@ -3592,19 +3592,19 @@
             <parent link="tether_2/fragment_5"/>
             <child link="tether_2/small_link_1_6"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_2_6" type="continuous">
             <parent link="tether_2/small_link_1_6"/>
             <child link="tether_2/small_link_2_6"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_1_6_" type="continuous">
             <parent link="tether_2/small_link_2_6"/>
             <child link="tether_2/fragment_6"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_2/fragment_7">
@@ -3646,19 +3646,19 @@
             <parent link="tether_2/fragment_6"/>
             <child link="tether_2/small_link_1_7"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_2_7" type="continuous">
             <parent link="tether_2/small_link_1_7"/>
             <child link="tether_2/small_link_2_7"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_1_7_" type="continuous">
             <parent link="tether_2/small_link_2_7"/>
             <child link="tether_2/fragment_7"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_2/fragment_8">
@@ -3700,19 +3700,19 @@
             <parent link="tether_2/fragment_7"/>
             <child link="tether_2/small_link_1_8"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_2_8" type="continuous">
             <parent link="tether_2/small_link_1_8"/>
             <child link="tether_2/small_link_2_8"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_1_8_" type="continuous">
             <parent link="tether_2/small_link_2_8"/>
             <child link="tether_2/fragment_8"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_2/fragment_9">
@@ -3754,19 +3754,19 @@
             <parent link="tether_2/fragment_8"/>
             <child link="tether_2/small_link_1_9"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_2_9" type="continuous">
             <parent link="tether_2/small_link_1_9"/>
             <child link="tether_2/small_link_2_9"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_1_9_" type="continuous">
             <parent link="tether_2/small_link_2_9"/>
             <child link="tether_2/fragment_9"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_2/fragment_10">
@@ -3808,19 +3808,19 @@
             <parent link="tether_2/fragment_9"/>
             <child link="tether_2/small_link_1_10"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_2_10" type="continuous">
             <parent link="tether_2/small_link_1_10"/>
             <child link="tether_2/small_link_2_10"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_1_10_" type="continuous">
             <parent link="tether_2/small_link_2_10"/>
             <child link="tether_2/fragment_10"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_2/fragment_11">
@@ -3862,19 +3862,19 @@
             <parent link="tether_2/fragment_10"/>
             <child link="tether_2/small_link_1_11"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_2_11" type="continuous">
             <parent link="tether_2/small_link_1_11"/>
             <child link="tether_2/small_link_2_11"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_1_11_" type="continuous">
             <parent link="tether_2/small_link_2_11"/>
             <child link="tether_2/fragment_11"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_2/fragment_12">
@@ -3916,19 +3916,19 @@
             <parent link="tether_2/fragment_11"/>
             <child link="tether_2/small_link_1_12"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_2_12" type="continuous">
             <parent link="tether_2/small_link_1_12"/>
             <child link="tether_2/small_link_2_12"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_1_12_" type="continuous">
             <parent link="tether_2/small_link_2_12"/>
             <child link="tether_2/fragment_12"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_2/fragment_13">
@@ -3970,19 +3970,19 @@
             <parent link="tether_2/fragment_12"/>
             <child link="tether_2/small_link_1_13"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_2_13" type="continuous">
             <parent link="tether_2/small_link_1_13"/>
             <child link="tether_2/small_link_2_13"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_1_13_" type="continuous">
             <parent link="tether_2/small_link_2_13"/>
             <child link="tether_2/fragment_13"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_2/fragment_14">
@@ -4024,19 +4024,19 @@
             <parent link="tether_2/fragment_13"/>
             <child link="tether_2/small_link_1_14"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_2_14" type="continuous">
             <parent link="tether_2/small_link_1_14"/>
             <child link="tether_2/small_link_2_14"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_1_14_" type="continuous">
             <parent link="tether_2/small_link_2_14"/>
             <child link="tether_2/fragment_14"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_2/fragment_15">
@@ -4078,19 +4078,19 @@
             <parent link="tether_2/fragment_14"/>
             <child link="tether_2/small_link_1_15"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_2_15" type="continuous">
             <parent link="tether_2/small_link_1_15"/>
             <child link="tether_2/small_link_2_15"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_1_15_" type="continuous">
             <parent link="tether_2/small_link_2_15"/>
             <child link="tether_2/fragment_15"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_2/fragment_16">
@@ -4132,19 +4132,19 @@
             <parent link="tether_2/fragment_15"/>
             <child link="tether_2/small_link_1_16"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_2_16" type="continuous">
             <parent link="tether_2/small_link_1_16"/>
             <child link="tether_2/small_link_2_16"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_1_16_" type="continuous">
             <parent link="tether_2/small_link_2_16"/>
             <child link="tether_2/fragment_16"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_2/fragment_17">
@@ -4186,19 +4186,19 @@
             <parent link="tether_2/fragment_16"/>
             <child link="tether_2/small_link_1_17"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_2_17" type="continuous">
             <parent link="tether_2/small_link_1_17"/>
             <child link="tether_2/small_link_2_17"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_1_17_" type="continuous">
             <parent link="tether_2/small_link_2_17"/>
             <child link="tether_2/fragment_17"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_2/fragment_18">
@@ -4240,19 +4240,19 @@
             <parent link="tether_2/fragment_17"/>
             <child link="tether_2/small_link_1_18"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_2_18" type="continuous">
             <parent link="tether_2/small_link_1_18"/>
             <child link="tether_2/small_link_2_18"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_1_18_" type="continuous">
             <parent link="tether_2/small_link_2_18"/>
             <child link="tether_2/fragment_18"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_2/fragment_19">
@@ -4294,19 +4294,19 @@
             <parent link="tether_2/fragment_18"/>
             <child link="tether_2/small_link_1_19"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_2_19" type="continuous">
             <parent link="tether_2/small_link_1_19"/>
             <child link="tether_2/small_link_2_19"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_1_19_" type="continuous">
             <parent link="tether_2/small_link_2_19"/>
             <child link="tether_2/fragment_19"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_2/fragment_20">
@@ -4348,19 +4348,19 @@
             <parent link="tether_2/fragment_19"/>
             <child link="tether_2/small_link_1_20"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_2_20" type="continuous">
             <parent link="tether_2/small_link_1_20"/>
             <child link="tether_2/small_link_2_20"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_1_20_" type="continuous">
             <parent link="tether_2/small_link_2_20"/>
             <child link="tether_2/fragment_20"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_2/fragment_21">
@@ -4402,19 +4402,19 @@
             <parent link="tether_2/fragment_20"/>
             <child link="tether_2/small_link_1_21"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_2_21" type="continuous">
             <parent link="tether_2/small_link_1_21"/>
             <child link="tether_2/small_link_2_21"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_1_21_" type="continuous">
             <parent link="tether_2/small_link_2_21"/>
             <child link="tether_2/fragment_21"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_2/fragment_22">
@@ -4456,19 +4456,19 @@
             <parent link="tether_2/fragment_21"/>
             <child link="tether_2/small_link_1_22"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_2_22" type="continuous">
             <parent link="tether_2/small_link_1_22"/>
             <child link="tether_2/small_link_2_22"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_1_22_" type="continuous">
             <parent link="tether_2/small_link_2_22"/>
             <child link="tether_2/fragment_22"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_2/fragment_23">
@@ -4510,19 +4510,19 @@
             <parent link="tether_2/fragment_22"/>
             <child link="tether_2/small_link_1_23"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_2_23" type="continuous">
             <parent link="tether_2/small_link_1_23"/>
             <child link="tether_2/small_link_2_23"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_1_23_" type="continuous">
             <parent link="tether_2/small_link_2_23"/>
             <child link="tether_2/fragment_23"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_2/fragment_24">
@@ -4564,19 +4564,19 @@
             <parent link="tether_2/fragment_23"/>
             <child link="tether_2/small_link_1_24"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_2_24" type="continuous">
             <parent link="tether_2/small_link_1_24"/>
             <child link="tether_2/small_link_2_24"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_1_24_" type="continuous">
             <parent link="tether_2/small_link_2_24"/>
             <child link="tether_2/fragment_24"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_2/fragment_25">
@@ -4618,19 +4618,19 @@
             <parent link="tether_2/fragment_24"/>
             <child link="tether_2/small_link_1_25"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_2_25" type="continuous">
             <parent link="tether_2/small_link_1_25"/>
             <child link="tether_2/small_link_2_25"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_1_25_" type="continuous">
             <parent link="tether_2/small_link_2_25"/>
             <child link="tether_2/fragment_25"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_2/fragment_26">
@@ -4672,19 +4672,19 @@
             <parent link="tether_2/fragment_25"/>
             <child link="tether_2/small_link_1_26"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_2_26" type="continuous">
             <parent link="tether_2/small_link_1_26"/>
             <child link="tether_2/small_link_2_26"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_1_26_" type="continuous">
             <parent link="tether_2/small_link_2_26"/>
             <child link="tether_2/fragment_26"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_2/fragment_27">
@@ -4726,19 +4726,19 @@
             <parent link="tether_2/fragment_26"/>
             <child link="tether_2/small_link_1_27"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_2_27" type="continuous">
             <parent link="tether_2/small_link_1_27"/>
             <child link="tether_2/small_link_2_27"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_1_27_" type="continuous">
             <parent link="tether_2/small_link_2_27"/>
             <child link="tether_2/fragment_27"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_2/fragment_28">
@@ -4780,19 +4780,19 @@
             <parent link="tether_2/fragment_27"/>
             <child link="tether_2/small_link_1_28"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_2_28" type="continuous">
             <parent link="tether_2/small_link_1_28"/>
             <child link="tether_2/small_link_2_28"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_1_28_" type="continuous">
             <parent link="tether_2/small_link_2_28"/>
             <child link="tether_2/fragment_28"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_2/fragment_29">
@@ -4834,19 +4834,19 @@
             <parent link="tether_2/fragment_28"/>
             <child link="tether_2/small_link_1_29"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_2_29" type="continuous">
             <parent link="tether_2/small_link_1_29"/>
             <child link="tether_2/small_link_2_29"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/joint_1_29_" type="continuous">
             <parent link="tether_2/small_link_2_29"/>
             <child link="tether_2/fragment_29"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <!--uav => tether joint-->
@@ -4879,19 +4879,19 @@
             <parent link="tether_2/fragment_29"/>
             <child link="tether_2/end_link_1"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/ugv_joint_2" type="continuous">
             <parent link="tether_2/end_link_1"/>
             <child link="tether_2/end_link_2"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_2/ugv_joint_3" type="continuous">
             <parent link="tether_2/end_link_2"/>
             <child link="mp_500_2/tether_end"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         
             <link name="tether_3/fragment_0">
@@ -4952,19 +4952,19 @@
             <parent link="tether_3/fragment_0"/>
             <child link="tether_3/small_link_1_1"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_2_1" type="continuous">
             <parent link="tether_3/small_link_1_1"/>
             <child link="tether_3/small_link_2_1"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_1_1_" type="continuous">
             <parent link="tether_3/small_link_2_1"/>
             <child link="tether_3/fragment_1"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_3/fragment_2">
@@ -5006,19 +5006,19 @@
             <parent link="tether_3/fragment_1"/>
             <child link="tether_3/small_link_1_2"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_2_2" type="continuous">
             <parent link="tether_3/small_link_1_2"/>
             <child link="tether_3/small_link_2_2"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_1_2_" type="continuous">
             <parent link="tether_3/small_link_2_2"/>
             <child link="tether_3/fragment_2"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_3/fragment_3">
@@ -5060,19 +5060,19 @@
             <parent link="tether_3/fragment_2"/>
             <child link="tether_3/small_link_1_3"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_2_3" type="continuous">
             <parent link="tether_3/small_link_1_3"/>
             <child link="tether_3/small_link_2_3"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_1_3_" type="continuous">
             <parent link="tether_3/small_link_2_3"/>
             <child link="tether_3/fragment_3"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_3/fragment_4">
@@ -5114,19 +5114,19 @@
             <parent link="tether_3/fragment_3"/>
             <child link="tether_3/small_link_1_4"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_2_4" type="continuous">
             <parent link="tether_3/small_link_1_4"/>
             <child link="tether_3/small_link_2_4"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_1_4_" type="continuous">
             <parent link="tether_3/small_link_2_4"/>
             <child link="tether_3/fragment_4"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_3/fragment_5">
@@ -5168,19 +5168,19 @@
             <parent link="tether_3/fragment_4"/>
             <child link="tether_3/small_link_1_5"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_2_5" type="continuous">
             <parent link="tether_3/small_link_1_5"/>
             <child link="tether_3/small_link_2_5"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_1_5_" type="continuous">
             <parent link="tether_3/small_link_2_5"/>
             <child link="tether_3/fragment_5"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_3/fragment_6">
@@ -5222,19 +5222,19 @@
             <parent link="tether_3/fragment_5"/>
             <child link="tether_3/small_link_1_6"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_2_6" type="continuous">
             <parent link="tether_3/small_link_1_6"/>
             <child link="tether_3/small_link_2_6"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_1_6_" type="continuous">
             <parent link="tether_3/small_link_2_6"/>
             <child link="tether_3/fragment_6"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_3/fragment_7">
@@ -5276,19 +5276,19 @@
             <parent link="tether_3/fragment_6"/>
             <child link="tether_3/small_link_1_7"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_2_7" type="continuous">
             <parent link="tether_3/small_link_1_7"/>
             <child link="tether_3/small_link_2_7"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_1_7_" type="continuous">
             <parent link="tether_3/small_link_2_7"/>
             <child link="tether_3/fragment_7"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_3/fragment_8">
@@ -5330,19 +5330,19 @@
             <parent link="tether_3/fragment_7"/>
             <child link="tether_3/small_link_1_8"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_2_8" type="continuous">
             <parent link="tether_3/small_link_1_8"/>
             <child link="tether_3/small_link_2_8"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_1_8_" type="continuous">
             <parent link="tether_3/small_link_2_8"/>
             <child link="tether_3/fragment_8"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_3/fragment_9">
@@ -5384,19 +5384,19 @@
             <parent link="tether_3/fragment_8"/>
             <child link="tether_3/small_link_1_9"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_2_9" type="continuous">
             <parent link="tether_3/small_link_1_9"/>
             <child link="tether_3/small_link_2_9"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_1_9_" type="continuous">
             <parent link="tether_3/small_link_2_9"/>
             <child link="tether_3/fragment_9"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_3/fragment_10">
@@ -5438,19 +5438,19 @@
             <parent link="tether_3/fragment_9"/>
             <child link="tether_3/small_link_1_10"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_2_10" type="continuous">
             <parent link="tether_3/small_link_1_10"/>
             <child link="tether_3/small_link_2_10"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_1_10_" type="continuous">
             <parent link="tether_3/small_link_2_10"/>
             <child link="tether_3/fragment_10"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_3/fragment_11">
@@ -5492,19 +5492,19 @@
             <parent link="tether_3/fragment_10"/>
             <child link="tether_3/small_link_1_11"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_2_11" type="continuous">
             <parent link="tether_3/small_link_1_11"/>
             <child link="tether_3/small_link_2_11"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_1_11_" type="continuous">
             <parent link="tether_3/small_link_2_11"/>
             <child link="tether_3/fragment_11"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_3/fragment_12">
@@ -5546,19 +5546,19 @@
             <parent link="tether_3/fragment_11"/>
             <child link="tether_3/small_link_1_12"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_2_12" type="continuous">
             <parent link="tether_3/small_link_1_12"/>
             <child link="tether_3/small_link_2_12"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_1_12_" type="continuous">
             <parent link="tether_3/small_link_2_12"/>
             <child link="tether_3/fragment_12"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_3/fragment_13">
@@ -5600,19 +5600,19 @@
             <parent link="tether_3/fragment_12"/>
             <child link="tether_3/small_link_1_13"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_2_13" type="continuous">
             <parent link="tether_3/small_link_1_13"/>
             <child link="tether_3/small_link_2_13"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_1_13_" type="continuous">
             <parent link="tether_3/small_link_2_13"/>
             <child link="tether_3/fragment_13"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_3/fragment_14">
@@ -5654,19 +5654,19 @@
             <parent link="tether_3/fragment_13"/>
             <child link="tether_3/small_link_1_14"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_2_14" type="continuous">
             <parent link="tether_3/small_link_1_14"/>
             <child link="tether_3/small_link_2_14"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_1_14_" type="continuous">
             <parent link="tether_3/small_link_2_14"/>
             <child link="tether_3/fragment_14"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_3/fragment_15">
@@ -5708,19 +5708,19 @@
             <parent link="tether_3/fragment_14"/>
             <child link="tether_3/small_link_1_15"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_2_15" type="continuous">
             <parent link="tether_3/small_link_1_15"/>
             <child link="tether_3/small_link_2_15"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_1_15_" type="continuous">
             <parent link="tether_3/small_link_2_15"/>
             <child link="tether_3/fragment_15"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_3/fragment_16">
@@ -5762,19 +5762,19 @@
             <parent link="tether_3/fragment_15"/>
             <child link="tether_3/small_link_1_16"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_2_16" type="continuous">
             <parent link="tether_3/small_link_1_16"/>
             <child link="tether_3/small_link_2_16"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_1_16_" type="continuous">
             <parent link="tether_3/small_link_2_16"/>
             <child link="tether_3/fragment_16"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_3/fragment_17">
@@ -5816,19 +5816,19 @@
             <parent link="tether_3/fragment_16"/>
             <child link="tether_3/small_link_1_17"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_2_17" type="continuous">
             <parent link="tether_3/small_link_1_17"/>
             <child link="tether_3/small_link_2_17"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_1_17_" type="continuous">
             <parent link="tether_3/small_link_2_17"/>
             <child link="tether_3/fragment_17"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_3/fragment_18">
@@ -5870,19 +5870,19 @@
             <parent link="tether_3/fragment_17"/>
             <child link="tether_3/small_link_1_18"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_2_18" type="continuous">
             <parent link="tether_3/small_link_1_18"/>
             <child link="tether_3/small_link_2_18"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_1_18_" type="continuous">
             <parent link="tether_3/small_link_2_18"/>
             <child link="tether_3/fragment_18"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_3/fragment_19">
@@ -5924,19 +5924,19 @@
             <parent link="tether_3/fragment_18"/>
             <child link="tether_3/small_link_1_19"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_2_19" type="continuous">
             <parent link="tether_3/small_link_1_19"/>
             <child link="tether_3/small_link_2_19"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_1_19_" type="continuous">
             <parent link="tether_3/small_link_2_19"/>
             <child link="tether_3/fragment_19"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_3/fragment_20">
@@ -5978,19 +5978,19 @@
             <parent link="tether_3/fragment_19"/>
             <child link="tether_3/small_link_1_20"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_2_20" type="continuous">
             <parent link="tether_3/small_link_1_20"/>
             <child link="tether_3/small_link_2_20"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_1_20_" type="continuous">
             <parent link="tether_3/small_link_2_20"/>
             <child link="tether_3/fragment_20"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_3/fragment_21">
@@ -6032,19 +6032,19 @@
             <parent link="tether_3/fragment_20"/>
             <child link="tether_3/small_link_1_21"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_2_21" type="continuous">
             <parent link="tether_3/small_link_1_21"/>
             <child link="tether_3/small_link_2_21"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_1_21_" type="continuous">
             <parent link="tether_3/small_link_2_21"/>
             <child link="tether_3/fragment_21"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_3/fragment_22">
@@ -6086,19 +6086,19 @@
             <parent link="tether_3/fragment_21"/>
             <child link="tether_3/small_link_1_22"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_2_22" type="continuous">
             <parent link="tether_3/small_link_1_22"/>
             <child link="tether_3/small_link_2_22"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_1_22_" type="continuous">
             <parent link="tether_3/small_link_2_22"/>
             <child link="tether_3/fragment_22"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_3/fragment_23">
@@ -6140,19 +6140,19 @@
             <parent link="tether_3/fragment_22"/>
             <child link="tether_3/small_link_1_23"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_2_23" type="continuous">
             <parent link="tether_3/small_link_1_23"/>
             <child link="tether_3/small_link_2_23"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_1_23_" type="continuous">
             <parent link="tether_3/small_link_2_23"/>
             <child link="tether_3/fragment_23"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_3/fragment_24">
@@ -6194,19 +6194,19 @@
             <parent link="tether_3/fragment_23"/>
             <child link="tether_3/small_link_1_24"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_2_24" type="continuous">
             <parent link="tether_3/small_link_1_24"/>
             <child link="tether_3/small_link_2_24"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_1_24_" type="continuous">
             <parent link="tether_3/small_link_2_24"/>
             <child link="tether_3/fragment_24"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_3/fragment_25">
@@ -6248,19 +6248,19 @@
             <parent link="tether_3/fragment_24"/>
             <child link="tether_3/small_link_1_25"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_2_25" type="continuous">
             <parent link="tether_3/small_link_1_25"/>
             <child link="tether_3/small_link_2_25"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_1_25_" type="continuous">
             <parent link="tether_3/small_link_2_25"/>
             <child link="tether_3/fragment_25"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_3/fragment_26">
@@ -6302,19 +6302,19 @@
             <parent link="tether_3/fragment_25"/>
             <child link="tether_3/small_link_1_26"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_2_26" type="continuous">
             <parent link="tether_3/small_link_1_26"/>
             <child link="tether_3/small_link_2_26"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_1_26_" type="continuous">
             <parent link="tether_3/small_link_2_26"/>
             <child link="tether_3/fragment_26"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_3/fragment_27">
@@ -6356,19 +6356,19 @@
             <parent link="tether_3/fragment_26"/>
             <child link="tether_3/small_link_1_27"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_2_27" type="continuous">
             <parent link="tether_3/small_link_1_27"/>
             <child link="tether_3/small_link_2_27"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_1_27_" type="continuous">
             <parent link="tether_3/small_link_2_27"/>
             <child link="tether_3/fragment_27"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_3/fragment_28">
@@ -6410,19 +6410,19 @@
             <parent link="tether_3/fragment_27"/>
             <child link="tether_3/small_link_1_28"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_2_28" type="continuous">
             <parent link="tether_3/small_link_1_28"/>
             <child link="tether_3/small_link_2_28"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_1_28_" type="continuous">
             <parent link="tether_3/small_link_2_28"/>
             <child link="tether_3/fragment_28"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <link name="tether_3/fragment_29">
@@ -6464,19 +6464,19 @@
             <parent link="tether_3/fragment_28"/>
             <child link="tether_3/small_link_1_29"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_2_29" type="continuous">
             <parent link="tether_3/small_link_1_29"/>
             <child link="tether_3/small_link_2_29"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/joint_1_29_" type="continuous">
             <parent link="tether_3/small_link_2_29"/>
             <child link="tether_3/fragment_29"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
                 
             <!--uav => tether joint-->
@@ -6509,19 +6509,19 @@
             <parent link="tether_3/fragment_29"/>
             <child link="tether_3/end_link_1"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/ugv_joint_2" type="continuous">
             <parent link="tether_3/end_link_1"/>
             <child link="tether_3/end_link_2"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         <joint name="tether_3/ugv_joint_3" type="continuous">
             <parent link="tether_3/end_link_2"/>
             <child link="mp_500_3/tether_end"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="0.01" friction="0.15"/>
+            <dynamics damping="0.01" friction="0.01"/>
         </joint>
         </xacro:macro>
 </robot>

@@ -18,7 +18,7 @@
         {%- set small_link_iyz = 0.0 -%}
         <!--joint dynamics-->
         {%- set damping = 0.01 -%}
-        {%- set friction = 0.15 -%}
+        {%- set friction = 0.01 -%}
         <!--link number-->
         {%- set tether_fragments = 30 -%}
         {%- set tether_number = 4 -%}

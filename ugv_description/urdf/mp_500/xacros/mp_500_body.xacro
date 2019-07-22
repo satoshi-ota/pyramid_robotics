@@ -3,7 +3,6 @@
 
   <xacro:macro name="mp_500_base" params="name">
 
-
     <link name="${name}">
         <inertial>
             <mass value="5" />
