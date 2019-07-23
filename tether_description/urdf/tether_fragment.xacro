@@ -4,7 +4,7 @@
     <xacro:macro name="tether">
         <!--tether fragment param-->
         {%- set cyl_r = 0.0033 -%}
-        {%- set cyl_l = 0.1 -%}
+        {%- set cyl_l = 0.15 -%}
         {%- set cyl_m = 0.012 -%}
         {%- set cyl_i = 1/12*cyl_m*(3*cyl_r**2+cyl_l**2) -%}
         {%- set cyl_iz = 1/2*cyl_m*cyl_r**2 -%}
@@ -23,7 +23,7 @@
         {%- set tether_fragments = 30 -%}
         {%- set tether_number = 4 -%}
         <!--box inertial-->
-        {%- set box_m = 50 -%}
+        {%- set box_m = 100 -%}
         {%- set box_x = 0.1 -%}
         {%- set box_y = 0.1 -%}
         {%- set box_z = 0.1 -%}
