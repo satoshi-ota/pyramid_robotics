@@ -22,11 +22,14 @@
         <!--link number-->
         {%- set tether_fragments = 30 -%}
         {%- set tether_number = 4 -%}
+<<<<<<< Updated upstream
         <!--box inertial-->
         {%- set box_m = 100 -%}
         {%- set box_x = 0.1 -%}
         {%- set box_y = 0.1 -%}
         {%- set box_z = 0.1 -%}
+=======
+>>>>>>> Stashed changes
 
         {%- macro tether_fragment(dirc, n) -%}
         <link name="tether_{{dirc}}/fragment_{{n}}">
