@@ -1,0 +1,150 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+    <!--tether model-->
+    <xacro:macro name="tether">
+        <!--tether fragment param-->
+        {%- set lump_mass = 0.0033 -%}
+        {%- set lump_radius = 0.1 -%}
+        {%- set lump_inertia = 2/5*lump_mass*lump_radius**2 -%}
+        <!--joint dynamics-->
+        {%- set damping = 0.01 -%}
+        {%- set friction = 0.01 -%}
+        <!--link number-->
+        {%- set tether_fragments = 30 -%}
+        {%- set tether_number = 4 -%}
+
+        {%- macro tether_fragment(dirc, n) -%}
+        <link name="tether_{{dirc}}/fragment_{{n}}">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 {{cyl_l/2}}"/>
+                <geometry>
+                    <cylinder length="{{cyl_l}}" radius="{{cyl_r}}"/>
+                </geometry>
+                <!--material name="black"/-->
+            </visual>
+            <inertial>
+                <mass value="{{cyl_m}}"/>
+                <inertia ixx="{{cyl_i}}" iyy="{{cyl_i}}" izz="{{cyl_iz}}" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+            <collision>
+                <geometry>
+                    <cylinder length="{{cyl_l}}" radius="{{cyl_r}}"/>
+                </geometry>
+            </collision>
+        </link>
+        {%- endmacro -%}
+
+        <!--tether_cylinder_joint-->
+        {%- macro tether_joint(dirc, n) -%}
+        <!--link between two tether fragments-->
+        <link name="tether_{{dirc}}/small_link_1_{{n}}">
+            <inertial>
+                <mass value="{{small_link_mass}}"/>
+                <inertia ixx="{{small_link_ixx}}" iyy="{{small_link_iyy}}" izz="{{small_link_izz}}" ixy="{{small_link_ixy}}" ixz="{{small_link_ixz}}" iyz="{{small_link_iyz}}"/>
+            </inertial>
+        </link>
+        <link name="tether_{{dirc}}/small_link_2_{{n}}">
+            <inertial>
+                <mass value="{{small_link_mass}}"/>
+                <inertia ixx="{{small_link_ixx}}" iyy="{{small_link_iyy}}" izz="{{small_link_izz}}" ixy="{{small_link_ixy}}" ixz="{{small_link_ixz}}" iyz="{{small_link_iyz}}"/>
+            </inertial>
+        </link>
+
+        <!--tether fragment joint-->
+        <joint name="tether_{{dirc}}/joint_1_{{n}}" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 {{cyl_l}}"/>
+            <parent link="tether_{{dirc}}/fragment_{{n-1}}"/>
+            <child link="tether_{{dirc}}/small_link_1_{{n}}"/>
+            <axis xyz="1 0 0" />
+            <dynamics damping="{{damping}}" friction="{{friction}}"/>
+        </joint>
+        <joint name="tether_{{dirc}}/joint_2_{{n}}" type="continuous">
+            <parent link="tether_{{dirc}}/small_link_1_{{n}}"/>
+            <child link="tether_{{dirc}}/small_link_2_{{n}}"/>
+            <axis xyz="0 1 0" />
+            <dynamics damping="{{damping}}" friction="{{friction}}"/>
+        </joint>
+        <joint name="tether_{{dirc}}/joint_1_{{n}}_" type="continuous">
+            <parent link="tether_{{dirc}}/small_link_2_{{n}}"/>
+            <child link="tether_{{dirc}}/fragment_{{n}}"/>
+            <axis xyz="0 0 1" />
+            <dynamics damping="{{damping}}" friction="{{friction}}"/>
+        </joint>
+        {%- endmacro -%}
+
+        {%- macro uav_joint(dirc) -%}
+        <!--uav => tether joint-->
+        <joint name="tether_{{dirc}}/uav_joint" type="fixed">
+            <parent link="${namespace}/base_link"/>
+            <child link="tether_{{dirc}}/fragment_0"/>
+            {% if dirc == 0 %}
+                <origin rpy="0 ${pi/2} 0" xyz="0 0 0"/>
+            {% elif dirc == 1 %}
+                <origin rpy="${pi/2} 0 0" xyz="0 0 0"/>
+            {% elif dirc == 2 %}
+                <origin rpy="0 ${-pi/2} 0" xyz="0 0 0"/>
+            {% elif dirc == 3 %}
+                <origin rpy="${-pi/2} 0 0" xyz="0 0 0"/>
+            {% endif %}
+        </joint>
+        {%- endmacro -%}
+
+        {%- macro ugv_joint(dirc) -%}
+        <!--link between tether and ugv-->
+        <link name="tether_{{dirc}}/end_link_1">
+            <inertial>
+                <mass value="{{small_link_mass}}"/>
+                <inertia ixx="{{small_link_ixx}}" iyy="{{small_link_iyy}}" izz="{{small_link_izz}}" ixy="{{small_link_ixy}}" ixz="{{small_link_ixz}}" iyz="{{small_link_iyz}}"/>
+            </inertial>
+        </link>
+        <link name="tether_{{dirc}}/end_link_2">
+            <inertial>
+                <mass value="{{small_link_mass}}"/>
+                <inertia ixx="{{small_link_ixx}}" iyy="{{small_link_iyy}}" izz="{{small_link_izz}}" ixy="{{small_link_ixy}}" ixz="{{small_link_ixz}}" iyz="{{small_link_iyz}}"/>
+            </inertial>
+        </link>
+
+        <!--tether end joint-->
+        <joint name="tether_{{dirc}}/ugv_joint_1" type="continuous">
+            {% if dirc == 0 %}
+                <origin rpy="0 ${-pi/2} 0" xyz="0 0 0"/>
+            {% elif dirc == 1 %}
+                <origin rpy="${-pi/2} 0 0" xyz="0 0 0"/>
+            {% elif dirc == 2 %}
+                <origin rpy="0 ${pi/2} 0" xyz="0 0 0"/>
+            {% elif dirc == 3 %}
+                <origin rpy="${pi/2} 0 0" xyz="0 0 0"/>
+            {% endif %}
+            <parent link="tether_{{dirc}}/fragment_{{tether_fragments-1}}"/>
+            <child link="tether_{{dirc}}/end_link_1"/>
+            <axis xyz="1 0 0" />
+            <dynamics damping="{{damping}}" friction="{{friction}}"/>
+        </joint>
+        <joint name="tether_{{dirc}}/ugv_joint_2" type="continuous">
+            <parent link="tether_{{dirc}}/end_link_1"/>
+            <child link="tether_{{dirc}}/end_link_2"/>
+            <axis xyz="0 1 0" />
+            <dynamics damping="{{damping}}" friction="{{friction}}"/>
+        </joint>
+        <joint name="tether_{{dirc}}/ugv_joint_3" type="continuous">
+            <parent link="tether_{{dirc}}/end_link_2"/>
+            <child link="mp_500_{{dirc}}/tether_end"/>
+            <axis xyz="0 0 1" />
+            <dynamics damping="{{damping}}" friction="{{friction}}"/>
+        </joint>
+        {%- endmacro -%}
+
+        <!-- main-->
+        {% for dirc in range(0,tether_number) %}
+            {% for n in range(0,tether_fragments) -%}
+                {{tether_fragment(dirc, n)}}
+                {% if n != 0 %}
+                    {{tether_joint(dirc, n)}}
+                {% endif %}
+            {% endfor -%}
+            {{uav_joint(dirc)}}
+            {{ugv_joint(dirc)}}
+        {% endfor -%}
+
+    </xacro:macro>
+</robot>
