@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="mp_500">
 
-    <xacro:property name="counter_weight_mass" value="5.0" />
+    <xacro:property name="counter_weight_mass" value="15.0" />
     <xacro:property name="counter_weight_x" value="0.1" />
     <xacro:property name="counter_weight_y" value="0.1" />
     <xacro:property name="counter_weight_z" value="0.1" />
@@ -39,7 +39,7 @@
         <joint name="${name}_joint" type="fixed">
             <parent link="${namespace}/base_link" />
             <child link="${name}" />
-            <origin xyz="-0.4 0.0 0.4" rpy="0 0 0" />
+            <origin xyz="-0.2 0.0 0.4" rpy="0 0 0" />
         </joint>
 
         <link name="${name}">
