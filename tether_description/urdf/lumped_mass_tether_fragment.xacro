@@ -3,15 +3,15 @@
     <!--tether model-->
     <xacro:macro name="tether">
         <!--tether fragment param-->
-        {%- set lump_mass = 0.10 -%}
-        {%- set lump_radius = 0.01 -%}
-        {%- set lump_inertia = 5*lump_mass*lump_radius**2 -%}
-        {%- set element_length = 1.0 -%}
+        {%- set lump_mass = 0.05 -%}
+        {%- set lump_radius = 0.03 -%}
+        {%- set lump_inertia = 3*lump_mass*lump_radius**2 -%}
+        {%- set element_length = 5.0 -%}
         <!--joint dynamics-->
         {%- set damping = 0.1 -%}
         {%- set friction = 0.1 -%}
         <!--link number-->
-        {%- set tether_fragments = 10 -%}
+        {%- set tether_fragments = 4 -%}
         {%- set tether_number = 4 -%}
 
         {%- macro tether_fragment(dirc, n) -%}

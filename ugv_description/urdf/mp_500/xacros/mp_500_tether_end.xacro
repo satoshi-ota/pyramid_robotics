@@ -11,14 +11,14 @@
         <joint name="${name}_joint" type="continuous">
             <parent link="${name}" />
             <child link="${namespace}/base_link" />
-            <origin xyz="0.0 0.0 -0.2" rpy="0 0 0" />
+            <origin xyz="0.0 0.0 -0.03" rpy="0 0 0" />
             <axis xyz="0 0 1" />
         </joint>
 
         <link name="${name}">
             <visual>
                 <geometry>
-                    <cylinder length="0.2" radius="0.02"/>
+                    <cylinder length="0.05" radius="0.02"/>
                 </geometry>
             </visual>
             <inertial>
@@ -27,7 +27,7 @@
             </inertial>
             <collision>
                 <geometry>
-                    <cylinder length="0.2" radius="0.02"/>
+                    <cylinder length="0.05" radius="0.02"/>
                 </geometry>
             </collision>
         </link>
