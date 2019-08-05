@@ -6,6 +6,7 @@
         {%- set lump_mass = 0.0033 -%}
         {%- set lump_radius = 0.1 -%}
         {%- set lump_inertia = 2/5*lump_mass*lump_radius**2 -%}
+        {%- set element_length = 0.1 -%}
         <!--joint dynamics-->
         {%- set damping = 0.01 -%}
         {%- set friction = 0.01 -%}
@@ -18,56 +19,32 @@
             <visual>
                 <origin rpy="0 0 0" xyz="0 0 {{cyl_l/2}}"/>
                 <geometry>
-                    <cylinder length="{{cyl_l}}" radius="{{cyl_r}}"/>
+                    <sphere radius="{{lump_radius}}"/>
                 </geometry>
-                <!--material name="black"/-->
             </visual>
             <inertial>
-                <mass value="{{cyl_m}}"/>
-                <inertia ixx="{{cyl_i}}" iyy="{{cyl_i}}" izz="{{cyl_iz}}" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <mass value="{{lump_mass}}"/>
+                <inertia ixx="{{lump_inertia}}" iyy="{{lump_inertia}}" izz="{{lump_inertia}}" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
             <collision>
                 <geometry>
-                    <cylinder length="{{cyl_l}}" radius="{{cyl_r}}"/>
+                    <sphere radius="{{lump_radius}}"/>
                 </geometry>
             </collision>
+            <gazebo reference="tether_{{dirc}}/fragment_{{n}}">
+                <material>Gazebo/Orange</material>
+            </gazebo>
         </link>
         {%- endmacro -%}
 
         <!--tether_cylinder_joint-->
         {%- macro tether_joint(dirc, n) -%}
-        <!--link between two tether fragments-->
-        <link name="tether_{{dirc}}/small_link_1_{{n}}">
-            <inertial>
-                <mass value="{{small_link_mass}}"/>
-                <inertia ixx="{{small_link_ixx}}" iyy="{{small_link_iyy}}" izz="{{small_link_izz}}" ixy="{{small_link_ixy}}" ixz="{{small_link_ixz}}" iyz="{{small_link_iyz}}"/>
-            </inertial>
-        </link>
-        <link name="tether_{{dirc}}/small_link_2_{{n}}">
-            <inertial>
-                <mass value="{{small_link_mass}}"/>
-                <inertia ixx="{{small_link_ixx}}" iyy="{{small_link_iyy}}" izz="{{small_link_izz}}" ixy="{{small_link_ixy}}" ixz="{{small_link_ixz}}" iyz="{{small_link_iyz}}"/>
-            </inertial>
-        </link>
-
         <!--tether fragment joint-->
         <joint name="tether_{{dirc}}/joint_1_{{n}}" type="continuous">
             <origin rpy="0 0 0" xyz="0 0 {{cyl_l}}"/>
             <parent link="tether_{{dirc}}/fragment_{{n-1}}"/>
-            <child link="tether_{{dirc}}/small_link_1_{{n}}"/>
-            <axis xyz="1 0 0" />
-            <dynamics damping="{{damping}}" friction="{{friction}}"/>
-        </joint>
-        <joint name="tether_{{dirc}}/joint_2_{{n}}" type="continuous">
-            <parent link="tether_{{dirc}}/small_link_1_{{n}}"/>
-            <child link="tether_{{dirc}}/small_link_2_{{n}}"/>
-            <axis xyz="0 1 0" />
-            <dynamics damping="{{damping}}" friction="{{friction}}"/>
-        </joint>
-        <joint name="tether_{{dirc}}/joint_1_{{n}}_" type="continuous">
-            <parent link="tether_{{dirc}}/small_link_2_{{n}}"/>
             <child link="tether_{{dirc}}/fragment_{{n}}"/>
-            <axis xyz="0 0 1" />
+            <axis xyz="1 0 0" />
             <dynamics damping="{{damping}}" friction="{{friction}}"/>
         </joint>
         {%- endmacro -%}
