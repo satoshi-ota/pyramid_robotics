@@ -13,7 +13,7 @@
             </visual>
             <inertial>
                 <mass value="0.1"/>
-                <inertia ixx="3e-05" iyy="3e-05" izz="3e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
             <collision>
                 <geometry>
@@ -34,7 +34,7 @@
             </visual>
             <inertial>
                 <mass value="0.1"/>
-                <inertia ixx="3e-05" iyy="3e-05" izz="3e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
             <collision>
                 <geometry>
@@ -51,7 +51,9 @@
             <origin rpy="0 0 0" xyz="0 0 1.0"/>
             <parent link="tether_0/fragment_0"/>
             <child link="tether_0/fragment_1"/>
-            <axis xyz="1 0 0" />
+            
+                <axis xyz="0 1 0" />
+            
             <dynamics damping="0.1" friction="0.1"/>
         </joint>
                 
@@ -64,7 +66,7 @@
             </visual>
             <inertial>
                 <mass value="0.1"/>
-                <inertia ixx="3e-05" iyy="3e-05" izz="3e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
             <collision>
                 <geometry>
@@ -81,7 +83,9 @@
             <origin rpy="0 0 0" xyz="0 0 1.0"/>
             <parent link="tether_0/fragment_1"/>
             <child link="tether_0/fragment_2"/>
-            <axis xyz="1 0 0" />
+            
+                <axis xyz="0 1 0" />
+            
             <dynamics damping="0.1" friction="0.1"/>
         </joint>
                 
@@ -94,7 +98,7 @@
             </visual>
             <inertial>
                 <mass value="0.1"/>
-                <inertia ixx="3e-05" iyy="3e-05" izz="3e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
             <collision>
                 <geometry>
@@ -111,7 +115,9 @@
             <origin rpy="0 0 0" xyz="0 0 1.0"/>
             <parent link="tether_0/fragment_2"/>
             <child link="tether_0/fragment_3"/>
-            <axis xyz="1 0 0" />
+            
+                <axis xyz="0 1 0" />
+            
             <dynamics damping="0.1" friction="0.1"/>
         </joint>
                 
@@ -124,7 +130,7 @@
             </visual>
             <inertial>
                 <mass value="0.1"/>
-                <inertia ixx="3e-05" iyy="3e-05" izz="3e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
             <collision>
                 <geometry>
@@ -141,16 +147,206 @@
             <origin rpy="0 0 0" xyz="0 0 1.0"/>
             <parent link="tether_0/fragment_3"/>
             <child link="tether_0/fragment_4"/>
-            <axis xyz="1 0 0" />
+            
+                <axis xyz="0 1 0" />
+            
             <dynamics damping="0.1" friction="0.1"/>
         </joint>
                 
-            <!--uav => tether joint-->
-        <joint name="tether_0/uav_joint" type="fixed">
+            <link name="tether_0/fragment_5">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass value="0.1"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+            <collision>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </collision>
+        </link>
+        <gazebo reference="tether_0/fragment_5">
+            <material>Gazebo/Red</material>
+        </gazebo>
+                
+                    <!--tether fragment joint-->
+        <joint name="tether_0/joint_5" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 1.0"/>
+            <parent link="tether_0/fragment_4"/>
+            <child link="tether_0/fragment_5"/>
+            
+                <axis xyz="0 1 0" />
+            
+            <dynamics damping="0.1" friction="0.1"/>
+        </joint>
+                
+            <link name="tether_0/fragment_6">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass value="0.1"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+            <collision>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </collision>
+        </link>
+        <gazebo reference="tether_0/fragment_6">
+            <material>Gazebo/Red</material>
+        </gazebo>
+                
+                    <!--tether fragment joint-->
+        <joint name="tether_0/joint_6" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 1.0"/>
+            <parent link="tether_0/fragment_5"/>
+            <child link="tether_0/fragment_6"/>
+            
+                <axis xyz="0 1 0" />
+            
+            <dynamics damping="0.1" friction="0.1"/>
+        </joint>
+                
+            <link name="tether_0/fragment_7">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass value="0.1"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+            <collision>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </collision>
+        </link>
+        <gazebo reference="tether_0/fragment_7">
+            <material>Gazebo/Red</material>
+        </gazebo>
+                
+                    <!--tether fragment joint-->
+        <joint name="tether_0/joint_7" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 1.0"/>
+            <parent link="tether_0/fragment_6"/>
+            <child link="tether_0/fragment_7"/>
+            
+                <axis xyz="0 1 0" />
+            
+            <dynamics damping="0.1" friction="0.1"/>
+        </joint>
+                
+            <link name="tether_0/fragment_8">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass value="0.1"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+            <collision>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </collision>
+        </link>
+        <gazebo reference="tether_0/fragment_8">
+            <material>Gazebo/Red</material>
+        </gazebo>
+                
+                    <!--tether fragment joint-->
+        <joint name="tether_0/joint_8" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 1.0"/>
+            <parent link="tether_0/fragment_7"/>
+            <child link="tether_0/fragment_8"/>
+            
+                <axis xyz="0 1 0" />
+            
+            <dynamics damping="0.1" friction="0.1"/>
+        </joint>
+                
+            <link name="tether_0/fragment_9">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass value="0.1"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+            <collision>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </collision>
+        </link>
+        <gazebo reference="tether_0/fragment_9">
+            <material>Gazebo/Red</material>
+        </gazebo>
+                
+                    <!--tether fragment joint-->
+        <joint name="tether_0/joint_9" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 1.0"/>
+            <parent link="tether_0/fragment_8"/>
+            <child link="tether_0/fragment_9"/>
+            
+                <axis xyz="0 1 0" />
+            
+            <dynamics damping="0.1" friction="0.1"/>
+        </joint>
+                
+            <link name="tether_0/rod">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.1"/>
+                <geometry>
+                    <cylinder length="0.2" radius="0.01"/>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass value="0.01"/>
+                <inertia ixx="0.01" iyy="0.01" izz="0.01" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+            <collision>
+                <geometry>
+                    <cylinder length="0.2" radius="0.01"/>
+                </geometry>
+            </collision>
+        </link>
+        <gazebo reference="tether_0/rod">
+            <material>Gazebo/Orange</material>
+        </gazebo>
+        <!--uav => tether joint-->
+        <joint name="tether_0/rod_joint" type="fixed">
             <parent link="${namespace}/base_link"/>
-            <child link="tether_0/fragment_0"/>
+            <child link="tether_0/rod"/>
             
                 <origin rpy="0 ${pi/2} 0" xyz="0 0 0"/>
+            
+        </joint>
+
+        <joint name="tether_0/uav_joint" type="continuous">
+            <parent link="tether_0/rod"/>
+            <child link="tether_0/fragment_0"/>
+            
+                <axis xyz="0 1 0" />
             
         </joint>
             <!--tether end joint-->
@@ -158,7 +354,7 @@
             
                 <origin rpy="0 ${-pi/2} 0" xyz="0 0 1.0"/>
             
-            <parent link="tether_0/fragment_4"/>
+            <parent link="tether_0/fragment_9"/>
             <child link="mp_500_0/tether_end"/>
             <axis xyz="1 0 0" />
             <dynamics damping="0.1" friction="0.1"/>
@@ -173,7 +369,7 @@
             </visual>
             <inertial>
                 <mass value="0.1"/>
-                <inertia ixx="3e-05" iyy="3e-05" izz="3e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
             <collision>
                 <geometry>
@@ -194,7 +390,7 @@
             </visual>
             <inertial>
                 <mass value="0.1"/>
-                <inertia ixx="3e-05" iyy="3e-05" izz="3e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
             <collision>
                 <geometry>
@@ -211,7 +407,9 @@
             <origin rpy="0 0 0" xyz="0 0 1.0"/>
             <parent link="tether_1/fragment_0"/>
             <child link="tether_1/fragment_1"/>
-            <axis xyz="1 0 0" />
+            
+                <axis xyz="1 0 0" />
+            
             <dynamics damping="0.1" friction="0.1"/>
         </joint>
                 
@@ -224,7 +422,7 @@
             </visual>
             <inertial>
                 <mass value="0.1"/>
-                <inertia ixx="3e-05" iyy="3e-05" izz="3e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
             <collision>
                 <geometry>
@@ -241,7 +439,9 @@
             <origin rpy="0 0 0" xyz="0 0 1.0"/>
             <parent link="tether_1/fragment_1"/>
             <child link="tether_1/fragment_2"/>
-            <axis xyz="1 0 0" />
+            
+                <axis xyz="1 0 0" />
+            
             <dynamics damping="0.1" friction="0.1"/>
         </joint>
                 
@@ -254,7 +454,7 @@
             </visual>
             <inertial>
                 <mass value="0.1"/>
-                <inertia ixx="3e-05" iyy="3e-05" izz="3e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
             <collision>
                 <geometry>
@@ -271,7 +471,9 @@
             <origin rpy="0 0 0" xyz="0 0 1.0"/>
             <parent link="tether_1/fragment_2"/>
             <child link="tether_1/fragment_3"/>
-            <axis xyz="1 0 0" />
+            
+                <axis xyz="1 0 0" />
+            
             <dynamics damping="0.1" friction="0.1"/>
         </joint>
                 
@@ -284,7 +486,7 @@
             </visual>
             <inertial>
                 <mass value="0.1"/>
-                <inertia ixx="3e-05" iyy="3e-05" izz="3e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
             <collision>
                 <geometry>
@@ -301,16 +503,206 @@
             <origin rpy="0 0 0" xyz="0 0 1.0"/>
             <parent link="tether_1/fragment_3"/>
             <child link="tether_1/fragment_4"/>
-            <axis xyz="1 0 0" />
+            
+                <axis xyz="1 0 0" />
+            
             <dynamics damping="0.1" friction="0.1"/>
         </joint>
                 
-            <!--uav => tether joint-->
-        <joint name="tether_1/uav_joint" type="fixed">
+            <link name="tether_1/fragment_5">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass value="0.1"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+            <collision>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </collision>
+        </link>
+        <gazebo reference="tether_1/fragment_5">
+            <material>Gazebo/Red</material>
+        </gazebo>
+                
+                    <!--tether fragment joint-->
+        <joint name="tether_1/joint_5" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 1.0"/>
+            <parent link="tether_1/fragment_4"/>
+            <child link="tether_1/fragment_5"/>
+            
+                <axis xyz="1 0 0" />
+            
+            <dynamics damping="0.1" friction="0.1"/>
+        </joint>
+                
+            <link name="tether_1/fragment_6">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass value="0.1"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+            <collision>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </collision>
+        </link>
+        <gazebo reference="tether_1/fragment_6">
+            <material>Gazebo/Red</material>
+        </gazebo>
+                
+                    <!--tether fragment joint-->
+        <joint name="tether_1/joint_6" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 1.0"/>
+            <parent link="tether_1/fragment_5"/>
+            <child link="tether_1/fragment_6"/>
+            
+                <axis xyz="1 0 0" />
+            
+            <dynamics damping="0.1" friction="0.1"/>
+        </joint>
+                
+            <link name="tether_1/fragment_7">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass value="0.1"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+            <collision>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </collision>
+        </link>
+        <gazebo reference="tether_1/fragment_7">
+            <material>Gazebo/Red</material>
+        </gazebo>
+                
+                    <!--tether fragment joint-->
+        <joint name="tether_1/joint_7" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 1.0"/>
+            <parent link="tether_1/fragment_6"/>
+            <child link="tether_1/fragment_7"/>
+            
+                <axis xyz="1 0 0" />
+            
+            <dynamics damping="0.1" friction="0.1"/>
+        </joint>
+                
+            <link name="tether_1/fragment_8">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass value="0.1"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+            <collision>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </collision>
+        </link>
+        <gazebo reference="tether_1/fragment_8">
+            <material>Gazebo/Red</material>
+        </gazebo>
+                
+                    <!--tether fragment joint-->
+        <joint name="tether_1/joint_8" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 1.0"/>
+            <parent link="tether_1/fragment_7"/>
+            <child link="tether_1/fragment_8"/>
+            
+                <axis xyz="1 0 0" />
+            
+            <dynamics damping="0.1" friction="0.1"/>
+        </joint>
+                
+            <link name="tether_1/fragment_9">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass value="0.1"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+            <collision>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </collision>
+        </link>
+        <gazebo reference="tether_1/fragment_9">
+            <material>Gazebo/Red</material>
+        </gazebo>
+                
+                    <!--tether fragment joint-->
+        <joint name="tether_1/joint_9" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 1.0"/>
+            <parent link="tether_1/fragment_8"/>
+            <child link="tether_1/fragment_9"/>
+            
+                <axis xyz="1 0 0" />
+            
+            <dynamics damping="0.1" friction="0.1"/>
+        </joint>
+                
+            <link name="tether_1/rod">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.1"/>
+                <geometry>
+                    <cylinder length="0.2" radius="0.01"/>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass value="0.01"/>
+                <inertia ixx="0.01" iyy="0.01" izz="0.01" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+            <collision>
+                <geometry>
+                    <cylinder length="0.2" radius="0.01"/>
+                </geometry>
+            </collision>
+        </link>
+        <gazebo reference="tether_1/rod">
+            <material>Gazebo/Orange</material>
+        </gazebo>
+        <!--uav => tether joint-->
+        <joint name="tether_1/rod_joint" type="fixed">
             <parent link="${namespace}/base_link"/>
-            <child link="tether_1/fragment_0"/>
+            <child link="tether_1/rod"/>
             
                 <origin rpy="${pi/2} 0 0" xyz="0 0 0"/>
+            
+        </joint>
+
+        <joint name="tether_1/uav_joint" type="continuous">
+            <parent link="tether_1/rod"/>
+            <child link="tether_1/fragment_0"/>
+            
+                <axis xyz="1 0 0" />
             
         </joint>
             <!--tether end joint-->
@@ -318,7 +710,7 @@
             
                 <origin rpy="${-pi/2} 0 0" xyz="0 0 1.0"/>
             
-            <parent link="tether_1/fragment_4"/>
+            <parent link="tether_1/fragment_9"/>
             <child link="mp_500_1/tether_end"/>
             <axis xyz="1 0 0" />
             <dynamics damping="0.1" friction="0.1"/>
@@ -333,7 +725,7 @@
             </visual>
             <inertial>
                 <mass value="0.1"/>
-                <inertia ixx="3e-05" iyy="3e-05" izz="3e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
             <collision>
                 <geometry>
@@ -354,7 +746,7 @@
             </visual>
             <inertial>
                 <mass value="0.1"/>
-                <inertia ixx="3e-05" iyy="3e-05" izz="3e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
             <collision>
                 <geometry>
@@ -371,7 +763,9 @@
             <origin rpy="0 0 0" xyz="0 0 1.0"/>
             <parent link="tether_2/fragment_0"/>
             <child link="tether_2/fragment_1"/>
-            <axis xyz="1 0 0" />
+            
+                <axis xyz="0 1 0" />
+            
             <dynamics damping="0.1" friction="0.1"/>
         </joint>
                 
@@ -384,7 +778,7 @@
             </visual>
             <inertial>
                 <mass value="0.1"/>
-                <inertia ixx="3e-05" iyy="3e-05" izz="3e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
             <collision>
                 <geometry>
@@ -401,7 +795,9 @@
             <origin rpy="0 0 0" xyz="0 0 1.0"/>
             <parent link="tether_2/fragment_1"/>
             <child link="tether_2/fragment_2"/>
-            <axis xyz="1 0 0" />
+            
+                <axis xyz="0 1 0" />
+            
             <dynamics damping="0.1" friction="0.1"/>
         </joint>
                 
@@ -414,7 +810,7 @@
             </visual>
             <inertial>
                 <mass value="0.1"/>
-                <inertia ixx="3e-05" iyy="3e-05" izz="3e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
             <collision>
                 <geometry>
@@ -431,7 +827,9 @@
             <origin rpy="0 0 0" xyz="0 0 1.0"/>
             <parent link="tether_2/fragment_2"/>
             <child link="tether_2/fragment_3"/>
-            <axis xyz="1 0 0" />
+            
+                <axis xyz="0 1 0" />
+            
             <dynamics damping="0.1" friction="0.1"/>
         </joint>
                 
@@ -444,7 +842,7 @@
             </visual>
             <inertial>
                 <mass value="0.1"/>
-                <inertia ixx="3e-05" iyy="3e-05" izz="3e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
             <collision>
                 <geometry>
@@ -461,16 +859,206 @@
             <origin rpy="0 0 0" xyz="0 0 1.0"/>
             <parent link="tether_2/fragment_3"/>
             <child link="tether_2/fragment_4"/>
-            <axis xyz="1 0 0" />
+            
+                <axis xyz="0 1 0" />
+            
             <dynamics damping="0.1" friction="0.1"/>
         </joint>
                 
-            <!--uav => tether joint-->
-        <joint name="tether_2/uav_joint" type="fixed">
+            <link name="tether_2/fragment_5">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass value="0.1"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+            <collision>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </collision>
+        </link>
+        <gazebo reference="tether_2/fragment_5">
+            <material>Gazebo/Red</material>
+        </gazebo>
+                
+                    <!--tether fragment joint-->
+        <joint name="tether_2/joint_5" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 1.0"/>
+            <parent link="tether_2/fragment_4"/>
+            <child link="tether_2/fragment_5"/>
+            
+                <axis xyz="0 1 0" />
+            
+            <dynamics damping="0.1" friction="0.1"/>
+        </joint>
+                
+            <link name="tether_2/fragment_6">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass value="0.1"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+            <collision>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </collision>
+        </link>
+        <gazebo reference="tether_2/fragment_6">
+            <material>Gazebo/Red</material>
+        </gazebo>
+                
+                    <!--tether fragment joint-->
+        <joint name="tether_2/joint_6" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 1.0"/>
+            <parent link="tether_2/fragment_5"/>
+            <child link="tether_2/fragment_6"/>
+            
+                <axis xyz="0 1 0" />
+            
+            <dynamics damping="0.1" friction="0.1"/>
+        </joint>
+                
+            <link name="tether_2/fragment_7">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass value="0.1"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+            <collision>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </collision>
+        </link>
+        <gazebo reference="tether_2/fragment_7">
+            <material>Gazebo/Red</material>
+        </gazebo>
+                
+                    <!--tether fragment joint-->
+        <joint name="tether_2/joint_7" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 1.0"/>
+            <parent link="tether_2/fragment_6"/>
+            <child link="tether_2/fragment_7"/>
+            
+                <axis xyz="0 1 0" />
+            
+            <dynamics damping="0.1" friction="0.1"/>
+        </joint>
+                
+            <link name="tether_2/fragment_8">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass value="0.1"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+            <collision>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </collision>
+        </link>
+        <gazebo reference="tether_2/fragment_8">
+            <material>Gazebo/Red</material>
+        </gazebo>
+                
+                    <!--tether fragment joint-->
+        <joint name="tether_2/joint_8" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 1.0"/>
+            <parent link="tether_2/fragment_7"/>
+            <child link="tether_2/fragment_8"/>
+            
+                <axis xyz="0 1 0" />
+            
+            <dynamics damping="0.1" friction="0.1"/>
+        </joint>
+                
+            <link name="tether_2/fragment_9">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass value="0.1"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+            <collision>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </collision>
+        </link>
+        <gazebo reference="tether_2/fragment_9">
+            <material>Gazebo/Red</material>
+        </gazebo>
+                
+                    <!--tether fragment joint-->
+        <joint name="tether_2/joint_9" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 1.0"/>
+            <parent link="tether_2/fragment_8"/>
+            <child link="tether_2/fragment_9"/>
+            
+                <axis xyz="0 1 0" />
+            
+            <dynamics damping="0.1" friction="0.1"/>
+        </joint>
+                
+            <link name="tether_2/rod">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.1"/>
+                <geometry>
+                    <cylinder length="0.2" radius="0.01"/>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass value="0.01"/>
+                <inertia ixx="0.01" iyy="0.01" izz="0.01" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+            <collision>
+                <geometry>
+                    <cylinder length="0.2" radius="0.01"/>
+                </geometry>
+            </collision>
+        </link>
+        <gazebo reference="tether_2/rod">
+            <material>Gazebo/Orange</material>
+        </gazebo>
+        <!--uav => tether joint-->
+        <joint name="tether_2/rod_joint" type="fixed">
             <parent link="${namespace}/base_link"/>
-            <child link="tether_2/fragment_0"/>
+            <child link="tether_2/rod"/>
             
                 <origin rpy="0 ${-pi/2} 0" xyz="0 0 0"/>
+            
+        </joint>
+
+        <joint name="tether_2/uav_joint" type="continuous">
+            <parent link="tether_2/rod"/>
+            <child link="tether_2/fragment_0"/>
+            
+                <axis xyz="0 1 0" />
             
         </joint>
             <!--tether end joint-->
@@ -478,7 +1066,7 @@
             
                 <origin rpy="0 ${pi/2} 0" xyz="0 0 1.0"/>
             
-            <parent link="tether_2/fragment_4"/>
+            <parent link="tether_2/fragment_9"/>
             <child link="mp_500_2/tether_end"/>
             <axis xyz="1 0 0" />
             <dynamics damping="0.1" friction="0.1"/>
@@ -493,7 +1081,7 @@
             </visual>
             <inertial>
                 <mass value="0.1"/>
-                <inertia ixx="3e-05" iyy="3e-05" izz="3e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
             <collision>
                 <geometry>
@@ -514,7 +1102,7 @@
             </visual>
             <inertial>
                 <mass value="0.1"/>
-                <inertia ixx="3e-05" iyy="3e-05" izz="3e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
             <collision>
                 <geometry>
@@ -531,7 +1119,9 @@
             <origin rpy="0 0 0" xyz="0 0 1.0"/>
             <parent link="tether_3/fragment_0"/>
             <child link="tether_3/fragment_1"/>
-            <axis xyz="1 0 0" />
+            
+                <axis xyz="1 0 0" />
+            
             <dynamics damping="0.1" friction="0.1"/>
         </joint>
                 
@@ -544,7 +1134,7 @@
             </visual>
             <inertial>
                 <mass value="0.1"/>
-                <inertia ixx="3e-05" iyy="3e-05" izz="3e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
             <collision>
                 <geometry>
@@ -561,7 +1151,9 @@
             <origin rpy="0 0 0" xyz="0 0 1.0"/>
             <parent link="tether_3/fragment_1"/>
             <child link="tether_3/fragment_2"/>
-            <axis xyz="1 0 0" />
+            
+                <axis xyz="1 0 0" />
+            
             <dynamics damping="0.1" friction="0.1"/>
         </joint>
                 
@@ -574,7 +1166,7 @@
             </visual>
             <inertial>
                 <mass value="0.1"/>
-                <inertia ixx="3e-05" iyy="3e-05" izz="3e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
             <collision>
                 <geometry>
@@ -591,7 +1183,9 @@
             <origin rpy="0 0 0" xyz="0 0 1.0"/>
             <parent link="tether_3/fragment_2"/>
             <child link="tether_3/fragment_3"/>
-            <axis xyz="1 0 0" />
+            
+                <axis xyz="1 0 0" />
+            
             <dynamics damping="0.1" friction="0.1"/>
         </joint>
                 
@@ -604,7 +1198,7 @@
             </visual>
             <inertial>
                 <mass value="0.1"/>
-                <inertia ixx="3e-05" iyy="3e-05" izz="3e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
             <collision>
                 <geometry>
@@ -621,16 +1215,206 @@
             <origin rpy="0 0 0" xyz="0 0 1.0"/>
             <parent link="tether_3/fragment_3"/>
             <child link="tether_3/fragment_4"/>
-            <axis xyz="1 0 0" />
+            
+                <axis xyz="1 0 0" />
+            
             <dynamics damping="0.1" friction="0.1"/>
         </joint>
                 
-            <!--uav => tether joint-->
-        <joint name="tether_3/uav_joint" type="fixed">
+            <link name="tether_3/fragment_5">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass value="0.1"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+            <collision>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </collision>
+        </link>
+        <gazebo reference="tether_3/fragment_5">
+            <material>Gazebo/Red</material>
+        </gazebo>
+                
+                    <!--tether fragment joint-->
+        <joint name="tether_3/joint_5" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 1.0"/>
+            <parent link="tether_3/fragment_4"/>
+            <child link="tether_3/fragment_5"/>
+            
+                <axis xyz="1 0 0" />
+            
+            <dynamics damping="0.1" friction="0.1"/>
+        </joint>
+                
+            <link name="tether_3/fragment_6">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass value="0.1"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+            <collision>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </collision>
+        </link>
+        <gazebo reference="tether_3/fragment_6">
+            <material>Gazebo/Red</material>
+        </gazebo>
+                
+                    <!--tether fragment joint-->
+        <joint name="tether_3/joint_6" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 1.0"/>
+            <parent link="tether_3/fragment_5"/>
+            <child link="tether_3/fragment_6"/>
+            
+                <axis xyz="1 0 0" />
+            
+            <dynamics damping="0.1" friction="0.1"/>
+        </joint>
+                
+            <link name="tether_3/fragment_7">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass value="0.1"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+            <collision>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </collision>
+        </link>
+        <gazebo reference="tether_3/fragment_7">
+            <material>Gazebo/Red</material>
+        </gazebo>
+                
+                    <!--tether fragment joint-->
+        <joint name="tether_3/joint_7" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 1.0"/>
+            <parent link="tether_3/fragment_6"/>
+            <child link="tether_3/fragment_7"/>
+            
+                <axis xyz="1 0 0" />
+            
+            <dynamics damping="0.1" friction="0.1"/>
+        </joint>
+                
+            <link name="tether_3/fragment_8">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass value="0.1"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+            <collision>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </collision>
+        </link>
+        <gazebo reference="tether_3/fragment_8">
+            <material>Gazebo/Red</material>
+        </gazebo>
+                
+                    <!--tether fragment joint-->
+        <joint name="tether_3/joint_8" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 1.0"/>
+            <parent link="tether_3/fragment_7"/>
+            <child link="tether_3/fragment_8"/>
+            
+                <axis xyz="1 0 0" />
+            
+            <dynamics damping="0.1" friction="0.1"/>
+        </joint>
+                
+            <link name="tether_3/fragment_9">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass value="0.1"/>
+                <inertia ixx="2e-05" iyy="2e-05" izz="2e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+            <collision>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </collision>
+        </link>
+        <gazebo reference="tether_3/fragment_9">
+            <material>Gazebo/Red</material>
+        </gazebo>
+                
+                    <!--tether fragment joint-->
+        <joint name="tether_3/joint_9" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 1.0"/>
+            <parent link="tether_3/fragment_8"/>
+            <child link="tether_3/fragment_9"/>
+            
+                <axis xyz="1 0 0" />
+            
+            <dynamics damping="0.1" friction="0.1"/>
+        </joint>
+                
+            <link name="tether_3/rod">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.1"/>
+                <geometry>
+                    <cylinder length="0.2" radius="0.01"/>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass value="0.01"/>
+                <inertia ixx="0.01" iyy="0.01" izz="0.01" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+            <collision>
+                <geometry>
+                    <cylinder length="0.2" radius="0.01"/>
+                </geometry>
+            </collision>
+        </link>
+        <gazebo reference="tether_3/rod">
+            <material>Gazebo/Orange</material>
+        </gazebo>
+        <!--uav => tether joint-->
+        <joint name="tether_3/rod_joint" type="fixed">
             <parent link="${namespace}/base_link"/>
-            <child link="tether_3/fragment_0"/>
+            <child link="tether_3/rod"/>
             
                 <origin rpy="${-pi/2} 0 0" xyz="0 0 0"/>
+            
+        </joint>
+
+        <joint name="tether_3/uav_joint" type="continuous">
+            <parent link="tether_3/rod"/>
+            <child link="tether_3/fragment_0"/>
+            
+                <axis xyz="1 0 0" />
             
         </joint>
             <!--tether end joint-->
@@ -638,7 +1422,7 @@
             
                 <origin rpy="${pi/2} 0 0" xyz="0 0 1.0"/>
             
-            <parent link="tether_3/fragment_4"/>
+            <parent link="tether_3/fragment_9"/>
             <child link="mp_500_3/tether_end"/>
             <axis xyz="1 0 0" />
             <dynamics damping="0.1" friction="0.1"/>

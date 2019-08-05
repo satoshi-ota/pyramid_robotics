@@ -3,15 +3,15 @@
     <!--tether model-->
     <xacro:macro name="tether">
         <!--tether fragment param-->
-        {%- set lump_mass = 0.1 -%}
+        {%- set lump_mass = 0.10 -%}
         {%- set lump_radius = 0.01 -%}
-        {%- set lump_inertia = 3*lump_mass*lump_radius**2 -%}
+        {%- set lump_inertia = 2*lump_mass*lump_radius**2 -%}
         {%- set element_length = 1.0 -%}
         <!--joint dynamics-->
         {%- set damping = 0.1 -%}
         {%- set friction = 0.1 -%}
         <!--link number-->
-        {%- set tether_fragments = 5 -%}
+        {%- set tether_fragments = 10 -%}
         {%- set tether_number = 4 -%}
 
         {%- macro tether_fragment(dirc, n) -%}
@@ -44,16 +44,44 @@
             <origin rpy="0 0 0" xyz="0 0 {{element_length}}"/>
             <parent link="tether_{{dirc}}/fragment_{{n-1}}"/>
             <child link="tether_{{dirc}}/fragment_{{n}}"/>
-            <axis xyz="1 0 0" />
+            {% if dirc == 0 %}
+                <axis xyz="0 1 0" />
+            {% elif dirc == 1 %}
+                <axis xyz="1 0 0" />
+            {% elif dirc == 2 %}
+                <axis xyz="0 1 0" />
+            {% elif dirc == 3 %}
+                <axis xyz="1 0 0" />
+            {% endif %}
             <dynamics damping="{{damping}}" friction="{{friction}}"/>
         </joint>
         {%- endmacro -%}
 
         {%- macro uav_joint(dirc) -%}
+        <link name="tether_{{dirc}}/rod">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.1"/>
+                <geometry>
+                    <cylinder length="0.2" radius="0.01"/>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass value="0.01"/>
+                <inertia ixx="0.01" iyy="0.01" izz="0.01" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+            <collision>
+                <geometry>
+                    <cylinder length="0.2" radius="0.01"/>
+                </geometry>
+            </collision>
+        </link>
+        <gazebo reference="tether_{{dirc}}/rod">
+            <material>Gazebo/Orange</material>
+        </gazebo>
         <!--uav => tether joint-->
-        <joint name="tether_{{dirc}}/uav_joint" type="fixed">
+        <joint name="tether_{{dirc}}/rod_joint" type="fixed">
             <parent link="${namespace}/base_link"/>
-            <child link="tether_{{dirc}}/fragment_0"/>
+            <child link="tether_{{dirc}}/rod"/>
             {% if dirc == 0 %}
                 <origin rpy="0 ${pi/2} 0" xyz="0 0 0"/>
             {% elif dirc == 1 %}
@@ -62,6 +90,20 @@
                 <origin rpy="0 ${-pi/2} 0" xyz="0 0 0"/>
             {% elif dirc == 3 %}
                 <origin rpy="${-pi/2} 0 0" xyz="0 0 0"/>
+            {% endif %}
+        </joint>
+
+        <joint name="tether_{{dirc}}/uav_joint" type="continuous">
+            <parent link="tether_{{dirc}}/rod"/>
+            <child link="tether_{{dirc}}/fragment_0"/>
+            {% if dirc == 0 %}
+                <axis xyz="0 1 0" />
+            {% elif dirc == 1 %}
+                <axis xyz="1 0 0" />
+            {% elif dirc == 2 %}
+                <axis xyz="0 1 0" />
+            {% elif dirc == 3 %}
+                <axis xyz="1 0 0" />
             {% endif %}
         </joint>
         {%- endmacro -%}
