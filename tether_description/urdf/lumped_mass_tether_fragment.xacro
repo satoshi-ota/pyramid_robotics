@@ -5,7 +5,7 @@
         <!--tether fragment param-->
         {%- set lump_mass = 0.10 -%}
         {%- set lump_radius = 0.01 -%}
-        {%- set lump_inertia = 2*lump_mass*lump_radius**2 -%}
+        {%- set lump_inertia = 5*lump_mass*lump_radius**2 -%}
         {%- set element_length = 1.0 -%}
         <!--joint dynamics-->
         {%- set damping = 0.1 -%}

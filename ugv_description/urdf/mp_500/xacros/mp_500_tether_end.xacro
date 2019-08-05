@@ -1,12 +1,17 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="mp_500">
 
+    <xacro:property name="counter_weight_mass" value="5.0" />
+    <xacro:property name="counter_weight_x" value="0.1" />
+    <xacro:property name="counter_weight_y" value="0.1" />
+    <xacro:property name="counter_weight_z" value="0.1" />
+
     <xacro:macro name="mp_500_tether_end" params="name">
 
         <joint name="${name}_joint" type="continuous">
             <parent link="${name}" />
             <child link="${namespace}/base_link" />
-            <origin xyz="0.0 0.0 -0.4" rpy="0 0 0" />
+            <origin xyz="0.0 0.0 -0.2" rpy="0 0 0" />
             <axis xyz="0 0 1" />
         </joint>
 
@@ -27,6 +32,33 @@
             </collision>
         </link>
 
-        </xacro:macro>
+    </xacro:macro>
+
+    <xacro:macro name="counter_weight" params="name">
+
+        <joint name="${name}_joint" type="fixed">
+            <parent link="${namespace}/base_link" />
+            <child link="${name}" />
+            <origin xyz="-0.4 0.0 0.4" rpy="0 0 0" />
+        </joint>
+
+        <link name="${name}">
+            <visual>
+                <geometry>
+                    <box size="${counter_weight_x} ${counter_weight_y} ${counter_weight_z}"/>
+                </geometry>
+            </visual>
+            <collision>
+                <geometry>
+                    <box size="${counter_weight_x} ${counter_weight_y} ${counter_weight_z}"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <mass value="${counter_weight_mass}"/>
+                <inertia ixx="1/12*${counter_weight_mass}*(${counter_weight_y}**2+${counter_weight_z}**2)" iyy="1/12*${counter_weight_mass}*(${counter_weight_z}**2+${counter_weight_x}**2)" izz="1/12*${counter_weight_mass}*(${counter_weight_x}**2+${counter_weight_y}**2)" ixy="0" ixz="0" iyz="0"/>
+            </inertial>
+        </link>
+
+    </xacro:macro>
 
 </robot>
