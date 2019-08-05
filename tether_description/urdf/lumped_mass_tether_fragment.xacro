@@ -32,7 +32,7 @@
                 </geometry>
             </collision>
             <gazebo reference="tether_{{dirc}}/fragment_{{n}}">
-                <material>Gazebo/Orange</material>
+                <material>Gazebo/Red</material>
             </gazebo>
         </link>
         {%- endmacro -%}
@@ -40,8 +40,8 @@
         <!--tether_cylinder_joint-->
         {%- macro tether_joint(dirc, n) -%}
         <!--tether fragment joint-->
-        <joint name="tether_{{dirc}}/joint_1_{{n}}" type="continuous">
-            <origin rpy="0 0 0" xyz="0 0 {{cyl_l}}"/>
+        <joint name="tether_{{dirc}}/joint_{{n}}" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 {{element_length}}"/>
             <parent link="tether_{{dirc}}/fragment_{{n-1}}"/>
             <child link="tether_{{dirc}}/fragment_{{n}}"/>
             <axis xyz="1 0 0" />
