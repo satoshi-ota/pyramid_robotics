@@ -3,21 +3,21 @@
     <!--tether model-->
     <xacro:macro name="tether">
         <!--tether fragment param-->
-        {%- set lump_mass = 0.0033 -%}
-        {%- set lump_radius = 0.1 -%}
-        {%- set lump_inertia = 2/5*lump_mass*lump_radius**2 -%}
-        {%- set element_length = 0.1 -%}
+        {%- set lump_mass = 0.1 -%}
+        {%- set lump_radius = 0.01 -%}
+        {%- set lump_inertia = 3*lump_mass*lump_radius**2 -%}
+        {%- set element_length = 1.0 -%}
         <!--joint dynamics-->
-        {%- set damping = 0.01 -%}
-        {%- set friction = 0.01 -%}
+        {%- set damping = 0.1 -%}
+        {%- set friction = 0.1 -%}
         <!--link number-->
-        {%- set tether_fragments = 30 -%}
+        {%- set tether_fragments = 5 -%}
         {%- set tether_number = 4 -%}
 
         {%- macro tether_fragment(dirc, n) -%}
         <link name="tether_{{dirc}}/fragment_{{n}}">
             <visual>
-                <origin rpy="0 0 0" xyz="0 0 {{cyl_l/2}}"/>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
                 <geometry>
                     <sphere radius="{{lump_radius}}"/>
                 </geometry>
@@ -31,10 +31,10 @@
                     <sphere radius="{{lump_radius}}"/>
                 </geometry>
             </collision>
-            <gazebo reference="tether_{{dirc}}/fragment_{{n}}">
-                <material>Gazebo/Red</material>
-            </gazebo>
         </link>
+        <gazebo reference="tether_{{dirc}}/fragment_{{n}}">
+            <material>Gazebo/Red</material>
+        </gazebo>
         {%- endmacro -%}
 
         <!--tether_cylinder_joint-->
@@ -67,46 +67,20 @@
         {%- endmacro -%}
 
         {%- macro ugv_joint(dirc) -%}
-        <!--link between tether and ugv-->
-        <link name="tether_{{dirc}}/end_link_1">
-            <inertial>
-                <mass value="{{small_link_mass}}"/>
-                <inertia ixx="{{small_link_ixx}}" iyy="{{small_link_iyy}}" izz="{{small_link_izz}}" ixy="{{small_link_ixy}}" ixz="{{small_link_ixz}}" iyz="{{small_link_iyz}}"/>
-            </inertial>
-        </link>
-        <link name="tether_{{dirc}}/end_link_2">
-            <inertial>
-                <mass value="{{small_link_mass}}"/>
-                <inertia ixx="{{small_link_ixx}}" iyy="{{small_link_iyy}}" izz="{{small_link_izz}}" ixy="{{small_link_ixy}}" ixz="{{small_link_ixz}}" iyz="{{small_link_iyz}}"/>
-            </inertial>
-        </link>
-
         <!--tether end joint-->
         <joint name="tether_{{dirc}}/ugv_joint_1" type="continuous">
             {% if dirc == 0 %}
-                <origin rpy="0 ${-pi/2} 0" xyz="0 0 0"/>
+                <origin rpy="0 ${-pi/2} 0" xyz="0 0 {{element_length}}"/>
             {% elif dirc == 1 %}
-                <origin rpy="${-pi/2} 0 0" xyz="0 0 0"/>
+                <origin rpy="${-pi/2} 0 0" xyz="0 0 {{element_length}}"/>
             {% elif dirc == 2 %}
-                <origin rpy="0 ${pi/2} 0" xyz="0 0 0"/>
+                <origin rpy="0 ${pi/2} 0" xyz="0 0 {{element_length}}"/>
             {% elif dirc == 3 %}
-                <origin rpy="${pi/2} 0 0" xyz="0 0 0"/>
+                <origin rpy="${pi/2} 0 0" xyz="0 0 {{element_length}}"/>
             {% endif %}
             <parent link="tether_{{dirc}}/fragment_{{tether_fragments-1}}"/>
-            <child link="tether_{{dirc}}/end_link_1"/>
-            <axis xyz="1 0 0" />
-            <dynamics damping="{{damping}}" friction="{{friction}}"/>
-        </joint>
-        <joint name="tether_{{dirc}}/ugv_joint_2" type="continuous">
-            <parent link="tether_{{dirc}}/end_link_1"/>
-            <child link="tether_{{dirc}}/end_link_2"/>
-            <axis xyz="0 1 0" />
-            <dynamics damping="{{damping}}" friction="{{friction}}"/>
-        </joint>
-        <joint name="tether_{{dirc}}/ugv_joint_3" type="continuous">
-            <parent link="tether_{{dirc}}/end_link_2"/>
             <child link="mp_500_{{dirc}}/tether_end"/>
-            <axis xyz="0 0 1" />
+            <axis xyz="1 0 0" />
             <dynamics damping="{{damping}}" friction="{{friction}}"/>
         </joint>
         {%- endmacro -%}

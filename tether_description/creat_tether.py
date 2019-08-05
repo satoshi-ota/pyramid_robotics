@@ -10,7 +10,7 @@ import subprocess
 args = sys.argv
 
 env = Environment(loader=FileSystemLoader('./urdf/', encoding='utf8'))
-tpl = env.get_template('tether_fragment.xacro')
+tpl = env.get_template('lumped_mass_tether_fragment.xacro')
 
 urdf = tpl.render()
 
