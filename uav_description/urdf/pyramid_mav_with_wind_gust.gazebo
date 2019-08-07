@@ -30,7 +30,7 @@
     wind_direction="1 0 0"
     wind_force_mean="0"
     wind_gust_direction="1 1 0"
-    wind_gust_duration="10"
+    wind_gust_duration="100"
     wind_gust_start="10"
     wind_gust_force_mean="30"
     wind_speed_mean="0"

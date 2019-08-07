@@ -3,15 +3,15 @@
     <!--tether model-->
     <xacro:macro name="tether">
         <!--tether fragment param-->
-        {%- set lump_mass = 0.01 -%}
+        {%- set lump_mass = 0.05 -%}
         {%- set lump_radius = 0.03 -%}
         {%- set lump_inertia = 3*lump_mass*lump_radius**2 -%}
-        {%- set element_length = 5.0 -%}
+        {%- set element_length = 10.0 -%}
         <!--joint dynamics-->
         {%- set damping = 1 -%}
         {%- set friction = 1 -%}
         <!--link number-->
-        {%- set tether_fragments = 5 -%}
+        {%- set tether_fragments = 2 -%}
         {%- set tether_number = 4 -%}
 
         {%- macro tether_fragment(dirc, n) -%}
@@ -158,16 +158,19 @@
         <joint name="tether_{{dirc}}/ugv_joint_1" type="continuous">
             {% if dirc == 0 %}
                 <origin rpy="0 ${-pi/2} 0" xyz="0 0 {{element_length}}"/>
+                <axis xyz="0 1 0" />
             {% elif dirc == 1 %}
                 <origin rpy="${-pi/2} 0 0" xyz="0 0 {{element_length}}"/>
+                <axis xyz="1 0 0" />
             {% elif dirc == 2 %}
                 <origin rpy="0 ${pi/2} 0" xyz="0 0 {{element_length}}"/>
+                <axis xyz="0 1 0" />
             {% elif dirc == 3 %}
                 <origin rpy="${pi/2} 0 0" xyz="0 0 {{element_length}}"/>
+                <axis xyz="1 0 0" />
             {% endif %}
             <parent link="tether_{{dirc}}/fragment_{{tether_fragments-1}}_3"/>
             <child link="mp_500_{{dirc}}/tether_end"/>
-            <axis xyz="1 0 0" />
             <dynamics damping="{{damping}}" friction="{{friction}}"/>
         </joint>
         {%- endmacro -%}
