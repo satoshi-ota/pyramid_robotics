@@ -3,16 +3,70 @@
     <!--tether model-->
     <xacro:macro name="tether">
         <!--tether fragment param-->
+        {%- set uav_link_mass = 0.005 -%}
+        {%- set uav_link_radius = 0.02 -%}
+        {%- set uav_link_inertia = 3*uav_link_mass*uav_link_radius**2 -%}
+        <!--tether fragment param-->
         {%- set lump_mass = 0.05 -%}
-        {%- set lump_radius = 0.03 -%}
-        {%- set lump_inertia = 3*lump_mass*lump_radius**2 -%}
-        {%- set element_length = 10.0 -%}
+        {%- set lump_radius = 0.02 -%}
+        {%- set lump_inertia = lump_mass*lump_radius**2 -%}
+        {%- set element_length = 1.0 -%}
         <!--joint dynamics-->
         {%- set damping = 1 -%}
         {%- set friction = 1 -%}
         <!--link number-->
-        {%- set tether_fragments = 2 -%}
+        {%- set tether_fragments = 4 -%}
         {%- set tether_number = 4 -%}
+
+        {%- macro uav_link(dirc, n) -%}
+        <link name="tether_{{dirc}}/fragment_{{n}}_1">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <sphere radius="{{uav_link_radius}}"/>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass value="{{uav_link_mass}}"/>
+                <inertia ixx="{{uav_link_inertia}}" iyy="{{uav_link_inertia}}" izz="{{uav_link_inertia}}" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <gazebo reference="tether_{{dirc}}/fragment_{{n}}_1">
+            <material>Gazebo/Black</material>
+        </gazebo>
+
+        <link name="tether_{{dirc}}/fragment_{{n}}_2">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <sphere radius="{{uav_link_radius}}"/>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass value="{{uav_link_mass}}"/>
+                <inertia ixx="{{uav_link_inertia}}" iyy="{{uav_link_inertia}}" izz="{{uav_link_inertia}}" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <gazebo reference="tether_{{dirc}}/fragment_{{n}}_2">
+            <material>Gazebo/Black</material>
+        </gazebo>
+
+        <link name="tether_{{dirc}}/fragment_{{n}}_3">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <sphere radius="{{uav_link_radius}}"/>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass value="{{uav_link_mass}}"/>
+                <inertia ixx="{{uav_link_inertia}}" iyy="{{uav_link_inertia}}" izz="{{uav_link_inertia}}" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <gazebo reference="tether_{{dirc}}/fragment_{{n}}_3">
+            <material>Gazebo/Black</material>
+        </gazebo>
+        {%- endmacro -%}
 
         {%- macro tether_fragment(dirc, n) -%}
         <link name="tether_{{dirc}}/fragment_{{n}}_1">
@@ -178,8 +232,10 @@
         <!-- main-->
         {% for dirc in range(0,tether_number) %}
             {% for n in range(0,tether_fragments) -%}
-                {{tether_fragment(dirc, n)}}
-                {% if n != 0 %}
+                {% if n == 0 %}
+                    {{uav_link(dirc, n)}}
+                {% elif n != 0 %}
+                    {{tether_fragment(dirc, n)}}
                     {{tether_joint(dirc, n)}}
                 {% endif %}
             {% endfor -%}
