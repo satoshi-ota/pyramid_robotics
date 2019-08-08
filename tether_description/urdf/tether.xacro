@@ -14,7 +14,7 @@
             </visual>
             <inertial>
                 <mass value="0.005"/>
-                <inertia ixx="6e-06" iyy="6e-06" izz="6e-06" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
         </link>
         <gazebo reference="tether_0/fragment_0_1">
@@ -30,7 +30,7 @@
             </visual>
             <inertial>
                 <mass value="0.005"/>
-                <inertia ixx="6e-06" iyy="6e-06" izz="6e-06" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
         </link>
         <gazebo reference="tether_0/fragment_0_2">
@@ -46,7 +46,7 @@
             </visual>
             <inertial>
                 <mass value="0.005"/>
-                <inertia ixx="6e-06" iyy="6e-06" izz="6e-06" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
         </link>
         <gazebo reference="tether_0/fragment_0_3">
@@ -276,18 +276,13 @@
             <visual>
                 <origin rpy="0 0 0" xyz="0 0 0.1"/>
                 <geometry>
-                    <cylinder length="0.2" radius="0.01"/>
+                    <cylinder length="0.21" radius="0.01"/>
                 </geometry>
             </visual>
             <inertial>
                 <mass value="0.01"/>
                 <inertia ixx="0.01" iyy="0.01" izz="0.01" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
-            <collision>
-                <geometry>
-                    <cylinder length="0.2" radius="0.01"/>
-                </geometry>
-            </collision>
         </link>
         <gazebo reference="tether_0/rod">
             <material>Gazebo/Orange</material>
@@ -302,7 +297,7 @@
         </joint>
 
         <joint name="tether_0/uav_roll_joint" type="continuous">
-            <origin rpy="0 0 0" xyz="0 0 0.2"/>
+            <origin rpy="0 0 0" xyz="0 0 0.21"/>
             <parent link="tether_0/rod"/>
             <child link="tether_0/fragment_0_1"/>
             <axis xyz="1 0 0" />
@@ -345,7 +340,7 @@
             </visual>
             <inertial>
                 <mass value="0.005"/>
-                <inertia ixx="6e-06" iyy="6e-06" izz="6e-06" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
         </link>
         <gazebo reference="tether_1/fragment_0_1">
@@ -361,7 +356,7 @@
             </visual>
             <inertial>
                 <mass value="0.005"/>
-                <inertia ixx="6e-06" iyy="6e-06" izz="6e-06" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
         </link>
         <gazebo reference="tether_1/fragment_0_2">
@@ -377,7 +372,7 @@
             </visual>
             <inertial>
                 <mass value="0.005"/>
-                <inertia ixx="6e-06" iyy="6e-06" izz="6e-06" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
         </link>
         <gazebo reference="tether_1/fragment_0_3">
@@ -607,18 +602,13 @@
             <visual>
                 <origin rpy="0 0 0" xyz="0 0 0.1"/>
                 <geometry>
-                    <cylinder length="0.2" radius="0.01"/>
+                    <cylinder length="0.21" radius="0.01"/>
                 </geometry>
             </visual>
             <inertial>
                 <mass value="0.01"/>
                 <inertia ixx="0.01" iyy="0.01" izz="0.01" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
-            <collision>
-                <geometry>
-                    <cylinder length="0.2" radius="0.01"/>
-                </geometry>
-            </collision>
         </link>
         <gazebo reference="tether_1/rod">
             <material>Gazebo/Orange</material>
@@ -633,7 +623,7 @@
         </joint>
 
         <joint name="tether_1/uav_roll_joint" type="continuous">
-            <origin rpy="0 0 0" xyz="0 0 0.2"/>
+            <origin rpy="0 0 0" xyz="0 0 0.21"/>
             <parent link="tether_1/rod"/>
             <child link="tether_1/fragment_0_1"/>
             <axis xyz="1 0 0" />
@@ -676,7 +666,7 @@
             </visual>
             <inertial>
                 <mass value="0.005"/>
-                <inertia ixx="6e-06" iyy="6e-06" izz="6e-06" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
         </link>
         <gazebo reference="tether_2/fragment_0_1">
@@ -692,7 +682,7 @@
             </visual>
             <inertial>
                 <mass value="0.005"/>
-                <inertia ixx="6e-06" iyy="6e-06" izz="6e-06" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
         </link>
         <gazebo reference="tether_2/fragment_0_2">
@@ -708,7 +698,7 @@
             </visual>
             <inertial>
                 <mass value="0.005"/>
-                <inertia ixx="6e-06" iyy="6e-06" izz="6e-06" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
         </link>
         <gazebo reference="tether_2/fragment_0_3">
@@ -938,18 +928,13 @@
             <visual>
                 <origin rpy="0 0 0" xyz="0 0 0.1"/>
                 <geometry>
-                    <cylinder length="0.2" radius="0.01"/>
+                    <cylinder length="0.21" radius="0.01"/>
                 </geometry>
             </visual>
             <inertial>
                 <mass value="0.01"/>
                 <inertia ixx="0.01" iyy="0.01" izz="0.01" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
-            <collision>
-                <geometry>
-                    <cylinder length="0.2" radius="0.01"/>
-                </geometry>
-            </collision>
         </link>
         <gazebo reference="tether_2/rod">
             <material>Gazebo/Orange</material>
@@ -964,7 +949,7 @@
         </joint>
 
         <joint name="tether_2/uav_roll_joint" type="continuous">
-            <origin rpy="0 0 0" xyz="0 0 0.2"/>
+            <origin rpy="0 0 0" xyz="0 0 0.21"/>
             <parent link="tether_2/rod"/>
             <child link="tether_2/fragment_0_1"/>
             <axis xyz="1 0 0" />
@@ -1007,7 +992,7 @@
             </visual>
             <inertial>
                 <mass value="0.005"/>
-                <inertia ixx="6e-06" iyy="6e-06" izz="6e-06" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
         </link>
         <gazebo reference="tether_3/fragment_0_1">
@@ -1023,7 +1008,7 @@
             </visual>
             <inertial>
                 <mass value="0.005"/>
-                <inertia ixx="6e-06" iyy="6e-06" izz="6e-06" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
         </link>
         <gazebo reference="tether_3/fragment_0_2">
@@ -1039,7 +1024,7 @@
             </visual>
             <inertial>
                 <mass value="0.005"/>
-                <inertia ixx="6e-06" iyy="6e-06" izz="6e-06" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <inertia ixx="1e-05" iyy="1e-05" izz="1e-05" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
         </link>
         <gazebo reference="tether_3/fragment_0_3">
@@ -1269,18 +1254,13 @@
             <visual>
                 <origin rpy="0 0 0" xyz="0 0 0.1"/>
                 <geometry>
-                    <cylinder length="0.2" radius="0.01"/>
+                    <cylinder length="0.21" radius="0.01"/>
                 </geometry>
             </visual>
             <inertial>
                 <mass value="0.01"/>
                 <inertia ixx="0.01" iyy="0.01" izz="0.01" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
-            <collision>
-                <geometry>
-                    <cylinder length="0.2" radius="0.01"/>
-                </geometry>
-            </collision>
         </link>
         <gazebo reference="tether_3/rod">
             <material>Gazebo/Orange</material>
@@ -1295,7 +1275,7 @@
         </joint>
 
         <joint name="tether_3/uav_roll_joint" type="continuous">
-            <origin rpy="0 0 0" xyz="0 0 0.2"/>
+            <origin rpy="0 0 0" xyz="0 0 0.21"/>
             <parent link="tether_3/rod"/>
             <child link="tether_3/fragment_0_1"/>
             <axis xyz="1 0 0" />

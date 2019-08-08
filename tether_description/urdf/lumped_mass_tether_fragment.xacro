@@ -5,7 +5,7 @@
         <!--tether fragment param-->
         {%- set uav_link_mass = 0.005 -%}
         {%- set uav_link_radius = 0.02 -%}
-        {%- set uav_link_inertia = 3*uav_link_mass*uav_link_radius**2 -%}
+        {%- set uav_link_inertia = 5*uav_link_mass*uav_link_radius**2 -%}
         <!--tether fragment param-->
         {%- set lump_mass = 0.05 -%}
         {%- set lump_radius = 0.02 -%}
@@ -151,18 +151,13 @@
             <visual>
                 <origin rpy="0 0 0" xyz="0 0 0.1"/>
                 <geometry>
-                    <cylinder length="0.2" radius="0.01"/>
+                    <cylinder length="0.21" radius="0.01"/>
                 </geometry>
             </visual>
             <inertial>
                 <mass value="0.01"/>
                 <inertia ixx="0.01" iyy="0.01" izz="0.01" ixy="0.0" ixz="0.0" iyz="0.0"/>
             </inertial>
-            <collision>
-                <geometry>
-                    <cylinder length="0.2" radius="0.01"/>
-                </geometry>
-            </collision>
         </link>
         <gazebo reference="tether_{{dirc}}/rod">
             <material>Gazebo/Orange</material>
@@ -183,7 +178,7 @@
         </joint>
 
         <joint name="tether_{{dirc}}/uav_roll_joint" type="continuous">
-            <origin rpy="0 0 0" xyz="0 0 0.2"/>
+            <origin rpy="0 0 0" xyz="0 0 0.21"/>
             <parent link="tether_{{dirc}}/rod"/>
             <child link="tether_{{dirc}}/fragment_0_1"/>
             <axis xyz="1 0 0" />

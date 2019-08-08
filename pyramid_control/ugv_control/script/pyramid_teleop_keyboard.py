@@ -74,10 +74,10 @@ def vels(speed,turn):
 if __name__=="__main__":
     settings = termios.tcgetattr(sys.stdin)
 
-    pub0 = rospy.Publisher('/firefly/mp_500_0/cmd_vel', Twist, queue_size = 1)
-    pub1 = rospy.Publisher('/firefly/mp_500_1/cmd_vel', Twist, queue_size = 1)
-    pub2 = rospy.Publisher('/firefly/mp_500_2/cmd_vel', Twist, queue_size = 1)
-    pub3 = rospy.Publisher('/firefly/mp_500_3/cmd_vel', Twist, queue_size = 1)
+    pub0 = rospy.Publisher('/pelican/mp_500_0/cmd_vel', Twist, queue_size = 1)
+    pub1 = rospy.Publisher('/pelican/mp_500_1/cmd_vel', Twist, queue_size = 1)
+    pub2 = rospy.Publisher('/pelican/mp_500_2/cmd_vel', Twist, queue_size = 1)
+    pub3 = rospy.Publisher('/pelican/mp_500_3/cmd_vel', Twist, queue_size = 1)
     rospy.init_node('teleop_twist_keyboard')
 
     speed = rospy.get_param("~speed", 0.5)
