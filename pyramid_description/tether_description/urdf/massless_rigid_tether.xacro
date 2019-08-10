@@ -1,0 +1,185 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+    <!--tether model-->
+    <xacro:macro name="tether">
+        <!--tether params-->
+        {%- set tether_mass = 0.001 -%}
+        {%- set tether_length = 10.0 -%}
+        {%- set tether_radius = 0.005 -%}
+        {%- set tether_inertia = 0.001 -%}
+        <!--virtual link params-->
+        {%- set virtual_link_mass = 0.001 -%}
+        {%- set virtual_link_inertia = 0.001 -%}
+        <!--joint dynamics-->
+        {%- set damping = 1 -%}
+        {%- set friction = 1 -%}
+
+        {%- set tether_number = 4 -%}
+
+        {%- macro tether(dirc) -%}
+        <link name="tether_{{dirc}}">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <cylinder length="{{tether_length}}" radius="{{tether_radius}}"/>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass value="{{tether_mass}}"/>
+                <inertia ixx="{{tether_inertia}}" iyy="{{tether_inertia}}" izz="{{tether_inertia}}" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <gazebo reference="tether_{{dirc}}">
+            <material>Gazebo/Black</material>
+        </gazebo>
+        {%- endmacro -%}
+
+        {%- macro virtual_link_uav2tether(dirc) -%}
+        <link name="virtual_link_uav2tether_1_{{dirc}}">
+            <inertial>
+                <mass value="{{virtual_link_mass}}"/>
+                <inertia ixx="{{virtual_link_inertia}}" iyy="{{virtual_link_inertia}}" izz="{{virtual_link_inertia}}" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+
+        <link name="virtual_link_uav2tether_2_{{dirc}}">
+            <inertial>
+                <mass value="{{virtual_link_mass}}"/>
+                <inertia ixx="{{virtual_link_inertia}}" iyy="{{virtual_link_inertia}}" izz="{{virtual_link_inertia}}" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        {%- endmacro -%}
+
+        {%- macro virtual_link_ugv2tether(dirc) -%}
+        <link name="virtual_link_ugv2tether_1_{{dirc}}">
+            <inertial>
+                <mass value="{{virtual_link_mass}}"/>
+                <inertia ixx="{{virtual_link_inertia}}" iyy="{{virtual_link_inertia}}" izz="{{virtual_link_inertia}}" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+
+        <link name="virtual_link_ugv2tether_2_{{dirc}}">
+            <inertial>
+                <mass value="{{virtual_link_mass}}"/>
+                <inertia ixx="{{virtual_link_inertia}}" iyy="{{virtual_link_inertia}}" izz="{{virtual_link_inertia}}" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+
+        <link name="virtual_link_ugv2tether_3_{{dirc}}">
+            <inertial>
+                <mass value="{{virtual_link_mass}}"/>
+                <inertia ixx="{{virtual_link_inertia}}" iyy="{{virtual_link_inertia}}" izz="{{virtual_link_inertia}}" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        {%- endmacro -%}
+
+        {%- macro uav2tether_joint(dirc) -%}
+        <link name="rod_{{dirc}}">
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0.1"/>
+                <geometry>
+                    <cylinder length="0.21" radius="0.01"/>
+                </geometry>
+            </visual>
+            <inertial>
+                <mass value="0.001"/>
+                <inertia ixx="0.001" iyy="0.001" izz="0.001" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            </inertial>
+        </link>
+        <gazebo reference="rod_{{dirc}}">
+            <material>Gazebo/Orange</material>
+        </gazebo>
+        <!--uav => tether joint-->
+        <joint name="uav2rod_joint_{{dirc}}" type="fixed">
+            <parent link="${namespace}/base_link"/>
+            <child link="rod_{{dirc}}"/>
+            {% if dirc == 0 %}
+                <origin rpy="0 ${pi/2} 0" xyz="0 0 0"/>
+            {% elif dirc == 1 %}
+                <origin rpy="${pi/2} 0 0" xyz="0 0 0"/>
+            {% elif dirc == 2 %}
+                <origin rpy="0 ${-pi/2} 0" xyz="0 0 0"/>
+            {% elif dirc == 3 %}
+                <origin rpy="${-pi/2} 0 0" xyz="0 0 0"/>
+            {% endif %}
+        </joint>
+
+        <joint name="rod2tether_joint_roll_{{dirc}}" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0.21"/>
+            <parent link="rod_{{dirc}}"/>
+            <child link="virtual_link_uav2tether_1_{{dirc}}"/>
+            <axis xyz="1 0 0" />
+            <dynamics damping="{{damping}}" friction="{{friction}}"/>
+        </joint>
+
+        <joint name="rod2tether_joint_pitch_{{dirc}}" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <parent link="virtual_link_uav2tether_1_{{dirc}}"/>
+            <child link="virtual_link_uav2tether_2_{{dirc}}"/>
+            <axis xyz="0 1 0" />
+            <dynamics damping="{{damping}}" friction="{{friction}}"/>
+        </joint>
+
+        <joint name="rod2tether_joint_yaw_{{dirc}}" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <parent link="virtual_link_uav2tether_2_{{dirc}}"/>
+            <child link="tether_{{dirc}}"/>
+            <axis xyz="0 0 1" />
+            <dynamics damping="{{damping}}" friction="{{friction}}"/>
+        </joint>
+        {%- endmacro -%}
+
+        {%- macro ugv2tether_joint(dirc) -%}
+        <joint name="ugv2tether_joint_prismatic_{{dirc}}" type="prismatic">
+            <origin rpy="0 0 0" xyz="0 0 10"/>
+            <parent link="tether_{{dirc}}"/>
+            <child link="virtual_link_ugv2tether_1_{{dirc}}"/>
+            <axis xyz="0 0 1" />
+            <dynamics damping="{{damping}}" friction="{{friction}}"/>
+            <limit effort="10000" lower="-5.0" upper="5.0" velocity="10.0"/>
+        </joint>
+
+        <joint name="ugv2tether_joint_roll_{{dirc}}" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <parent link="virtual_link_ugv2tether_1_{{dirc}}"/>
+            <child link="virtual_link_ugv2tether_2_{{dirc}}"/>
+            <axis xyz="1 0 0" />
+            <dynamics damping="{{damping}}" friction="{{friction}}"/>
+        </joint>
+
+        <joint name="ugv2tether_joint_pitch_{{dirc}}" type="continuous">
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <parent link="virtual_link_ugv2tether_2_{{dirc}}"/>
+            <child link="virtual_link_ugv2tether_3_{{dirc}}"/>
+            <axis xyz="0 1 0" />
+            <dynamics damping="{{damping}}" friction="{{friction}}"/>
+        </joint>
+
+        <joint name="ugv2tether_joint_yaw_{{dirc}}" type="continuous">
+            {% if dirc == 0 %}
+                <origin rpy="0 ${-pi/2} 0" xyz="0 0 0"/>
+            {% elif dirc == 1 %}
+                <origin rpy="${-pi/2} 0 0" xyz="0 0 0"/>
+            {% elif dirc == 2 %}
+                <origin rpy="0 ${pi/2} 0" xyz="0 0 0"/>
+            {% elif dirc == 3 %}
+                <origin rpy="${pi/2} 0 0" xyz="0 0 0"/>
+            {% endif %}
+            <axis xyz="0 0 1" />
+            <parent link="virtual_link_ugv2tether_3_{{dirc}}"/>
+            <child link="mp_500_{{dirc}}/tether_end"/>
+            <dynamics damping="{{damping}}" friction="{{friction}}"/>
+        </joint>
+        {%- endmacro -%}
+
+        <!-- main-->
+        {% for dirc in range(0,tether_number) %}
+            {{tether(dirc)}}
+            {{virtual_link_uav2tether(dirc)}}
+            {{virtual_link_ugv2tether(dirc)}}
+            {{uav2tether_joint(dirc)}}
+            {{ugv2tether_joint(dirc)}}
+        {% endfor -%}
+
+    </xacro:macro>
+</robot>
