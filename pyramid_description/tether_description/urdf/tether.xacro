@@ -2,13 +2,13 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
     <!--tether model-->
     <xacro:macro name="tether">
-        <!--tether params--><!--virtual link params--><!--joint dynamics--><!-- main-->
+        <!--tether params--><!--virtual link params--><!--actuated joint dynamics--><!--passive joint dynamics--><!-- main-->
         
             <link name="tether_0">
             <visual>
-                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <origin rpy="0 0 0" xyz="0 0 10.0"/>
                 <geometry>
-                    <cylinder length="10.0" radius="0.005"/>
+                    <cylinder length="20.0" radius="0.005"/>
                 </geometry>
             </visual>
             <inertial>
@@ -81,7 +81,7 @@
             <parent link="rod_0"/>
             <child link="virtual_link_uav2tether_1_0"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="1" friction="1"/>
+            <dynamics damping="0.01" friction="0.0"/>
         </joint>
 
         <joint name="rod2tether_joint_pitch_0" type="continuous">
@@ -89,7 +89,7 @@
             <parent link="virtual_link_uav2tether_1_0"/>
             <child link="virtual_link_uav2tether_2_0"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="1" friction="1"/>
+            <dynamics damping="0.01" friction="0.0"/>
         </joint>
 
         <joint name="rod2tether_joint_yaw_0" type="continuous">
@@ -97,15 +97,15 @@
             <parent link="virtual_link_uav2tether_2_0"/>
             <child link="tether_0"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="1" friction="1"/>
+            <dynamics damping="0.01" friction="0.0"/>
         </joint>
             <joint name="ugv2tether_joint_prismatic_0" type="prismatic">
-            <origin rpy="0 0 0" xyz="0 0 10"/>
+            <origin rpy="0 0 0" xyz="0 0 5"/>
             <parent link="tether_0"/>
             <child link="virtual_link_ugv2tether_1_0"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="1" friction="1"/>
-            <limit effort="10000" lower="-5.0" upper="5.0" velocity="10.0"/>
+            <dynamics damping="0.01" friction="0.0"/>
+            <limit effort="10000" lower="-5.0" upper="10.0" velocity="10.0"/>
         </joint>
 
         <joint name="ugv2tether_joint_roll_0" type="continuous">
@@ -113,7 +113,7 @@
             <parent link="virtual_link_ugv2tether_1_0"/>
             <child link="virtual_link_ugv2tether_2_0"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="1" friction="1"/>
+            <dynamics damping="0.01" friction="0.0"/>
         </joint>
 
         <joint name="ugv2tether_joint_pitch_0" type="continuous">
@@ -121,7 +121,7 @@
             <parent link="virtual_link_ugv2tether_2_0"/>
             <child link="virtual_link_ugv2tether_3_0"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="1" friction="1"/>
+            <dynamics damping="0.01" friction="0.0"/>
         </joint>
 
         <joint name="ugv2tether_joint_yaw_0" type="continuous">
@@ -131,14 +131,14 @@
             <axis xyz="0 0 1" />
             <parent link="virtual_link_ugv2tether_3_0"/>
             <child link="mp_500_0/tether_end"/>
-            <dynamics damping="1" friction="1"/>
+            <dynamics damping="0.01" friction="0.0"/>
         </joint>
         
             <link name="tether_1">
             <visual>
-                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <origin rpy="0 0 0" xyz="0 0 10.0"/>
                 <geometry>
-                    <cylinder length="10.0" radius="0.005"/>
+                    <cylinder length="20.0" radius="0.005"/>
                 </geometry>
             </visual>
             <inertial>
@@ -211,7 +211,7 @@
             <parent link="rod_1"/>
             <child link="virtual_link_uav2tether_1_1"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="1" friction="1"/>
+            <dynamics damping="0.01" friction="0.0"/>
         </joint>
 
         <joint name="rod2tether_joint_pitch_1" type="continuous">
@@ -219,7 +219,7 @@
             <parent link="virtual_link_uav2tether_1_1"/>
             <child link="virtual_link_uav2tether_2_1"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="1" friction="1"/>
+            <dynamics damping="0.01" friction="0.0"/>
         </joint>
 
         <joint name="rod2tether_joint_yaw_1" type="continuous">
@@ -227,15 +227,15 @@
             <parent link="virtual_link_uav2tether_2_1"/>
             <child link="tether_1"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="1" friction="1"/>
+            <dynamics damping="0.01" friction="0.0"/>
         </joint>
             <joint name="ugv2tether_joint_prismatic_1" type="prismatic">
-            <origin rpy="0 0 0" xyz="0 0 10"/>
+            <origin rpy="0 0 0" xyz="0 0 5"/>
             <parent link="tether_1"/>
             <child link="virtual_link_ugv2tether_1_1"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="1" friction="1"/>
-            <limit effort="10000" lower="-5.0" upper="5.0" velocity="10.0"/>
+            <dynamics damping="0.01" friction="0.0"/>
+            <limit effort="10000" lower="-5.0" upper="10.0" velocity="10.0"/>
         </joint>
 
         <joint name="ugv2tether_joint_roll_1" type="continuous">
@@ -243,7 +243,7 @@
             <parent link="virtual_link_ugv2tether_1_1"/>
             <child link="virtual_link_ugv2tether_2_1"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="1" friction="1"/>
+            <dynamics damping="0.01" friction="0.0"/>
         </joint>
 
         <joint name="ugv2tether_joint_pitch_1" type="continuous">
@@ -251,7 +251,7 @@
             <parent link="virtual_link_ugv2tether_2_1"/>
             <child link="virtual_link_ugv2tether_3_1"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="1" friction="1"/>
+            <dynamics damping="0.01" friction="0.0"/>
         </joint>
 
         <joint name="ugv2tether_joint_yaw_1" type="continuous">
@@ -261,14 +261,14 @@
             <axis xyz="0 0 1" />
             <parent link="virtual_link_ugv2tether_3_1"/>
             <child link="mp_500_1/tether_end"/>
-            <dynamics damping="1" friction="1"/>
+            <dynamics damping="0.01" friction="0.0"/>
         </joint>
         
             <link name="tether_2">
             <visual>
-                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <origin rpy="0 0 0" xyz="0 0 10.0"/>
                 <geometry>
-                    <cylinder length="10.0" radius="0.005"/>
+                    <cylinder length="20.0" radius="0.005"/>
                 </geometry>
             </visual>
             <inertial>
@@ -341,7 +341,7 @@
             <parent link="rod_2"/>
             <child link="virtual_link_uav2tether_1_2"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="1" friction="1"/>
+            <dynamics damping="0.01" friction="0.0"/>
         </joint>
 
         <joint name="rod2tether_joint_pitch_2" type="continuous">
@@ -349,7 +349,7 @@
             <parent link="virtual_link_uav2tether_1_2"/>
             <child link="virtual_link_uav2tether_2_2"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="1" friction="1"/>
+            <dynamics damping="0.01" friction="0.0"/>
         </joint>
 
         <joint name="rod2tether_joint_yaw_2" type="continuous">
@@ -357,15 +357,15 @@
             <parent link="virtual_link_uav2tether_2_2"/>
             <child link="tether_2"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="1" friction="1"/>
+            <dynamics damping="0.01" friction="0.0"/>
         </joint>
             <joint name="ugv2tether_joint_prismatic_2" type="prismatic">
-            <origin rpy="0 0 0" xyz="0 0 10"/>
+            <origin rpy="0 0 0" xyz="0 0 5"/>
             <parent link="tether_2"/>
             <child link="virtual_link_ugv2tether_1_2"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="1" friction="1"/>
-            <limit effort="10000" lower="-5.0" upper="5.0" velocity="10.0"/>
+            <dynamics damping="0.01" friction="0.0"/>
+            <limit effort="10000" lower="-5.0" upper="10.0" velocity="10.0"/>
         </joint>
 
         <joint name="ugv2tether_joint_roll_2" type="continuous">
@@ -373,7 +373,7 @@
             <parent link="virtual_link_ugv2tether_1_2"/>
             <child link="virtual_link_ugv2tether_2_2"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="1" friction="1"/>
+            <dynamics damping="0.01" friction="0.0"/>
         </joint>
 
         <joint name="ugv2tether_joint_pitch_2" type="continuous">
@@ -381,7 +381,7 @@
             <parent link="virtual_link_ugv2tether_2_2"/>
             <child link="virtual_link_ugv2tether_3_2"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="1" friction="1"/>
+            <dynamics damping="0.01" friction="0.0"/>
         </joint>
 
         <joint name="ugv2tether_joint_yaw_2" type="continuous">
@@ -391,14 +391,14 @@
             <axis xyz="0 0 1" />
             <parent link="virtual_link_ugv2tether_3_2"/>
             <child link="mp_500_2/tether_end"/>
-            <dynamics damping="1" friction="1"/>
+            <dynamics damping="0.01" friction="0.0"/>
         </joint>
         
             <link name="tether_3">
             <visual>
-                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <origin rpy="0 0 0" xyz="0 0 10.0"/>
                 <geometry>
-                    <cylinder length="10.0" radius="0.005"/>
+                    <cylinder length="20.0" radius="0.005"/>
                 </geometry>
             </visual>
             <inertial>
@@ -471,7 +471,7 @@
             <parent link="rod_3"/>
             <child link="virtual_link_uav2tether_1_3"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="1" friction="1"/>
+            <dynamics damping="0.01" friction="0.0"/>
         </joint>
 
         <joint name="rod2tether_joint_pitch_3" type="continuous">
@@ -479,7 +479,7 @@
             <parent link="virtual_link_uav2tether_1_3"/>
             <child link="virtual_link_uav2tether_2_3"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="1" friction="1"/>
+            <dynamics damping="0.01" friction="0.0"/>
         </joint>
 
         <joint name="rod2tether_joint_yaw_3" type="continuous">
@@ -487,15 +487,15 @@
             <parent link="virtual_link_uav2tether_2_3"/>
             <child link="tether_3"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="1" friction="1"/>
+            <dynamics damping="0.01" friction="0.0"/>
         </joint>
             <joint name="ugv2tether_joint_prismatic_3" type="prismatic">
-            <origin rpy="0 0 0" xyz="0 0 10"/>
+            <origin rpy="0 0 0" xyz="0 0 5"/>
             <parent link="tether_3"/>
             <child link="virtual_link_ugv2tether_1_3"/>
             <axis xyz="0 0 1" />
-            <dynamics damping="1" friction="1"/>
-            <limit effort="10000" lower="-5.0" upper="5.0" velocity="10.0"/>
+            <dynamics damping="0.01" friction="0.0"/>
+            <limit effort="10000" lower="-5.0" upper="10.0" velocity="10.0"/>
         </joint>
 
         <joint name="ugv2tether_joint_roll_3" type="continuous">
@@ -503,7 +503,7 @@
             <parent link="virtual_link_ugv2tether_1_3"/>
             <child link="virtual_link_ugv2tether_2_3"/>
             <axis xyz="1 0 0" />
-            <dynamics damping="1" friction="1"/>
+            <dynamics damping="0.01" friction="0.0"/>
         </joint>
 
         <joint name="ugv2tether_joint_pitch_3" type="continuous">
@@ -511,7 +511,7 @@
             <parent link="virtual_link_ugv2tether_2_3"/>
             <child link="virtual_link_ugv2tether_3_3"/>
             <axis xyz="0 1 0" />
-            <dynamics damping="1" friction="1"/>
+            <dynamics damping="0.01" friction="0.0"/>
         </joint>
 
         <joint name="ugv2tether_joint_yaw_3" type="continuous">
@@ -521,7 +521,7 @@
             <axis xyz="0 0 1" />
             <parent link="virtual_link_ugv2tether_3_3"/>
             <child link="mp_500_3/tether_end"/>
-            <dynamics damping="1" friction="1"/>
+            <dynamics damping="0.01" friction="0.0"/>
         </joint>
         </xacro:macro>
 </robot>
