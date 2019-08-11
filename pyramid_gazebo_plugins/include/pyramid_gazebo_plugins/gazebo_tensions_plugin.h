@@ -25,9 +25,9 @@ public:
 private: //member function
 
     //tensions distribution
-    void TensionsCommandCB(const pyramid_msgs::TensionsConsrPtr &_msg)
+    void TensionsCommandCB(const pyramid_msgs::TensionsConstPtr &_msg)
     {
-        tensions_command_ = *_msgs;
+        tensions_command_ = *_msg;
         command_received_ = true;
     }
 
@@ -37,6 +37,7 @@ private: //data member
     ros::CallbackQueue callback_queue_;
     event::ConnectionPtr update_event_;
     double update_T_;
+    double t_prev_;
 
     //model
     physics::ModelPtr model_;

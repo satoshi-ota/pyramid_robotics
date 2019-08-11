@@ -9,7 +9,7 @@
 #include <ros/node_handle.h>
 #include <pyramid_gazebo_plugins/gazebo_tensions_plugin.h>
 
-namespace gazebo_msgs
+namespace gazebo
 {
 
 void TensionsPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
@@ -23,7 +23,7 @@ void TensionsPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
 
     //initialize
     joints_.clear();
-    tension_command_.clear();
+    //tensions_command_.clear();
     rosnode_.param("/use_tether", use_tether_, true);
 
     if(model_->GetJointCount() != 0 && use_tether_)
@@ -90,7 +90,7 @@ void TensionsPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
         update_T_ = 0;
 
     // Register plugin update
-    update_event_ = event::Events::ConnectWorldUpdateBegin(boost::bind(&CDPRPlugin::Update, this));
+    update_event_ = event::Events::ConnectWorldUpdateBegin(boost::bind(&TensionsPlugin::Update, this));
 
     ros::spinOnce();
     ROS_INFO("Started Tensions Plugin for %s.", _model->GetName().c_str());
@@ -108,16 +108,16 @@ void TensionsPlugin::Update()
         {
             physics::JointPtr joint;
             unsigned int idx;
-            for(unsigned int i=0;i<tensions_command_.name.size();++i)
+            for(unsigned int i=0;i<tensions_command_.names.size();++i)
             {
                 // find corresponding model joint
                 idx = 0;
-                while(joint_states_.name[idx] != tensions_command_.name[i])
+                while(joint_states_.name[idx] != tensions_command_.names[i])
                     idx++;
                 joint = joints_[idx];
                 // only apply positive tensions
-                if(tensions_command_.effort[i] > 0)
-                    joint->SetForce(0,std::min(tensions_command_.effort[i], f_max));
+                if(tensions_command_.tensions[i] > 0)
+                    joint->SetForce(0,std::min(tensions_command_.tensions[i], f_max));
             }
         }
         ROS_WARN("set param 'use_tether' as TRUE");
@@ -139,7 +139,7 @@ void TensionsPlugin::Update()
         joint_state_publisher_.publish(joint_states_);
     }
 
-    auto ee_pose = platform_link_->WorldPose() - frame_link_->WorldPose();
+    auto ee_pose = ee_link_->WorldPose() - ee_link_->WorldPose();
     ee_state_.pose.position.x = ee_pose.Pos().X();
     ee_state_.pose.position.y = ee_pose.Pos().Y();
     ee_state_.pose.position.z = ee_pose.Pos().Z();
@@ -147,16 +147,16 @@ void TensionsPlugin::Update()
     ee_state_.pose.orientation.y = ee_pose.Rot().Y();
     ee_state_.pose.orientation.z = ee_pose.Rot().Z();
     ee_state_.pose.orientation.w = ee_pose.Rot().W();
-    auto vel = ee_pose.Rot().RotateVector(platform_link_->RelativeLinearVel());
+    auto vel = ee_pose.Rot().RotateVector(ee_link_->RelativeLinearVel());
     ee_state_.twist.linear.x = vel.X();
     ee_state_.twist.linear.y = vel.Y();
     ee_state_.twist.linear.z = vel.Z();
-    vel = ee_pose.Rot().RotateVector(platform_link_->RelativeAngularVel());
+    vel = ee_pose.Rot().RotateVector(ee_link_->RelativeAngularVel());
     ee_state_.twist.angular.x = vel.X();
     ee_state_.twist.angular.y = vel.Y();
     ee_state_.twist.angular.z = vel.Z();
 
-    ee_publisher_.publish(ee_state_);
+    ee_state_publisher_.publish(ee_state_);
     ros::spinOnce();
 }
 

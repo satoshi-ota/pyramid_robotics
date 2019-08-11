@@ -4,23 +4,25 @@ add_compile_options(-std=c++11)
 
 find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
-  nav_msgs
-  rosbag
   roscpp
-  rospy
   sensor_msgs
-  std_msgs
-  tf
+  pyramid_msgs
+  gazebo_ros
+  roslib
 )
 
 find_package(gazebo REQUIRED)
 
 catkin_package(
-    FILES
-    Tensions.msg
+INCLUDE_DIRS include ${GAZEBO_LIBRARY_DIRS}
+LIBRARIES pyramid_gazebo_plugins
+CATKIN_DEPENDS roscpp roslib gazebo_ros sensor_msgs geometry_msgs pyramid_msgs
+DEPENDS
 )
 
-include_directories(
-# include
-  ${catkin_INCLUDE_DIRS}
-)
+link_directories(${GAZEBO_LIBRARY_DIRS})
+include_directories(include ${catkin_INCLUDE_DIRS} ${GAZEBO_INCLUDE_DIRS})
+
+add_library(gazebo_tensions_plugin src/gazebo_tensions_plugin.cpp include/pyramid_gazebo_plugins/gazebo_tensions_plugin.h)
+target_link_libraries(gazebo_tensions_plugin ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES})
+add_dependencies(gazebo_tensions_plugin ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
