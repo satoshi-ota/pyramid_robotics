@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>tether_control</name>
+  <version>0.0.0</version>
+  <description>The tether_control package</description>
+
+  <maintainer email="satoshi.ota928@gmail.com">Ota Satoshi</maintainer>
+  <author>Ota Satoshi</author>
+  <license>MIT License</license>
+
+  <url type="website">http://wiki.ros.org/pyramid_gazebo</url>
+  
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>gazebo_msgs</build_depend>
+  <build_depend>geometry_msgs</build_depend>
+  <build_depend>rosbag</build_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_export_depend>gazebo_msgs</build_export_depend>
+  <build_export_depend>geometry_msgs</build_export_depend>
+  <build_export_depend>rosbag</build_export_depend>
+  <build_export_depend>roscpp</build_export_depend>
+  <build_export_depend>sensor_msgs</build_export_depend>
+  <exec_depend>gazebo_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>rosbag</exec_depend>
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+
+</package>
