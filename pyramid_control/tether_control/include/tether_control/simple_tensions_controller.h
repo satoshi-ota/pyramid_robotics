@@ -9,6 +9,9 @@
 #include <geometry_msgs/Pose.h>
 #include <pyramid_msgs/Tension.h>
 
+namespace rotors_control
+{
+
 class SimpleTensionController
 {
 public:
@@ -20,6 +23,9 @@ protected:
     ros::Subscriber tensions_pub;
     sensor_msgs::JointState tensions_msg;
 
-    //tensions distribution
-    void TensionCommandCB(const pyramid_msgs::TensionConstPtr &msg);
 };
+
+} //namespace tensions_control
+
+
+#endif //SIMPLE_TENSION_CONTROLLER_H
