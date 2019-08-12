@@ -1,31 +1,28 @@
-#ifndef SIMPLE_TENSION_CONTROLLER_H
-#define SIMPLE_TENSION_CONTROLLER_H
+#ifndef SIMPLE_TENSIONS_CONTROLLER_H
+#define SIMPLE_TENSIONS_CONTROLLER_H
 
 #include <ros/ros.h>
+#include <Eigen/Core>
 #include <ros/publisher.h>
 #include <ros/subscriber.h>
 #include <sensor_msgs/JointState.h>
-#include <sensor_msgs/LinkState.h>
 #include <geometry_msgs/Pose.h>
-#include <pyramid_msgs/Tension.h>
 
-namespace rotors_control
+namespace tensions_control
 {
 
-class SimpleTensionController
+class SimpleTensionsController
 {
 public:
-    SimpleTensionController();
-    ~SimpleTensionController();
+    SimpleTensionsController();
+    ~SimpleTensionsController();
+
+    void MsgFromEigenTensions();
 
 protected:
-    //publisher to tether tensions
-    ros::Subscriber tensions_pub;
-    sensor_msgs::JointState tensions_msg;
 
 };
 
 } //namespace tensions_control
-
 
 #endif //SIMPLE_TENSION_CONTROLLER_H
