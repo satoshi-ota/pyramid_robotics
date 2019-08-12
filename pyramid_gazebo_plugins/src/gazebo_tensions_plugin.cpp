@@ -28,7 +28,7 @@ void TensionsPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
 
     if(model_->GetJointCount() != 0 && use_tether_)
     {
-        ros::SubscribeOptions opt = ros::SubscribeOptions::create<pyramid_msgs::Tensions>(
+        ros::SubscribeOptions opt = ros::SubscribeOptions::create<sensor_msgs::JointState>(
                     "tensions_command", 1,
                     boost::bind(&TensionsPlugin::TensionsCommandCB, this, _1),
                     ros::VoidPtr(),
@@ -108,16 +108,16 @@ void TensionsPlugin::Update()
         {
             physics::JointPtr joint;
             unsigned int idx;
-            for(unsigned int i=0;i<tensions_command_.names.size();++i)
+            for(unsigned int i=0;i<tensions_command_.name.size();++i)
             {
                 // find corresponding model joint
                 idx = 0;
-                while(joint_states_.name[idx] != tensions_command_.names[i])
+                while(joint_states_.name[idx] != tensions_command_.name[i])
                     idx++;
                 joint = joints_[idx];
                 // only apply positive tensions
-                if(tensions_command_.tensions[i] > 0)
-                    joint->SetForce(0,std::min(tensions_command_.tensions[i], f_max));
+                if(tensions_command_.effort[i] > 0)
+                    joint->SetForce(0,std::min(tensions_command_.effort[i], f_max));
             }
         }
         ROS_WARN("set param 'use_tether' as TRUE");

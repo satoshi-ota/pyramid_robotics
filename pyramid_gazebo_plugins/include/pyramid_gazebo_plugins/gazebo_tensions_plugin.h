@@ -6,7 +6,6 @@
 #include <ros/callback_queue.h>
 #include <sensor_msgs/JointState.h>
 #include <gazebo_msgs/LinkState.h>
-#include <pyramid_msgs/Tensions.h>
 
 namespace gazebo{
 
@@ -25,7 +24,7 @@ public:
 private: //member function
 
     //tensions distribution
-    void TensionsCommandCB(const pyramid_msgs::TensionsConstPtr &_msg)
+    void TensionsCommandCB(const sensor_msgs::JointStateConstPtr &_msg)
     {
         tensions_command_ = *_msg;
         command_received_ = true;
@@ -49,7 +48,7 @@ private: //data member
     //subscriber to tensions
     bool use_tether_;
     ros::Subscriber command_subscriber_;
-    pyramid_msgs::Tensions tensions_command_;
+    sensor_msgs::JointState tensions_command_;
     bool command_received_;
 
     //publisher to joint_states
