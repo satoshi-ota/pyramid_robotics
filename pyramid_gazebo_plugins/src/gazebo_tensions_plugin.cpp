@@ -7,13 +7,20 @@
 #include <gazebo/physics/World.hh>
 #include <gazebo/physics/PhysicsEngine.hh>
 #include <ros/node_handle.h>
-#include <pyramid_gazebo_plugins/gazebo_tensions_plugin.h>
+
+#include "pyramid_gazebo_plugins/gazebo_tensions_plugin.h"
 
 namespace gazebo
 {
 
 void TensionsPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
 {
+    if(!ros::isInitialized)
+    {
+        ROS_FATAL_STREAM("ROS node for Gazebo not established. Plugin failed.");
+        return;
+    }
+
     //get model and name
     model_ = _model;
 
@@ -159,5 +166,5 @@ void TensionsPlugin::Update()
     ee_state_publisher_.publish(ee_state_);
     ros::spinOnce();
 }
-
+GZ_REGISTER_MODEL_PLUGIN(TensionsPlugin);
 } //namespace gazebo

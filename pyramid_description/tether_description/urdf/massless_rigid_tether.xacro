@@ -183,6 +183,9 @@
             {{uav2tether_joint(dirc)}}
             {{ugv2tether_joint(dirc)}}
         {% endfor -%}
-
+        <gazebo>
+            <!--plugin name="rover_plugin" filename="librover_plugin.so"> </plugin-->
+            <plugin name="tensions" filename="libgazebo_tensions_plugin.so"/>
+        </gazebo>
     </xacro:macro>
 </robot>

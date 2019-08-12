@@ -2,6 +2,7 @@
 #define PYRAMID_GAZEBO_PLUGINS_GAZEBO_TENSIONS_PLUGIN_H
 
 #include <gazebo/common/Plugin.hh>
+#include <gazebo/gazebo.hh>
 #include <ros/ros.h>
 #include <ros/callback_queue.h>
 #include <sensor_msgs/JointState.h>
@@ -61,7 +62,7 @@ private: //data member
     physics::LinkPtr ee_link_;
 
 };
-GZ_REGISTER_MODEL_PLUGIN(TensionsPlugin)
+
 } //namespace gazebo
 
 #endif //PYRAMID_GAZEBO_PLUGINS_GAZEBO_TENSIONS_PLUGIN_H
