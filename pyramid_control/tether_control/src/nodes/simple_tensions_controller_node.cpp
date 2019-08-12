@@ -27,6 +27,7 @@ void SimpleTensionsControllerNode::InitializeParams()
     private_nh_.getParam("tension_3", t3_);
 
     //get tether number
+    n_tether_ = 4;
     private_nh_.getParam("n_tether", n_tether_);
 
     //get tensions_pub frequency
@@ -47,7 +48,7 @@ void SimpleTensionsControllerNode::sendTensions(Eigen::Vector4d& td)
     //write tether tensions
     tensions_msg.header.stamp = ros::Time::now();
     for(unsigned int i=0;i<n_tether_;++i)
-        tensions_msg.effort[i] = td(i);
+        tensions_msg.effort[i] = td(i, 0);
 
     tensions_pub_.publish(tensions_msg);
 }
@@ -61,7 +62,7 @@ int main(int argc, char** argv) {
     ros::NodeHandle private_nh("~");
     tensions_control::SimpleTensionsControllerNode simple_tensions_conrtoller_node(nh, private_nh);
 
-    Eigen::Vector4d desired_tensions(100.0, 100.0, 0.0, 0.0);
+    Eigen::Vector4d desired_tensions(20.0, 10.0, 0.0, 0.0);
 
     unsigned int hz = simple_tensions_conrtoller_node.hz();
     ros::Rate loop_rate(10);
