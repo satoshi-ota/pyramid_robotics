@@ -39,6 +39,7 @@
 
   <gazebo>
     <plugin name="diff_dirve_controller" filename="libgazebo_ros_diff_drive.so">
+        <namespace>pelican</namespace>
         <alwaysOn>true</alwaysOn>
         <updateRate>100</updateRate>
         <legacyMode>false</legacyMode>
@@ -49,16 +50,16 @@
         <wheelDiameter>0.260</wheelDiameter>
         <commandTopic>${namespace}/cmd_vel</commandTopic>
         <rosDebugLevel>na</rosDebugLevel>
-        <odometryTopic>odom</odometryTopic>
-        <odometryFrame>odom</odometryFrame>
-        <robotBaseFrame>base_link</robotBaseFrame>
+        <odometryTopic>${namespace}/odom</odometryTopic>
+        <odometryFrame>${namespace}/odom</odometryFrame>
+        <robotBaseFrame>${namespace}/base_link</robotBaseFrame>
         <publishWheelTF>true</publishWheelTF>
-        <publishWheelJointState>true</publishWheelJointState>
+        <publishWheelJointState>false</publishWheelJointState>
         <wheelAcceleration>0</wheelAcceleration>
         <wheelTorque>200</wheelTorque>
         <odometrySource>world</odometrySource>
         <publishTf>1</publishTf>
-        <publishOdomTF>true</publishOdomTF>
+        <publishOdomTF>false</publishOdomTF>
     </plugin>
   </gazebo>
 

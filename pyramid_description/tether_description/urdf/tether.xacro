@@ -103,7 +103,7 @@
             <origin rpy="0 0 0" xyz="0 0 5"/>
             <parent link="tether_0"/>
             <child link="virtual_link_ugv2tether_1_0"/>
-            <axis xyz="0 0 1" />
+            <axis xyz="0 0 -1" />
             <dynamics damping="0.01" friction="0.0"/>
             <limit effort="10000" lower="-5.0" upper="10.0" velocity="10.0"/>
         </joint>
@@ -233,7 +233,7 @@
             <origin rpy="0 0 0" xyz="0 0 5"/>
             <parent link="tether_1"/>
             <child link="virtual_link_ugv2tether_1_1"/>
-            <axis xyz="0 0 1" />
+            <axis xyz="0 0 -1" />
             <dynamics damping="0.01" friction="0.0"/>
             <limit effort="10000" lower="-5.0" upper="10.0" velocity="10.0"/>
         </joint>
@@ -363,7 +363,7 @@
             <origin rpy="0 0 0" xyz="0 0 5"/>
             <parent link="tether_2"/>
             <child link="virtual_link_ugv2tether_1_2"/>
-            <axis xyz="0 0 1" />
+            <axis xyz="0 0 -1" />
             <dynamics damping="0.01" friction="0.0"/>
             <limit effort="10000" lower="-5.0" upper="10.0" velocity="10.0"/>
         </joint>
@@ -493,7 +493,7 @@
             <origin rpy="0 0 0" xyz="0 0 5"/>
             <parent link="tether_3"/>
             <child link="virtual_link_ugv2tether_1_3"/>
-            <axis xyz="0 0 1" />
+            <axis xyz="0 0 -1" />
             <dynamics damping="0.01" friction="0.0"/>
             <limit effort="10000" lower="-5.0" upper="10.0" velocity="10.0"/>
         </joint>
@@ -525,6 +525,25 @@
         </joint>
         <gazebo>
             <plugin name="gazebo_tensions_plugin" filename="libgazebo_tensions_plugin.so"/>
+            <plugin name="joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
+                <robotNamespace>pelican</robotNamespace>
+                <jointName>
+                rod2tether_joint_roll_0, rod2tether_joint_pitch_0, rod2tether_joint_yaw_0,
+                rod2tether_joint_roll_1, rod2tether_joint_pitch_1, rod2tether_joint_yaw_1,
+                rod2tether_joint_roll_2, rod2tether_joint_pitch_2, rod2tether_joint_yaw_2,
+                rod2tether_joint_roll_3, rod2tether_joint_pitch_3, rod2tether_joint_yaw_3,
+                ugv2tether_joint_prismatic_0,
+                ugv2tether_joint_prismatic_1,
+                ugv2tether_joint_prismatic_2,
+                ugv2tether_joint_prismatic_3,
+                ugv2tether_joint_roll_0, ugv2tether_joint_pitch_0, ugv2tether_joint_yaw_0,
+                ugv2tether_joint_roll_1, ugv2tether_joint_pitch_1, ugv2tether_joint_yaw_1,
+                ugv2tether_joint_roll_2, ugv2tether_joint_pitch_2, ugv2tether_joint_yaw_2,
+                ugv2tether_joint_roll_3, ugv2tether_joint_pitch_3, ugv2tether_joint_yaw_3
+                </jointName>
+                <updateRate>1000</updateRate>
+                <alwaysOn>true</alwaysOn>
+            </plugin>
         </gazebo>
     </xacro:macro>
 </robot>
