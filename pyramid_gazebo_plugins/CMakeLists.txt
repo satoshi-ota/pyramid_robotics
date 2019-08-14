@@ -23,16 +23,7 @@ DEPENDS
 link_directories(${GAZEBO_LIBRARY_DIRS})
 include_directories(include ${catkin_INCLUDE_DIRS} ${GAZEBO_INCLUDE_DIRS})
 
+#add_library(gazebo_tensions_plugin src/gazebo_tensions_plugin.cpp)
 add_library(gazebo_tensions_plugin src/gazebo_tensions_plugin.cpp include/pyramid_gazebo_plugins/gazebo_tensions_plugin.h)
 target_link_libraries(gazebo_tensions_plugin ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES} ${roscpp_LIBRARIES})
 add_dependencies(gazebo_tensions_plugin ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
-list(APPEND targets_to_install gazebo_tensions_plugin)
-
-add_library(rover_plugin src/rover.cpp)
-target_link_libraries(rover_plugin ${catkin_LIBRARIES} ${GAZEBO_LIBRARIES} ${roscpp_LIBRARIES})
-
-install(TARGETS
-    ${targets_to_install}
-    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-    LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
-)

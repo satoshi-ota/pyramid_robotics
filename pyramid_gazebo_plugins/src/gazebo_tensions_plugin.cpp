@@ -1,5 +1,6 @@
 #include <ros/ros.h>
 #include <gazebo/gazebo.hh>
+#include <gazebo/physics/physics.hh>
 
 #include <gazebo/physics/PhysicsIface.hh>
 #include <gazebo/physics/Model.hh>
@@ -12,6 +13,13 @@
 
 namespace gazebo
 {
+
+TensionsPlugin::TensionsPlugin(){ }
+
+TensionsPlugin::~TensionsPlugin()
+{
+    rosnode_.shutdown();
+}
 
 void TensionsPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
 {
@@ -127,7 +135,10 @@ void TensionsPlugin::Update()
                     joint->SetForce(0,std::min(tensions_command_.effort[i], f_max));
             }
         }
-        ROS_WARN("set param 'use_tether' as TRUE");
+        else
+        {
+            ROS_WARN("set param 'use_tether' as TRUE");
+        }
     }
 
     // publish joint states
@@ -166,5 +177,6 @@ void TensionsPlugin::Update()
     ee_state_publisher_.publish(ee_state_);
     ros::spinOnce();
 }
+
 GZ_REGISTER_MODEL_PLUGIN(TensionsPlugin);
 } //namespace gazebo

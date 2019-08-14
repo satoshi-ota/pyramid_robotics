@@ -14,10 +14,7 @@ class TensionsPlugin : public ModelPlugin
 {
 public:
     TensionsPlugin();
-    ~TensionsPlugin()
-    {
-        rosnode_.shutdown();
-    }
+    ~TensionsPlugin();
 
     virtual void Load(physics::ModelPtr _model, sdf::ElementPtr _sdf);
     virtual void Update();
