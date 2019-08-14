@@ -41,4 +41,5 @@
          -model $(arg namespace)"
    respawn="false" output="screen">
   </node>
+  <node name="rviz" pkg="rviz" type="rviz" required="true" />
 </launch>
