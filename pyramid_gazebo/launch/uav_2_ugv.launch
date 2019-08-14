@@ -34,7 +34,7 @@
         </node>
         <node name="pyramid_hovering_example" pkg="uav_description" type="pyramid_hovering_example" output="screen"/>
         <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
-        <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+        <!--node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" /-->
     </group>
 
     <node pkg="ugv_control" type="pyramid_teleop_keyboard.py" name="teleop_keyboard"  output="screen"/>
