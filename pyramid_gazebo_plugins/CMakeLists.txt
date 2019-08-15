@@ -6,7 +6,6 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   roscpp
   sensor_msgs
-  pyramid_msgs
   gazebo_ros
   roslib
 )
@@ -16,7 +15,7 @@ find_package(gazebo REQUIRED)
 catkin_package(
 INCLUDE_DIRS include ${GAZEBO_LIBRARY_DIRS}
 LIBRARIES pyramid_gazebo_plugins
-CATKIN_DEPENDS roscpp roslib gazebo_ros sensor_msgs geometry_msgs pyramid_msgs
+CATKIN_DEPENDS roscpp roslib gazebo_ros sensor_msgs geometry_msgs
 DEPENDS
 )
 
