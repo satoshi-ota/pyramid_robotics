@@ -3,7 +3,7 @@
 
 #include <ros/ros.h>
 
-#include "rotors_control/parameters.h"
+#include "uav_control/parameters.h"
 
 namespace motor_speed_control
 {

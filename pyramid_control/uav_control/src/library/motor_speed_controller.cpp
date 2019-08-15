@@ -31,11 +31,12 @@ void MotorSpeedController::InitializeParameters()
     initialized_params_ = true;
 }
 
-void MotorSpeedController::SetOdometry(const EigenWrenchStamped& thrust) {
+void MotorSpeedController::SetThrustMsg(const pyramid_msgs::EigenWrenchStamped& thrust)
+{
   thrust_ = thrust;
 }
 
-void MotorSpeedConroller::CalculateRotorVelocities(Eigen::VectorXd* rotor_velocities) const
+void MotorSpeedController::CalculateRotorVelocities(Eigen::VectorXd* rotor_velocities) const
 {
     assert(initialized_params_);
 
@@ -44,10 +45,10 @@ void MotorSpeedConroller::CalculateRotorVelocities(Eigen::VectorXd* rotor_veloci
 
 
     Eigen::Vector4d limited_thrust;
-    limited_thrust.block<3, 1>(0, 0) = ;
-    limited_thrust(3) = thrust;
+    limited_thrust.block<3, 1>(0, 0) = thrust_.getTorque();
+    limited_thrust(3) = thrust_.getZforce();
 
-    *rotor_velocities = angular_acc_to_rotor_velocities_ * angular_acceleration_thrust;
+    *rotor_velocities = thrust_to_rotor_velocities_ * limited_thrust;
     *rotor_velocities = rotor_velocities->cwiseMax(Eigen::VectorXd::Zero(rotor_velocities->rows()));
     *rotor_velocities = rotor_velocities->cwiseSqrt();
 }

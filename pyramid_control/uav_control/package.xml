@@ -11,5 +11,7 @@
   <buildtool_depend>catkin</buildtool_depend>
   <depend>geometry_msgs</depend>
   <depend>roscpp</depend>
+  <depend>mav_msgs</depend>
+  <depend>pyramid_msgs</depend>
 
 </package>

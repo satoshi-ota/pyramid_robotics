@@ -1,4 +1,4 @@
-#include "uav_control/motor_speed_controller_node.h"
+#include "motor_speed_controller_node.h"
 
 namespace motor_speed_control
 {
@@ -13,13 +13,12 @@ MotorSpeedControllerNode::MotorSpeedControllerNode(
     thrust_cmd_sub_ = nh_.subscribe("thrust_command", 1,
                             &MotorSpeedControllerNode::ThrustCommandCB, this);
 
-    motor_velocity_reference_pub_ = nh_.advertise<mav_msgs::Actuators>(
-                                mav_msgs::default_topics::COMMAND_ACTUATORS, 1);
+    motor_velocity_reference_pub_ = nh_.advertise<mav_msgs::Actuators>("motor_speed", 1);
 }
 
 MotorSpeedControllerNode::~MotorSpeedControllerNode(){ }
 
-MotorSpeedControllerNode::InitializeParams()
+void MotorSpeedControllerNode::InitializeParams()
 {
     GetVehicleParameters(private_nh_, &motor_speed_controller_.vehicle_parameters_);
     motor_speed_controller_.InitializeParameters();
@@ -30,9 +29,9 @@ void MotorSpeedControllerNode::ThrustCommandCB(const geometry_msgs::WrenchStampe
     ROS_INFO_ONCE("MotorSpeedConroller got first thrust msg.");
 
     //conversion
-    EigenWrenchStamped desired_thrust;
-    conversions::eigenThrustFromMsg(thrust_msg, &desired_thrust);
-    motor_speed_controller_.setThrustMsg(desired_thrust);
+    pyramid_msgs::EigenWrenchStamped desired_thrust;
+    eigenThrustFromMsg(thrust_msg, &desired_thrust);
+    motor_speed_controller_.SetThrustMsg(desired_thrust);
 
     //calculate motor speed
     Eigen::VectorXd ref_rotor_velocities;

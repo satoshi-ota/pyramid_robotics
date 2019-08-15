@@ -1,12 +1,16 @@
 #ifndef MOTOR_SPEED_CONTROLLER_NODE_H
 #define MOTOR_SPEED_CONTROLLER_NODE_H
 
+#include <boost/bind.hpp>
 #include <Eigen/Eigen>
 
 #include <ros/ros.h>
 #include <geometry_msgs/WrenchStamped.h>
 #include <mav_msgs/Actuators.h>
 #include <pyramid_msgs/pyramid_eigen_msgs.h>
+
+#include "uav_control/conversions.h"
+#include "uav_control/motor_speed_controller.h"
 
 namespace motor_speed_control
 {

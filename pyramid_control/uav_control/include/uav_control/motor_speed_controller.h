@@ -19,19 +19,12 @@ class MotorSpeedControllerParameters
 {
 public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-    LeePositionControllerParameters()
-        : position_gain_(kDefaultPositionGain),
-    velocity_gain_(kDefaultVelocityGain),
-    attitude_gain_(kDefaultAttitudeGain),
-    angular_rate_gain_(kDefaultAngularRateGain){
+    MotorSpeedControllerParameters()
+    {
         calculateAllocationMatrix(rotor_configuration_, &allocation_matrix_);
     }
 
     Eigen::Matrix4Xd allocation_matrix_;
-    Eigen::Vector3d position_gain_;
-    Eigen::Vector3d velocity_gain_;
-    Eigen::Vector3d attitude_gain_;
-    Eigen::Vector3d angular_rate_gain_;
     RotorConfiguration rotor_configuration_;
 };
 
@@ -45,15 +38,16 @@ public:
 
     void InitializeParameters();
 
-    void setThrustMsg(const EigenWrenchStamped& thrust);
+    void SetThrustMsg(const pyramid_msgs::EigenWrenchStamped& thrust);
     void CalculateRotorVelocities(Eigen::VectorXd* rotor_velocities) const;
 
+    MotorSpeedControllerParameters controller_parameters_;
     VehicleParameters vehicle_parameters_;
 
 private:
     //general
     bool initialized_params_;
-    EigenWrenchStamped thrust_;
+    pyramid_msgs::EigenWrenchStamped thrust_;
 
     //inverse allocation matrix
     Eigen::MatrixX4d thrust_to_rotor_velocities_;
