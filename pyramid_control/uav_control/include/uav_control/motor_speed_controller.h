@@ -6,7 +6,7 @@
 
 #include "uav_control/common.h"
 #include "uav_control/parameters.h"
-#include "uav_control/get_params.h"
+#include "uav_control/configurations.h"
 
 namespace motor_speed_control
 {

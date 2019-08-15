@@ -1,5 +1,5 @@
-#ifndef MOTOR_SPEED_CONTROLLER_GET_PARAMS_H
-#define MOTOR_SPEED_CONTROLLER_GET_PARAMS_H
+#ifndef MOTOR_SPEED_CONTROLLER_CONFIGURATIONS_H
+#define MOTOR_SPEED_CONTROLLER_CONFIGURATIONS_H
 
 #include <ros/ros.h>
 
@@ -80,4 +80,4 @@ inline void GetVehicleParameters(const ros::NodeHandle& nh, VehicleParameters* v
 
 } //namespace motor_speed_control
 
-#endif //MOTOR_SPEED_CONTROLLER_GET_PARAMS_H
+#endif //MOTOR_SPEED_CONTROLLER_CONFIGURATIONS_H
