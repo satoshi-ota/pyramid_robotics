@@ -1,31 +1,43 @@
-#ifndef MOTOR_SPEED_CONTROLLER_CONVERSIONS_H
-#define MOTOR_SPEED_CONTROLLER_CONVERSIONS_H
+#ifndef MOTOR_SPEED_CONTROLLER_COMMON_H
+#define MOTOR_SPEED_CONTROLLER_COMMON_H
 
-#include <ros/ros.h>
-#include <geometry_msgs/WrenchStamped.h>
-#include <pyramid_msgs/pyramid_eigen_msgs.h>
+#include <pyramid_msgs/conversions.h>
 
 #include "uav_control/parameters.h"
 
 namespace motor_speed_control
 {
 
-inline Eigen::Vector3d vector3FromMsg(const geometry_msgs::Vector3& msg)
+struct EigenWrenchStamped
 {
-  return Eigen::Vector3d(msg.x, msg.y, msg.z);
-}
+    EigenWrenchStamped()
+        :timestamp_ns(-1),
+         force_ET(Eigen::Vector3d::Zero()),
+         torque_ET(Eigen::Vector3d::Zero()){ }
 
-inline void eigenThrustFromMsg(const geometry_msgs::WrenchStampedPtr& msg,
-                                     pyramid_msgs::EigenWrenchStamped* thrust)
+    EigenWrenchStamped(const Eigen::Vector3d& _force, const Eigen::Vector3d& _torque)
+        :force_ET(_force),
+         torque_ET(_torque){ }
+
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+    int64_t timestamp_ns;  // Time since epoch, negative value = invalid timestamp.
+    Eigen::Vector3d force_ET;
+    Eigen::Vector3d torque_ET;
+
+    inline double getZforce() const {return force_ET.z();}
+    inline Eigen::Vector3d getTorque() const {return torque_ET;}
+};
+
+inline void eigenThrustFromMsg(const geometry_msgs::WrenchStampedPtr& msg, EigenWrenchStamped* thrust)
 {
     assert(thrust != NULL);
     thrust->timestamp_ns = msg->header.stamp.toNSec();
-    thrust->force_ET = vector3FromMsg(msg->wrench.force);
-    thrust->torque_ET = vector3FromMsg(msg->wrench.torque);
+    thrust->force_ET = pyramid_msgs::vector3FromMsg(msg->wrench.force);
+    thrust->torque_ET = pyramid_msgs::vector3FromMsg(msg->wrench.torque);
 }
 
 inline void calculateAllocationMatrix(const RotorConfiguration& rotor_configuration,
-                                        Eigen::Matrix4Xd* allocation_matrix)
+                                            Eigen::Matrix4Xd* allocation_matrix)
 {
     assert(allocation_matrix != nullptr);
     allocation_matrix->resize(4, rotor_configuration.rotors.size());
@@ -34,13 +46,13 @@ inline void calculateAllocationMatrix(const RotorConfiguration& rotor_configurat
     {
         // Set first row of allocation matrix.
         (*allocation_matrix)(0, i) = sin(rotor.angle) * rotor.arm_length
-                                        * rotor.rotor_force_constant;
+            * rotor.rotor_force_constant;
         // Set second row of allocation matrix.
         (*allocation_matrix)(1, i) = -cos(rotor.angle) * rotor.arm_length
-                                        * rotor.rotor_force_constant;
+            * rotor.rotor_force_constant;
         // Set third row of allocation matrix.
         (*allocation_matrix)(2, i) = -rotor.direction * rotor.rotor_force_constant
-                                        * rotor.rotor_moment_constant;
+            * rotor.rotor_moment_constant;
         // Set forth row of allocation matrix.
         (*allocation_matrix)(3, i) = rotor.rotor_force_constant;
         ++i;
@@ -59,4 +71,4 @@ inline void calculateAllocationMatrix(const RotorConfiguration& rotor_configurat
 
 } //namespace motor_speed_control
 
-#endif //MOTOR_SPEED_CONTROLLER_CONVERSIONS_H
+#endif //MOTOR_SPEED_CONTROLLER_COMMON_H

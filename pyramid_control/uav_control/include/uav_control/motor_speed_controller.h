@@ -2,15 +2,11 @@
 #define MOTOR_SPEED_CONTROLLER_H
 
 #include <ros/ros.h>
-
-#include <uav_control/conversions.h>
-#include <uav_control/parameters.h>
-#include <uav_control/get_params.h>
-
 #include <geometry_msgs/WrenchStamped.h>
-#include <pyramid_msgs/pyramid_eigen_msgs.h>
 
-
+#include "uav_control/common.h"
+#include "uav_control/parameters.h"
+#include "uav_control/get_params.h"
 
 namespace motor_speed_control
 {
@@ -38,7 +34,7 @@ public:
 
     void InitializeParameters();
 
-    void SetThrustMsg(const pyramid_msgs::EigenWrenchStamped& thrust);
+    void SetThrustMsg(const EigenWrenchStamped& thrust);
     void CalculateRotorVelocities(Eigen::VectorXd* rotor_velocities) const;
 
     MotorSpeedControllerParameters controller_parameters_;
@@ -47,7 +43,7 @@ public:
 private:
     //general
     bool initialized_params_;
-    pyramid_msgs::EigenWrenchStamped thrust_;
+    EigenWrenchStamped thrust_;
 
     //inverse allocation matrix
     Eigen::MatrixX4d thrust_to_rotor_velocities_;

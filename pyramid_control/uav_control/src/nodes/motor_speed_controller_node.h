@@ -9,7 +9,7 @@
 #include <mav_msgs/Actuators.h>
 #include <pyramid_msgs/pyramid_eigen_msgs.h>
 
-#include "uav_control/conversions.h"
+#include "uav_control/common.h"
 #include "uav_control/motor_speed_controller.h"
 
 namespace motor_speed_control

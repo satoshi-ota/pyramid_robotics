@@ -31,7 +31,7 @@ void MotorSpeedController::InitializeParameters()
     initialized_params_ = true;
 }
 
-void MotorSpeedController::SetThrustMsg(const pyramid_msgs::EigenWrenchStamped& thrust)
+void MotorSpeedController::SetThrustMsg(const EigenWrenchStamped& thrust)
 {
   thrust_ = thrust;
 }

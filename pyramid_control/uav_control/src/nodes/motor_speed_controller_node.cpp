@@ -29,7 +29,7 @@ void MotorSpeedControllerNode::ThrustCommandCB(const geometry_msgs::WrenchStampe
     ROS_INFO_ONCE("MotorSpeedConroller got first thrust msg.");
 
     //conversion
-    pyramid_msgs::EigenWrenchStamped desired_thrust;
+    EigenWrenchStamped desired_thrust;
     eigenThrustFromMsg(thrust_msg, &desired_thrust);
     motor_speed_controller_.SetThrustMsg(desired_thrust);
 
