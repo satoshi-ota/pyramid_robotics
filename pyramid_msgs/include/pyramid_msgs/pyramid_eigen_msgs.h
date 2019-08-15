@@ -22,6 +22,9 @@ struct EigenWrenchStamped
     int64_t timestamp_ns;  // Time since epoch, negative value = invalid timestamp.
     Eigen::Vector3d force_ET;
     Eigen::Vector3d torque_ET;
+
+    inline double getZforce() const {return force_ET.z();}
+    inline Eigen::Vector3d getTorque() const {return torque_ET;}
 };
 
 } //namespace pyramid_msgs
