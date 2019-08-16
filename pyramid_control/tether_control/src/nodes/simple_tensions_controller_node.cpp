@@ -62,7 +62,7 @@ int main(int argc, char** argv) {
     ros::NodeHandle private_nh("~");
     tensions_control::SimpleTensionsControllerNode simple_tensions_conrtoller_node(nh, private_nh);
 
-    Eigen::Vector4d desired_tensions(2.0, 0.0, 2.0, 0.0);
+    Eigen::Vector4d desired_tensions(0.0, 1.0, 1.0, 0.0);
 
     unsigned int hz = simple_tensions_conrtoller_node.hz();
     ros::Rate loop_rate(10);
