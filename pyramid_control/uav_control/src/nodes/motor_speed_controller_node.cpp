@@ -13,7 +13,7 @@ MotorSpeedControllerNode::MotorSpeedControllerNode(
     thrust_cmd_sub_ = nh_.subscribe("thrust_command", 1,
                             &MotorSpeedControllerNode::ThrustCommandCB, this);
 
-    motor_velocity_reference_pub_ = nh_.advertise<mav_msgs::Actuators>("motor_speed", 1);
+    motor_velocity_reference_pub_ = nh_.advertise<mav_msgs::Actuators>("/command/motor_speed", 1);
 }
 
 MotorSpeedControllerNode::~MotorSpeedControllerNode(){ }
