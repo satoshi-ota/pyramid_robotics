@@ -31,9 +31,6 @@
         <xacro:mp_500_tether_end name="${namespace}/tether_end">
         </xacro:mp_500_tether_end>
 
-        <xacro:counter_weight name="${namespace}/counter_weight">
-        </xacro:counter_weight>
-
         <!--+++++++++++++++++++laserscanner_front_link++++++++++++++++++++++++-->
         <!-- SENSORS -->
         <xacro:include filename="$(find neo_simulation)/robots/mp_500/xacros/sick_laser.xacro" />
