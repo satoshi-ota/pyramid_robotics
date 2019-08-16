@@ -1,4 +1,3 @@
-#include <ros/ros.h>
 #include "simple_tensions_controller_node.h"
 
 namespace tensions_control
@@ -12,7 +11,8 @@ SimpleTensionsControllerNode::SimpleTensionsControllerNode(
     InitializeParams();
 
     //publisher to tensions_msg
-    tensions_pub_ = nh_.advertise<sensor_msgs::JointState>("tensions_command", 1);
+    tensions_pub_ = nh_.advertise<sensor_msgs::JointState>
+                        (pyramid_msgs::default_topics::COMMAND_TENSIONS, 1);
 }
 
 SimpleTensionsControllerNode::~SimpleTensionsControllerNode(){ }

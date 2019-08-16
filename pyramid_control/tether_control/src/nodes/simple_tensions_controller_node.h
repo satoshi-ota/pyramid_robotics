@@ -3,9 +3,8 @@
 
 #include <ros/ros.h>
 #include <Eigen/Core>
-#include <ros/publisher.h>
-#include <ros/subscriber.h>
 #include <sensor_msgs/JointState.h>
+#include <pyramid_msgs/default_topics.h>
 
 namespace tensions_control
 {

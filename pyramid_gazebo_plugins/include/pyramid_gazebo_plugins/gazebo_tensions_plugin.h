@@ -7,6 +7,7 @@
 #include <ros/callback_queue.h>
 #include <sensor_msgs/JointState.h>
 #include <gazebo_msgs/LinkState.h>
+#include <pyramid_msgs/default_topics.h>
 
 namespace gazebo{
 

@@ -7,6 +7,7 @@
 #include <ros/ros.h>
 #include <geometry_msgs/WrenchStamped.h>
 #include <mav_msgs/Actuators.h>
+#include <pyramid_msgs/default_topics.h>
 
 #include "uav_control/common.h"
 #include "uav_control/motor_speed_controller.h"

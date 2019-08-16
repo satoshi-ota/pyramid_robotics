@@ -44,7 +44,7 @@ void TensionsPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
     if(model_->GetJointCount() != 0 && use_tether_)
     {
         ros::SubscribeOptions opt = ros::SubscribeOptions::create<sensor_msgs::JointState>(
-                    "tensions_command", 1,
+                    pyramid_msgs::default_topics::COMMAND_TENSIONS, 1,
                     boost::bind(&TensionsPlugin::TensionsCommandCB, this, _1),
                     ros::VoidPtr(),
                     &callback_queue_);
@@ -74,7 +74,8 @@ void TensionsPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
             }
         }
         //publish prismatic joints states
-        joint_state_publisher_ = rosnode_.advertise<sensor_msgs::JointState>("tether_states", 1);
+        joint_state_publisher_ = rosnode_.advertise<sensor_msgs::JointState>
+                                    (pyramid_msgs::default_topics::STATE_TETHER, 1);
         joint_states_.name = joint_names;
         joint_states_.position.resize(joints_.size());
         joint_states_.velocity.resize(joints_.size());
