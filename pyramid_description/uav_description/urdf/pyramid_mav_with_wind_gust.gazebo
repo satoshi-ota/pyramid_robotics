@@ -32,7 +32,7 @@
     wind_gust_direction="1 1 0"
     wind_gust_duration="100"
     wind_gust_start="10"
-    wind_gust_force_mean="30"
+    wind_gust_force_mean="2"
     wind_speed_mean="0"
     use_custom_static_wind_field="false"
     custom_wind_field_path="$(find rotors_gazebo)/models/hemicyl/wind_field_hemicyl.txt">
