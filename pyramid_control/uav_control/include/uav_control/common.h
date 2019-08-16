@@ -1,6 +1,8 @@
 #ifndef MOTOR_SPEED_CONTROLLER_COMMON_H
 #define MOTOR_SPEED_CONTROLLER_COMMON_H
 
+#include <assert.h>
+
 #include <pyramid_msgs/conversions.h>
 
 #include "uav_control/parameters.h"
