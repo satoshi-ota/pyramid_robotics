@@ -3,6 +3,7 @@
 
 #include <Eigen/Eigen>
 #include <geometry_msgs/Vector3.h>
+#include <geometry_msgs/Quaternion.h>
 
 #include "pyramid_msgs/conversions.h"
 
