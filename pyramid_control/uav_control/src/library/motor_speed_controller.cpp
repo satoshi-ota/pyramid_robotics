@@ -26,7 +26,7 @@ void MotorSpeedController::InitializeParameters()
     initialized_params_ = true;
 }
 
-void MotorSpeedController::SetThrustMsg(const EigenWrenchStamped& thrust)
+void MotorSpeedController::SetThrust(const EigenWrenchStamped& thrust)
 {
   thrust_ = thrust;
 }

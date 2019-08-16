@@ -34,7 +34,7 @@ public:
 
     void InitializeParameters();
 
-    void SetThrustMsg(const EigenWrenchStamped& thrust);
+    void SetThrust(const EigenWrenchStamped& thrust);
     void CalculateRotorVelocities(Eigen::VectorXd* rotor_velocities) const;
 
     MotorSpeedControllerParameters controller_parameters_;

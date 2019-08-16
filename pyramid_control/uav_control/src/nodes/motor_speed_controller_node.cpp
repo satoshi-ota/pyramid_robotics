@@ -32,7 +32,7 @@ void MotorSpeedControllerNode::ThrustCommandCB(const geometry_msgs::WrenchStampe
     //conversion
     EigenWrenchStamped desired_thrust;
     eigenThrustFromMsg(thrust_msg, &desired_thrust);
-    motor_speed_controller_.SetThrustMsg(desired_thrust);
+    motor_speed_controller_.SetThrust(desired_thrust);
 
     //calculate motor speed
     Eigen::VectorXd ref_rotor_velocities;
