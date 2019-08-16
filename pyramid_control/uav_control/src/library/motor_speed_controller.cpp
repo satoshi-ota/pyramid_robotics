@@ -16,17 +16,12 @@ void MotorSpeedController::InitializeParameters()
     //calculate allocation matrix from vehicle parameters
     calculateAllocationMatrix(vehicle_parameters_.rotor_configuration_, &(controller_parameters_.allocation_matrix_));
 
-    Eigen::Matrix4d I;
-    I.setZero();
-    I.block<3, 3>(0, 0) = vehicle_parameters_.inertia_;
-    I(3, 3) = 1;
-
     //calculate inverse allocation matrix
     thrust_to_rotor_velocities_.resize(vehicle_parameters_.rotor_configuration_.rotors.size(), 4);
 
     thrust_to_rotor_velocities_ = controller_parameters_.allocation_matrix_.transpose()
         * (controller_parameters_.allocation_matrix_
-        * controller_parameters_.allocation_matrix_.transpose()).inverse() * I;
+        * controller_parameters_.allocation_matrix_.transpose()).inverse();
 
     initialized_params_ = true;
 }
