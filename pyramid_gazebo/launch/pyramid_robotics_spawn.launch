@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <launch>
-  <arg name="mav_name" default="firefly"/>
+  <arg name="mav_name" default="pelican"/>
   <arg name="namespace" default="$(arg mav_name)"/>
   <arg name="model" default="$(find uav_description)/urdf/pyramid_$(arg mav_name)_base.xacro"/>
   <arg name="tf_prefix" default="$(optenv ROS_NAMESPACE)"/>
@@ -41,5 +41,5 @@
          -model $(arg namespace)"
    respawn="false" output="screen">
   </node>
-  <node name="rviz" pkg="rviz" type="rviz" required="true" />
+
 </launch>

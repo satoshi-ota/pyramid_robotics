@@ -11,7 +11,7 @@
 
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
         <arg name="world_name" value="$(find rotors_gazebo)/worlds/$(arg world_name).world"/>
-        <arg name="paused" value="true" />
+        <arg name="paused" value="false" />
     </include>
 
     <group ns="$(arg mav_name)">
@@ -24,12 +24,9 @@
             <arg name="use_tether" value="$(arg use_tether)"/>
             <arg name="enable_wind" value="$(arg enable_wind)"/>
         </include>
-        <node name="lee_position_controller_node" pkg="rotors_control" type="lee_position_controller_node" output="screen">
-            <rosparam command="load" file="$(find rotors_gazebo)/resource/lee_controller_$(arg mav_name).yaml" />
-            <rosparam command="load" file="$(find rotors_gazebo)/resource/$(arg mav_name).yaml" />
-            <remap from="odometry" to="odometry_sensor1/odometry" />
+        <node name="motor_speed_controller_node" pkg="uav_control" type="motor_speed_controller_node" output="screen">
+            <rosparam command="load" file="$(find pyramid_gazebo)/config/pyramid_$(arg mav_name).yaml" />
         </node>
-        <node name="pyramid_hovering_example" pkg="uav_description" type="pyramid_hovering_example" output="screen"/>
         <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
     </group>
 
@@ -37,5 +34,5 @@
         <node name="rviz" pkg="rviz" type="rviz" required="true" />
     </group>
 
-    <node pkg="ugv_control" type="pyramid_teleop_keyboard.py" name="teleop_keyboard"  output="screen"/>
+    <node name="rqt_ez_publisher" pkg="rqt_ez_publisher" type="rqt_ez_publisher" />
 </launch>
