@@ -16,5 +16,6 @@
   <depend>sensor_msgs</depend>
   <depend>gazebo_ros</depend>
   <depend>roslib</depend>
+  <depend>pyramid_msgs</depend>
 
 </package>

@@ -8,14 +8,10 @@
   <author>Ota Satoshi</author>
   <license>MIT License</license>
 
-  <url type="website">http://wiki.ros.org/pyramid_gazebo</url>
-
   <buildtool_depend>catkin</buildtool_depend>
   <depend>geometry_msgs</depend>
-  <depend>rosbag</depend>
   <depend>roscpp</depend>
   <depend>sensor_msgs</depend>
-  <depend>cmake_modules</depend>
-  <depend>roslib</depend>
+  <depend>pyramid_msgs</depend>
 
 </package>

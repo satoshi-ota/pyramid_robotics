@@ -4,12 +4,9 @@ add_compile_options(-std=c++11)
 
 find_package(catkin REQUIRED COMPONENTS
     geometry_msgs
-    mav_msgs
-    rosbag
     roscpp
     sensor_msgs
-    cmake_modules
-    roslib
+    pyramid_msgs
 )
 
 find_package(Eigen3 REQUIRED)
@@ -17,7 +14,7 @@ find_package(Eigen3 REQUIRED)
 catkin_package(
     INCLUDE_DIRS include ${Eigen3_INCLUDE_DIRS}
     LIBRARIES tether_control
-    CATKIN_DEPENDS geometry_msgs rosbag roscpp sensor_msgs roslib
+    CATKIN_DEPENDS geometry_msgs roscpp sensor_msgs pyramid_msgs
     DEPENDS Eigen3
 )
 
