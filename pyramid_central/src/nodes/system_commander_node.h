@@ -43,7 +43,7 @@ private: //member data
     ros::Publisher thrust_pub_;
 
 private: //member function
-    void DesiredTrajectryCB(const trajectry_msgs::MultiDOFJointTrajectryPtr& trajectry_msg);
+    void DesiredTrajectoryCB(const trajectory_msgs::MultiDOFJointTrajectoryPtr& trajectory_msg);
     void FeedbackOdometryCB(const geometry_msgs::OdometryPtr& odometry_msg);
     void FeedbackImuCB(const sensor_msgs::ImuPtr& imu_msg);
 

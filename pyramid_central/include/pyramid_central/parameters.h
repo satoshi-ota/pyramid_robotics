@@ -74,28 +74,28 @@ struct Tether
     Tether()
         :mounting_pos_(Eigen::Vector3d::Zero()),
          direction_(Eigen::Vector3d::Zero()),
-         tensions_(0.0){ }
+         tension_(0.0){ }
 
     Tether(Eigen::Vector3d _mounting_pos,
            Eigen::Vector3d _direction,
            double _tension)
         :mounting_pos_(_mounting_pos),
          direction_(_direction),
-         tensions_(_tension){ }
+         tension_(_tension){ }
 
     Eigen::Vector3d mounting_pos_; //body-fixed frame
     Eigen::Vector3d direction_; //global frame
     double tension_;
 };
 
-struct TetherConfiguration
+struct TetherStates
 {
-    TetherConfiguration()
+    TetherStates()
     {
 
     }
 
-    std::vector<Tether> tethers
+    std::vector<Tether> tethers;
 };
 
 class VehicleParameters {

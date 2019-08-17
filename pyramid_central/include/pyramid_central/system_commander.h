@@ -2,9 +2,9 @@
 #define PYRAMID_CENTRAL_SYSTEM_COMMANDER_H
 
 #include <ros/ros.h>
-#include <geometry_msgs/Odometry.h>
+#include <nav_msgs/Odometry.h>
 #include <sensor_msgs/Imu.h>
-#include <trajectry_msgs/MultiDOFJointTrajectry.h>
+#include <trajectory_msgs/MultiDOFJointTrajectory.h>
 
 #include "pyramid_central/common.h"
 #include "pyramid_central/configurations.h"
@@ -21,13 +21,16 @@ public:
 
     Eigen::Matrix3d rotation_matrix_;
     Eigen::Matrix3d global_inertia_;
+    Eigen::Matrix3d angular_mapping_matrix_;
 
-    Eigen::Matrix6d spatial_mass_matrix_;
-    Eigen::Matrix6d centrifugal_coriolis_matrix_;
-    Eigen::Matrix6d angular_derivative_matrix_;
+    Eigen::Matrix<double, 6, 6> spatial_mass_matrix_;
+    Eigen::Matrix<double, 6, 6> centrifugal_coriolis_matrix_;
+
     Eigen::MatrixXd jacobian_;
 
-    TetherConfiguration tether_configuration_;
+    Eigen::VectorXd wrench_;
+
+    TetherStates tether_states_;
 
     RotorConfiguration rotor_configuration_;
 };
@@ -40,25 +43,24 @@ public:
 
     void UpdateParams();
 
-    void SetDesiredTrajectry(const EigenMultiDOFJointTrajectry& trajectory);
+    void SetDesiredTrajectory(const EigenMultiDOFJointTrajectory& trajectory);
     void SetFeedbackOdometry(const EigenOdometry& odometry);
 
-    void CalculateSystemDynamicsParameters();
-    void CalculateAcceleration();
-    void CalculateTensions();
+    void CalculateInputAcc();
+    void CalculateConrolVariable();
 
     SystemParameters system_parameters_;
     VehicleParameters vehicle_parameters_;
 
 
 private: //member data
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
     //general
     ros::NodeHandle nh_;
     ros::NodeHandle private_nh_;
 
-    //parameters
-    SystemParameters system_parameters_;
-    VehicleParameters vehicle_parameters_;
+    //variable
+    Eigen::VectorXd control_input_;
 
     //linear
     Eigen::Vector3d desired_position_;
@@ -71,7 +73,7 @@ private: //member data
     Eigen::Vector3d desired_angular_acceleration_;
 
     //goal
-    trajectry_msgs::MultiDOFJointTrajectry desired_trajectry_;
+    trajectory_msgs::MultiDOFJointTrajectory desired_trajectory_;
 
     //feedback
     EigenOdometry odometry_;

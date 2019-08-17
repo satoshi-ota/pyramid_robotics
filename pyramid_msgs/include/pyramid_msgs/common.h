@@ -5,14 +5,17 @@
 #include <geometry_msgs/Vector3.h>
 #include <geometry_msgs/Quaternion.h>
 
-#include "pyramid_msgs/conversions.h"
-
 namespace pyramid_msgs
 {
 
 inline Eigen::Vector3d vector3FromMsg(const geometry_msgs::Vector3& msg)
 {
     return Eigen::Vector3d(msg.x, msg.y, msg.z);
+}
+
+inline Eigen::Vector3d vector3FromPointMsg(const geometry_msgs::Point& msg)
+{
+  return Eigen::Vector3d(msg.x, msg.y, msg.z);
 }
 
 inline Eigen::Quaterniond quaternionFromMsg(const geometry_msgs::Quaternion& msg)

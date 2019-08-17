@@ -45,11 +45,10 @@ void DesiredTrajectryCB(const trajectry_msgs::MultiDOFJointTrajectryPtr& traject
     system_commander_.CalculateSystemDynamicsParameters();
 
     //acc = acc_d + Kd(vel_d - vel) + Kp(pos_d - pos)
-    system_commander_.CalculateAcceleration();
+    system_commander_.CalculateInputAcc();
 
     //calculate controlled variable
-    system_commander_.CalculateTensions();
-    system_commander_.CalculateThrust();
+    system_commander_.CalculateConrolVariable();
 
     //publish desired tensions
     Eigen::VectorXd desired_tensions;
