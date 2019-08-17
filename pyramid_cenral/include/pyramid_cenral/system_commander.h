@@ -20,9 +20,11 @@ public:
     ~SystemParameters(){ }
 
     Eigen::Matrix3d rotation_matrix_;
+    Eigen::Matrix3d global_inertia_;
 
     Eigen::Matrix6d spatial_mass_matrix_;
     Eigen::Matrix6d centrifugal_coriolis_matrix_;
+    Eigen::Matrix6d angular_derivative_matrix_;
     Eigen::MatrixXd jacobian_;
 
     TetherConfiguration tether_configuration_;
@@ -46,6 +48,8 @@ public:
     void CalculateTensions();
 
     SystemParameters system_parameters_;
+    VehicleParameters vehicle_parameters_;
+
 
 private: //member data
     //general

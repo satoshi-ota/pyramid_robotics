@@ -107,12 +107,27 @@ inline void CalculateRotationMatrix(const Eigen::Quaterniond& orientation,
     rotation_matrix = orientation.toRotationMatrix();
 }
 
-inline void CalculateSpatialInertiaMatrix(const RotorConfiguration& rotor_configuration)
+inline void CalculateGlobalInertia(const VehicleParameters& vehicle_parameters,
+                                   const Eigen::Matrix3d& rotation_matrix,
+                                   const Eigen::Matrix3d& global_inertia)
 {
-
+    grobal_inertia = rotation_matrix * vehicle_parameters.inertia_ * rotation_matrix.transpose();
 }
 
-inline void CalculateCentrifugalCoriolisMatrix()
+inline void CalculateSpatialInertiaMatrix(const VehicleParameters& vehicle_parameters,
+                                          const Eigen::Matrix3d& global_inertia,
+                                          const Eigen::Matrix3d& angular_derivative_matrix,
+                                          const Eigen::Matrix6d& spatial_mass_matrix)
+{
+    Eigen::Matrix3d I = Eigen::Matrix3d::Identity();
+    spatial_mass_matrix.block<3, 3>(0, 0)
+        = vehicle_parameters.mass_ * I;
+    spatial_mass_matrix.block<3, 3>(3, 3)
+        = angular_derivative_matrix.transpose() * global_inertia * angular_derivative_matrix;
+}
+
+inline void CalculateCentrifugalCoriolisMatrix(const Eigen::Matrix3d& global_inertia,
+                                               const Eigen::Matrix3d& angular_derivative_matrix)
 {
 
 }

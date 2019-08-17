@@ -10,7 +10,11 @@ SystemCommander::~SystemCommander(){ }
 void SystemCommander::UpdateParams()
 {
     CalculateRotationMatrix(odometry_.orientation_EO, system_parameters_.rotation_matrix_);
-    CalculateSpatialInertiaMatrix(rotor_configuration_, &rotation_matrix_, &spatial_mass_matrix_);
+    CalculateGlobalInertia(vehicle_parameters_, &rotation_matrix_, &global_inertia_);
+
+    CalculateAngularDrivativeMatrix();
+    CalculateSpatialInertiaMatrix(vehicle_parameters_, &rotation_matrix_,
+                                  &spatial_mass_matrix_, &angular_derivative_matrix_);
     CalculateCentrifugalCoriolisMatrix();
     CalculateJacobian();
 }
