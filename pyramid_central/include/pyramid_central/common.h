@@ -103,7 +103,8 @@ struct EigenOdometry {
 };
 
 inline void getEulerAnglesFromQuaternion(const Eigen::Quaternion<double>& q,
-                                         Eigen::Vector3d* euler_angles) {
+                                               Eigen::Vector3d* euler_angles)
+{
   {
     assert(euler_angles != NULL);
 
@@ -122,107 +123,125 @@ inline void skewMatrixFromVector(Eigen::Vector3d& vector, Eigen::Matrix3d* skew_
 }
 
 inline void eigenOdometryFromMsg(const nav_msgs::OdometryConstPtr& msg,
-                                 EigenOdometry* odometry) {
+                                       EigenOdometry* odometry)
+{
   odometry->position_EO = pyramid_msgs::vector3FromPointMsg(msg->pose.pose.position);
   odometry->orientation_EO = pyramid_msgs::quaternionFromMsg(msg->pose.pose.orientation);
   odometry->velocity_EO = pyramid_msgs::vector3FromMsg(msg->twist.twist.linear);
   odometry->angular_velocity_EO = pyramid_msgs::vector3FromMsg(msg->twist.twist.angular);
 }
 
+inline void CalculateTetherDirections(TetherConfiguration& tether_configuration,
+                                      const EigenOdometry& odometry,
+                                      const Eigen::Matrix3d& rotation_matrix,
+                                      const Eigen::Vector3d& anchor_positions)
+{
+    unsigned int i = 0;
+    for (Tether& tether : tether_configuration.tethers)
+    {
+        tether.direction = anchor_positions.block<3, 1>(i*3, 0) - odometry.position_EO
+                           - rotation_matrix * tether.mounting_pos;
+        ++i;
+    }
+}
+
 inline void CalculateRotationMatrix(const Eigen::Quaterniond& orientation,
-                                          Eigen::Matrix3d& rotation_matrix)
+                                          Eigen::Matrix3d* rotation_matrix)
 {
-    rotation_matrix = orientation.toRotationMatrix();
+    *rotation_matrix = orientation.toRotationMatrix();
 }
 
-inline void CalculateGlobalInertia(const Eigen::Matrix3d* rotation_matrix,
-                                   const Eigen::Matrix3d* global_inertia)
+inline void CalculateGlobalInertia(const Eigen::Matrix3d& inertia,
+                                   const Eigen::Matrix3d& rotation_matrix,
+                                         Eigen::Matrix3d* global_inertia)
 {
-    global_inertia = rotation_matrix * vehicle_parameters_.inertia_ * rotation_matrix.transpose();
+    *global_inertia = rotation_matrix * inertia * rotation_matrix.transpose();
 }
 
-inline void CalculateAngularMappingMatrix(const Eigen::Quaterniond& orientation)
+inline void CalculateAngularMappingMatrix(const Eigen::Quaterniond& orientation,
+                                                Eigen::Matrix3d* angular_mapping_matrix)
 {
-    Eigen::Vector3d euler_angle;
-    getEulerAnglesFromQuaternion(orientation, euler_angle);
+    Eigen::Vector3d euler_angles;
+    getEulerAnglesFromQuaternion(orientation, &euler_angles);
 
-    angular_mapping_matrix << 1,  0,                   -sin(euler_angle(1)),
-                              0,  cos(euler_angle(0)),  cos(euler_angle(1))*sin(euler_angle(0)),
-                              0, -sin(euler_angle(0)),  cos(euler_angle(1))*cos(euler_angle(0));
+    *angular_mapping_matrix << 1,  0,                   -sin(euler_angles(1)),
+                              0,  cos(euler_angles(0)),  cos(euler_angles(1))*sin(euler_angles(0)),
+                              0, -sin(euler_angles(0)),  cos(euler_angles(1))*cos(euler_angles(0));
 }
 
-inline void CalculateDrivativeAngularMappingMatrix(const Eigen::Quaterniond& orientation)
+inline void CalculateDrivativeAngularMappingMatrix(
+                                            const Eigen::Quaterniond& orientation,
+                                                  Eigen::Matrix3d* derivative_angular_mapping_matrix)
 {
-    Eigen::Vector3d euler_angle;
-    getEulerAnglesFromQuaternion(orientation, euler_angle);
+    Eigen::Vector3d euler_angles;
+    getEulerAnglesFromQuaternion(orientation, &euler_angles);
 
-    angular_mapping_matrix << 1,  0,                   -sin(euler_angle(1)),
-                              0,  cos(euler_angle(0)),  cos(euler_angle(1))*sin(euler_angle(0)),
-                              0, -sin(euler_angle(0)),  cos(euler_angle(1))*cos(euler_angle(0));
+    *derivative_angular_mapping_matrix
+                            << 1,  0,                   -sin(euler_angles(1)),
+                               0,  cos(euler_angles(0)),  cos(euler_angles(1))*sin(euler_angles(0)),
+                               0, -sin(euler_angles(0)),  cos(euler_angles(1))*cos(euler_angles(0));
 }
 
-inline void CalculateSpatialInertiaMatrix(const VehicleParameters& vehicle_parameters,
-                                          const Eigen::Matrix3d* global_inertia,
-                                          const Eigen::Matrix3d* angular_mapping_matrix,
-                                          const Eigen::MatrixXd* spatial_mass_matrix)
+inline void CalculateSpatialInertiaMatrix(const SystemParameters& system_parameters,
+                                          const Eigen::Matrix3d& global_inertia,
+                                          const Eigen::Matrix3d& angular_mapping_matrix,
+                                                Eigen::MatrixXd& spatial_mass_matrix)
 {
     Eigen::Matrix3d I = Eigen::Matrix3d::Identity();
     spatial_mass_matrix.block<3, 3>(0, 0)
-        = I.array() * vehicle_parameters.mass_ ;
+        = system_parameters.mass_ * I.array();
     spatial_mass_matrix.block<3, 3>(3, 3)
         = angular_mapping_matrix.transpose() * global_inertia * angular_mapping_matrix;
 }
 
-inline void CalculateCentrifugalCoriolisMatrix(const Eigen::Vector3d* angular_velocity,
-                                               const Eigen::Matrix3d* global_inertia,
-                                               const Eigen::Matrix3d* angular_mapping_matrix,
-                                               const Eigen::MatrixXd* centrifugal_coriolis_matrix)
+inline void CalculateCentrifugalCoriolisMatrix(const Eigen::Vector3d& angular_velocity,
+                                               const Eigen::Matrix3d& global_inertia,
+                                               const Eigen::Matrix3d& angular_mapping_matrix,
+                                               const Eigen::Matrix3d&
+                                                     derivative_angular_mapping_matrix,
+                                                     Eigen::MatrixXd& centrifugal_coriolis_matrix)
 {
     Eigen::Matrix3d skew_matrix;
-    skewMatrixFromVector(angular_velocity, skew_matrix);
-    Eigen::Matrix3d derivative_angular_mapping_matrix;
-    CalculateDrivativeAngularMappingMatrix(derivative_angular_mapping_matrix);
+    Eigen::Vector3d omega = angular_velocity;
+    skewMatrixFromVector(omega, &skew_matrix);
     Eigen::Matrix3d C;
-    C = angular_mapping_matrix.transpose()*global_inertia*derivative_angular_mapping_matrix
-        +angular_mapping_matrix.transpose()*skew_matrix*global_inertia*angular_mapping_matrix;
+    C = angular_mapping_matrix.transpose() * global_inertia * derivative_angular_mapping_matrix
+        + angular_mapping_matrix.transpose() * skew_matrix * global_inertia * angular_mapping_matrix;
 
     centrifugal_coriolis_matrix.block<3, 3>(3, 3) = C;
 }
 
-inline void CalculateJacobian(const TetherConfiguration& tether_states,
-                              const RotorConfiguration& rotor_configuration,
-                              const Eigen::Matrix3d* rotation_matrix
-                              const Eigen::MatrixXd* jacobian)
+inline void CalculateJacobian(const TetherConfiguration& tether_configuration,
+                              const Eigen::Matrix3d& rotation_matrix,
+                                    Eigen::MatrixXd& jacobian)
 {
     Eigen::VectorXd J;
     J.resize(6);
-    jacobian->resize(4, 6);
+    jacobian.resize(4, 6);
     unsigned int i = 0;
-    for (const Tether& tether : tether_states.tethers)
+    for (const Tether& tether : tether_configuration.tethers)
     {
-
-        J.block<3, 1>(0, 0) = tether.direction_;
-        J.block<3, 1>(3, 0) = rotation_matrix * tether.mounting_pos_;
+        J.block<3, 1>(0, 0) = tether.direction;
+        J.block<3, 1>(3, 0) = rotation_matrix * tether.mounting_pos;
         jacobian.block<1, 3>(i, 0) = J;
 
         ++i;
     }
 }
 
-inline void CalculateWrench(const RotorConfiguration& rotor_configuration,
+inline void CalculateWrench(const SystemParameters& system_parameters,
                             const EigenOdometry& odometry,
-                            const Eigen::MatrixXd* spatial_mass_matrix,
-                            const Eigen::MatrixXd* centrifugal_coriolis_matrix,
-                            const Eigen::VectorXd* input_acc,
-                            const Eigen::VectorXd* wrench)
+                            const Eigen::MatrixXd& spatial_mass_matrix,
+                            const Eigen::MatrixXd& centrifugal_coriolis_matrix,
+                            const Eigen::VectorXd& input_acc,
+                                  Eigen::VectorXd* wrench)
 {
     Eigen::VectorXd V;
     V.block<3, 1>(0, 0) = odometry.velocity_EO;
     V.block<3, 1>(3, 0) = odometry.angular_velocity_EO;
     Eigen::VectorXd G = Eigen::VectorXd::Zero(6);
-    G(2) = rotor_configuration.mass_ * kDefaultGravity;
-    wrench = spatial_mass_matrix * input_acc
-             + centrifugal_coriolis_matrix * V + G;
+    G(2) = system_parameters.mass_ * kDefaultGravity;
+    *wrench = spatial_mass_matrix * input_acc + centrifugal_coriolis_matrix * V + G;
 }
 
 } //namespace system_commander

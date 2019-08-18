@@ -12,46 +12,23 @@
 namespace system_commander
 {
 
-class SystemParameters
-{
-public:
-    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-    SystemParameters(){ }
-    ~SystemParameters(){ }
-
-    Eigen::Matrix3d rotation_matrix_;
-    Eigen::Matrix3d global_inertia_;
-    Eigen::Matrix3d angular_mapping_matrix_;
-
-    Eigen::Matrix<double, 6, 6> spatial_mass_matrix_;
-    Eigen::Matrix<double, 6, 6> centrifugal_coriolis_matrix_;
-
-    Eigen::MatrixXd jacobian_;
-
-    Eigen::VectorXd wrench_;
-
-    TetherStates tether_states_;
-
-    RotorConfiguration rotor_configuration_;
-};
-
 class SystemCommander
 {
 public:
     SystemCommander(const ros::NodeHandle& nh, const ros::NodeHandle& private_nh);
     ~SystemCommander();
 
-    void UpdateParams();
-
     void SetDesiredTrajectory(const EigenMultiDOFJointTrajectory& trajectory);
     void SetFeedbackOdometry(const EigenOdometry& odometry);
+
+    void UpdateTetherDirections(const EigenOdometry& odometry);
+    void UpdateDynamicParams();
 
     void CalculateInputAcc();
     void CalculateConrolVariable();
 
+    //from parameters.h
     SystemParameters system_parameters_;
-    VehicleParameters vehicle_parameters_;
-
 
 private: //member data
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
@@ -60,7 +37,19 @@ private: //member data
     ros::NodeHandle private_nh_;
 
     //variable
-    Eigen::VectorXd control_input_;
+    Eigen::Matrix3d rotation_matrix_; //R
+    Eigen::Matrix3d global_inertia_; //I_g
+    Eigen::Matrix3d angular_mapping_matrix_; //S
+    Eigen::Matrix3d derivative_angular_mapping_matrix_; //S
+
+    Eigen::Matrix<double, 6, 6> spatial_mass_matrix_; //M
+    Eigen::Matrix<double, 6, 6> centrifugal_coriolis_matrix_; //C
+
+    Eigen::MatrixXd jacobian_; //J
+
+    Eigen::VectorXd wrench_; //f
+
+    Eigen::VectorXd control_input_; //u
 
     //linear
     Eigen::Vector3d desired_position_;
@@ -78,6 +67,9 @@ private: //member data
     //feedback
     EigenOdometry odometry_;
     sensor_msgs::Imu imu_;
+
+    //anchor pos
+    Eigen::VectorXd anchor_positions_;
 
 
 };

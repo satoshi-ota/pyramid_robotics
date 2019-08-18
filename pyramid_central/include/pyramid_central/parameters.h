@@ -72,25 +72,25 @@ struct RotorConfiguration {
 struct Tether
 {
     Tether()
-        :mounting_pos_(Eigen::Vector3d::Zero()),
-         direction_(Eigen::Vector3d::Zero()),
-         tension_(0.0){ }
+        :mounting_pos(Eigen::Vector3d::Zero()),
+         direction(Eigen::Vector3d::Zero()),
+         tension(0.0){ }
 
     Tether(Eigen::Vector3d _mounting_pos,
            Eigen::Vector3d _direction,
            double _tension)
-        :mounting_pos_(_mounting_pos),
-         direction_(_direction),
-         tension_(_tension){ }
+        :mounting_pos(_mounting_pos),
+         direction(_direction),
+         tension(_tension){ }
 
-    Eigen::Vector3d mounting_pos_; //body-fixed frame
-    Eigen::Vector3d direction_; //global frame
-    double tension_;
+    Eigen::Vector3d mounting_pos; //body-fixed frame
+    Eigen::Vector3d direction; //global frame
+    double tension;
 };
 
-struct TetherStates
+struct TetherConfiguration
 {
-    TetherStates()
+    TetherConfiguration()
     {
 
     }
@@ -98,10 +98,10 @@ struct TetherStates
     std::vector<Tether> tethers;
 };
 
-class VehicleParameters {
+class SystemParameters {
  public:
   EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-  VehicleParameters()
+  SystemParameters()
       : mass_(kDefaultMass),
         gravity_(kDefaultGravity),
         inertia_(Eigen::Vector3d(kDefaultInertiaXx, kDefaultInertiaYy,
@@ -110,6 +110,7 @@ class VehicleParameters {
   const double gravity_;
   Eigen::Matrix3d inertia_;
   RotorConfiguration rotor_configuration_;
+  TetherConfiguration tether_configuration_;
 };
 
 }

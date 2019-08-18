@@ -50,32 +50,32 @@ inline void GetRotorConfiguration(const ros::NodeHandle& nh,
     }
 }
 
-inline void GetVehicleParameters(const ros::NodeHandle& nh, VehicleParameters* vehicle_parameters) {
+inline void GetSystemParameters(const ros::NodeHandle& nh, SystemParameters* system_parameters) {
     GetRosParameter(nh, "mass",
-        vehicle_parameters->mass_,
-        &vehicle_parameters->mass_);
+        system_parameters->mass_,
+        &system_parameters->mass_);
     GetRosParameter(nh, "inertia/xx",
-        vehicle_parameters->inertia_(0, 0),
-        &vehicle_parameters->inertia_(0, 0));
+        system_parameters->inertia_(0, 0),
+        &system_parameters->inertia_(0, 0));
     GetRosParameter(nh, "inertia/xy",
-        vehicle_parameters->inertia_(0, 1),
-        &vehicle_parameters->inertia_(0, 1));
-        vehicle_parameters->inertia_(1, 0) = vehicle_parameters->inertia_(0, 1);
+        system_parameters->inertia_(0, 1),
+        &system_parameters->inertia_(0, 1));
+        system_parameters->inertia_(1, 0) = system_parameters->inertia_(0, 1);
     GetRosParameter(nh, "inertia/xz",
-        vehicle_parameters->inertia_(0, 2),
-        &vehicle_parameters->inertia_(0, 2));
-        vehicle_parameters->inertia_(2, 0) = vehicle_parameters->inertia_(0, 2);
+        system_parameters->inertia_(0, 2),
+        &system_parameters->inertia_(0, 2));
+        system_parameters->inertia_(2, 0) = system_parameters->inertia_(0, 2);
     GetRosParameter(nh, "inertia/yy",
-        vehicle_parameters->inertia_(1, 1),
-        &vehicle_parameters->inertia_(1, 1));
+        system_parameters->inertia_(1, 1),
+        &system_parameters->inertia_(1, 1));
     GetRosParameter(nh, "inertia/yz",
-        vehicle_parameters->inertia_(1, 2),
-        &vehicle_parameters->inertia_(1, 2));
-        vehicle_parameters->inertia_(2, 1) = vehicle_parameters->inertia_(1, 2);
+        system_parameters->inertia_(1, 2),
+        &system_parameters->inertia_(1, 2));
+        system_parameters->inertia_(2, 1) = system_parameters->inertia_(1, 2);
     GetRosParameter(nh, "inertia/zz",
-        vehicle_parameters->inertia_(2, 2),
-        &vehicle_parameters->inertia_(2, 2));
-    GetRotorConfiguration(nh, &vehicle_parameters->rotor_configuration_);
+        system_parameters->inertia_(2, 2),
+        &system_parameters->inertia_(2, 2));
+    GetRotorConfiguration(nh, &system_parameters->rotor_configuration_);
 }
 
 } //namespace system_commander

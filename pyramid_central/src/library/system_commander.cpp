@@ -3,11 +3,17 @@
 namespace system_commander
 {
 
-SystemCommander::SystemCommander(){ }
+SystemCommander::SystemCommander(const ros::NodeHandle& nh, const ros::NodeHandle& private_nh){ }
 
 SystemCommander::~SystemCommander(){ }
 
-void SystemCommander::UpdateParams()
+void SystemCommander::UpdateTetherDirections()
+{
+    CalculateTetherDirections(system_parameters_.tether_configuration_,
+                              odometry_, rotation_matrix_, anchor_positions_);
+}
+
+void SystemCommander::UpdateDynamicParams()
 {
 
     CalculateRotationMatrix(odometry_.orientation_EO, &rotation_matrix_);
