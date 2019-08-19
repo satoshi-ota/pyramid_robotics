@@ -26,7 +26,10 @@ public:
     void UpdateDynamicParams();
 
     void CalculateInputAcc();
-    void CalculateConrolVariable(Eigen::VectorXd* control_input);
+    void CalculateConrolVariable();
+
+    inline Eigen::Vector4d getTensions(){return tensions_;};
+    inline EigenThrust getThrust(){return thrust_;};
 
     //from parameters.h
     SystemParameters system_parameters_;
@@ -48,8 +51,8 @@ private: //member data
 
     Eigen::MatrixXd jacobian_; //J
 
-    Eigen::VectorXd wrench_; //f
-    Eigen::VectorXd input_acc_;
+    Eigen::Matrix<double, 6, 1> wrench_; //f
+    Eigen::Matrix<double, 6, 1> input_acceleration_;
 
     //linear
     Eigen::Vector3d desired_position_;
@@ -66,6 +69,10 @@ private: //member data
 
     //feedback
     EigenOdometry odometry_;
+
+    //countoller output
+    Eigen::Vector4d tensions_;
+    EigenThrust thrust_;
 
 };
 
