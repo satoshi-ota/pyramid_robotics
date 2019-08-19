@@ -4,9 +4,20 @@ namespace system_commander
 {
 
 SystemCommander::SystemCommander()
-{
-
-}
+    :rotation_matrix_(Eigen::Matrix3d::Zero()),
+     global_inertia_(Eigen::Matrix3d::Zero()),
+     angular_mapping_matrix_(Eigen::Matrix3d::Zero()),
+     derivative_angular_mapping_matrix_(Eigen::Matrix3d::Zero()),
+     spatial_mass_matrix_(Eigen::MatrixXd::Zero(6, 6)),
+     centrifugal_coriolis_matrix_(Eigen::MatrixXd::Zero(6, 6)),
+     wrench_(Eigen::MatrixXd::Zero(6, 1)),
+     input_acceleration_(Eigen::MatrixXd::Zero(6, 1)),
+     desired_position_(Eigen::Vector3d::Zero()),
+     desired_velocity_(Eigen::Vector3d::Zero()),
+     desired_acceleration_(Eigen::Vector3d::Zero()),
+     desired_orientarion_(Eigen::Quaterniond::Identity()),
+     desired_angular_velocity_(Eigen::Vector3d::Zero()),
+     desired_angular_acceleration_(Eigen::Vector3d::Zero()){ }
 
 SystemCommander::~SystemCommander(){ }
 
