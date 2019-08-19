@@ -145,7 +145,7 @@ class SystemParameters {
   double mass_;
   const double gravity_;
   Eigen::Matrix3d inertia_;
-  unsigned int n_tether_;
+  int n_tether_;
 
   //PID control parameters
   Eigen::Matrix<double, 6, 6> K_d_;
