@@ -9,17 +9,17 @@ namespace system_commander
 {
 
 template<typename T> inline void GetRosParameter(const ros::NodeHandle& nh,
-                                                     const std::string& key,
-                                                     const T& default_value,
-                                                     T* value)
+                                                 const std::string& key,
+                                                 const T& default_value,
+                                                       T* value)
 {
     ROS_ASSERT(value != nullptr);
     bool have_parameter = nh.getParam(key, *value);
     if (!have_parameter)
     {
-        ROS_WARN_STREAM("[rosparam]: could not find parameter " << nh.getNamespace()
-        << "/" << key << ", setting to default: " << default_value);
-        *value = default_value;
+      ROS_WARN_STREAM("[rosparam]: could not find parameter " << nh.getNamespace()
+                      << "/" << key << ", setting to default: " << default_value);
+      *value = default_value;
     }
 }
 
@@ -50,7 +50,8 @@ inline void GetRotorConfiguration(const ros::NodeHandle& nh,
     }
 }
 
-inline void GetSystemParameters(const ros::NodeHandle& nh, SystemParameters* system_parameters) {
+inline void GetSystemParameters(const ros::NodeHandle& nh, SystemParameters* system_parameters)
+{
     GetRosParameter(nh, "mass",
         system_parameters->mass_,
         &system_parameters->mass_);
@@ -75,6 +76,50 @@ inline void GetSystemParameters(const ros::NodeHandle& nh, SystemParameters* sys
     GetRosParameter(nh, "inertia/zz",
         system_parameters->inertia_(2, 2),
         &system_parameters->inertia_(2, 2));
+    GetRosParameter(nh, "n_tether",
+        system_parameters->n_tether_,
+        &system_parameters->n_tether_);
+
+    //PID parameters D
+    GetRosParameter(nh, "gainD/x",
+        system_parameters->K_d_(0, 0),
+        &system_parameters->K_d_(0, 0));
+    GetRosParameter(nh, "gainD/y",
+        system_parameters->K_d_(1, 1),
+        &system_parameters->K_d_(1, 1));
+    GetRosParameter(nh, "gainD/z",
+        system_parameters->K_d_(2, 2),
+        &system_parameters->K_d_(2, 2));
+    GetRosParameter(nh, "gainD/roll",
+        system_parameters->K_d_(3, 3),
+        &system_parameters->K_d_(3, 3));
+    GetRosParameter(nh, "gainD/pitch",
+        system_parameters->K_d_(4, 4),
+        &system_parameters->K_d_(4, 4));
+    GetRosParameter(nh, "gainD/yaw",
+        system_parameters->K_d_(5, 5),
+        &system_parameters->K_d_(5, 5));
+
+    //PID parameters P
+    GetRosParameter(nh, "gainP/x",
+        system_parameters->K_p_(0, 0),
+        &system_parameters->K_p_(0, 0));
+    GetRosParameter(nh, "gainP/y",
+        system_parameters->K_p_(1, 1),
+        &system_parameters->K_p_(1, 1));
+    GetRosParameter(nh, "gainP/z",
+        system_parameters->K_p_(2, 2),
+        &system_parameters->K_p_(2, 2));
+    GetRosParameter(nh, "gainP/roll",
+        system_parameters->K_p_(3, 3),
+        &system_parameters->K_p_(3, 3));
+    GetRosParameter(nh, "gainP/pitch",
+        system_parameters->K_p_(4, 4),
+        &system_parameters->K_p_(4, 4));
+    GetRosParameter(nh, "gainP/yaw",
+        system_parameters->K_p_(5, 5),
+        &system_parameters->K_p_(5, 5));
+
     GetRotorConfiguration(nh, &system_parameters->rotor_configuration_);
 }
 
