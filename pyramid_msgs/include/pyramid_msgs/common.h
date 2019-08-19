@@ -33,6 +33,15 @@ inline Eigen::Quaterniond quaternionFromMsg(const geometry_msgs::Quaternion& msg
   return quaternion;
 }
 
+inline void vectorEigenToMsg(const Eigen::Vector3d& eigen,
+                             geometry_msgs::Vector3* msg)
+{
+  assert(msg != NULL);
+  msg->x = eigen.x();
+  msg->y = eigen.y();
+  msg->z = eigen.z();
+}
+
 } //namespace pyramid_msgs
 
 #endif //PYRAMID_MSGS_COMMON_H
