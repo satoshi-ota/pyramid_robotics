@@ -19,6 +19,29 @@ static constexpr double kDefaultInertiaZz = 0.0977;
 static constexpr double kDefaultRotorForceConstant = 8.54858e-6;
 static constexpr double kDefaultRotorMomentConstant = 1.6e-2;
 
+// Default tether parameters
+const unsigned int DefaultTetherNum = 4;
+//mounting_posisons
+const Eigen::Vector3d DefaultTether0MountPos = Eigen::Vector3d( 5.0,  0.0, 0.0);
+const Eigen::Vector3d DefaultTether1MountPos = Eigen::Vector3d( 0.0,  5.0, 0.0);
+const Eigen::Vector3d DefaultTether2MountPos = Eigen::Vector3d(-5.0,  0.0, 0.0);
+const Eigen::Vector3d DefaultTether3MountPos = Eigen::Vector3d( 0.0, -5.0, 0.0);
+
+//directions
+const Eigen::Vector3d DefaultTether0Direction = Eigen::Vector3d( 5.0,  0.0, 0.0);
+const Eigen::Vector3d DefaultTether1Direction = Eigen::Vector3d( 0.0,  5.0, 0.0);
+const Eigen::Vector3d DefaultTether2Direction = Eigen::Vector3d(-5.0,  0.0, 0.0);
+const Eigen::Vector3d DefaultTether3Direction = Eigen::Vector3d( 0.0, -5.0, 0.0);
+
+//anchor_positions
+const Eigen::Vector3d DefaultAnchor0Pos = Eigen::Vector3d( 5.0,  0.0, 0.0);
+const Eigen::Vector3d DefaultAnchor1Pos = Eigen::Vector3d( 0.0,  5.0, 0.0);
+const Eigen::Vector3d DefaultAnchor2Pos = Eigen::Vector3d(-5.0,  0.0, 0.0);
+const Eigen::Vector3d DefaultAnchor3Pos = Eigen::Vector3d( 0.0, -5.0, 0.0);
+
+const Eigen::Matrix<double, 6, 6> DefaultGainP = Eigen::MatrixXd::Identity(6, 6);
+const Eigen::Matrix<double, 6, 6> DefaultGainD = Eigen::MatrixXd::Identity(6, 6);
+
 // Default physics parameters.
 static constexpr double kDefaultGravity = 9.81;
 
@@ -74,27 +97,37 @@ struct Tether
     Tether()
         :mounting_pos(Eigen::Vector3d::Zero()),
          direction(Eigen::Vector3d::Zero()),
-         tension(0.0){ }
+         tension(0.0),
+         anchor_position(Eigen::Vector3d::Zero()){ }
 
     Tether(Eigen::Vector3d _mounting_pos,
            Eigen::Vector3d _direction,
-           double _tension)
+           double _tension,
+           Eigen::Vector3d _anchor_position)
         :mounting_pos(_mounting_pos),
          direction(_direction),
-         tension(_tension){ }
+         tension(_tension),
+         anchor_position(_anchor_position){ }
 
     Eigen::Vector3d mounting_pos; //body-fixed frame
     Eigen::Vector3d direction; //global frame
     double tension;
+    Eigen::Vector3d anchor_position; //global_frame
 };
 
 struct TetherConfiguration
 {
     TetherConfiguration()
     {
-
+        tethers.push_back(
+            Tether(DefaultTether0MountPos, DefaultTether0Direction, 0.0, DefaultAnchor0Pos));
+        tethers.push_back(
+            Tether(DefaultTether1MountPos, DefaultTether1Direction, 0.0, DefaultAnchor1Pos));
+        tethers.push_back(
+            Tether(DefaultTether2MountPos, DefaultTether2Direction, 0.0, DefaultAnchor2Pos));
+        tethers.push_back(
+            Tether(DefaultTether3MountPos, DefaultTether3Direction, 0.0, DefaultAnchor3Pos));
     }
-
     std::vector<Tether> tethers;
 };
 
@@ -105,10 +138,19 @@ class SystemParameters {
       : mass_(kDefaultMass),
         gravity_(kDefaultGravity),
         inertia_(Eigen::Vector3d(kDefaultInertiaXx, kDefaultInertiaYy,
-                                 kDefaultInertiaZz).asDiagonal()) {}
+                                 kDefaultInertiaZz).asDiagonal()),
+        n_tether_(DefaultTetherNum),
+        K_p_(DefaultGainP),
+        K_d_(DefaultGainD){ }
   double mass_;
   const double gravity_;
   Eigen::Matrix3d inertia_;
+  unsigned int n_tether_;
+
+  //PID control parameters
+  Eigen::Matrix<double, 6, 6> K_d_;
+  Eigen::Matrix<double, 6, 6> K_p_;
+
   RotorConfiguration rotor_configuration_;
   TetherConfiguration tether_configuration_;
 };

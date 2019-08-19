@@ -15,17 +15,18 @@ namespace system_commander
 class SystemCommander
 {
 public:
-    SystemCommander(const ros::NodeHandle& nh, const ros::NodeHandle& private_nh);
+    SystemCommander();
     ~SystemCommander();
 
     void SetDesiredTrajectory(const EigenMultiDOFJointTrajectory& trajectory);
     void SetFeedbackOdometry(const EigenOdometry& odometry);
 
-    void UpdateTetherDirections(const EigenOdometry& odometry);
+    void UpdateAnchorPos(); //not implemente
+    void UpdateTetherDirections();
     void UpdateDynamicParams();
 
     void CalculateInputAcc();
-    void CalculateConrolVariable();
+    void CalculateConrolVariable(Eigen::VectorXd* control_input);
 
     //from parameters.h
     SystemParameters system_parameters_;
@@ -48,8 +49,7 @@ private: //member data
     Eigen::MatrixXd jacobian_; //J
 
     Eigen::VectorXd wrench_; //f
-
-    Eigen::VectorXd control_input_; //u
+    Eigen::VectorXd input_acc_;
 
     //linear
     Eigen::Vector3d desired_position_;
@@ -57,20 +57,15 @@ private: //member data
     Eigen::Vector3d desired_acceleration_;
 
     //angular
-    Eigen::Quaterniond desired_quaternion_;
+    Eigen::Quaterniond desired_orientarion_;
     Eigen::Vector3d desired_angular_velocity_;
     Eigen::Vector3d desired_angular_acceleration_;
 
     //goal
-    trajectory_msgs::MultiDOFJointTrajectory desired_trajectory_;
+    EigenMultiDOFJointTrajectory desired_trajectory_;
 
     //feedback
     EigenOdometry odometry_;
-    sensor_msgs::Imu imu_;
-
-    //anchor pos
-    Eigen::VectorXd anchor_positions_;
-
 
 };
 

@@ -4,10 +4,13 @@
 #include <ros/ros.h>
 #include <Eigen/Core>
 #include <pyramid_msgs/default_topics.h>
-#include <geometry_msgs/Odometry.h>
+#include <nav_msgs/Odometry.h>
+#include <sensor_msgs/JointState.h>
 #include <sensor_msgs/Imu.h>
+#include <geometry_msgs/WrenchStamped.h>
 
 #include "pyramid_central/common.h"
+#include "pyramid_central/system_commander.h"
 
 namespace system_commander
 {
@@ -19,7 +22,8 @@ public:
     ~SystemCommanderNode();
 
     void InitializeParams();
-    void sendTensions(Eigen::Vector4d& td);
+    void sendTensions(const Eigen::VectorXd& tensions);
+    void sendThrust(const Eigen::VectorXd& thrust);
 
 private: //member data
     //general
@@ -44,8 +48,8 @@ private: //member data
 
 private: //member function
     void DesiredTrajectoryCB(const trajectory_msgs::MultiDOFJointTrajectoryPtr& trajectory_msg);
-    void FeedbackOdometryCB(const geometry_msgs::OdometryPtr& odometry_msg);
-    void FeedbackImuCB(const sensor_msgs::ImuPtr& imu_msg);
+    void FeedbackOdometryCB(const nav_msgs::OdometryPtr& odometry_msg);
+    //void FeedbackImuCB(const sensor_msgs::ImuPtr& imu_msg);
 
 };
 
