@@ -50,8 +50,41 @@ inline void GetRotorConfiguration(const ros::NodeHandle& nh,
     }
 }
 
+inline void GetTetherConfiguration(const ros::NodeHandle& nh,
+                                  TetherConfiguration* tether_configuration)
+{
+    std::map<std::string, double> single_tether;
+    std::string tether_configuration_string = "tether_configuration/";
+    unsigned int i = 0;
+    while (nh.getParam(tether_configuration_string + std::to_string(i), single_tether))
+    {
+        if (i == 0) {
+            tether_configuration->tethers.clear();
+        }
+        Eigen::Vector3d mounting_pos;
+        Eigen::Vector3d anchor_position;
+
+        nh.getParam(tether_configuration_string + std::to_string(i) + "/mounting_pos/x",
+            mounting_pos.x());
+        nh.getParam(tether_configuration_string + std::to_string(i) + "/mounting_pos/y",
+            mounting_pos.y());
+        nh.getParam(tether_configuration_string + std::to_string(i) + "/mounting_pos/z",
+            mounting_pos.z());
+        nh.getParam(tether_configuration_string + std::to_string(i) + "/anchor_pos/x",
+            anchor_position.x());
+        nh.getParam(tether_configuration_string + std::to_string(i) + "/anchor_pos/y",
+            anchor_position.y());
+        nh.getParam(tether_configuration_string + std::to_string(i) + "/anchor_pos/y",
+            anchor_position.z());
+
+        tether_configuration->tethers.push_back(Tether(mounting_pos, anchor_position));
+        ++i;
+    }
+}
+
 inline void GetSystemParameters(const ros::NodeHandle& nh, SystemParameters* system_parameters)
 {
+    //uav parameters
     GetRosParameter(nh, "mass",
         system_parameters->mass_,
         &system_parameters->mass_);
@@ -76,6 +109,8 @@ inline void GetSystemParameters(const ros::NodeHandle& nh, SystemParameters* sys
     GetRosParameter(nh, "inertia/zz",
         system_parameters->inertia_(2, 2),
         &system_parameters->inertia_(2, 2));
+
+    //tether number
     GetRosParameter(nh, "n_tether",
         system_parameters->n_tether_,
         &system_parameters->n_tether_);
