@@ -62,36 +62,40 @@ void SystemCommander::SetFeedbackOdometry(const EigenOdometry& odometry)
 
 void SystemCommander::CalculateInputAcc()
 {
-    input_acc_.resize(6);
-    Eigen::VectorXd x_delta = Eigen::VectorXd::Zero(6);
+    Eigen::Matrix<double, 6, 1> x_delta = Eigen::VectorXd::Zero(6);
     CalculatePosAttDelta(odometry_, desired_position_, desired_orientarion_, &x_delta);
-    Eigen::VectorXd v_delta = Eigen::VectorXd::Zero(6);
+    Eigen::Matrix<double, 6, 1> v_delta = Eigen::VectorXd::Zero(6);
     CalculateVelocityDelta(odometry_, desired_velocity_, desired_angular_velocity_, &v_delta);
-    Eigen::VectorXd acc_desired = Eigen::VectorXd::Zero(6);
+    Eigen::Matrix<double, 6, 1> acc_desired = Eigen::VectorXd::Zero(6);
 
     acc_desired.block<3, 1>(0, 0) = desired_acceleration_;
     acc_desired.block<3, 1>(3, 0) = desired_angular_acceleration_;
 
-    input_acc_ = acc_desired + system_parameters_.K_d_ * v_delta
-                 + system_parameters_.K_p_ * x_delta;
+    input_acceleration_ = acc_desired + system_parameters_.K_d_ * v_delta
+                          + system_parameters_.K_p_ * x_delta;
 }
 
-void SystemCommander::CalculateConrolVariable(Eigen::VectorXd* control_input)
+void SystemCommander::CalculateConrolVariable()
 {
-    control_input->resize(10);
-    CalculateWrench(system_parameters_, odometry_, spatial_mass_matrix_,
-                    centrifugal_coriolis_matrix_, input_acc_, &wrench_);
+    Eigen::Matrix<double, 10, 1> controller_output = Eigen::MatrixXd::Zero(10, 1);
 
-    Eigen::Matrix<double, 6, 6> R;
+    CalculateWrench(system_parameters_, odometry_, spatial_mass_matrix_,
+                    centrifugal_coriolis_matrix_, input_acceleration_, &wrench_);
+
+    Eigen::Matrix<double, 6, 6> R = Eigen::MatrixXd::Zero(6, 6);
     R.block<3, 3>(0, 0) = Eigen::Matrix3d::Identity();
     R.block<3, 3>(3, 3) = rotation_matrix_;
 
-    Eigen::Matrix<double, 6, 10> B;
+    Eigen::Matrix<double, 6, 10> B = Eigen::MatrixXd::Zero(6, 10);
     B.block<6, 4>(0, 0) = (jacobian_ * R).transpose();
     B.block<3, 3>(0, 4) = rotation_matrix_;
     B.block<3, 3>(3, 7) = Eigen::Matrix3d::Identity();
 
-    *control_input = B.transpose() * (B * B.transpose()).inverse() * wrench_;
+    controller_output = B.transpose() * (B * B.transpose()).inverse() * wrench_;
+
+    tensions_ = controller_output.block<4, 1>(0, 0);
+
+    EigenVectorToEigenThrust(controller_output.block<6, 1>(4, 0), &thrust_);
 }
 
 
