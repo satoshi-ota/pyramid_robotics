@@ -101,6 +101,13 @@ struct Tether
          anchor_position(Eigen::Vector3d::Zero()){ }
 
     Tether(Eigen::Vector3d _mounting_pos,
+           Eigen::Vector3d _anchor_position)
+        :mounting_pos(_mounting_pos),
+         direction(Eigen::Vector3d::Zero()),
+         tension(0.0),
+         anchor_position(_anchor_position){ }
+
+    Tether(Eigen::Vector3d _mounting_pos,
            Eigen::Vector3d _direction,
            double _tension,
            Eigen::Vector3d _anchor_position)
