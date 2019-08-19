@@ -75,21 +75,35 @@ inline void eigenMultiDOFJointTrajectoryFromMsg(
                                     const trajectory_msgs::MultiDOFJointTrajectoryPtr& msg,
                                           EigenMultiDOFJointTrajectory* multidoftrajectory)
 {
+    if (msg->points[0].transforms.empty())
+    {
+        ROS_ERROR("MultiDofJointTrajectoryPoint is empty.");
+        return;
+    }
+
+    if (msg->points[0].transforms.size() > 1)
+    {
+        ROS_WARN(
+            "MultiDofJointTrajectoryPoint message should have one joint, but has "
+            "%lu. Using first joint.",
+            msg->points[0].transforms.size());
+    }
+
     multidoftrajectory->timestamp_ns
         = msg->header.stamp.toNSec();
 
     multidoftrajectory->position_ET
         = pyramid_msgs::vector3FromMsg(msg->points[0].transforms[0].translation);
-    multidoftrajectory->velocity_ET
-        = pyramid_msgs::vector3FromMsg(msg->points[0].velocities[0].linear);
-    multidoftrajectory->acceleration_ET
-        = pyramid_msgs::vector3FromMsg(msg->points[0].accelerations[0].linear);
+    //multidoftrajectory->velocity_ET
+    //    = pyramid_msgs::vector3FromMsg(msg->points[0].velocities[0].linear);
+    //multidoftrajectory->acceleration_ET
+    //    = pyramid_msgs::vector3FromMsg(msg->points[0].accelerations[0].linear);
     multidoftrajectory->orientation_ET
         = pyramid_msgs::quaternionFromMsg(msg->points[0].transforms[0].rotation);
-    multidoftrajectory->angular_velocity_ET
-        = pyramid_msgs::vector3FromMsg(msg->points[0].velocities[0].angular);
-    multidoftrajectory->angular_acceleration_ET
-        = pyramid_msgs::vector3FromMsg(msg->points[0].accelerations[0].angular);
+    //multidoftrajectory->angular_velocity_ET
+        //= pyramid_msgs::vector3FromMsg(msg->points[0].velocities[0].angular);
+    //multidoftrajectory->angular_acceleration_ET
+        //= pyramid_msgs::vector3FromMsg(msg->points[0].accelerations[0].angular);
 }
 
 struct EigenOdometry {
@@ -233,18 +247,19 @@ inline void CalculateJacobian(const TetherConfiguration& tether_configuration,
                               const Eigen::Matrix3d& rotation_matrix,
                                     Eigen::MatrixXd& jacobian)
 {
-    Eigen::VectorXd J;
-    J.resize(6);
     jacobian.resize(4, 6);
+
+    Eigen::Matrix<double, 6, 4> J = Eigen::MatrixXd::Zero(6, 4);
+
     unsigned int i = 0;
     for (const Tether& tether : tether_configuration.tethers)
     {
-        J.block<3, 1>(0, 0) = tether.direction;
-        J.block<3, 1>(3, 0) = (rotation_matrix*tether.mounting_pos).cross(tether.direction);
-        jacobian.block<1, 3>(i, 0) = J;
+        J.block<3, 1>(0, i) = tether.direction;
+        J.block<3, 1>(3, i) = (rotation_matrix*tether.mounting_pos).cross(tether.direction);
 
         ++i;
     }
+    jacobian = J.transpose();
 }
 
 inline void CalculateWrench(const SystemParameters& system_parameters,

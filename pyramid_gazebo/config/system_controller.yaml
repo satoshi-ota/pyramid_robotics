@@ -11,8 +11,8 @@ tether_configuration:
       mounting_pos: {x: 0.0, y: 5.0, z: 0.0}
       anchor_position: {x: 0.0, y: 5.0, z: 0.0}
   '2':
-      mounting_pos: {x:-5.0, y: 0.0, z: 0.0}
-      anchor_position: {x:-5.0, y: 0.0, z: 0.0}
+      mounting_pos: {x: -5.0, y: 0.0, z: 0.0}
+      anchor_position: {x: -5.0, y: 0.0, z: 0.0}
   '3':
-      mounting_pos: {x: 0.0, y:-5.0, z: 0.0}
-      anchor_position: {x: 0.0, y:-5.0, z: 0.0}
+      mounting_pos: {x: 0.0, y: -5.0, z: 0.0}
+      anchor_position: {x: 0.0, y: -5.0, z: 0.0}

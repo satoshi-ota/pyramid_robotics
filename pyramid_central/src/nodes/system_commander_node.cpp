@@ -41,7 +41,18 @@ void SystemCommanderNode::DesiredTrajectoryCB(
 
     EigenMultiDOFJointTrajectory desired_trajectory;
     eigenMultiDOFJointTrajectoryFromMsg(trajectory_msg, &desired_trajectory);
+
     system_commander_.SetDesiredTrajectory(desired_trajectory);
+}
+
+void SystemCommanderNode::FeedbackOdometryCB(const nav_msgs::OdometryPtr& odometry_msg)
+{
+    ROS_INFO_ONCE("SystemCommander got first feedback odometry msg.");
+
+    EigenOdometry feedback_odometry;
+    eigenOdometryFromMsg(odometry_msg, &feedback_odometry);
+
+    system_commander_.SetFeedbackOdometry(feedback_odometry);
 
     system_commander_.UpdateDynamicParams();
 
@@ -58,25 +69,18 @@ void SystemCommanderNode::DesiredTrajectoryCB(
     sendThrust();
 }
 
-void SystemCommanderNode::FeedbackOdometryCB(const nav_msgs::OdometryPtr& odometry_msg)
-{
-    ROS_INFO_ONCE("SystemCommander got first feedback odometry msg.");
-
-    EigenOdometry feedback_odometry;
-    eigenOdometryFromMsg(odometry_msg, &feedback_odometry);
-    system_commander_.SetFeedbackOdometry(feedback_odometry);
-}
-
 void SystemCommanderNode::sendTensions()
 {
     //write tether tensions
-
     Eigen::Vector4d desired_tensions = system_commander_.getTensions();
 
     unsigned int n_tether = system_commander_.system_parameters_.n_tether_;
+    tensions_msg.effort.resize(n_tether);
+
     tensions_msg.header.stamp = ros::Time::now();
+
     for(unsigned int i=0;i<n_tether;++i)
-        tensions_msg.effort[i] = desired_tensions(i, 0);
+        tensions_msg.effort[i] = desired_tensions(i);
 
     tensions_pub_.publish(tensions_msg);
 }
