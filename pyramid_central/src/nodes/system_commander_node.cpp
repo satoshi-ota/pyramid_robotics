@@ -48,19 +48,14 @@ void SystemCommanderNode::DesiredTrajectoryCB(
     //acc = acc_d + Kd(vel_d - vel) + Kp(pos_d - pos)
     system_commander_.CalculateInputAcc();
 
-    Eigen::VectorXd reference_control_input = Eigen::VectorXd::Zero(10);
     //calculate controlled variable
-    system_commander_.CalculateConrolVariable(&reference_control_input);
+    system_commander_.CalculateConrolVariable();
 
     //publish desired tensions
-    Eigen::VectorXd desired_tensions;
-    desired_tensions = reference_control_input.block<4, 1>(0, 0);
-    sendTensions(desired_tensions);
+    sendTensions();
 
     //publish deisred thrust
-    Eigen::VectorXd desired_thrust;
-    desired_thrust = reference_control_input.block<6, 1>(4, 0);
-    sendThrust(desired_thrust);
+    sendThrust();
 }
 
 void SystemCommanderNode::FeedbackOdometryCB(const nav_msgs::OdometryPtr& odometry_msg)
@@ -72,21 +67,27 @@ void SystemCommanderNode::FeedbackOdometryCB(const nav_msgs::OdometryPtr& odomet
     system_commander_.SetFeedbackOdometry(feedback_odometry);
 }
 
-void SystemCommanderNode::sendTensions(const Eigen::VectorXd& tensions)
+void SystemCommanderNode::sendTensions()
 {
     //write tether tensions
+
+    Eigen::Vector4d desired_tensions = system_commander_.getTensions();
+
     unsigned int n_tether = system_commander_.system_parameters_.n_tether_;
     tensions_msg.header.stamp = ros::Time::now();
     for(unsigned int i=0;i<n_tether;++i)
-        tensions_msg.effort[i] = tensions(i, 0);
+        tensions_msg.effort[i] = desired_tensions(i, 0);
 
     tensions_pub_.publish(tensions_msg);
 }
 
-void SystemCommanderNode::sendThrust(const Eigen::VectorXd& thrust)
+void SystemCommanderNode::sendThrust()
 {
     //write thrust
+    EigenThrust desired_thrust = system_commander_.getThrust();
 
+    thrust_msg.header.stamp = ros::Time::now();
+    eigenThrustToMsg(desired_thrust, thrust_msg);
 
     thrust_pub_.publish(thrust_msg);
 }

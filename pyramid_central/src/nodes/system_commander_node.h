@@ -22,8 +22,8 @@ public:
     ~SystemCommanderNode();
 
     void InitializeParams();
-    void sendTensions(const Eigen::VectorXd& tensions);
-    void sendThrust(const Eigen::VectorXd& thrust);
+    void sendTensions();
+    void sendThrust();
 
 private: //member data
     //general
