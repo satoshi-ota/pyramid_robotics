@@ -33,16 +33,14 @@ include_directories(
 
 include_directories("/usr/include/eigen3")
 
-add_library(system_commander src/library/system_commander.cpp)
+add_library(system_commander
+        src/library/system_commander.cpp
+        src/library/system_reconfiguration.cpp)
 
 target_link_libraries(system_commander ${catkin_LIBRARIES})
 add_dependencies(system_commander ${catkin_EXPORTED_TARGETS})
 
 add_executable(system_commander_node src/nodes/system_commander_node.cpp)
 add_dependencies(system_commander_node ${catkin_EXPORTED_TARGETS})
-target_link_libraries(system_commander_node
-    system_commander ${catkin_LIBRARIES})
-
-add_executable(central_reconfigure src/central_reconfigure.cpp)
-add_dependencies(central_reconfigure ${PROJECT_NAME}_gencfg)
-target_link_libraries(central_reconfigure ${catkin_LIBRARIES})
+add_dependencies(system_commander_node pyramid_central_gencfg)
+target_link_libraries(system_commander_node system_commander ${catkin_LIBRARIES})

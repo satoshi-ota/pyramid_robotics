@@ -11,6 +11,12 @@ SystemCommanderNode::SystemCommanderNode(
     //get params & initialize
     InitializeParams();
 
+    //set up dynamic reconfigure
+    srv_ = boost::make_shared <dynamic_reconfigure::Server<pyramid_central::SystemCommanderConfig>>( private_nh);
+    dynamic_reconfigure::Server<pyramid_central::SystemCommanderConfig>::CallbackType cb
+        = boost::bind(&SystemCommanderNode::ReconfigureCB, this, _1, _2);
+    srv_->setCallback(cb);
+
     trajectory_sub_ = nh_.subscribe(pyramid_msgs::default_topics::COMMAND_TRAJECTORY, 1,
                                     &SystemCommanderNode::DesiredTrajectoryCB, this);
 
@@ -32,6 +38,12 @@ SystemCommanderNode::~SystemCommanderNode(){ }
 void SystemCommanderNode::InitializeParams()
 {
     GetSystemParameters(private_nh_, &(system_commander_.system_parameters_));
+}
+
+void SystemCommanderNode::ReconfigureCB(pyramid_central::SystemCommanderConfig &config,
+                                        uint32_t level)
+{
+    system_reconfigure_.reconfig(config, &system_commander_.system_parameters_);
 }
 
 void SystemCommanderNode::DesiredTrajectoryCB(

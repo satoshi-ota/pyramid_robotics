@@ -34,8 +34,6 @@
         </node>
         <node name="pyramid_hovering_example" pkg="uav_description" type="pyramid_hovering_example" output="screen"/>
         <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
-
-        <node name="central_reconfigure" pkg="pyramid_central" type="central_reconfigure"/>
     </group>
 
     <group if="$(arg enable_rviz)">

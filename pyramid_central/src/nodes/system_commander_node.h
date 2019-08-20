@@ -11,6 +11,8 @@
 
 #include "pyramid_central/common.h"
 #include "pyramid_central/system_commander.h"
+#include "pyramid_central/system_reconfiguration.h"
+#include "pyramid_central/SystemCommanderConfig.h"
 
 namespace system_commander
 {
@@ -22,6 +24,7 @@ public:
     ~SystemCommanderNode();
 
     void InitializeParams();
+    void ReconfigureCB(pyramid_central::SystemCommanderConfig &config, uint32_t level);
     void sendTensions();
     void sendThrust();
 
@@ -30,12 +33,15 @@ private: //member data
     ros::NodeHandle nh_;
     ros::NodeHandle private_nh_;
 
+    boost::shared_ptr<dynamic_reconfigure::Server<pyramid_central::SystemCommanderConfig>> srv_;
+
     //topic
     sensor_msgs::JointState tensions_msg;
     geometry_msgs::WrenchStamped thrust_msg;
 
     //class
     SystemCommander system_commander_;
+    SystemReconfigure system_reconfigure_;
 
     //subscriber
     ros::Subscriber trajectory_sub_;
