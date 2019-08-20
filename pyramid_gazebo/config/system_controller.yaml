@@ -5,14 +5,14 @@ n_tether: 4
 
 tether_configuration:
   '0':
-      mounting_pos: {x: 5.0, y: 0.0, z: 0.0}
-      anchor_position: {x: 5.0, y: 0.0, z: 0.0}
+      mounting_pos: {x: 0.21, y: 0.0, z: 0.0}
+      anchor_position: {x: 5.21, y: 0.0, z: 0.0}
   '1':
-      mounting_pos: {x: 0.0, y: 5.0, z: 0.0}
-      anchor_position: {x: 0.0, y: 5.0, z: 0.0}
+      mounting_pos: {x: 0.0, y: -0.21, z: 0.0}
+      anchor_position: {x: 0.0, y: -5.21, z: 0.0}
   '2':
-      mounting_pos: {x: -5.0, y: 0.0, z: 0.0}
-      anchor_position: {x: -5.0, y: 0.0, z: 0.0}
+      mounting_pos: {x: -0.21, y: 0.0, z: 0.0}
+      anchor_position: {x: -5.21, y: 0.0, z: 0.0}
   '3':
-      mounting_pos: {x: 0.0, y: -5.0, z: 0.0}
-      anchor_position: {x: 0.0, y: -5.0, z: 0.0}
+      mounting_pos: {x: 0.0, y: 0.21, z: 0.0}
+      anchor_position: {x: 0.0, y: 5.21, z: 0.0}
