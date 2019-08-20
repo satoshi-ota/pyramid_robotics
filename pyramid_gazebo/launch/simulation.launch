@@ -25,21 +25,24 @@
             <arg name="enable_wind" value="$(arg enable_wind)"/>
         </include>
         <node name="system_commander_node" pkg="pyramid_central" type="system_commander_node" output="screen">
-            <rosparam command="load" file="$(find pyramid_gazebo)/config/system_controller.yaml" />
-            <rosparam command="load" file="$(find pyramid_gazebo)/config/pyramid_$(arg mav_name).yaml" />
+            <rosparam command="load" file="$(find pyramid_central)/params/system_controller.yaml" />
+            <rosparam command="load" file="$(find uav_control)/params/pyramid_$(arg mav_name).yaml" />
             <remap from="feedback/odometry" to="odometry_sensor1/odometry"/>
         </node>
         <node name="motor_speed_controller_node" pkg="uav_control" type="motor_speed_controller_node" output="screen">
-            <rosparam command="load" file="$(find rotors_gazebo)/resource/$(arg mav_name).yaml" />
-            <rosparam command="load" file="$(find pyramid_gazebo)/config/pyramid_$(arg mav_name).yaml" />
+            <rosparam command="load" file="$(find uav_control)/params/pyramid_$(arg mav_name).yaml" />
         </node>
         <node name="pyramid_hovering_example" pkg="uav_description" type="pyramid_hovering_example" output="screen"/>
         <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+
+        <node name="central_reconfigure" pkg="pyramid_central" type="central_reconfigure"/>
     </group>
 
     <group if="$(arg enable_rviz)">
         <node name="rviz" pkg="rviz" type="rviz" required="true" />
     </group>
+
+    <node name="rqt_reconfigure" pkg="rqt_reconfigure" type="rqt_reconfigure" />
 
     <!--node name="rqt_ez_publisher" pkg="rqt_ez_publisher" type="rqt_ez_publisher" /-->
 </launch>
