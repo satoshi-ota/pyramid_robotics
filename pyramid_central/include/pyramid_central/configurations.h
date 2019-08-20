@@ -116,42 +116,42 @@ inline void GetSystemParameters(const ros::NodeHandle& nh, SystemParameters* sys
         &system_parameters->n_tether_);
 
     //PID parameters D
-    GetRosParameter(nh, "central_reconfigure/D_x",
+    GetRosParameter(nh, "gainD/x",
         system_parameters->K_d_(0, 0),
         &system_parameters->K_d_(0, 0));
-    GetRosParameter(nh, "D_y",
+    GetRosParameter(nh, "gainD/y",
         system_parameters->K_d_(1, 1),
         &system_parameters->K_d_(1, 1));
-    GetRosParameter(nh, "D_z",
+    GetRosParameter(nh, "gainD/z",
         system_parameters->K_d_(2, 2),
         &system_parameters->K_d_(2, 2));
-    GetRosParameter(nh, "D_roll",
+    GetRosParameter(nh, "gainD/roll",
         system_parameters->K_d_(3, 3),
         &system_parameters->K_d_(3, 3));
-    GetRosParameter(nh, "D_pitch",
+    GetRosParameter(nh, "gainD/pitch",
         system_parameters->K_d_(4, 4),
         &system_parameters->K_d_(4, 4));
-    GetRosParameter(nh, "D_yaw",
+    GetRosParameter(nh, "gainD/yaw",
         system_parameters->K_d_(5, 5),
         &system_parameters->K_d_(5, 5));
 
     //PID parameters P
-    GetRosParameter(nh, "P_x",
+    GetRosParameter(nh, "gainP/x",
         system_parameters->K_p_(0, 0),
         &system_parameters->K_p_(0, 0));
-    GetRosParameter(nh, "P_y",
+    GetRosParameter(nh, "gainP/y",
         system_parameters->K_p_(1, 1),
         &system_parameters->K_p_(1, 1));
-    GetRosParameter(nh, "P_z",
+    GetRosParameter(nh, "gainP/z",
         system_parameters->K_p_(2, 2),
         &system_parameters->K_p_(2, 2));
-    GetRosParameter(nh, "P_roll",
+    GetRosParameter(nh, "gainP/roll",
         system_parameters->K_p_(3, 3),
         &system_parameters->K_p_(3, 3));
-    GetRosParameter(nh, "P_pitch",
+    GetRosParameter(nh, "gainP/pitch",
         system_parameters->K_p_(4, 4),
         &system_parameters->K_p_(4, 4));
-    GetRosParameter(nh, "P_yaw",
+    GetRosParameter(nh, "gainP/yaw",
         system_parameters->K_p_(5, 5),
         &system_parameters->K_p_(5, 5));
 
