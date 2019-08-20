@@ -185,25 +185,25 @@ inline void CalculateGlobalInertia(const Eigen::Matrix3d& inertia,
 inline void CalculateAngularMappingMatrix(const Eigen::Quaterniond& orientation,
                                                 Eigen::Matrix3d* angular_mapping_matrix)
 {
-    Eigen::Vector3d euler_angles;
-    getEulerAnglesFromQuaternion(orientation, &euler_angles);
+    Eigen::Vector3d angles;
+    getEulerAnglesFromQuaternion(orientation, &angles);
 
-    *angular_mapping_matrix << 1,  0,                   -sin(euler_angles(1)),
-                              0,  cos(euler_angles(0)),  cos(euler_angles(1))*sin(euler_angles(0)),
-                              0, -sin(euler_angles(0)),  cos(euler_angles(1))*cos(euler_angles(0));
+    *angular_mapping_matrix << 1,  0,              -sin(angles(1)),
+                               0,  cos(angles(0)),  cos(angles(1))*sin(angles(0)),
+                               0, -sin(angles(0)),  cos(angles(1))*cos(angles(0));
 }
 
 inline void CalculateDrivativeAngularMappingMatrix(
                                             const Eigen::Quaterniond& orientation,
                                                   Eigen::Matrix3d* derivative_angular_mapping_matrix)
 {
-    Eigen::Vector3d euler_angles;
-    getEulerAnglesFromQuaternion(orientation, &euler_angles);
+    Eigen::Vector3d angles;
+    getEulerAnglesFromQuaternion(orientation, &angles);
 
     *derivative_angular_mapping_matrix
-                            << 1,  0,                   -sin(euler_angles(1)),
-                               0,  cos(euler_angles(0)),  cos(euler_angles(1))*sin(euler_angles(0)),
-                               0, -sin(euler_angles(0)),  cos(euler_angles(1))*cos(euler_angles(0));
+        << 1,  0,              -cos(angles(1)),
+           0, -sin(angles(0)), -sin(angles(1))*sin(angles(0))+cos(angles(1))*sin(angles(0)),
+           0, -cos(angles(0)), -sin(angles(1))*cos(angles(0))-cos(angles(1))*sin(angles(0));
 }
 
 inline void CalculateSpatialInertiaMatrix(const SystemParameters& system_parameters,
@@ -254,8 +254,8 @@ inline void CalculateJacobian(const TetherConfiguration& tether_configuration,
     unsigned int i = 0;
     for (const Tether& tether : tether_configuration.tethers)
     {
-        J.block<3, 1>(0, i) = tether.direction;
-        J.block<3, 1>(3, i) = (rotation_matrix*tether.mounting_pos).cross(tether.direction);
+        J.block<3, 1>(0, i) = -tether.direction;
+        J.block<3, 1>(3, i) =  tether.direction.cross(rotation_matrix*tether.mounting_pos);
 
         ++i;
     }
