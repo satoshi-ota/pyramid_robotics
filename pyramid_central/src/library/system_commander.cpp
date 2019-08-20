@@ -11,14 +11,7 @@ SystemCommander::SystemCommander()
      spatial_mass_matrix_(Eigen::MatrixXd::Zero(6, 6)),
      centrifugal_coriolis_matrix_(Eigen::MatrixXd::Zero(6, 6)),
      wrench_(Eigen::VectorXd::Zero(6)),
-     input_acceleration_(Eigen::VectorXd::Zero(6))
-     //desired_position_(Eigen::Vector3d::Zero()),
-     //desired_velocity_(Eigen::Vector3d::Zero()),
-     //desired_acceleration_(Eigen::Vector3d::Zero()),
-     //desired_orientarion_(Eigen::Quaterniond::Identity()),
-     //desired_angular_velocity_(Eigen::Vector3d::Zero()),
-     //desired_angular_acceleration_(Eigen::Vector3d::Zero())
-     { }
+     input_acceleration_(Eigen::VectorXd::Zero(6)){ }
 
 SystemCommander::~SystemCommander(){ }
 
@@ -53,18 +46,20 @@ void SystemCommander::UpdateDynamicParams()
 
     CalculateJacobian(system_parameters_.tether_configuration_, rotation_matrix_, jacobian_);
 
-
     CalculateSpatialInertiaMatrix(system_parameters_, global_inertia_,
                                   angular_mapping_matrix_, &spatial_mass_matrix_);
 
     CalculateCentrifugalCoriolisMatrix(odometry_.angular_velocity_EO, global_inertia_,
                                        angular_mapping_matrix_, derivative_angular_mapping_matrix_, &centrifugal_coriolis_matrix_);
-
 }
 
 void SystemCommander::SetDesiredTrajectory(const EigenMultiDOFJointTrajectory& trajectory)
 {
     desired_trajectory_ = trajectory;
+    ROS_INFO("Set desired trajectory: position[%f, %f, %f].",
+             desired_trajectory_.position_ET.x(),
+             desired_trajectory_.position_ET.y(),
+             desired_trajectory_.position_ET.z());
 }
 
 void SystemCommander::SetFeedbackOdometry(const EigenOdometry& odometry)

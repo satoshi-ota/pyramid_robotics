@@ -94,16 +94,16 @@ inline void eigenMultiDOFJointTrajectoryFromMsg(
 
     multidoftrajectory->position_ET
         = pyramid_msgs::vector3FromMsg(msg->points[0].transforms[0].translation);
-    //multidoftrajectory->velocity_ET
-    //    = pyramid_msgs::vector3FromMsg(msg->points[0].velocities[0].linear);
-    //multidoftrajectory->acceleration_ET
-    //    = pyramid_msgs::vector3FromMsg(msg->points[0].accelerations[0].linear);
+    multidoftrajectory->velocity_ET
+        = pyramid_msgs::vector3FromMsg(msg->points[0].velocities[0].linear);
+    multidoftrajectory->acceleration_ET
+        = pyramid_msgs::vector3FromMsg(msg->points[0].accelerations[0].linear);
     multidoftrajectory->orientation_ET
         = pyramid_msgs::quaternionFromMsg(msg->points[0].transforms[0].rotation);
-    //multidoftrajectory->angular_velocity_ET
-        //= pyramid_msgs::vector3FromMsg(msg->points[0].velocities[0].angular);
-    //multidoftrajectory->angular_acceleration_ET
-        //= pyramid_msgs::vector3FromMsg(msg->points[0].accelerations[0].angular);
+    multidoftrajectory->angular_velocity_ET
+        = pyramid_msgs::vector3FromMsg(msg->points[0].velocities[0].angular);
+    multidoftrajectory->angular_acceleration_ET
+        = pyramid_msgs::vector3FromMsg(msg->points[0].accelerations[0].angular);
 }
 
 struct EigenOdometry {

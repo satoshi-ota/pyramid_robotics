@@ -53,17 +53,7 @@ private: //member data
 
     Eigen::VectorXd wrench_; //f
     Eigen::VectorXd input_acceleration_;
-/*
-    //linear
-    Eigen::Vector3d desired_position_;
-    Eigen::Vector3d desired_velocity_;
-    Eigen::Vector3d desired_acceleration_;
-
-    //angular
-    Eigen::Quaterniond desired_orientarion_;
-    Eigen::Vector3d desired_angular_velocity_;
-    Eigen::Vector3d desired_angular_acceleration_;
-*/
+    
     //goal
     EigenMultiDOFJointTrajectory desired_trajectory_;
 
