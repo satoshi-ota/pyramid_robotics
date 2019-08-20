@@ -10,14 +10,15 @@ SystemCommander::SystemCommander()
      derivative_angular_mapping_matrix_(Eigen::Matrix3d::Zero()),
      spatial_mass_matrix_(Eigen::MatrixXd::Zero(6, 6)),
      centrifugal_coriolis_matrix_(Eigen::MatrixXd::Zero(6, 6)),
-     wrench_(Eigen::MatrixXd::Zero(6, 1)),
-     input_acceleration_(Eigen::MatrixXd::Zero(6, 1)),
-     desired_position_(Eigen::Vector3d::Zero()),
-     desired_velocity_(Eigen::Vector3d::Zero()),
-     desired_acceleration_(Eigen::Vector3d::Zero()),
-     desired_orientarion_(Eigen::Quaterniond::Identity()),
-     desired_angular_velocity_(Eigen::Vector3d::Zero()),
-     desired_angular_acceleration_(Eigen::Vector3d::Zero()){ }
+     wrench_(Eigen::VectorXd::Zero(6)),
+     input_acceleration_(Eigen::VectorXd::Zero(6))
+     //desired_position_(Eigen::Vector3d::Zero()),
+     //desired_velocity_(Eigen::Vector3d::Zero()),
+     //desired_acceleration_(Eigen::Vector3d::Zero()),
+     //desired_orientarion_(Eigen::Quaterniond::Identity()),
+     //desired_angular_velocity_(Eigen::Vector3d::Zero()),
+     //desired_angular_acceleration_(Eigen::Vector3d::Zero())
+     { }
 
 SystemCommander::~SystemCommander(){ }
 
@@ -36,8 +37,8 @@ void SystemCommander::UpdateTetherDirections()
 {
     for (Tether& tether : system_parameters_.tether_configuration_.tethers)
     {
-        tether.direction = tether.anchor_position - odometry_.position_EO
-                           - rotation_matrix_ * tether.mounting_pos;
+        tether.direction = (tether.anchor_position - odometry_.position_EO
+                            - rotation_matrix_ * tether.mounting_pos).normalized();
     }
 }
 
@@ -73,14 +74,14 @@ void SystemCommander::SetFeedbackOdometry(const EigenOdometry& odometry)
 
 void SystemCommander::CalculateInputAcc()
 {
-    Eigen::Matrix<double, 6, 1> x_delta = Eigen::VectorXd::Zero(6);
-    CalculatePosAttDelta(odometry_, desired_position_, desired_orientarion_, &x_delta);
-    Eigen::Matrix<double, 6, 1> v_delta = Eigen::VectorXd::Zero(6);
-    CalculateVelocityDelta(odometry_, desired_velocity_, desired_angular_velocity_, &v_delta);
-    Eigen::Matrix<double, 6, 1> acc_desired = Eigen::VectorXd::Zero(6);
+    Eigen::VectorXd x_delta = Eigen::VectorXd::Zero(6);
+    CalculatePosAttDelta(odometry_, desired_trajectory_, &x_delta);
+    Eigen::VectorXd v_delta = Eigen::VectorXd::Zero(6);
+    CalculateVelocityDelta(odometry_, desired_trajectory_, &v_delta);
+    Eigen::VectorXd acc_desired = Eigen::VectorXd::Zero(6);
 
-    acc_desired.block<3, 1>(0, 0) = desired_acceleration_;
-    acc_desired.block<3, 1>(3, 0) = desired_angular_acceleration_;
+    acc_desired.block<3, 1>(0, 0) = desired_trajectory_.acceleration_ET;
+    acc_desired.block<3, 1>(3, 0) = desired_trajectory_.angular_acceleration_ET;
 
     input_acceleration_ = acc_desired + system_parameters_.K_d_ * v_delta
                           + system_parameters_.K_p_ * x_delta;
@@ -88,7 +89,7 @@ void SystemCommander::CalculateInputAcc()
 
 void SystemCommander::CalculateConrolVariable()
 {
-    Eigen::Matrix<double, 10, 1> controller_output = Eigen::MatrixXd::Zero(10, 1);
+    Eigen::VectorXd controller_output = Eigen::VectorXd::Zero(10);
 
     CalculateWrench(system_parameters_, odometry_, spatial_mass_matrix_,
                     centrifugal_coriolis_matrix_, input_acceleration_, &wrench_);

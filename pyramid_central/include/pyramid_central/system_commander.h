@@ -46,14 +46,14 @@ private: //member data
     Eigen::Matrix3d angular_mapping_matrix_; //S
     Eigen::Matrix3d derivative_angular_mapping_matrix_; //S
 
-    Eigen::Matrix<double, 6, 6> spatial_mass_matrix_; //M
-    Eigen::Matrix<double, 6, 6> centrifugal_coriolis_matrix_; //C
+    Eigen::MatrixXd spatial_mass_matrix_; //M
+    Eigen::MatrixXd centrifugal_coriolis_matrix_; //C
 
     Eigen::MatrixXd jacobian_; //J
 
-    Eigen::Matrix<double, 6, 1> wrench_; //f
-    Eigen::Matrix<double, 6, 1> input_acceleration_;
-
+    Eigen::VectorXd wrench_; //f
+    Eigen::VectorXd input_acceleration_;
+/*
     //linear
     Eigen::Vector3d desired_position_;
     Eigen::Vector3d desired_velocity_;
@@ -63,7 +63,7 @@ private: //member data
     Eigen::Quaterniond desired_orientarion_;
     Eigen::Vector3d desired_angular_velocity_;
     Eigen::Vector3d desired_angular_acceleration_;
-
+*/
     //goal
     EigenMultiDOFJointTrajectory desired_trajectory_;
 

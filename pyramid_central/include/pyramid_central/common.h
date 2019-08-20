@@ -209,7 +209,7 @@ inline void CalculateDrivativeAngularMappingMatrix(
 inline void CalculateSpatialInertiaMatrix(const SystemParameters& system_parameters,
                                           const Eigen::Matrix3d& global_inertia,
                                           const Eigen::Matrix3d& angular_mapping_matrix,
-                                                Eigen::Matrix<double, 6, 6>* spatial_mass_matrix)
+                                                Eigen::MatrixXd* spatial_mass_matrix)
 {
     Eigen::Matrix<double, 6, 6> S_I_M = Eigen::MatrixXd::Zero(6, 6);
 
@@ -228,7 +228,7 @@ inline void CalculateCentrifugalCoriolisMatrix(const Eigen::Vector3d& angular_ve
                                                const Eigen::Matrix3d& angular_mapping_matrix,
                                                const Eigen::Matrix3d&
                                                      derivative_angular_mapping_matrix,
-                                                     Eigen::Matrix<double, 6, 6>* centrifugal_coriolis_matrix)
+                                                     Eigen::MatrixXd* centrifugal_coriolis_matrix)
 {
     Eigen::Matrix<double, 6, 6> C_C_M = Eigen::MatrixXd::Zero(6, 6);
 
@@ -264,34 +264,33 @@ inline void CalculateJacobian(const TetherConfiguration& tether_configuration,
 
 inline void CalculateWrench(const SystemParameters& system_parameters,
                             const EigenOdometry& odometry,
-                            const Eigen::Matrix<double, 6, 6>& spatial_mass_matrix,
-                            const Eigen::Matrix<double, 6, 6>& centrifugal_coriolis_matrix,
-                            const Eigen::Matrix<double, 6, 1>& input_acceleration,
-                                  Eigen::Matrix<double, 6, 1>* wrench)
+                            const Eigen::MatrixXd& spatial_mass_matrix,
+                            const Eigen::MatrixXd& centrifugal_coriolis_matrix,
+                            const Eigen::VectorXd& input_acceleration,
+                                  Eigen::VectorXd* wrench)
 {
-    Eigen::Matrix<double, 6, 1> V = Eigen::MatrixXd::Zero(6, 1);
+    Eigen::VectorXd V = Eigen::VectorXd::Zero(6);
     V.block<3, 1>(0, 0) = odometry.velocity_EO;
     V.block<3, 1>(3, 0) = odometry.angular_velocity_EO;
 
-    Eigen::Matrix<double, 6, 1> G = Eigen::MatrixXd::Zero(6, 1);
+    Eigen::VectorXd G = Eigen::VectorXd::Zero(6);
     G(2) = system_parameters.mass_ * kDefaultGravity;
 
     *wrench = spatial_mass_matrix * input_acceleration + centrifugal_coriolis_matrix * V + G;
 }
 
 inline void CalculatePosAttDelta(const EigenOdometry& odometry,
-                                 const Eigen::Vector3d& desired_position,
-                                 const Eigen::Quaterniond& desired_orientarion,
-                                       Eigen::Matrix<double, 6, 1>* x_delta)
+                                 const EigenMultiDOFJointTrajectory& desired_trajectory,
+                                       Eigen::VectorXd* x_delta)
 {
-    Eigen::Matrix<double, 6, 1> pos_att_delta = Eigen::MatrixXd::Zero(6, 1);
+    Eigen::VectorXd pos_att_delta = Eigen::VectorXd::Zero(6);
 
-    pos_att_delta.block<3, 1>(0, 0) = desired_position - odometry.position_EO;
+    pos_att_delta.block<3, 1>(0, 0) = desired_trajectory.position_ET - odometry.position_EO;
 
     Eigen::Vector3d euler_angles;
     getEulerAnglesFromQuaternion(odometry.orientation_EO, &euler_angles);
     Eigen::Vector3d desired_euler_angles;
-    getEulerAnglesFromQuaternion(odometry.orientation_EO, &desired_euler_angles);
+    getEulerAnglesFromQuaternion(desired_trajectory.orientation_ET, &desired_euler_angles);
 
     pos_att_delta.block<3, 1>(3, 0) = desired_euler_angles - euler_angles;
 
@@ -299,19 +298,20 @@ inline void CalculatePosAttDelta(const EigenOdometry& odometry,
 }
 
 inline void CalculateVelocityDelta(const EigenOdometry& odometry,
-                                   const Eigen::Vector3d& desired_velocity,
-                                   const Eigen::Vector3d& desired_angular_velocity,
-                                         Eigen::Matrix<double, 6, 1>* v_delta)
+                                   const EigenMultiDOFJointTrajectory& desired_trajectory,
+                                         Eigen::VectorXd* v_delta)
 {
-    Eigen::Matrix<double, 6, 1> velocity_delta = Eigen::MatrixXd::Zero(6, 1);
+    Eigen::VectorXd velocity_delta = Eigen::VectorXd::Zero(6);
 
-    velocity_delta.block<3, 1>(0, 0) = desired_velocity - odometry.velocity_EO;
-    velocity_delta.block<3, 1>(3, 0) = desired_angular_velocity - odometry.angular_velocity_EO;
+    velocity_delta.block<3, 1>(0, 0)
+        = desired_trajectory.velocity_ET - odometry.velocity_EO;
+    velocity_delta.block<3, 1>(3, 0)
+        = desired_trajectory.angular_velocity_ET - odometry.angular_velocity_EO;
 
     *v_delta = velocity_delta;
 }
 
-inline void EigenVectorToEigenThrust(const Eigen::Matrix<double, 6, 1>& controller_output,
+inline void EigenVectorToEigenThrust(const Eigen::VectorXd& controller_output,
                                            EigenThrust* thrust)
 {
     thrust->force = controller_output.block<3, 1>(0, 0);
