@@ -9,9 +9,14 @@ find_package(catkin REQUIRED COMPONENTS
     sensor_msgs
     trajectory_msgs
     pyramid_msgs
+    dynamic_reconfigure
 )
 
 find_package(Eigen3 REQUIRED)
+
+generate_dynamic_reconfigure_options(
+  cfg/SystemCommander.cfg
+)
 
 catkin_package(
     INCLUDE_DIRS include ${Eigen3_INCLUDE_DIRS}
@@ -19,7 +24,6 @@ catkin_package(
     CATKIN_DEPENDS geometry_msgs nav_msgs roscpp sensor_msgs trajectory_msgs pyramid_msgs
     DEPENDS Eigen3
 )
-
 
 include_directories(
     include
@@ -38,3 +42,7 @@ add_executable(system_commander_node src/nodes/system_commander_node.cpp)
 add_dependencies(system_commander_node ${catkin_EXPORTED_TARGETS})
 target_link_libraries(system_commander_node
     system_commander ${catkin_LIBRARIES})
+
+add_executable(central_reconfigure src/central_reconfigure.cpp)
+add_dependencies(central_reconfigure ${PROJECT_NAME}_gencfg)
+target_link_libraries(central_reconfigure ${catkin_LIBRARIES})
