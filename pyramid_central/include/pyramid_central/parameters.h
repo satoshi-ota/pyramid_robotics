@@ -22,22 +22,22 @@ static constexpr double kDefaultRotorMomentConstant = 1.6e-2;
 // Default tether parameters
 const unsigned int DefaultTetherNum = 4;
 //mounting_posisons
-const Eigen::Vector3d DefaultTether0MountPos = Eigen::Vector3d( 5.0,  0.0, 0.0);
-const Eigen::Vector3d DefaultTether1MountPos = Eigen::Vector3d( 0.0,  5.0, 0.0);
-const Eigen::Vector3d DefaultTether2MountPos = Eigen::Vector3d(-5.0,  0.0, 0.0);
-const Eigen::Vector3d DefaultTether3MountPos = Eigen::Vector3d( 0.0, -5.0, 0.0);
+const Eigen::Vector3d DefaultTether0MountPos = Eigen::Vector3d( 0.21,   0.0, 0.0);
+const Eigen::Vector3d DefaultTether1MountPos = Eigen::Vector3d(  0.0, -0.21, 0.0);
+const Eigen::Vector3d DefaultTether2MountPos = Eigen::Vector3d(-0.21,   0.0, 0.0);
+const Eigen::Vector3d DefaultTether3MountPos = Eigen::Vector3d(  0.0,  0.21, 0.0);
 
 //directions
-const Eigen::Vector3d DefaultTether0Direction = Eigen::Vector3d( 5.0,  0.0, 0.0);
-const Eigen::Vector3d DefaultTether1Direction = Eigen::Vector3d( 0.0,  5.0, 0.0);
-const Eigen::Vector3d DefaultTether2Direction = Eigen::Vector3d(-5.0,  0.0, 0.0);
-const Eigen::Vector3d DefaultTether3Direction = Eigen::Vector3d( 0.0, -5.0, 0.0);
+const Eigen::Vector3d DefaultTether0Direction = Eigen::Vector3d( 1.0,  0.0, 0.0);
+const Eigen::Vector3d DefaultTether1Direction = Eigen::Vector3d( 0.0, -1.0, 0.0);
+const Eigen::Vector3d DefaultTether2Direction = Eigen::Vector3d(-1.0,  0.0, 0.0);
+const Eigen::Vector3d DefaultTether3Direction = Eigen::Vector3d( 0.0,  1.0, 0.0);
 
 //anchor_positions
-const Eigen::Vector3d DefaultAnchor0Pos = Eigen::Vector3d( 5.0,  0.0, 0.0);
-const Eigen::Vector3d DefaultAnchor1Pos = Eigen::Vector3d( 0.0,  5.0, 0.0);
-const Eigen::Vector3d DefaultAnchor2Pos = Eigen::Vector3d(-5.0,  0.0, 0.0);
-const Eigen::Vector3d DefaultAnchor3Pos = Eigen::Vector3d( 0.0, -5.0, 0.0);
+const Eigen::Vector3d DefaultAnchor0Pos = Eigen::Vector3d( 5.21,   0.0, 0.0);
+const Eigen::Vector3d DefaultAnchor1Pos = Eigen::Vector3d(  0.0, -5.21, 0.0);
+const Eigen::Vector3d DefaultAnchor2Pos = Eigen::Vector3d(-5.21,   0.0, 0.0);
+const Eigen::Vector3d DefaultAnchor3Pos = Eigen::Vector3d(  0.0,  5.21, 0.0);
 
 const Eigen::Matrix<double, 6, 6> DefaultGainP = Eigen::MatrixXd::Identity(6, 6);
 const Eigen::Matrix<double, 6, 6> DefaultGainD = Eigen::MatrixXd::Identity(6, 6);
