@@ -39,6 +39,17 @@ SystemCommanderNode::~SystemCommanderNode(){ }
 void SystemCommanderNode::InitializeParams()
 {
     GetSystemParameters(private_nh_, &(system_commander_.system_parameters_));
+
+    //initialize tensions_msg
+    n_tether_ = system_commander_.system_parameters_.n_tether_;
+
+    char tether_name[256];
+    for(unsigned int i=0;i<n_tether_;++i)
+    {
+        sprintf(tether_name, "ugv2tether_joint_prismatic_%i", i);
+        tensions_msg.name.push_back(std::string(tether_name));
+    }
+    tensions_msg.effort.resize(n_tether_);
 }
 
 void SystemCommanderNode::ReconfigureCB(pyramid_central::SystemCommanderConfig &config,
@@ -82,8 +93,6 @@ void SystemCommanderNode::FeedbackOdometryCB(const nav_msgs::OdometryPtr& odomet
 
     //publish desired tensions
     sendTensions();
-
-    ros::Duration(0.1).sleep();
 }
 
 void SystemCommanderNode::sendTensions()
@@ -91,20 +100,9 @@ void SystemCommanderNode::sendTensions()
     //write tether tensions
     Eigen::Vector4d desired_tensions = system_commander_.getTensions();
 
-    unsigned int n_tether = system_commander_.system_parameters_.n_tether_;
-    tensions_msg.effort.resize(n_tether);
-
     tensions_msg.header.stamp = ros::Time::now();
 
-    //initialize tensions_msg
-    char tether_name[256];
-    for(unsigned int i=0;i<n_tether;++i)
-    {
-        sprintf(tether_name, "ugv2tether_joint_prismatic_%i", i);
-        tensions_msg.name.push_back(std::string(tether_name));
-    }
-
-    for(unsigned int i=0;i<n_tether;++i)
+    for(unsigned int i=0;i<n_tether_;++i)
         tensions_msg.effort[i] = desired_tensions(i);
 
     double duration = (ros::Time::now() - begin_).toSec();
@@ -112,8 +110,6 @@ void SystemCommanderNode::sendTensions()
     //wait for uav take off
     if(duration > 10.0)
         tensions_pub_.publish(tensions_msg);
-
-
 }
 
 void SystemCommanderNode::sendThrust()

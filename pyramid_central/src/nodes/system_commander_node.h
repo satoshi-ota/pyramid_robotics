@@ -33,6 +33,7 @@ private: //member data
     ros::NodeHandle nh_;
     ros::NodeHandle private_nh_;
     ros::Time begin_;
+    unsigned int n_tether_;
 
     boost::shared_ptr<dynamic_reconfigure::Server<pyramid_central::SystemCommanderConfig>> srv_;
 
