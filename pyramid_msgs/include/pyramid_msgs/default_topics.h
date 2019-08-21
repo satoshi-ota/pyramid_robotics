@@ -4,7 +4,7 @@
 namespace pyramid_msgs {
 namespace default_topics {
 //command
-static constexpr char COMMAND_TENSIONS[] = "command/tension";
+static constexpr char COMMAND_TENSIONS[] = "/command/tension";
 static constexpr char COMMAND_THRUST[] = "command/thrust";
 static constexpr char COMMAND_ACTUATORS[] = "command/motor_speed";
 static constexpr char COMMAND_TRAJECTORY[] = "command/trajectory";
