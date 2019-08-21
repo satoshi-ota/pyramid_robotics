@@ -1,6 +1,6 @@
 #system parameters
-gainP: {x: 1.0, y: 1.0, z: 1.0, roll: 1.0, pitch: 1.0, yaw: 1.0}
-gainD: {x: 1.0, y: 1.0, z: 1.0, roll: 1.0, pitch: 1.0, yaw: 1.0}
+gainP: {x: 1.0, y: 1.0, z: 1.0, roll: 0.1, pitch: 0.1, yaw: 0.1}
+gainD: {x: 1.0, y: 1.0, z: 1.0, roll: 0.1, pitch: 0.1, yaw: 0.1}
 n_tether: 4
 
 tether_configuration:
