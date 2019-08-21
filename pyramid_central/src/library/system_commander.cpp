@@ -89,20 +89,19 @@ void SystemCommander::CalculateConrolVariable()
     CalculateWrench(system_parameters_, odometry_, spatial_mass_matrix_,
                     centrifugal_coriolis_matrix_, input_acceleration_, &wrench_);
 
+    thrust_.force.setZero();
+    thrust_.force(2) = (rotation_matrix_.inverse() * wrench_.block<3, 1>(0, 0)).z();
+
     Eigen::MatrixXd jacobian_tilde;
 
     CalculateJacobianTilde(angular_mapping_matrix_, jacobian_, &jacobian_tilde);
 
-    Eigen::Matrix<double, 6, 10> B = Eigen::MatrixXd::Zero(6, 10);
-    B.block<6, 4>(0, 0) = jacobian_tilde.transpose();
-    B.block<3, 3>(0, 4) = rotation_matrix_;
-    B.block<3, 3>(3, 7) = Eigen::Matrix3d::Identity();
+    Eigen::Matrix<double, 4, 3> small_jacobian_tilde = jacobian_tilde.block<4, 3>(0, 0);
 
-    controller_output = B.transpose() * (B * B.transpose()).inverse() * wrench_;
+    tensions_ = small_jacobian_tilde * (small_jacobian_tilde.transpose() * small_jacobian_tilde)
+                * (wrench_ - rotation_matrix_ * thrust_.force);
 
-    tensions_ = controller_output.block<4, 1>(0, 0);
-
-    EigenVectorToEigenThrust(controller_output.block<6, 1>(4, 0), &thrust_);
+    thrust_.torque = wrench_ - jacobian_tilde.transpose() * tensions_;
 }
 
 
