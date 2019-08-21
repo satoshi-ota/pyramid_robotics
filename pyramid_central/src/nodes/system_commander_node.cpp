@@ -6,7 +6,8 @@ namespace system_commander
 SystemCommanderNode::SystemCommanderNode(
     const ros::NodeHandle& nh, const ros::NodeHandle& private_nh)
     :nh_(nh),
-     private_nh_(private_nh)
+     private_nh_(private_nh),
+     begin_(ros::Time::now())
 {
     //get params & initialize
     InitializeParams();
@@ -66,6 +67,8 @@ void SystemCommanderNode::FeedbackOdometryCB(const nav_msgs::OdometryPtr& odomet
 
     system_commander_.SetFeedbackOdometry(feedback_odometry);
 
+    system_commander_.UpdateTetherDirections();
+
     system_commander_.UpdateDynamicParams();
 
     //acc = acc_d + Kd(vel_d - vel) + Kp(pos_d - pos)
@@ -74,11 +77,13 @@ void SystemCommanderNode::FeedbackOdometryCB(const nav_msgs::OdometryPtr& odomet
     //calculate controlled variable
     system_commander_.CalculateConrolVariable();
 
+    //publish deisred thrust
+    sendThrust();
+
     //publish desired tensions
     sendTensions();
 
-    //publish deisred thrust
-    sendThrust();
+    ros::Duration(0.1).sleep();
 }
 
 void SystemCommanderNode::sendTensions()
@@ -91,10 +96,24 @@ void SystemCommanderNode::sendTensions()
 
     tensions_msg.header.stamp = ros::Time::now();
 
+    //initialize tensions_msg
+    char tether_name[256];
+    for(unsigned int i=0;i<n_tether;++i)
+    {
+        sprintf(tether_name, "ugv2tether_joint_prismatic_%i", i);
+        tensions_msg.name.push_back(std::string(tether_name));
+    }
+
     for(unsigned int i=0;i<n_tether;++i)
         tensions_msg.effort[i] = desired_tensions(i);
 
-    tensions_pub_.publish(tensions_msg);
+    double duration = (ros::Time::now() - begin_).toSec();
+
+    //wait for uav take off
+    if(duration > 10.0)
+        tensions_pub_.publish(tensions_msg);
+
+
 }
 
 void SystemCommanderNode::sendThrust()

@@ -32,6 +32,7 @@ private: //member data
     //general
     ros::NodeHandle nh_;
     ros::NodeHandle private_nh_;
+    ros::Time begin_;
 
     boost::shared_ptr<dynamic_reconfigure::Server<pyramid_central::SystemCommanderConfig>> srv_;
 
