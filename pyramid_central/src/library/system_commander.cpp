@@ -1,4 +1,5 @@
 #include "pyramid_central/system_commander.h"
+#define PRINT_MAT(X) cout << #X << ":\n" << X << endl << endl
 
 namespace system_commander
 {
@@ -97,13 +98,17 @@ void SystemCommander::CalculateConrolVariable()
     Eigen::VectorXd wrench_delta = Eigen::VectorXd::Zero(6);
     wrench_delta.block<3, 1>(0, 0) = wrench_.block<3, 1>(0, 0) - rotation_matrix_ * thrust_.force;
     wrench_delta.block<3, 1>(3, 0) = Eigen::Vector3d::Zero();
+    PRINT_MAT(jacobian_tilde.transpose());
 
-    tensions_
-        = jacobian_tilde * //(jacobian_tilde.transpose() * jacobian_tilde).inverse() *
-        wrench_delta;
-
-    thrust_.torque
-        = wrench_.block<3, 1>(3, 0) - (jacobian_tilde.transpose() * tensions_).block<3, 1>(3, 0);
+    Eigen::VectorXd pseudo_wrench = Eigen::VectorXd::Zero(6);
+    pseudo_wrench << 10.0, 0.0, 0.0, 0.0, 0.0, 0.0;
+    Eigen::FullPivLU<Eigen::MatrixXd> lu(jacobian_tilde.transpose());
+    //tensions_ = lu.solve(pseudo_wrench);
+    tensions_ << 0.0, 1.0, 1.0, 0.0;
+    LimitTensions(&tensions_);
+    //PRINT_MAT(tensions_);
+    //thrust_.torque
+    //    = wrench_.block<3, 1>(3, 0) - (jacobian_tilde.transpose() * tensions_).block<3, 1>(3, 0);
 }
 
 

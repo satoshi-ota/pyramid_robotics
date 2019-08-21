@@ -1,6 +1,9 @@
 #ifndef PYRAMID_CENTRAL_SYSTEM_COMMANDER_H
 #define PYRAMID_CENTRAL_SYSTEM_COMMANDER_H
 
+#include <Eigen/QR>
+#include <iostream>
+
 #include <ros/ros.h>
 #include <nav_msgs/Odometry.h>
 #include <sensor_msgs/Imu.h>
@@ -8,6 +11,8 @@
 
 #include "pyramid_central/common.h"
 #include "pyramid_central/configurations.h"
+
+using namespace std;
 
 namespace system_commander
 {
@@ -53,7 +58,7 @@ private: //member data
 
     Eigen::VectorXd wrench_; //f
     Eigen::VectorXd input_acceleration_;
-    
+
     //goal
     EigenMultiDOFJointTrajectory desired_trajectory_;
 

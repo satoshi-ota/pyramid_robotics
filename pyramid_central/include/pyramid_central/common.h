@@ -201,7 +201,7 @@ inline void CalculateDrivativeAngularMappingMatrix(
     getEulerAnglesFromQuaternion(orientation, &angles);
 
     *derivative_angular_mapping_matrix
-        << 1,  0,              -cos(angles(1)),
+        << 0,  0,              -cos(angles(1)),
            0, -sin(angles(0)), -sin(angles(1))*sin(angles(0))+cos(angles(1))*sin(angles(0)),
            0, -cos(angles(0)), -sin(angles(1))*cos(angles(0))-cos(angles(1))*sin(angles(0));
 }
@@ -332,6 +332,13 @@ inline void EigenVectorToEigenThrust(const Eigen::VectorXd& controller_output,
 {
     thrust->force = controller_output.block<3, 1>(0, 0);
     thrust->torque = controller_output.block<3, 1>(3, 0);
+}
+
+inline void LimitTensions(Eigen::Vector4d* tensions)
+{
+    Eigen::Vector4d max_tensions(1.0, 1.0, 1.0, 1.0);
+    *tensions = tensions->cwiseMax(Eigen::VectorXd::Zero(tensions->rows()));
+    *tensions = tensions->cwiseMin(max_tensions);
 }
 
 } //namespace system_commander
