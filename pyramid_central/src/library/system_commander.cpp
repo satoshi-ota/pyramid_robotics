@@ -44,7 +44,7 @@ void SystemCommander::UpdateDynamicParams()
 
     CalculateAngularMappingMatrix(odometry_.orientation_EO, &angular_mapping_matrix_);
 
-    CalculateJacobian(system_parameters_.tether_configuration_, rotation_matrix_, jacobian_);
+    CalculateJacobian(system_parameters_.tether_configuration_, rotation_matrix_, &jacobian_);
 
     CalculateSpatialInertiaMatrix(system_parameters_, global_inertia_,
                                   angular_mapping_matrix_, &spatial_mass_matrix_);
@@ -89,12 +89,12 @@ void SystemCommander::CalculateConrolVariable()
     CalculateWrench(system_parameters_, odometry_, spatial_mass_matrix_,
                     centrifugal_coriolis_matrix_, input_acceleration_, &wrench_);
 
-    Eigen::Matrix<double, 6, 6> R = Eigen::MatrixXd::Zero(6, 6);
-    R.block<3, 3>(0, 0) = Eigen::Matrix3d::Identity();
-    R.block<3, 3>(3, 3) = rotation_matrix_;
+    Eigen::MatrixXd jacobian_tilde;
+
+    CalculateJacobianTilde(angular_mapping_matrix_, jacobian_, &jacobian_tilde);
 
     Eigen::Matrix<double, 6, 10> B = Eigen::MatrixXd::Zero(6, 10);
-    B.block<6, 4>(0, 0) = (jacobian_ * R).transpose();
+    B.block<6, 4>(0, 0) = jacobian_tilde.transpose();
     B.block<3, 3>(0, 4) = rotation_matrix_;
     B.block<3, 3>(3, 7) = Eigen::Matrix3d::Identity();
 

@@ -245,9 +245,10 @@ inline void CalculateCentrifugalCoriolisMatrix(const Eigen::Vector3d& angular_ve
 
 inline void CalculateJacobian(const TetherConfiguration& tether_configuration,
                               const Eigen::Matrix3d& rotation_matrix,
-                                    Eigen::MatrixXd& jacobian)
+                                    Eigen::MatrixXd* jacobian)
 {
-    jacobian.resize(4, 6);
+    jacobian->resize(4, 6);
+    jacobian->setZero();
 
     Eigen::Matrix<double, 6, 4> J = Eigen::MatrixXd::Zero(6, 4);
 
@@ -259,7 +260,22 @@ inline void CalculateJacobian(const TetherConfiguration& tether_configuration,
 
         ++i;
     }
-    jacobian = J.transpose();
+    *jacobian = J.transpose();
+}
+
+inline void CalculateJacobianTilde(const Eigen::Matrix3d& angular_mapping_matrix,
+                                   const Eigen::MatrixXd& jacobian,
+                                         Eigen::MatrixXd* jacobian_tilde)
+{
+    jacobian_tilde->resize(4, 6);
+    jacobian_tilde->setZero();
+
+    Eigen::Matrix<double, 6, 6> S1 = Eigen::MatrixXd::Zero(6, 6);
+
+    S1.block<3, 3>(0, 0) = Eigen::Matrix3d::Identity();
+    S1.block<3, 3>(3, 3) = angular_mapping_matrix;
+
+    *jacobian_tilde = jacobian * S1;
 }
 
 inline void CalculateWrench(const SystemParameters& system_parameters,
