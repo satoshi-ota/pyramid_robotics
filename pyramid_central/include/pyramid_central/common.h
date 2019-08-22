@@ -255,8 +255,8 @@ inline void CalculateJacobian(const TetherConfiguration& tether_configuration,
     unsigned int i = 0;
     for (const Tether& tether : tether_configuration.tethers)
     {
-        J.block<3, 1>(0, i) = -tether.direction;
-        J.block<3, 1>(3, i) =  tether.direction.cross(rotation_matrix*tether.mounting_pos);
+        J.block<3, 1>(0, i) =  tether.direction;
+        J.block<3, 1>(3, i) = -tether.direction.cross(rotation_matrix*tether.mounting_pos);
 
         ++i;
     }
@@ -336,7 +336,7 @@ inline void EigenVectorToEigenThrust(const Eigen::VectorXd& controller_output,
 
 inline void LimitTensions(Eigen::Vector4d* tensions)
 {
-    Eigen::Vector4d max_tensions(1.0, 1.0, 1.0, 1.0);
+    Eigen::Vector4d max_tensions(10.0, 10.0, 10.0, 10.0);
     *tensions = tensions->cwiseMax(Eigen::VectorXd::Zero(tensions->rows()));
     *tensions = tensions->cwiseMin(max_tensions);
 }
