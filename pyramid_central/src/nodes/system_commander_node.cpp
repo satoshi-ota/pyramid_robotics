@@ -15,7 +15,7 @@ SystemCommanderNode::SystemCommanderNode(
     //set up dynamic reconfigure
     srv_ = boost::make_shared <dynamic_reconfigure::Server<pyramid_central::SystemCommanderConfig>>( private_nh);
     dynamic_reconfigure::Server<pyramid_central::SystemCommanderConfig>::CallbackType cb
-        = boost::bind(&SystemCommanderNode::ReconfigureCB, this, _1, _2);
+        = boost::bind(&SystemCommanderNode::ControllerReconfigureCB, this, _1, _2);
     srv_->setCallback(cb);
 
     trajectory_sub_ = nh_.subscribe(pyramid_msgs::default_topics::COMMAND_TRAJECTORY, 1,
@@ -52,10 +52,10 @@ void SystemCommanderNode::InitializeParams()
     tensions_msg.effort.resize(n_tether_);
 }
 
-void SystemCommanderNode::ReconfigureCB(pyramid_central::SystemCommanderConfig &config,
+void SystemCommanderNode::ControllerReconfigureCB(pyramid_central::SystemCommanderConfig &config,
                                         uint32_t level)
 {
-    system_reconfigure_.reconfig(config, &system_commander_.system_parameters_);
+    system_reconfigure_.ControllerReconfig(config, &system_commander_.system_parameters_);
 }
 
 void SystemCommanderNode::DesiredTrajectoryCB(
@@ -108,8 +108,8 @@ void SystemCommanderNode::sendTensions()
     double duration = (ros::Time::now() - begin_).toSec();
 
     //wait for uav take off
-    if(duration > 10.0)
-        tensions_pub_.publish(tensions_msg);
+    //if(duration > 10.0)
+    tensions_pub_.publish(tensions_msg);
 }
 
 void SystemCommanderNode::sendThrust()

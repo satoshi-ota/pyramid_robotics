@@ -3,7 +3,7 @@
 namespace system_commander
 {
 
-void SystemReconfigure::reconfig(pyramid_central::SystemCommanderConfig& config,
+void SystemReconfigure::ControllerReconfig(pyramid_central::SystemCommanderConfig& config,
                                  SystemParameters* system_parameters)
 {
     ROS_INFO("Reconfigure Request: P[%f, %f, %f, %f, %f, %f] D[%f, %f, %f, %f, %f, %f]",
@@ -23,6 +23,18 @@ void SystemReconfigure::reconfig(pyramid_central::SystemCommanderConfig& config,
     system_parameters->K_p_(3, 3) = config.P_roll;
     system_parameters->K_p_(4, 4) = config.P_pitch;
     system_parameters->K_p_(5, 5) = config.P_yaw;
+}
+
+void SystemReconfigure::TrajectoryReconfig(pyramid_central::SystemCommanderConfig& config)
+{
+    ROS_INFO("Reconfigure Request: Desired position[%f, %f, %f] Desired Attitude[0.0, 0.0, %f]",
+             config.x, config.y, config.z, config.yaw);
+
+    desired_position_.x() = config.x;
+    desired_position_.y() = config.y;
+    desired_position_.z() = config.z;
+
+    desired_yaw_ = config.yaw;
 }
 
 } //namespace system_commander

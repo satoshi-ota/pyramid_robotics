@@ -16,10 +16,22 @@ namespace system_commander
 class SystemReconfigure
 {
 public:
-    SystemReconfigure(){ }
+    SystemReconfigure()
+        :desired_position_(Eigen::Vector3d::Zero()),
+         desired_yaw_(0.0){ }
+
     ~SystemReconfigure(){ }
 
-    void reconfig(pyramid_central::SystemCommanderConfig& cfg, SystemParameters* system_parameters);
+    void ControllerReconfig(pyramid_central::SystemCommanderConfig& cfg, SystemParameters* system_parameters);
+    void TrajectoryReconfig(pyramid_central::SystemCommanderConfig& cfg);
+
+    inline Eigen::Vector3d getDesiredPosition(){return desired_position_;};
+    inline double getDesiredYaw(){return desired_yaw_;};
+
+private:
+    //general
+    Eigen::Vector3d desired_position_;
+    double desired_yaw_;
 };
 
 } //namespace system_commander

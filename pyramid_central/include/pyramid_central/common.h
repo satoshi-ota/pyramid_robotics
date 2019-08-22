@@ -141,9 +141,9 @@ inline void getEulerAnglesFromQuaternion(const Eigen::Quaternion<double>& q,
 
     *euler_angles << atan2(2.0 * (q.w() * q.x() + q.y() * q.z()),
                            1.0 - 2.0 * (q.x() * q.x() + q.y() * q.y())),
-        asin(2.0 * (q.w() * q.y() - q.z() * q.x())),
-        atan2(2.0 * (q.w() * q.z() + q.x() * q.y()),
-              1.0 - 2.0 * (q.y() * q.y() + q.z() * q.z()));
+                           asin(2.0 * (q.w() * q.y() - q.z() * q.x())),
+                           atan2(2.0 * (q.w() * q.z() + q.x() * q.y()),
+                           1.0 - 2.0 * (q.y() * q.y() + q.z() * q.z()));
   }
 }
 

@@ -99,8 +99,10 @@ void SystemCommander::CalculateConrolVariable()
 
     Eigen::FullPivLU<Eigen::MatrixXd> lu(jacobian_tilde.block<4, 3>(0, 0).transpose());
     tensions_ = lu.solve(wrench_delta);
+    //tensions_(1) = 0;
+    //tensions_(3) = 0;
 
-    LimitTensions(&tensions_);
+    //LimitTensions(&tensions_);
     PRINT_MAT(wrench_);
     thrust_.torque
         = wrench_.block<3, 1>(3, 0) - (jacobian_tilde.transpose() * tensions_).block<3, 1>(3, 0);

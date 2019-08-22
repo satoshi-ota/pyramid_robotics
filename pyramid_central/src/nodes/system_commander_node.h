@@ -24,7 +24,7 @@ public:
     ~SystemCommanderNode();
 
     void InitializeParams();
-    void ReconfigureCB(pyramid_central::SystemCommanderConfig &config, uint32_t level);
+    void ControllerReconfigureCB(pyramid_central::SystemCommanderConfig &config, uint32_t level);
     void sendTensions();
     void sendThrust();
 

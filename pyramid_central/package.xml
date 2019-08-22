@@ -15,5 +15,6 @@
   <depend>sensor_msgs</depend>
   <depend>trajectory_msgs</depend>
   <depend>pyramid_msgs</depend>
+  <depend>mav_msgs</depend>
 
 </package>
