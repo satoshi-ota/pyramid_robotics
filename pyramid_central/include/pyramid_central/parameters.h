@@ -42,6 +42,10 @@ const Eigen::Vector3d DefaultAnchor3Pos = Eigen::Vector3d(  0.0,  5.21, 0.0);
 const Eigen::Matrix<double, 6, 6> DefaultGainP = Eigen::MatrixXd::Identity(6, 6);
 const Eigen::Matrix<double, 6, 6> DefaultGainD = Eigen::MatrixXd::Identity(6, 6);
 
+//Sliding mode controller
+const Eigen::Matrix<double, 6, 6> DefaultLambda = Eigen::MatrixXd::Identity(6, 6);
+const Eigen::Matrix<double, 6, 6> DefaultGainK = Eigen::MatrixXd::Identity(6, 6);
+
 // Default physics parameters.
 static constexpr double kDefaultGravity = 9.81;
 
@@ -148,7 +152,9 @@ class SystemParameters {
                                  kDefaultInertiaZz).asDiagonal()),
         n_tether_(DefaultTetherNum),
         K_p_(DefaultGainP),
-        K_d_(DefaultGainD){ }
+        K_d_(DefaultGainD),
+        Lambda_(DefaultLambda),
+        K_(DefaultGainK){ }
   double mass_;
   const double gravity_;
   Eigen::Matrix3d inertia_;
@@ -157,6 +163,10 @@ class SystemParameters {
   //PID control parameters
   Eigen::Matrix<double, 6, 6> K_d_;
   Eigen::Matrix<double, 6, 6> K_p_;
+
+  //Sliding mode control parameters
+  Eigen::Matrix<double, 6, 6> Lambda_;
+  Eigen::Matrix<double, 6, 6> K_;
 
   RotorConfiguration rotor_configuration_;
   TetherConfiguration tether_configuration_;
