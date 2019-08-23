@@ -69,6 +69,14 @@ struct EigenMultiDOFJointTrajectory
     Eigen::Quaterniond orientation_ET;
     Eigen::Vector3d angular_velocity_ET;
     Eigen::Vector3d angular_acceleration_ET;
+
+    inline Eigen::VectorXd getAcc()
+    {
+        Eigen::VectorXd acceleration = Eigen::VectorXd::Zero(6);
+        acceleration.block<3, 1>(0, 0) = acceleration_ET;
+        acceleration.block<3, 1>(3, 0) = angular_acceleration_ET;
+        return acceleration;
+    }
 };
 
 inline void eigenMultiDOFJointTrajectoryFromMsg(
@@ -131,6 +139,14 @@ struct EigenOdometry {
     Eigen::Vector3d angular_velocity_EO;
     Eigen::Matrix<double, 6, 6> pose_covariance_;
     Eigen::Matrix<double, 6, 6> twist_covariance_;
+
+    inline Eigen::VectorXd getVel()
+    {
+        Eigen::VectorXd velocity = Eigen::VectorXd::Zero(6);
+        velocity.block<3, 1>(0, 0) = velocity_EO;
+        velocity.block<3, 1>(3, 0) = angular_velocity_EO;
+        return velocity;
+    }
 };
 
 inline void getEulerAnglesFromQuaternion(const Eigen::Quaternion<double>& q,
@@ -339,6 +355,23 @@ inline void LimitTensions(Eigen::Vector4d* tensions)
     Eigen::Vector4d max_tensions(10.0, 10.0, 10.0, 10.0);
     *tensions = tensions->cwiseMax(Eigen::VectorXd::Zero(tensions->rows()));
     *tensions = tensions->cwiseMin(max_tensions);
+}
+
+inline Eigen::VectorXd sgn(Eigen::VectorXd& sliding_surface)
+{
+    Eigen::VectorXd sgn_s = Eigen::VectorXd::Zero(6);
+
+    for (unsigned int i=0;i<sliding_surface.size();++i)
+    {
+        if (sliding_surface(i) < 0)
+            sgn_s(i) = -1;
+        else if (sliding_surface(i) == 0)
+            sgn_s(i) = 0;
+        else if (sliding_surface(i) > 0)
+            sgn_s(i) = 1;
+    }
+
+    return sgn_s;
 }
 
 } //namespace system_commander
