@@ -1,0 +1,76 @@
+#ifndef PYRAMID_GAZEBO_PLUGINS_GAZEBO_EXTERNAL_FORCE_PLUGIN_H
+#define PYRAMID_GAZEBO_PLUGINS_GAZEBO_EXTERNAL_FORCE_PLUGIN_H
+
+#include <ros/ros.h>
+#include <ros/callback_queue.h>
+#include <gazebo_msgs/LinkState.h>
+#include <geometry_msgs/WrenchStamped.h>
+#include <pyramid_msgs/default_topics.h>
+
+#include <gazebo/gazebo.hh>
+#include <gazebo/common/Plugin.hh>
+#include <gazebo/physics/physics.hh>
+#include <gazebo/physics/PhysicsIface.hh>
+#include <gazebo/physics/Model.hh>
+#include <gazebo/physics/Link.hh>
+#include <gazebo/physics/World.hh>
+#include <gazebo/physics/PhysicsEngine.hh>
+
+namespace gazebo{
+
+class ExternalForcePlugin : public ModelPlugin
+{
+    struct Force
+    {
+        Force()
+        :point(ignition::math::Vector3d(0, 0, 0)),
+         force(ignition::math::Vector3d(0, 0, 0)),
+         torque(ignition::math::Vector3d(0, 0, 0)){ }
+        ignition::math::Vector3d point;
+        ignition::math::Vector3d force;
+        ignition::math::Vector3d torque;
+        std::string name;
+    };
+
+public:
+    ExternalForcePlugin();
+    ~ExternalForcePlugin();
+
+    virtual void Load(physics::ModelPtr _model, sdf::ElementPtr _sdf);
+    virtual void Update();
+
+private: //member function
+
+    void ForceCommandCB(const geometry_msgs::WrenchStampedPtr &msg)
+    {
+        external_force_.force = msg->wrench.force;
+        external_force_.torque = msg->wrench.torque;
+        command_received_ = true;
+    }
+
+private: //data member
+    //general
+    ros::NodeHandle rosnode_;
+    ros::CallbackQueue callback_queue_;
+    event::ConnectionPtr update_event_;
+    double update_T_;
+    double t_prev_;
+    Force external_force_;
+
+    //model
+    physics::ModelPtr model_;
+
+    //subscriber to thrust
+    ros::Subscriber thrust_sub_;
+    bool command_received_;
+
+    //publisher to end-effector state
+    ros::Publisher ee_state_publisher_;
+    gazebo_msgs::LinkState ee_state_;
+    physics::LinkPtr ee_link_;
+
+};
+
+} //namespace gazebo
+
+#endif //PYRAMID_GAZEBO_PLUGINS_GAZEBO_EXTERNAL_FORCE_PLUGIN_H
