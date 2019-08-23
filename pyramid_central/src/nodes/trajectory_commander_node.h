@@ -37,6 +37,9 @@ private:
 
     SystemReconfigure system_reconfigure_;
 
+    Eigen::Vector3d desired_position_;
+    double desired_yaw_;
+
     ros::Publisher trajectory_pub_;
     trajectory_msgs::MultiDOFJointTrajectory trajectory_msg;
 };

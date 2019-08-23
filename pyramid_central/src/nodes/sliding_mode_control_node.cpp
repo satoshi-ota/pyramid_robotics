@@ -13,10 +13,12 @@ SlidingModeControlNode::SlidingModeControlNode(
     InitializeParams();
 
     //set up dynamic reconfigure
+    /*
     srv_ = boost::make_shared <dynamic_reconfigure::Server<pyramid_central::SystemCommanderConfig>>( private_nh);
     dynamic_reconfigure::Server<pyramid_central::SystemCommanderConfig>::CallbackType cb
         = boost::bind(&SlidingModeControlNode::ControllerReconfigureCB, this, _1, _2);
     srv_->setCallback(cb);
+    */
 
     trajectory_sub_ = nh_.subscribe(pyramid_msgs::default_topics::COMMAND_TRAJECTORY, 1,
                                     &SlidingModeControlNode::DesiredTrajectoryCB, this);

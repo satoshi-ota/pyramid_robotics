@@ -54,7 +54,7 @@ void SlidingModeController::CalculateSlidingSurface()
     CalculatePosAttDelta(odometry_, desired_trajectory_, &x_delta_);
     CalculateVelocityDelta(odometry_, desired_trajectory_, &v_delta_);
 
-    sliding_surface_ = v_delta_ + system_parameters_.Lambda_ * x_delta_;
+    sliding_surface_ = - v_delta_ - system_parameters_.Lambda_ * x_delta_;
 }
 
 void SlidingModeController::CalculateThrust()
@@ -69,7 +69,7 @@ void SlidingModeController::CalculateThrust()
 
     wrench_
         = - spatial_mass_matrix_
-          * (desired_acc - system_parameters_.Lambda_ * v_delta_ + system_parameters_.K_ * sgn_s)
+          * (desired_acc + system_parameters_.Lambda_ * v_delta_ + system_parameters_.K_ * sgn_s)
           + centrifugal_coriolis_matrix_ * odom_vel + G;
 
     thrust_.force = wrench_.block<3, 1>(0, 0);
