@@ -3,8 +3,8 @@
 namespace system_commander
 {
 
-void SystemReconfigure::ControllerReconfig(pyramid_central::SystemCommanderConfig& config,
-                                 SystemParameters* system_parameters)
+void SystemReconfigure::PIDControllerReconfig(pyramid_central::SystemCommanderConfig& config,
+                                              SystemParameters* system_parameters)
 {
     ROS_INFO("Reconfigure Request: P[%f, %f, %f, %f, %f, %f] D[%f, %f, %f, %f, %f, %f]",
              config.P_x, config.P_y, config.P_z, config.P_roll, config.P_pitch, config.P_yaw,
@@ -25,7 +25,31 @@ void SystemReconfigure::ControllerReconfig(pyramid_central::SystemCommanderConfi
     system_parameters->K_p_(5, 5) = config.P_yaw;
 }
 
-void SystemReconfigure::TrajectoryReconfig(pyramid_central::SystemCommanderConfig& config)
+void SystemReconfigure::SlidingModeControllerReconfig(
+                            pyramid_central::SlidingModeControllerConfig& config,
+                            SystemParameters* system_parameters)
+{
+    ROS_INFO("Reconfigure Request: Lambda[%f, %f, %f, %f, %f, %f] Gain_K[%f, %f, %f, %f, %f, %f]",
+             config.lambda_1, config.lambda_2, config.lambda_3,
+             config.lambda_4, config.lambda_5, config.lambda_6,
+             config.K_1, config.K_2, config.K_3, config.K_4, config.K_5, config.K_6);
+
+    system_parameters->Lambda_(0, 0) = config.lambda_1;
+    system_parameters->Lambda_(1, 1) = config.lambda_1;
+    system_parameters->Lambda_(2, 2) = config.lambda_1;
+    system_parameters->Lambda_(3, 3) = config.lambda_1;
+    system_parameters->Lambda_(4, 4) = config.lambda_1;
+    system_parameters->Lambda_(5, 5) = config.lambda_1;
+
+    system_parameters->K_(0, 0) = config.K_1;
+    system_parameters->K_(1, 1) = config.K_2;
+    system_parameters->K_(2, 2) = config.K_3;
+    system_parameters->K_(3, 3) = config.K_4;
+    system_parameters->K_(4, 4) = config.K_5;
+    system_parameters->K_(5, 5) = config.K_6;
+}
+
+void SystemReconfigure::TrajectoryReconfig(pyramid_central::TrajectoryGeneratorConfig& config)
 {
     ROS_INFO("Reconfigure Request: Desired position[%f, %f, %f] Desired Attitude[0.0, 0.0, %f]",
              config.x, config.y, config.z, config.yaw);

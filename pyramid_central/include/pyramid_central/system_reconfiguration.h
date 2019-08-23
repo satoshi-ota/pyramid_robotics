@@ -8,6 +8,8 @@
 #include <dynamic_reconfigure/server.h>
 
 #include "pyramid_central/SystemCommanderConfig.h"
+#include "pyramid_central/SlidingModeControllerConfig.h"
+#include "pyramid_central/TrajectoryGeneratorConfig.h"
 #include "pyramid_central/parameters.h"
 
 namespace system_commander
@@ -22,8 +24,13 @@ public:
 
     ~SystemReconfigure(){ }
 
-    void ControllerReconfig(pyramid_central::SystemCommanderConfig& cfg, SystemParameters* system_parameters);
-    void TrajectoryReconfig(pyramid_central::SystemCommanderConfig& cfg);
+    void PIDControllerReconfig(pyramid_central::SystemCommanderConfig& cfg,
+                               SystemParameters* system_parameters);
+
+    void SlidingModeControllerReconfig(pyramid_central::SlidingModeControllerConfig& cfg,
+                                       SystemParameters* system_parameters);
+
+    void TrajectoryReconfig(pyramid_central::TrajectoryGeneratorConfig& cfg);
 
     inline Eigen::Vector3d getDesiredPosition(){return desired_position_;};
     inline double getDesiredYaw(){return desired_yaw_;};
