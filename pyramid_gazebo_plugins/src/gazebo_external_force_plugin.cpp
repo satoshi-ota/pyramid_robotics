@@ -50,7 +50,7 @@ void ExternalForcePlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
     update_event_ = event::Events::ConnectWorldUpdateBegin(boost::bind(&ExternalForcePlugin::Update, this));
 
     ros::spinOnce();
-    ROS_INFO("Started Tensions Plugin for %s.", _model->GetName().c_str());
+    ROS_INFO("Started external force Plugin for %s.", _model->GetName().c_str());
 }
 
 void ExternalForcePlugin::Update()

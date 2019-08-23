@@ -41,7 +41,7 @@ public:
 
 private: //member function
 
-    void ForceCommandCB(const geometry_msgs::WrenchStampedPtr &msg)
+    void ForceCommandCB(const geometry_msgs::WrenchStampedConstPtr &msg)
     {
         external_force_.force.X() = msg->wrench.force.x;
         external_force_.force.Y() = msg->wrench.force.y;
