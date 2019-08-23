@@ -43,8 +43,12 @@ private: //member function
 
     void ForceCommandCB(const geometry_msgs::WrenchStampedPtr &msg)
     {
-        external_force_.force = msg->wrench.force;
-        external_force_.torque = msg->wrench.torque;
+        external_force_.force.X() = msg->wrench.force.x;
+        external_force_.force.Y() = msg->wrench.force.y;
+        external_force_.force.Z() = msg->wrench.force.z;
+        external_force_.torque.X() = msg->wrench.torque.x;
+        external_force_.torque.Y() = msg->wrench.torque.y;
+        external_force_.torque.Z() = msg->wrench.torque.z;
         command_received_ = true;
     }
 
