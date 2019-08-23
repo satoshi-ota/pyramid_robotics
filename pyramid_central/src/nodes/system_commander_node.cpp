@@ -24,9 +24,6 @@ SystemCommanderNode::SystemCommanderNode(
     odometry_sub_ = nh_.subscribe(pyramid_msgs::default_topics::FEEDBACK_ODOMETRY, 1,
                                   &SystemCommanderNode::FeedbackOdometryCB, this);
 
-    //imu_sub_ = nh_.subscribe(pyramid_msgs::default_topics::FEEDBACK_IMU, 1,
-    //                         &SystemCommanderNode::FeedbackImuCB, this);
-
     tensions_pub_ = nh_.advertise<sensor_msgs::JointState>
                         (pyramid_msgs::default_topics::COMMAND_TENSIONS, 1);
 
@@ -53,9 +50,9 @@ void SystemCommanderNode::InitializeParams()
 }
 
 void SystemCommanderNode::ControllerReconfigureCB(pyramid_central::SystemCommanderConfig &config,
-                                        uint32_t level)
+                                                  uint32_t level)
 {
-    system_reconfigure_.ControllerReconfig(config, &system_commander_.system_parameters_);
+    system_reconfigure_.PIDControllerReconfig(config, &system_commander_.system_parameters_);
 }
 
 void SystemCommanderNode::DesiredTrajectoryCB(
@@ -63,8 +60,8 @@ void SystemCommanderNode::DesiredTrajectoryCB(
 {
     ROS_INFO_ONCE("Recieved first Desired Trajectory. System controller start!");
 
-    EigenMultiDOFJointTrajectory desired_trajectory;
-    eigenMultiDOFJointTrajectoryFromMsg(trajectory_msg, &desired_trajectory);
+    pyramid_msgs::EigenMultiDOFJointTrajectory desired_trajectory;
+    pyramid_msgs::eigenMultiDOFJointTrajectoryFromMsg(trajectory_msg, &desired_trajectory);
 
     system_commander_.SetDesiredTrajectory(desired_trajectory);
 }
@@ -73,8 +70,8 @@ void SystemCommanderNode::FeedbackOdometryCB(const nav_msgs::OdometryPtr& odomet
 {
     ROS_INFO_ONCE("SystemCommander got first feedback odometry msg.");
 
-    EigenOdometry feedback_odometry;
-    eigenOdometryFromMsg(odometry_msg, &feedback_odometry);
+    pyramid_msgs::EigenOdometry feedback_odometry;
+    pyramid_msgs::eigenOdometryFromMsg(odometry_msg, &feedback_odometry);
 
     system_commander_.SetFeedbackOdometry(feedback_odometry);
 
@@ -115,10 +112,10 @@ void SystemCommanderNode::sendTensions()
 void SystemCommanderNode::sendThrust()
 {
     //write thrust
-    EigenThrust desired_thrust = system_commander_.getThrust();
+    pyramid_msgs::EigenThrust desired_thrust = system_commander_.getThrust();
 
     thrust_msg.header.stamp = ros::Time::now();
-    eigenThrustToMsg(desired_thrust, thrust_msg);
+    pyramid_msgs::eigenThrustToMsg(desired_thrust, thrust_msg);
 
     thrust_pub_.publish(thrust_msg);
 }

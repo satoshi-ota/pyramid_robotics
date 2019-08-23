@@ -13,12 +13,12 @@ SlidingModeControlNode::SlidingModeControlNode(
     InitializeParams();
 
     //set up dynamic reconfigure
-    /*
-    srv_ = boost::make_shared <dynamic_reconfigure::Server<pyramid_central::SystemCommanderConfig>>( private_nh);
-    dynamic_reconfigure::Server<pyramid_central::SystemCommanderConfig>::CallbackType cb
+    srv_ = boost::make_shared
+            <dynamic_reconfigure::Server<pyramid_central::SlidingModeControllerConfig>>( private_nh);
+    dynamic_reconfigure::Server<pyramid_central::SlidingModeControllerConfig>::CallbackType cb
         = boost::bind(&SlidingModeControlNode::ControllerReconfigureCB, this, _1, _2);
     srv_->setCallback(cb);
-    */
+
 
     trajectory_sub_ = nh_.subscribe(pyramid_msgs::default_topics::COMMAND_TRAJECTORY, 1,
                                     &SlidingModeControlNode::DesiredTrajectoryCB, this);
@@ -37,10 +37,11 @@ void SlidingModeControlNode::InitializeParams()
     GetSystemParameters(private_nh_, &(sliding_mode_controller_.system_parameters_));
 }
 
-void SlidingModeControlNode::ControllerReconfigureCB(pyramid_central::SystemCommanderConfig &config,
-                                        uint32_t level)
+void SlidingModeControlNode::ControllerReconfigureCB(
+                                pyramid_central::SlidingModeControllerConfig &config,           uint32_t level)
 {
-    system_reconfigure_.ControllerReconfig(config, &sliding_mode_controller_.system_parameters_);
+    system_reconfigure_.SlidingModeControllerReconfig(config,
+                                                      &sliding_mode_controller_.system_parameters_);
 }
 
 void SlidingModeControlNode::DesiredTrajectoryCB(
@@ -48,8 +49,8 @@ void SlidingModeControlNode::DesiredTrajectoryCB(
 {
     ROS_INFO_ONCE("Recieved first Desired Trajectory. System controller start!");
 
-    EigenMultiDOFJointTrajectory desired_trajectory;
-    eigenMultiDOFJointTrajectoryFromMsg(trajectory_msg, &desired_trajectory);
+    pyramid_msgs::EigenMultiDOFJointTrajectory desired_trajectory;
+    pyramid_msgs::eigenMultiDOFJointTrajectoryFromMsg(trajectory_msg, &desired_trajectory);
 
     sliding_mode_controller_.SetDesiredTrajectory(desired_trajectory);
 }
@@ -58,8 +59,8 @@ void SlidingModeControlNode::FeedbackOdometryCB(const nav_msgs::OdometryPtr& odo
 {
     ROS_INFO_ONCE("SystemCommander got first feedback odometry msg.");
 
-    EigenOdometry feedback_odometry;
-    eigenOdometryFromMsg(odometry_msg, &feedback_odometry);
+    pyramid_msgs::EigenOdometry feedback_odometry;
+    pyramid_msgs::eigenOdometryFromMsg(odometry_msg, &feedback_odometry);
 
     sliding_mode_controller_.SetFeedbackOdometry(feedback_odometry);
 
@@ -69,17 +70,16 @@ void SlidingModeControlNode::FeedbackOdometryCB(const nav_msgs::OdometryPtr& odo
 
     sliding_mode_controller_.CalculateThrust();
 
-    //publish deisred thrust
     sendThrust();
 }
 
 void SlidingModeControlNode::sendThrust()
 {
     //write thrust
-    EigenThrust desired_thrust = sliding_mode_controller_.getThrust();
+    pyramid_msgs::EigenThrust desired_thrust = sliding_mode_controller_.getThrust();
 
     thrust_msg.header.stamp = ros::Time::now();
-    eigenThrustToMsg(desired_thrust, thrust_msg);
+    pyramid_msgs::eigenThrustToMsg(desired_thrust, thrust_msg);
 
     thrust_pub_.publish(thrust_msg);
 }

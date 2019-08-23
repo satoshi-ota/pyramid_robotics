@@ -1,16 +1,18 @@
 #ifndef PYRAMID_CENTRAL_SYSTEM_COMMANDER_NODE_H
 #define PYRAMID_CENTRAL_SYSTEM_COMMANDER_NODE_H
 
-#include <ros/ros.h>
 #include <Eigen/Core>
-#include <pyramid_msgs/default_topics.h>
+
+#include <ros/ros.h>
 #include <nav_msgs/Odometry.h>
+#include <pyramid_msgs/conversions.h>
+#include <pyramid_msgs/default_topics.h>
 #include <geometry_msgs/WrenchStamped.h>
 
 #include "pyramid_central/common.h"
 #include "pyramid_central/sliding_mode_controller.h"
 #include "pyramid_central/system_reconfiguration.h"
-#include "pyramid_central/SystemCommanderConfig.h"
+#include "pyramid_central/SlidingModeControllerConfig.h"
 
 namespace system_commander
 {
@@ -22,7 +24,7 @@ public:
     ~SlidingModeControlNode();
 
     void InitializeParams();
-    void ControllerReconfigureCB(pyramid_central::SystemCommanderConfig &config, uint32_t level);
+    void ControllerReconfigureCB(pyramid_central::SlidingModeControllerConfig &config, uint32_t level);
     void sendThrust();
 
 private: //member data
@@ -31,7 +33,7 @@ private: //member data
     ros::NodeHandle private_nh_;
     ros::Time begin_;
 
-    boost::shared_ptr<dynamic_reconfigure::Server<pyramid_central::SystemCommanderConfig>> srv_;
+    boost::shared_ptr<dynamic_reconfigure::Server<pyramid_central::SlidingModeControllerConfig>> srv_;
 
     //topic
     geometry_msgs::WrenchStamped thrust_msg;

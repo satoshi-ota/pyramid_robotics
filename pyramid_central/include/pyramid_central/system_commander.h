@@ -6,7 +6,6 @@
 
 #include <ros/ros.h>
 #include <nav_msgs/Odometry.h>
-#include <sensor_msgs/Imu.h>
 #include <trajectory_msgs/MultiDOFJointTrajectory.h>
 
 #include "pyramid_central/common.h"
@@ -23,10 +22,9 @@ public:
     SystemCommander();
     ~SystemCommander();
 
-    void SetDesiredTrajectory(const EigenMultiDOFJointTrajectory& trajectory);
-    void SetFeedbackOdometry(const EigenOdometry& odometry);
+    void SetDesiredTrajectory(const pyramid_msgs::EigenMultiDOFJointTrajectory& trajectory);
+    void SetFeedbackOdometry(const pyramid_msgs::EigenOdometry& odometry);
 
-    void UpdateAnchorPos(); //not implemente
     void UpdateTetherDirections();
     void UpdateDynamicParams();
 
@@ -34,7 +32,7 @@ public:
     void CalculateConrolVariable();
 
     inline Eigen::Vector4d getTensions(){return tensions_;};
-    inline EigenThrust getThrust(){return thrust_;};
+    inline pyramid_msgs::EigenThrust getThrust(){return thrust_;};
 
     //from parameters.h
     SystemParameters system_parameters_;
@@ -60,14 +58,14 @@ private: //member data
     Eigen::VectorXd input_acceleration_;
 
     //goal
-    EigenMultiDOFJointTrajectory desired_trajectory_;
+    pyramid_msgs::EigenMultiDOFJointTrajectory desired_trajectory_;
 
     //feedback
-    EigenOdometry odometry_;
+    pyramid_msgs::EigenOdometry odometry_;
 
     //countoller output
     Eigen::Vector4d tensions_;
-    EigenThrust thrust_;
+    pyramid_msgs::EigenThrust thrust_;
 
 };
 

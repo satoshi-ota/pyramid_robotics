@@ -6,7 +6,8 @@
 
 #include <ros/ros.h>
 #include <nav_msgs/Odometry.h>
-#include <sensor_msgs/Imu.h>
+#include <pyramid_msgs/conversions.h>
+#include <pyramid_msgs/pyramid_eigen_msgs.h>
 #include <trajectory_msgs/MultiDOFJointTrajectory.h>
 
 #include "pyramid_central/common.h"
@@ -23,8 +24,8 @@ public:
     SlidingModeController();
     ~SlidingModeController();
 
-    void SetDesiredTrajectory(const EigenMultiDOFJointTrajectory& trajectory);
-    void SetFeedbackOdometry(const EigenOdometry& odometry);
+    void SetDesiredTrajectory(const pyramid_msgs::EigenMultiDOFJointTrajectory& trajectory);
+    void SetFeedbackOdometry(const pyramid_msgs::EigenOdometry& odometry);
 
     void UpdateDynamicParams();
     void CalculateSlidingSurface();
@@ -33,7 +34,7 @@ public:
     //from parameters.h
     SystemParameters system_parameters_;
 
-    inline EigenThrust getThrust(){return thrust_;};
+    inline pyramid_msgs::EigenThrust getThrust(){return thrust_;};
 
 private:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
@@ -50,23 +51,19 @@ private:
     Eigen::MatrixXd spatial_mass_matrix_; //M
     Eigen::MatrixXd centrifugal_coriolis_matrix_; //C
 
-    Eigen::MatrixXd jacobian_; //J
-
     Eigen::VectorXd sliding_surface_;
-    Eigen::VectorXd x_delta_;
-    Eigen::VectorXd v_delta_;
+    Eigen::VectorXd x_error_;
+    Eigen::VectorXd v_error_;
     Eigen::VectorXd wrench_; //f
-    Eigen::VectorXd input_acceleration_;
 
     //goal
-    EigenMultiDOFJointTrajectory desired_trajectory_;
+    pyramid_msgs::EigenMultiDOFJointTrajectory desired_trajectory_;
 
     //feedback
-    EigenOdometry odometry_;
+    pyramid_msgs::EigenOdometry odometry_;
 
     //countoller output
-    EigenThrust thrust_;
-
+    pyramid_msgs::EigenThrust thrust_;
 };
 
 }

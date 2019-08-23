@@ -17,6 +17,8 @@ find_package(Eigen3 REQUIRED)
 
 generate_dynamic_reconfigure_options(
   cfg/SystemCommander.cfg
+  cfg/SlidingModeController.cfg
+  cfg/TrajectoryGenerator.cfg
 )
 
 catkin_package(

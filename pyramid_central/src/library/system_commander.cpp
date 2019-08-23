@@ -16,22 +16,11 @@ SystemCommander::SystemCommander()
 
 SystemCommander::~SystemCommander(){ }
 
-void SystemCommander::UpdateAnchorPos()
-{
-    //dynamic anchor_position
-    /*
-    for (Tether& tether : tether_configuration_.tethers)
-    {
-        tether.anchor_position =
-    }
-    */
-}
-
 void SystemCommander::UpdateTetherDirections()
 {
     for (Tether& tether : system_parameters_.tether_configuration_.tethers)
     {
-        tether.direction = (tether.anchor_position - odometry_.position_EO
+        tether.direction = (tether.anchor_position - odometry_.position
                             - rotation_matrix_ * tether.mounting_pos).normalized();
     }
 }
@@ -39,31 +28,32 @@ void SystemCommander::UpdateTetherDirections()
 void SystemCommander::UpdateDynamicParams()
 {
 
-    CalculateRotationMatrix(odometry_.orientation_EO, &rotation_matrix_);
+    CalculateRotationMatrix(odometry_.orientation, &rotation_matrix_);
 
     CalculateGlobalInertia(system_parameters_.inertia_, rotation_matrix_, &global_inertia_);
 
-    CalculateAngularMappingMatrix(odometry_.orientation_EO, &angular_mapping_matrix_);
+    CalculateAngularMappingMatrix(odometry_.orientation, &angular_mapping_matrix_);
 
     CalculateJacobian(system_parameters_.tether_configuration_, rotation_matrix_, &jacobian_);
 
     CalculateSpatialInertiaMatrix(system_parameters_, global_inertia_,
                                   angular_mapping_matrix_, &spatial_mass_matrix_);
 
-    CalculateCentrifugalCoriolisMatrix(odometry_.angular_velocity_EO, global_inertia_,
+    CalculateCentrifugalCoriolisMatrix(odometry_.angular_velocity, global_inertia_,
                                        angular_mapping_matrix_, derivative_angular_mapping_matrix_, &centrifugal_coriolis_matrix_);
 }
 
-void SystemCommander::SetDesiredTrajectory(const EigenMultiDOFJointTrajectory& trajectory)
+void SystemCommander::SetDesiredTrajectory(
+                        const pyramid_msgs::EigenMultiDOFJointTrajectory& trajectory)
 {
     desired_trajectory_ = trajectory;
     ROS_INFO("Set desired trajectory: position[%f, %f, %f].",
-             desired_trajectory_.position_ET.x(),
-             desired_trajectory_.position_ET.y(),
-             desired_trajectory_.position_ET.z());
+             desired_trajectory_.position.x(),
+             desired_trajectory_.position.y(),
+             desired_trajectory_.position.z());
 }
 
-void SystemCommander::SetFeedbackOdometry(const EigenOdometry& odometry)
+void SystemCommander::SetFeedbackOdometry(const pyramid_msgs::EigenOdometry& odometry)
 {
     odometry_ = odometry;
 }
@@ -76,8 +66,8 @@ void SystemCommander::CalculateInputAcc()
     CalculateVelocityDelta(odometry_, desired_trajectory_, &v_delta);
     Eigen::VectorXd acc_desired = Eigen::VectorXd::Zero(6);
 
-    acc_desired.block<3, 1>(0, 0) = desired_trajectory_.acceleration_ET;
-    acc_desired.block<3, 1>(3, 0) = desired_trajectory_.angular_acceleration_ET;
+    acc_desired.block<3, 1>(0, 0) = desired_trajectory_.acceleration;
+    acc_desired.block<3, 1>(3, 0) = desired_trajectory_.angular_acceleration;
 
     input_acceleration_ = acc_desired + system_parameters_.K_d_ * v_delta
                           + system_parameters_.K_p_ * x_delta;

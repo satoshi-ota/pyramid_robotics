@@ -1,12 +1,14 @@
 #ifndef PYRAMID_CENTRAL_SYSTEM_COMMANDER_NODE_H
 #define PYRAMID_CENTRAL_SYSTEM_COMMANDER_NODE_H
 
-#include <ros/ros.h>
 #include <Eigen/Core>
+
+#include <ros/ros.h>
+
 #include <pyramid_msgs/default_topics.h>
+#include <pyramid_msgs/conversions.h>
 #include <nav_msgs/Odometry.h>
 #include <sensor_msgs/JointState.h>
-#include <sensor_msgs/Imu.h>
 #include <geometry_msgs/WrenchStamped.h>
 
 #include "pyramid_central/common.h"
@@ -57,7 +59,6 @@ private: //member data
 private: //member function
     void DesiredTrajectoryCB(const trajectory_msgs::MultiDOFJointTrajectoryPtr& trajectory_msg);
     void FeedbackOdometryCB(const nav_msgs::OdometryPtr& odometry_msg);
-    //void FeedbackImuCB(const sensor_msgs::ImuPtr& imu_msg);
 
 };
 
