@@ -27,12 +27,18 @@ public:
     void SetDesiredTrajectory(const pyramid_msgs::EigenMultiDOFJointTrajectory& trajectory);
     void SetFeedbackOdometry(const pyramid_msgs::EigenOdometry& odometry);
 
+    void UpdateTetherDirections();
     void UpdateDynamicParams();
     void CalculateSlidingSurface();
     void CalculateThrust();
 
     //from parameters.h
     SystemParameters system_parameters_;
+
+    inline Eigen::VectorXd getWrench(){return wrench_;};
+    inline Eigen::MatrixXd getJacobian(){return jacobian_;};
+    inline Eigen::Matrix3d getRotationMatrix(){return rotation_matrix_;};
+    inline Eigen::Matrix3d getToOmegaMatrix(){return angular_mapping_matrix_;};
 
     inline pyramid_msgs::EigenThrust getThrust(){return thrust_;};
 
@@ -43,18 +49,19 @@ private:
     ros::NodeHandle private_nh_;
 
     //variable
-    Eigen::Matrix3d rotation_matrix_; //R
-    Eigen::Matrix3d global_inertia_; //I_g
-    Eigen::Matrix3d angular_mapping_matrix_; //S
-    Eigen::Matrix3d derivative_angular_mapping_matrix_; //S
+    Eigen::Matrix3d rotation_matrix_;
+    Eigen::Matrix3d global_inertia_;
+    Eigen::Matrix3d angular_mapping_matrix_;
+    Eigen::Matrix3d derivative_angular_mapping_matrix_;
 
-    Eigen::MatrixXd spatial_mass_matrix_; //M
-    Eigen::MatrixXd centrifugal_coriolis_matrix_; //C
+    Eigen::MatrixXd spatial_mass_matrix_;
+    Eigen::MatrixXd centrifugal_coriolis_matrix_;
+    Eigen::MatrixXd jacobian_;
 
     Eigen::VectorXd sliding_surface_;
     Eigen::VectorXd x_error_;
     Eigen::VectorXd v_error_;
-    Eigen::VectorXd wrench_; //f
+    Eigen::VectorXd wrench_;
 
     //goal
     pyramid_msgs::EigenMultiDOFJointTrajectory desired_trajectory_;

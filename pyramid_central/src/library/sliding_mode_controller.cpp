@@ -18,6 +18,15 @@ SlidingModeController::SlidingModeController()
 
 SlidingModeController::~SlidingModeController(){ }
 
+void SlidingModeController::UpdateTetherDirections()
+{
+    for (Tether& tether : system_parameters_.tether_configuration_.tethers)
+    {
+        tether.direction = (tether.anchor_position - odometry_.position
+                            - rotation_matrix_ * tether.mounting_pos).normalized();
+    }
+}
+
 void SlidingModeController::UpdateDynamicParams()
 {
 
@@ -26,6 +35,8 @@ void SlidingModeController::UpdateDynamicParams()
     CalculateGlobalInertia(system_parameters_.inertia_, rotation_matrix_, &global_inertia_);
 
     CalculateAngularMappingMatrix(odometry_.orientation, &angular_mapping_matrix_);
+
+    CalculateJacobian(system_parameters_.tether_configuration_, rotation_matrix_, &jacobian_);
 
     CalculateSpatialInertiaMatrix(system_parameters_, global_inertia_,
                                   angular_mapping_matrix_, &spatial_mass_matrix_);
