@@ -12,7 +12,8 @@
 #include <geometry_msgs/WrenchStamped.h>
 
 #include "pyramid_central/common.h"
-#include "pyramid_central/system_commander.h"
+#include "pyramid_central/tension_distributor.h"
+#include "pyramid_central/sliding_mode_controller.h"
 #include "pyramid_central/system_reconfiguration.h"
 #include "pyramid_central/SystemCommanderConfig.h"
 
@@ -26,8 +27,8 @@ public:
     ~SystemCommanderNode();
 
     void InitializeParams();
-    void ControllerReconfigureCB(pyramid_central::SystemCommanderConfig &config, uint32_t level);
-    void sendTensions();
+    void ControllerReconfigureCB(pyramid_central::SlidingModeControllerConfig &config, uint32_t level);
+    void sendTension();
     void sendThrust();
 
 private: //member data
@@ -37,20 +38,20 @@ private: //member data
     ros::Time begin_;
     unsigned int n_tether_;
 
-    boost::shared_ptr<dynamic_reconfigure::Server<pyramid_central::SystemCommanderConfig>> srv_;
+    boost::shared_ptr<dynamic_reconfigure::Server<pyramid_central::SlidingModeControllerConfig>> srv_;
 
     //topic
     sensor_msgs::JointState tensions_msg;
     geometry_msgs::WrenchStamped thrust_msg;
 
     //class
-    SystemCommander system_commander_;
+    SlidingModeController sliding_mode_controller_;
+    TensionDistributor tension_distributor_;
     SystemReconfigure system_reconfigure_;
 
     //subscriber
     ros::Subscriber trajectory_sub_;
     ros::Subscriber odometry_sub_;
-    ros::Subscriber imu_sub_;
 
     //publisher
     ros::Publisher tensions_pub_;
@@ -59,7 +60,6 @@ private: //member data
 private: //member function
     void DesiredTrajectoryCB(const trajectory_msgs::MultiDOFJointTrajectoryPtr& trajectory_msg);
     void FeedbackOdometryCB(const nav_msgs::OdometryPtr& odometry_msg);
-
 };
 
 } //namespace system_commander

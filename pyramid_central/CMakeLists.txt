@@ -39,7 +39,8 @@ include_directories("/usr/include/eigen3")
 add_library(system_commander
         src/library/system_commander.cpp
         src/library/system_reconfiguration.cpp
-        src/library/sliding_mode_controller.cpp)
+        src/library/sliding_mode_controller.cpp
+        src/library/tension_distributor.cpp)
 
 target_link_libraries(system_commander ${catkin_LIBRARIES})
 add_dependencies(system_commander ${catkin_EXPORTED_TARGETS})

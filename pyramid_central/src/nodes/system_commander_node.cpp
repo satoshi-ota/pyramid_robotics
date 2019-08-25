@@ -13,8 +13,8 @@ SystemCommanderNode::SystemCommanderNode(
     InitializeParams();
 
     //set up dynamic reconfigure
-    srv_ = boost::make_shared <dynamic_reconfigure::Server<pyramid_central::SystemCommanderConfig>>( private_nh);
-    dynamic_reconfigure::Server<pyramid_central::SystemCommanderConfig>::CallbackType cb
+    srv_ = boost::make_shared <dynamic_reconfigure::Server<pyramid_central::SlidingModeControllerConfig>>( private_nh);
+    dynamic_reconfigure::Server<pyramid_central::SlidingModeControllerConfig>::CallbackType cb
         = boost::bind(&SystemCommanderNode::ControllerReconfigureCB, this, _1, _2);
     srv_->setCallback(cb);
 
@@ -35,10 +35,10 @@ SystemCommanderNode::~SystemCommanderNode(){ }
 
 void SystemCommanderNode::InitializeParams()
 {
-    GetSystemParameters(private_nh_, &(system_commander_.system_parameters_));
+    GetSystemParameters(private_nh_, &(sliding_mode_controller_.system_parameters_));
 
     //initialize tensions_msg
-    n_tether_ = system_commander_.system_parameters_.n_tether_;
+    n_tether_ = sliding_mode_controller_.system_parameters_.n_tether_;
 
     char tether_name[256];
     for(unsigned int i=0;i<n_tether_;++i)
@@ -49,10 +49,12 @@ void SystemCommanderNode::InitializeParams()
     tensions_msg.effort.resize(n_tether_);
 }
 
-void SystemCommanderNode::ControllerReconfigureCB(pyramid_central::SystemCommanderConfig &config,
-                                                  uint32_t level)
+void SystemCommanderNode::ControllerReconfigureCB(
+                            pyramid_central::SlidingModeControllerConfig &config,
+                            uint32_t level)
 {
-    system_reconfigure_.PIDControllerReconfig(config, &system_commander_.system_parameters_);
+    system_reconfigure_.SlidingModeControllerReconfig(config,
+                                                      &sliding_mode_controller_.system_parameters_);
 }
 
 void SystemCommanderNode::DesiredTrajectoryCB(
@@ -63,7 +65,7 @@ void SystemCommanderNode::DesiredTrajectoryCB(
     pyramid_msgs::EigenMultiDOFJointTrajectory desired_trajectory;
     pyramid_msgs::eigenMultiDOFJointTrajectoryFromMsg(trajectory_msg, &desired_trajectory);
 
-    system_commander_.SetDesiredTrajectory(desired_trajectory);
+    sliding_mode_controller_.SetDesiredTrajectory(desired_trajectory);
 }
 
 void SystemCommanderNode::FeedbackOdometryCB(const nav_msgs::OdometryPtr& odometry_msg)
@@ -73,49 +75,59 @@ void SystemCommanderNode::FeedbackOdometryCB(const nav_msgs::OdometryPtr& odomet
     pyramid_msgs::EigenOdometry feedback_odometry;
     pyramid_msgs::eigenOdometryFromMsg(odometry_msg, &feedback_odometry);
 
-    system_commander_.SetFeedbackOdometry(feedback_odometry);
+    sliding_mode_controller_.SetFeedbackOdometry(feedback_odometry);
 
-    system_commander_.UpdateTetherDirections();
+    sliding_mode_controller_.UpdateTetherDirections();
 
-    system_commander_.UpdateDynamicParams();
+    sliding_mode_controller_.UpdateDynamicParams();
 
-    //acc = acc_d + Kd(vel_d - vel) + Kp(pos_d - pos)
-    system_commander_.CalculateInputAcc();
+    sliding_mode_controller_.CalculateSlidingSurface();
 
-    //calculate controlled variable
-    system_commander_.CalculateConrolVariable();
+    sliding_mode_controller_.CalculateThrust();
+
+    Eigen::VectorXd wrench = sliding_mode_controller_.getWrench();
+    Eigen::MatrixXd jacobian = sliding_mode_controller_.getJacobian();
+    Eigen::Matrix3d rotation_matrix = sliding_mode_controller_.getRotationMatrix();
+    Eigen::Matrix3d to_omega_matrix = sliding_mode_controller_.getToOmegaMatrix();
+
+    tension_distributor_.TensionDistribution(wrench, jacobian, rotation_matrix, to_omega_matrix);
+
+    tension_distributor_.OptimizeTension();
 
     //publish deisred thrust
     sendThrust();
 
     //publish desired tensions
-    sendTensions();
+    sendTension();
 }
 
-void SystemCommanderNode::sendTensions()
+void SystemCommanderNode::sendTension()
 {
     //write tether tensions
-    Eigen::Vector4d desired_tensions = system_commander_.getTensions();
+    Eigen::Vector4d desired_tensions = tension_distributor_.getTension();
 
     tensions_msg.header.stamp = ros::Time::now();
 
     for(unsigned int i=0;i<n_tether_;++i)
         tensions_msg.effort[i] = desired_tensions(i);
 
-    double duration = (ros::Time::now() - begin_).toSec();
+    //double duration = (ros::Time::now() - begin_).toSec();
 
     //wait for uav take off
     //if(duration > 10.0)
-    tensions_pub_.publish(tensions_msg);
+    //tensions_pub_.publish(tensions_msg);
 }
 
 void SystemCommanderNode::sendThrust()
 {
     //write thrust
-    pyramid_msgs::EigenThrust desired_thrust = system_commander_.getThrust();
+    Eigen::Vector4d desired_thrust = tension_distributor_.getThrust();
 
     thrust_msg.header.stamp = ros::Time::now();
-    pyramid_msgs::eigenThrustToMsg(desired_thrust, thrust_msg);
+    thrust_msg.wrench.force.z = desired_thrust(0);
+    thrust_msg.wrench.torque.x = desired_thrust(1);
+    thrust_msg.wrench.torque.y = desired_thrust(2);
+    thrust_msg.wrench.torque.z = desired_thrust(3);
 
     thrust_pub_.publish(thrust_msg);
 }
