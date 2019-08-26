@@ -16,5 +16,6 @@
   <depend>trajectory_msgs</depend>
   <depend>pyramid_msgs</depend>
   <depend>mav_msgs</depend>
+  <depend>ifopt</depend>
 
 </package>
