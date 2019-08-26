@@ -4,7 +4,15 @@
 namespace system_commander
 {
 
-TensionDistributor::TensionDistributor(){ }
+TensionDistributor::TensionDistributor()
+{
+    nlp_.AddVariableSet  (std::make_shared<ExVariables>());
+    nlp_.AddCostSet      (std::make_shared<ExCost>());
+    nlp_.PrintCurrent();
+
+    ipopt_.SetOption("linear_solver", "mumps");
+    ipopt_.SetOption("jacobian_approximation", "exact");
+}
 
 TensionDistributor::~TensionDistributor(){ }
 
@@ -19,7 +27,8 @@ void TensionDistributor::TensionDistribution(const Eigen::VectorXd& wrench,
 
     jacobian_tilde_ = jacobian * S;
 
-    Eigen::Matrix<double, 6, 8> H = Eigen::MatrixXd::Zero(6, 8);
+    //Eigen::Matrix<double, 6, 8> H = Eigen::MatrixXd::Zero(6, 8);
+    H = Eigen::MatrixXd::Zero(6, 8);
     H.block<6, 4>(0, 0) = jacobian_tilde_.transpose();
     H(0, 4) = rotation_matrix(0, 2);
     H(1, 4) = rotation_matrix(1, 2);
@@ -27,30 +36,51 @@ void TensionDistributor::TensionDistribution(const Eigen::VectorXd& wrench,
     H.block<3, 3>(3, 5) = Eigen::Matrix3d::Identity();
 
     Eigen::VectorXd tension_thrust = H.transpose() * (H * H.transpose()).inverse() * wrench;
-
+    //PRINT_MAT(wrench);
     tension_ = tension_thrust.block<4, 1>(0, 0);
     thrust_ = tension_thrust.block<4, 1>(4, 0);
+    Eigen::FullPivLU<Eigen::MatrixXd> lu(H);
+    Eigen::MatrixXd H_kernel_ = lu.kernel();
+    PRINT_MAT(H_kernel_);
 }
 
 void TensionDistributor::OptimizeTension()
 {
     CheckTensionFeasibility();
-    //PRINT_MAT(jacobian_tilde_.transpose());
 
     if (feasible_tension_ == false)
     {
         Eigen::FullPivLU<Eigen::MatrixXd> lu(jacobian_tilde_.transpose());
-        lu.setThreshold(1e-1);
+        lu.setThreshold(2e-1);
         jacobian_kernel_ = lu.kernel();
         jacobian_rank_ = lu.rank();
 
-        if (jacobian_rank_ == 4)
+        if (jacobian_rank_ == 3)
+        {
             ROS_WARN("Coundn't find feasible tension.");
+            Eigen::Vector4d I = Eigen::Vector4d::Ones();
+            tension_ -= tension_.minCoeff() * I;
+        }
+        else if (jacobian_rank_ == 2)
+        {
+            nlp_.AddConstraintSet(std::make_shared<ExConstraint>("constraint1",
+                                                                 jacobian_kernel_, tension_));
+            ipopt_.Solve(nlp_);
+            Eigen::VectorXd x = nlp_.GetOptVariables()->GetValues();
+
+            tension_ += jacobian_kernel_ * x;
+        }
         else
-            
-        //cout << "The rank of J is " << lu.rank() << endl;
-        PRINT_MAT(jacobian_kernel_);
+        {
+            //ROS_WARN("Coundn't find feasible tension.");
+        }
     }
+    //Eigen::VectorXd X = Eigen::VectorXd::Zero(8);
+    //X.block<4, 1>(0, 0) = tension_;
+    //X.block<4, 1>(4, 0) = thrust_;
+    //Eigen::VectorXd pseudo_wrench = H * X;
+    //PRINT_MAT(tension_);
+    //PRINT_MAT(jacobian_kernel_);
 }
 
 } //namespace

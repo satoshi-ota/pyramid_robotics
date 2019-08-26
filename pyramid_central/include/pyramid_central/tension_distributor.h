@@ -3,13 +3,20 @@
 
 #include <Eigen/QR>
 #include <iostream>
+#include <ifopt/variable_set.h>
+#include <ifopt/constraint_set.h>
+#include <ifopt/cost_term.h>
+#include <ifopt/ipopt_solver.h>
+#include <ifopt/problem.h>
 
 #include <ros/ros.h>
 
 #include "pyramid_central/common.h"
 #include "pyramid_central/configurations.h"
+#include "pyramid_central/tension_optimizer.h"
 
 using namespace std;
+using namespace ifopt;
 
 namespace system_commander
 {
@@ -31,6 +38,9 @@ public:
 
     //from parameters.h
     SystemParameters system_parameters_;
+    Problem nlp_;
+    IpoptSolver ipopt_;
+
 private: //member data
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
     //general
@@ -42,6 +52,7 @@ private: //member data
     Eigen::MatrixXd jacobian_kernel_;
     unsigned int jacobian_rank_;
     Eigen::MatrixXd jacobian_tilde_;
+    Eigen::Matrix<double, 6, 8> H;
 
     Eigen::Vector4d tension_;
     Eigen::Vector4d thrust_;

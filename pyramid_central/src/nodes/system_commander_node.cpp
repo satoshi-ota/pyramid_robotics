@@ -111,11 +111,7 @@ void SystemCommanderNode::sendTension()
     for(unsigned int i=0;i<n_tether_;++i)
         tensions_msg.effort[i] = desired_tensions(i);
 
-    //double duration = (ros::Time::now() - begin_).toSec();
-
-    //wait for uav take off
-    //if(duration > 10.0)
-    //tensions_pub_.publish(tensions_msg);
+    tensions_pub_.publish(tensions_msg);
 }
 
 void SystemCommanderNode::sendThrust()
