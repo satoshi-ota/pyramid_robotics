@@ -27,7 +27,7 @@ void TensionDistributor::TensionDistribution(const Eigen::VectorXd& wrench,
 
     jacobian_tilde_ = jacobian * S;
 
-    //Eigen::Matrix<double, 6, 8> H = Eigen::MatrixXd::Zero(6, 8);
+    Eigen::Matrix<double, 6, 8> H = Eigen::MatrixXd::Zero(6, 8);
     H = Eigen::MatrixXd::Zero(6, 8);
     H.block<6, 4>(0, 0) = jacobian_tilde_.transpose();
     H(0, 4) = rotation_matrix(0, 2);
@@ -39,9 +39,7 @@ void TensionDistributor::TensionDistribution(const Eigen::VectorXd& wrench,
     //PRINT_MAT(wrench);
     tension_ = tension_thrust.block<4, 1>(0, 0);
     thrust_ = tension_thrust.block<4, 1>(4, 0);
-    Eigen::FullPivLU<Eigen::MatrixXd> lu(H);
-    Eigen::MatrixXd H_kernel_ = lu.kernel();
-    PRINT_MAT(H_kernel_);
+    PRINT_MAT(tension_);
 }
 
 void TensionDistributor::OptimizeTension()
@@ -51,7 +49,7 @@ void TensionDistributor::OptimizeTension()
     if (feasible_tension_ == false)
     {
         Eigen::FullPivLU<Eigen::MatrixXd> lu(jacobian_tilde_.transpose());
-        lu.setThreshold(2e-1);
+        lu.setThreshold(1e-1);
         jacobian_kernel_ = lu.kernel();
         jacobian_rank_ = lu.rank();
 
@@ -70,16 +68,12 @@ void TensionDistributor::OptimizeTension()
 
             tension_ += jacobian_kernel_ * x;
         }
-        else
-        {
-            //ROS_WARN("Coundn't find feasible tension.");
-        }
     }
     //Eigen::VectorXd X = Eigen::VectorXd::Zero(8);
     //X.block<4, 1>(0, 0) = tension_;
     //X.block<4, 1>(4, 0) = thrust_;
     //Eigen::VectorXd pseudo_wrench = H * X;
-    //PRINT_MAT(tension_);
+
     //PRINT_MAT(jacobian_kernel_);
 }
 

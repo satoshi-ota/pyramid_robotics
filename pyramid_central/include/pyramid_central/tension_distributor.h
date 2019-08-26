@@ -52,7 +52,6 @@ private: //member data
     Eigen::MatrixXd jacobian_kernel_;
     unsigned int jacobian_rank_;
     Eigen::MatrixXd jacobian_tilde_;
-    Eigen::Matrix<double, 6, 8> H;
 
     Eigen::Vector4d tension_;
     Eigen::Vector4d thrust_;
