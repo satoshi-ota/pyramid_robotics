@@ -155,6 +155,46 @@ inline void GetSystemParameters(const ros::NodeHandle& nh, SystemParameters* sys
         system_parameters->K_p_(5, 5),
         &system_parameters->K_p_(5, 5));
 
+    //Sliding Mode Controller parameters Lambda
+    GetRosParameter(nh, "lambda_1",
+        system_parameters->Lambda_(0, 0),
+        &system_parameters->Lambda_(0, 0));
+    GetRosParameter(nh, "lambda_2",
+        system_parameters->Lambda_(1, 1),
+        &system_parameters->Lambda_(1, 1));
+    GetRosParameter(nh, "lambda_3",
+        system_parameters->Lambda_(2, 2),
+        &system_parameters->Lambda_(2, 2));
+    GetRosParameter(nh, "lambda_4",
+        system_parameters->Lambda_(3, 3),
+        &system_parameters->Lambda_(3, 3));
+    GetRosParameter(nh, "lambda_5",
+        system_parameters->Lambda_(4, 4),
+        &system_parameters->Lambda_(4, 4));
+    GetRosParameter(nh, "lambda_6",
+        system_parameters->Lambda_(5, 5),
+        &system_parameters->Lambda_(5, 5));
+
+    //Sliding Mode Controller parameters K
+    GetRosParameter(nh, "K_1",
+        system_parameters->K_(0, 0),
+        &system_parameters->K_(0, 0));
+    GetRosParameter(nh, "K_2",
+        system_parameters->K_(1, 1),
+        &system_parameters->K_(1, 1));
+    GetRosParameter(nh, "K_3",
+        system_parameters->K_(2, 2),
+        &system_parameters->K_(2, 2));
+    GetRosParameter(nh, "K_4",
+        system_parameters->K_(3, 3),
+        &system_parameters->K_(3, 3));
+    GetRosParameter(nh, "K_5",
+        system_parameters->K_(4, 4),
+        &system_parameters->K_(4, 4));
+    GetRosParameter(nh, "K_6",
+        system_parameters->K_(5, 5),
+        &system_parameters->K_(5, 5));
+
     GetRotorConfiguration(nh, &system_parameters->rotor_configuration_);
 }
 
