@@ -38,25 +38,26 @@ public:
 
     //from parameters.h
     SystemParameters system_parameters_;
-    Problem nlp_;
+    Problem lpp_;
     IpoptSolver ipopt_;
 
 private: //member data
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-    //general
-    ros::NodeHandle nh_;
-    ros::NodeHandle private_nh_;
 
-    bool feasible_tension_;
+    bool feasible_;
+    unsigned int rank_;
 
-    Eigen::MatrixXd jacobian_kernel_;
-    unsigned int jacobian_rank_;
+    Eigen::MatrixXd kernel_;
     Eigen::MatrixXd jacobian_tilde_;
+
+    Eigen::VectorXd tension_thrust_;
 
     Eigen::Vector4d tension_;
     Eigen::Vector4d thrust_;
 
-    void CheckTensionFeasibility(){feasible_tension_ = (tension_.array() >= 0).all();}
+    void CheckTensionFeasibility(){
+        feasible_ = (tension_thrust_.block<4, 1>(0, 0).array() >= 0).all();
+    }
 };
 
 } //system_commander
