@@ -29,9 +29,9 @@
             <rosparam command="load" file="$(find uav_control)/params/pyramid_$(arg mav_name).yaml" />
             <remap from="feedback/odometry" to="odometry_sensor1/odometry"/>
         </node>
-        <!--node name="motor_speed_controller_node" pkg="uav_control" type="motor_speed_controller_node" output="screen">
+        <node name="motor_speed_controller_node" pkg="uav_control" type="motor_speed_controller_node" output="screen">
             <rosparam command="load" file="$(find uav_control)/params/pyramid_$(arg mav_name).yaml" />
-        </node-->
+        </node>
         <node name="trajectory_commander_node" pkg="pyramid_central" type="trajectory_commander_node" output="screen"/>
         <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
     </group>

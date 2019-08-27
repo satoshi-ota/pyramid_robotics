@@ -81,7 +81,7 @@
         <linkName>${robot_namespace}/base_link</linkName>
         <rotorVelocitySlowdownSim>${rotor_velocity_slowdown_sim}</rotorVelocitySlowdownSim>
       </plugin>
-      <plugin filename="libgazebo_external_force_plugin.so" name="external_force_plugin" />
+      <!--plugin filename="libgazebo_external_force_plugin.so" name="external_force_plugin" /-->
     </gazebo>
   </xacro:macro>
 
