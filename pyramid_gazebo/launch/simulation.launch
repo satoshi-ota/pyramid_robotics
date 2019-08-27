@@ -8,6 +8,7 @@
     <arg name="use_tether" default="true"/>
     <arg name="enable_wind" default="false"/>
     <arg name="enable_rviz" default="false"/>
+    <arg name="plot_status" default="false"/>
 
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
         <arg name="world_name" value="$(find rotors_gazebo)/worlds/$(arg world_name).world"/>
@@ -25,7 +26,7 @@
             <arg name="enable_wind" value="$(arg enable_wind)"/>
         </include>
         <node name="system_commander_node" pkg="pyramid_central" type="system_commander_node" output="screen">
-            <rosparam command="load" file="$(find pyramid_central)/params/system_controller.yaml" />
+            <rosparam command="load" file="$(find pyramid_central)/params/sliding_mode_controller.yaml" />
             <rosparam command="load" file="$(find uav_control)/params/pyramid_$(arg mav_name).yaml" />
             <remap from="feedback/odometry" to="odometry_sensor1/odometry"/>
         </node>
@@ -42,5 +43,13 @@
 
     <node name="rqt_reconfigure" pkg="rqt_reconfigure" type="rqt_reconfigure" />
 
-    <!--node name="rqt_ez_publisher" pkg="rqt_ez_publisher" type="rqt_ez_publisher" /-->
+    <group if="$(arg plot_status)">
+        <node name = "odometry_plotter" pkg="rqt_plot" type="rqt_plot"
+              args = "/$(arg mav_name)/odometry_sensor1/odometry/pose/pose/position"/>
+        <node name = "tension_plotter" pkg="rqt_plot" type="rqt_plot"
+              args = "/command/tension/effort[0]
+                      /command/tension/effort[1]
+                      /command/tension/effort[2]
+                      /command/tension/effort[3]"/>
+    </group>
 </launch>
