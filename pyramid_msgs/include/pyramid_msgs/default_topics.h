@@ -13,9 +13,12 @@ static constexpr char COMMAND_POSE[] = "command/pose";
 //state
 static constexpr char STATE_TETHER[] = "state/tether";
 static constexpr char STATE_ODOMETRY[] = "state/odometry";
+
 //feedback
 static constexpr char FEEDBACK_IMU[] = "feedback/imu";
 static constexpr char FEEDBACK_ODOMETRY[] = "feedback/odometry";
+
+static constexpr char DISTURBANCE[] = "/wind/disturbance";
 }  // end namespace default_topics
 }  // end namespace mav_msgs
 
