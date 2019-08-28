@@ -11,14 +11,14 @@
     <arg name="plot_status" default="false"/>
 
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <arg name="world_name" value="$(find rotors_gazebo)/worlds/$(arg world_name).world"/>
+        <arg name="world_name" value="$(find pyramid_gazebo)/worlds/pyramid_$(arg world_name).world"/>
         <arg name="paused" value="false" />
     </include>
 
     <group ns="$(arg mav_name)">
         <include file="$(find pyramid_gazebo)/launch/pyramid_robotics_spawn.launch">
             <arg name="mav_name" value="$(arg mav_name)" />
-            <arg name="model" value="$(find world_description)/urdf/uav_2_ugv.xacro" />
+            <arg name="model" value="$(find world_description)/urdf/pyramid_robotics.xacro" />
             <arg name="enable_logging" value="$(arg enable_logging)" />
             <arg name="enable_ground_truth" value="$(arg enable_ground_truth)" />
             <arg name="log_file" value="$(arg log_file)"/>
@@ -38,7 +38,7 @@
     </group>
 
     <group if="$(arg enable_rviz)">
-        <node name="rviz" pkg="rviz" type="rviz" required="true" />
+        <node name="rviz" pkg="rviz" type="rviz" required="true" args="-d $(find pyramid_viz)/rviz/simulation.rviz"/>
     </group>
 
     <node name="rqt_reconfigure" pkg="rqt_reconfigure" type="rqt_reconfigure" />
@@ -52,4 +52,5 @@
                       /command/tension/effort[2]
                       /command/tension/effort[3]"/>
     </group>
+
 </launch>

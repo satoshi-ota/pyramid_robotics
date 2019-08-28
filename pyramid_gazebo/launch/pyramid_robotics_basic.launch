@@ -1,25 +1,23 @@
 <launch>
-    <arg name="mav_name" default="firefly"/>
+    <arg name="mav_name" default="pelican"/>
+    <arg name="ugv_name" default="mp_500"/>
     <arg name="world_name" default="basic"/>
     <arg name="enable_logging" default="false"/>
     <arg name="enable_ground_truth" default="true"/>
     <arg name="log_file" default="$(arg mav_name)"/>
     <arg name="use_tether" default="true"/>
     <arg name="enable_wind" default="true"/>
+    <arg name="enable_rviz" default="false"/>
 
-    <env name="GAZEBO_MODEL_PATH" value="${GAZEBO_MODEL_PATH}:$(find rotors_gazebo)/models"/>
-    <env name="GAZEBO_RESOURCE_PATH" value="${GAZEBO_RESOURCE_PATH}:$(find rotors_gazebo)/models"/>
     <include file="$(find gazebo_ros)/launch/empty_world.launch">
-        <arg name="world_name" value="$(find rotors_gazebo)/worlds/$(arg world_name).world"/>
-        <!-- <arg name="debug" value="true" /> -->
+        <arg name="world_name" value="$(find pyramid_gazebo)/worlds/pyramid_$(arg world_name).world"/>
         <arg name="paused" value="true" />
-        <!-- <arg name="gui" value="false" /> -->
     </include>
 
     <group ns="$(arg mav_name)">
         <include file="$(find pyramid_gazebo)/launch/pyramid_robotics_spawn.launch">
             <arg name="mav_name" value="$(arg mav_name)" />
-            <arg name="model" value="$(find world_description)/urdf/uav_2_pseudougv.xacro" />
+            <arg name="model" value="$(find world_description)/urdf/pyramid_robotics.xacro" />
             <arg name="enable_logging" value="$(arg enable_logging)" />
             <arg name="enable_ground_truth" value="$(arg enable_ground_truth)" />
             <arg name="log_file" value="$(arg log_file)"/>
@@ -33,6 +31,11 @@
         </node>
         <node name="pyramid_hovering_example" pkg="uav_description" type="pyramid_hovering_example" output="screen"/>
         <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
-        <!--node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" /-->
     </group>
+
+    <group if="$(arg enable_rviz)">
+        <node name="rviz" pkg="rviz" type="rviz" required="true" args="-d $(find pyramid_viz)/rviz/simulation.rviz"/>
+    </group>
+
+    <node pkg="ugv_control" type="pyramid_teleop_keyboard.py" name="teleop_keyboard"  output="screen"/>
 </launch>
