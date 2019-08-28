@@ -58,6 +58,7 @@ void DisturbancePlugin::Update()
     }
 
     disturbance_.header.stamp = ros::Time::now();
+    disturbance_.header.frame_id = "pelican/base_link";
     disturbance_.wrench.force.x = force_.force.X();
     disturbance_.wrench.force.y = force_.force.Y();
     disturbance_.wrench.force.z = force_.force.Z();

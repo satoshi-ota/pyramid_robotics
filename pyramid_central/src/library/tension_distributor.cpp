@@ -8,9 +8,11 @@ TensionDistributor::TensionDistributor()
 {
     lpp_.AddVariableSet(std::make_shared<ExVariables>());
     lpp_.AddCostSet(std::make_shared<ExCost>());
+    lpp_.PrintCurrent();
 
     ipopt_.SetOption("linear_solver", "mumps");
     ipopt_.SetOption("jacobian_approximation", "exact");
+    ipopt_.SetOption("print_level", 0);
 }
 
 TensionDistributor::~TensionDistributor(){ }
