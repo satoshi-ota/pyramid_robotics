@@ -58,16 +58,16 @@ $ catkin build
 ## Modified package **ifopt**
 
 1. Add member function
-~/catkin_ws/src/ifopt/ifopt_core/src
-```cpp:problem.cc
+~/catkin_ws/src/ifopt/ifopt_core/src/problem.cc
+```cpp
 void
 Problem::Clear()
 {
     constraints_.ClearComponents();
 }
 ```
-~/catkin_ws/src/ifopt/ifopt_core/src
-```
+~/catkin_ws/src/ifopt/ifopt_core/include/ifopt_core/problem.h
+```cpp
 void Clear();
 ```
 
