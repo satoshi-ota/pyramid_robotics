@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="tethered_uav" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <!--add uav in windy condition-->
+    <xacro:if value="$(arg enable_wind)">
+        <xacro:include filename="$(find pyramid_description)/urdf/pyramid_mav_with_wind_gust.gazebo" />
+    </xacro:if>
+
+    <!--add uav in calm condition-->
+    <xacro:unless value="$(arg enable_wind)">
+        <xacro:include filename="$(find pyramid_description)/urdf/pyramid_mav_generic_odometry_sensor.gazebo" />
+    </xacro:unless>
+
+</robot>

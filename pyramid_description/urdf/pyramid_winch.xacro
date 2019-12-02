@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="winch" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <xacro:macro name="winch" params="x y z winch_number suffix color">
+        <joint name="winch_joint_${winch_number}" type="fixed">
+            <origin xyz="${x} ${y} ${z}" rpy="0 0 0" />
+            <parent link="world" />
+            <child link="winch_${winch_number}" />
+        </joint>
+        <link name="winch_${winch_number}">
+            <inertial>
+                <mass value="1"/>
+                <inertia ixx="1" iyy="1" izz="1" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <box size="0.1 0.1 0.1"/>
+                </geometry>
+            </visual>
+        </link>
+        <gazebo reference="winch_${winch_number}">
+            <material>Gazebo/${color}</material>
+        </gazebo>
+    </xacro:macro>
+
+    <link name="world"/>
+
+    <xacro:winch
+        x="5.0" y="-5.0" z="0"
+        winch_number="0"
+        suffix="front_right"
+        color="Red">
+    </xacro:winch>
+
+    <xacro:winch
+        x="5.0" y="5.0" z="0"
+        winch_number="1"
+        suffix="front_left"
+        color="Orange">
+    </xacro:winch>
+
+    <xacro:winch
+        x="-5.0" y="-5.0" z="0"
+        winch_number="2"
+        suffix="back_right"
+        color="Blue">
+    </xacro:winch>
+
+    <xacro:winch
+        x="-5.0" y="5.0" z="0"
+        winch_number="3"
+        suffix="back_left"
+        color="Green">
+    </xacro:winch>
+</robot>
