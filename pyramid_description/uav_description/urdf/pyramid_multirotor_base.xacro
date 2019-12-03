@@ -145,4 +145,37 @@
       <material>Gazebo/${color}</material>
     </gazebo>
   </xacro:macro>
+
+  <!-- ================================================================== -->
+  <!-- ======================== PYRAMID ROBOTICS =========================-->
+  <!-- ================================================================== -->
+
+    <!-- Tether attached point -->
+    <xacro:macro name="tether_end" params="robot_namespace x y z tether_number suffix color">
+        <joint name="${robot_namespace}/tether_joint_${tether_number}" type="fixed">
+            <origin xyz="${x} ${y} ${z}" rpy="0 0 0" />
+            <parent link="${robot_namespace}/base_link" />
+            <child link="${robot_namespace}/tether_${tether_number}" />
+        </joint>
+        <link name="${robot_namespace}/tether_${tether_number}">
+            <inertial>
+                <mass value="0.01"/>
+                <inertia ixx="0.01" iyy="0.01" izz="0.01" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </visual>
+        </link>
+        <gazebo reference="${robot_namespace}/tether_${tether_number}">
+            <material>Gazebo/${color}</material>
+        </gazebo>
+    </xacro:macro>
+
+    <!-- ================================================================== -->
+    <!-- ======================== PYRAMID ROBOTICS =========================-->
+    <!-- ================================================================== -->
 </robot>
