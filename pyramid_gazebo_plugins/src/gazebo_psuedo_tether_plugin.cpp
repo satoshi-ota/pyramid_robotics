@@ -18,24 +18,23 @@ void PsuedoTetherPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
         return;
     }
 
-    //get model and name
     model_ = _model;
 
-    //register ROS node & time
     rosnode_ = ros::NodeHandle();
-    t_prev_ = 0;
 
-    command_received_ = false;
-
-    //find end-effector links
     for(auto &link: model_->GetLinks())
     {
-        //"pelican" is uav
-        if(link->GetName() == "pelican/base_link")
-            ee_link_ = link;
+        // if(link->GetName() == "pelican/base_link")
+        //     ee_link_ = link;
+        printf("parent:%s\n", link->GetName().c_str());
     }
 
-    //publish end-effector state
+    // link_ = model_->GetLink("pelican/tether_0");
+    // printf("%s\n", link_->GetName().c_str());
+
+
+
+
     direc_pub_ = rosnode_.advertise<geometry_msgs::Vector3>("tether_direction",1);
 
     // Register plugin update
@@ -48,30 +47,30 @@ void PsuedoTetherPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
 
 void PsuedoTetherPlugin::Update()
 {
-    if(command_received_)
-    {
-        ee_link_->AddForceAtRelativePosition(external_force_.force, external_force_.point);
-        ee_link_->AddTorque(external_force_.torque);
-    }
+    // if(command_received_)
+    // {
+    //     ee_link_->AddForceAtRelativePosition(external_force_.force, external_force_.point);
+    //     ee_link_->AddTorque(external_force_.torque);
+    // }
 
-    auto ee_pose = ee_link_->WorldPose() - ee_link_->WorldPose();
-    ee_state_.pose.position.x = ee_pose.Pos().X();
-    ee_state_.pose.position.y = ee_pose.Pos().Y();
-    ee_state_.pose.position.z = ee_pose.Pos().Z();
-    ee_state_.pose.orientation.x = ee_pose.Rot().X();
-    ee_state_.pose.orientation.y = ee_pose.Rot().Y();
-    ee_state_.pose.orientation.z = ee_pose.Rot().Z();
-    ee_state_.pose.orientation.w = ee_pose.Rot().W();
-    auto vel = ee_pose.Rot().RotateVector(ee_link_->RelativeLinearVel());
-    ee_state_.twist.linear.x = vel.X();
-    ee_state_.twist.linear.y = vel.Y();
-    ee_state_.twist.linear.z = vel.Z();
-    vel = ee_pose.Rot().RotateVector(ee_link_->RelativeAngularVel());
-    ee_state_.twist.angular.x = vel.X();
-    ee_state_.twist.angular.y = vel.Y();
-    ee_state_.twist.angular.z = vel.Z();
-
-    ee_state_publisher_.publish(ee_state_);
+    // auto ee_pose = ee_link_->WorldPose() - ee_link_->WorldPose();
+    // ee_state_.pose.position.x = ee_pose.Pos().X();
+    // ee_state_.pose.position.y = ee_pose.Pos().Y();
+    // ee_state_.pose.position.z = ee_pose.Pos().Z();
+    // ee_state_.pose.orientation.x = ee_pose.Rot().X();
+    // ee_state_.pose.orientation.y = ee_pose.Rot().Y();
+    // ee_state_.pose.orientation.z = ee_pose.Rot().Z();
+    // ee_state_.pose.orientation.w = ee_pose.Rot().W();
+    // auto vel = ee_pose.Rot().RotateVector(ee_link_->RelativeLinearVel());
+    // ee_state_.twist.linear.x = vel.X();
+    // ee_state_.twist.linear.y = vel.Y();
+    // ee_state_.twist.linear.z = vel.Z();
+    // vel = ee_pose.Rot().RotateVector(ee_link_->RelativeAngularVel());
+    // ee_state_.twist.angular.x = vel.X();
+    // ee_state_.twist.angular.y = vel.Y();
+    // ee_state_.twist.angular.z = vel.Z();
+    //
+    // ee_state_publisher_.publish(ee_state_);
     ros::spinOnce();
 }
 

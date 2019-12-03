@@ -31,12 +31,11 @@ private: //data member
     //general
     ros::NodeHandle rosnode_;
     event::ConnectionPtr update_event_;
-    double update_T_;
-    double t_prev_;
-    Force external_force_;
 
     //model
     physics::ModelPtr model_;
+    physics::LinkPtr link_;
+    physics::Link_V child_links_;
 
     //publisher to end-effector state
     ros::Publisher direc_pub_;

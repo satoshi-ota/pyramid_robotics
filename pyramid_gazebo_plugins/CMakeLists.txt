@@ -56,3 +56,14 @@ target_link_libraries(gazebo_disturbance_plugin
 add_dependencies(gazebo_disturbance_plugin
     ${${PROJECT_NAME}_EXPORTED_TARGETS}
     ${catkin_EXPORTED_TARGETS})
+
+add_library(gazebo_psuedo_tether_plugin
+    src/gazebo_psuedo_tether_plugin.cpp
+    include/pyramid_gazebo_plugins/gazebo_psuedo_tether_plugin.h)
+target_link_libraries(gazebo_psuedo_tether_plugin
+    ${catkin_LIBRARIES}
+    ${GAZEBO_LIBRARIES}
+    ${roscpp_LIBRARIES})
+add_dependencies(gazebo_psuedo_tether_plugin
+    ${${PROJECT_NAME}_EXPORTED_TARGETS}
+    ${catkin_EXPORTED_TARGETS})

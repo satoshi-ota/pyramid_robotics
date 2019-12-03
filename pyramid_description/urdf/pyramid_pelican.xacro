@@ -59,13 +59,40 @@
   <!-- ================================================================== -->
 
     <!-- front_right -->
-    <xacro:tether_end
+    <!-- <xacro:tether_end
         robot_namespace="${namespace}"
         x="0.2" y="-0.2" z="0.1"
         tether_number="0"
         suffix="front_right_upper"
         color="Orange">
-    </xacro:tether_end>
+    </xacro:tether_end> -->
+    <joint name="${namespace}/tether_joint_0" type="fixed">
+        <origin xyz="0.2 -0.2 0.1" rpy="0 0 0" />
+        <parent link="${namespace}/base_link" />
+        <child link="${namespace}/tether_0" />
+    </joint>
+    <link name="${namespace}/tether_0">
+        <inertial>
+            <mass value="0.01"/>
+            <inertia ixx="0.01" iyy="0.01" izz="0.01" ixy="0.0" ixz="0.0" iyz="0.0"/>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </inertial>
+        <visual>
+            <origin rpy="0 0 0" xyz="0 0 0"/>
+            <geometry>
+                <sphere radius="0.01"/>
+            </geometry>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <geometry>
+                <sphere radius="0.01"/>
+            </geometry>
+        </collision>
+    </link>
+    <gazebo reference="${namespace}/tether_0">
+        <material>Gazebo/Orange</material>
+    </gazebo>
     <xacro:tether_end
         robot_namespace="${namespace}"
         x="0.2" y="-0.2" z="-0.1"

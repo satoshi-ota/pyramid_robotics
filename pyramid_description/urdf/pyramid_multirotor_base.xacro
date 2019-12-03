@@ -49,8 +49,8 @@
         </joint>
         <link name="${robot_namespace}/tether_${tether_number}">
             <inertial>
-                <mass value="0.001"/>
-                <inertia ixx="0.001" iyy="0.001" izz="0.001" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <mass value="0.01"/>
+                <inertia ixx="0.01" iyy="0.01" izz="0.01" ixy="0.0" ixz="0.0" iyz="0.0"/>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
             </inertial>
             <visual>
@@ -59,6 +59,12 @@
                     <sphere radius="0.01"/>
                 </geometry>
             </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0" />
+                <geometry>
+                    <sphere radius="0.01"/>
+                </geometry>
+            </collision>
         </link>
         <gazebo reference="${robot_namespace}/tether_${tether_number}">
             <material>Gazebo/${color}</material>
@@ -116,6 +122,7 @@
       </plugin>
       <!--plugin filename="libgazebo_disturbance_plugin.so" name="disturbance_plugin" /-->
       <!--plugin filename="libgazebo_external_force_plugin.so" name="external_force_plugin" /-->
+      <plugin filename="libgazebo_psuedo_tether_plugin.so" name="psuedo_tether_plugin" />
     </gazebo>
   </xacro:macro>
 
