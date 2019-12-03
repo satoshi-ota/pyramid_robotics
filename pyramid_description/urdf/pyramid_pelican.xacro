@@ -54,103 +54,7 @@
   <!-- Included URDF Files -->
   <xacro:include filename="$(find pyramid_description)/urdf/pyramid_multirotor_base.xacro" />
 
-  <!-- ================================================================== -->
-  <!-- ======================== PYRAMID ROBOTICS =========================-->
-  <!-- ================================================================== -->
-
-    <!-- front_right -->
-    <!-- <xacro:tether_end
-        robot_namespace="${namespace}"
-        x="0.2" y="-0.2" z="0.1"
-        tether_number="0"
-        suffix="front_right_upper"
-        color="Orange">
-    </xacro:tether_end> -->
-    <joint name="${namespace}/tether_joint_0" type="fixed">
-        <origin xyz="0.2 -0.2 0.1" rpy="0 0 0" />
-        <parent link="${namespace}/base_link" />
-        <child link="${namespace}/tether_0" />
-    </joint>
-    <link name="${namespace}/tether_0">
-        <inertial>
-            <mass value="0.01"/>
-            <inertia ixx="0.01" iyy="0.01" izz="0.01" ixy="0.0" ixz="0.0" iyz="0.0"/>
-            <origin xyz="0 0 0" rpy="0 0 0"/>
-        </inertial>
-        <visual>
-            <origin rpy="0 0 0" xyz="0 0 0"/>
-            <geometry>
-                <sphere radius="0.01"/>
-            </geometry>
-        </visual>
-        <collision>
-            <origin xyz="0 0 0" rpy="0 0 0" />
-            <geometry>
-                <sphere radius="0.01"/>
-            </geometry>
-        </collision>
-    </link>
-    <gazebo reference="${namespace}/tether_0">
-        <material>Gazebo/Orange</material>
-    </gazebo>
-    <xacro:tether_end
-        robot_namespace="${namespace}"
-        x="0.2" y="-0.2" z="-0.1"
-        tether_number="1"
-        suffix="front_right_lower"
-        color="Blue">
-    </xacro:tether_end>
-    <!-- front_left -->
-    <xacro:tether_end
-        robot_namespace="${namespace}"
-        x="0.2" y="0.2" z="0.1"
-        tether_number="2"
-        suffix="front_left_upper"
-        color="Green">
-    </xacro:tether_end>
-    <xacro:tether_end
-        robot_namespace="${namespace}"
-        x="0.2" y="0.2" z="-0.1"
-        tether_number="3"
-        suffix="front_left_lower"
-        color="Red">
-    </xacro:tether_end>
-    <!-- back right -->
-    <xacro:tether_end
-        robot_namespace="${namespace}"
-        x="-0.2" y="-0.2" z="0.1"
-        tether_number="4"
-        suffix="back_right_upper"
-        color="Red">
-    </xacro:tether_end>
-    <xacro:tether_end
-        robot_namespace="${namespace}"
-        x="-0.2" y="-0.2" z="-0.1"
-        tether_number="5"
-        suffix="back_right_lower"
-        color="Green">
-    </xacro:tether_end>
-    <!-- back left -->
-    <xacro:tether_end
-        robot_namespace="${namespace}"
-        x="-0.2" y="0.2" z="0.1"
-        tether_number="6"
-        suffix="back_left_upper"
-        color="Blue">
-    </xacro:tether_end>
-    <xacro:tether_end
-        robot_namespace="${namespace}"
-        x="-0.2" y="0.2" z="-0.1"
-        tether_number="7"
-        suffix="back_left_lower"
-        color="Orange">
-    </xacro:tether_end>
-
-  <!-- ================================================================== -->
-  <!-- ======================== PYRAMID ROBOTICS =========================-->
-  <!-- ================================================================== -->
-
-  <!-- Instantiate multirotor_base_macro once -->
+    <!-- Instantiate multirotor_base_macro once -->
   <xacro:multirotor_base_macro
     robot_namespace="${namespace}"
     mass="${mass}"
@@ -249,4 +153,73 @@
     <origin xyz="0 -${arm_length} ${rotor_offset_top}" rpy="0 0 0" />
     <xacro:insert_block name="rotor_inertia" />
   </xacro:vertical_rotor>
+
+  <!-- ================================================================== -->
+  <!-- ======================== PYRAMID ROBOTICS =========================-->
+  <!-- ================================================================== -->
+
+    <!-- front_right -->
+    <xacro:tether_end
+        robot_namespace="${namespace}"
+        x="0.2" y="-0.2" z="0.1"
+        tether_number="0"
+        suffix="front_right_upper"
+        color="Orange">
+    </xacro:tether_end>
+    <xacro:tether_end
+        robot_namespace="${namespace}"
+        x="0.2" y="-0.2" z="-0.1"
+        tether_number="1"
+        suffix="front_right_lower"
+        color="Blue">
+    </xacro:tether_end>
+    <!-- front_left -->
+    <xacro:tether_end
+        robot_namespace="${namespace}"
+        x="0.2" y="0.2" z="0.1"
+        tether_number="2"
+        suffix="front_left_upper"
+        color="Green">
+    </xacro:tether_end>
+    <xacro:tether_end
+        robot_namespace="${namespace}"
+        x="0.2" y="0.2" z="-0.1"
+        tether_number="3"
+        suffix="front_left_lower"
+        color="Red">
+    </xacro:tether_end>
+    <!-- back right -->
+    <xacro:tether_end
+        robot_namespace="${namespace}"
+        x="-0.2" y="-0.2" z="0.1"
+        tether_number="4"
+        suffix="back_right_upper"
+        color="Red">
+    </xacro:tether_end>
+    <xacro:tether_end
+        robot_namespace="${namespace}"
+        x="-0.2" y="-0.2" z="-0.1"
+        tether_number="5"
+        suffix="back_right_lower"
+        color="Green">
+    </xacro:tether_end>
+    <!-- back left -->
+    <xacro:tether_end
+        robot_namespace="${namespace}"
+        x="-0.2" y="0.2" z="0.1"
+        tether_number="6"
+        suffix="back_left_upper"
+        color="Blue">
+    </xacro:tether_end>
+    <xacro:tether_end
+        robot_namespace="${namespace}"
+        x="-0.2" y="0.2" z="-0.1"
+        tether_number="7"
+        suffix="back_left_lower"
+        color="Orange">
+    </xacro:tether_end>
+
+  <!-- ================================================================== -->
+  <!-- ======================== PYRAMID ROBOTICS =========================-->
+  <!-- ================================================================== -->
 </robot>
