@@ -46,7 +46,8 @@ inline Eigen::Vector3d vector3FromPointMsg(const geometry_msgs::Point& msg)
     return Eigen::Vector3d(msg.x, msg.y, msg.z);
 }
 
-inline Eigen::Quaterniond quaternionFromYaw(double yaw) {
+inline Eigen::Quaterniond quaternionFromYaw(double yaw)
+{
     return Eigen::Quaterniond(Eigen::AngleAxisd(yaw, Eigen::Vector3d::UnitZ()));
 }
 
@@ -71,6 +72,15 @@ inline void vectorEigenToMsg(const Eigen::Vector3d& eigen,
   msg->x = eigen.x();
   msg->y = eigen.y();
   msg->z = eigen.z();
+}
+
+inline Eigen::Quaterniond quaternionFromAtt(const Eigen::Vector3d& att)
+{
+    Eigen::Quaterniond quaternion = Eigen::AngleAxisd(att.x(), Eigen::Vector3d::UnitX())
+                                  * Eigen::AngleAxisd(att.y(), Eigen::Vector3d::UnitY())
+                                  * Eigen::AngleAxisd(att.z(), Eigen::Vector3d::UnitZ());
+
+    return quaternion;
 }
 
 } //namespace pyramid_msgs

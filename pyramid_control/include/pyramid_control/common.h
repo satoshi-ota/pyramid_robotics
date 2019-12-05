@@ -5,9 +5,9 @@
 
 #include <pyramid_msgs/conversions.h>
 
-#include "uav_control/parameters.h"
+#include "pyramid_control/parameters.h"
 
-namespace motor_speed_control
+namespace pyramid_control
 {
 
 struct EigenWrenchStamped
@@ -71,6 +71,6 @@ inline void calculateAllocationMatrix(const RotorConfiguration& rotor_configurat
     }
 }
 
-} //namespace motor_speed_control
+} //namespace pyramid_control
 
 #endif //MOTOR_SPEED_CONTROLLER_COMMON_H

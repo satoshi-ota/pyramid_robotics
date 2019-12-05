@@ -18,6 +18,19 @@
 
 namespace gazebo{
 
+struct Force
+{
+    Force()
+    :point(ignition::math::Vector3d(0, 0, 0)),
+     force(ignition::math::Vector3d(0, 0, 0)),
+     torque(ignition::math::Vector3d(0, 0, 0)){ }
+
+    ignition::math::Vector3d point;
+    ignition::math::Vector3d force;
+    ignition::math::Vector3d torque;
+    std::string name;
+};
+
 class PsuedoTetherPlugin : public ModelPlugin
 {
 public:
@@ -27,15 +40,18 @@ public:
     virtual void Load(physics::ModelPtr _model, sdf::ElementPtr _sdf);
     virtual void Update();
 
-private: //data member
-    //general
+private:
     ros::NodeHandle rosnode_;
     event::ConnectionPtr update_event_;
 
-    //model
+    physics::WorldPtr world_;
     physics::ModelPtr model_;
     physics::LinkPtr link_;
     physics::Link_V child_links_;
+
+    std::string link_name_;
+
+    Force tension_;
 
     //publisher to end-effector state
     ros::Publisher direc_pub_;

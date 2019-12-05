@@ -9,10 +9,8 @@ SlidingModeControlNode::SlidingModeControlNode(
      private_nh_(private_nh),
      begin_(ros::Time::now())
 {
-    //get params & initialize
     InitializeParams();
 
-    //set up dynamic reconfigure
     srv_ = boost::make_shared
             <dynamic_reconfigure::Server<pyramid_central::SlidingModeControllerConfig>>( private_nh);
     dynamic_reconfigure::Server<pyramid_central::SlidingModeControllerConfig>::CallbackType cb
@@ -47,7 +45,7 @@ void SlidingModeControlNode::ControllerReconfigureCB(
 void SlidingModeControlNode::DesiredTrajectoryCB(
                             const trajectory_msgs::MultiDOFJointTrajectoryPtr& trajectory_msg)
 {
-    ROS_INFO_ONCE("Recieved first Desired Trajectory. System controller start!");
+    ROS_INFO_ONCE("Recieved first Desired Trajectory. SMC START!");
 
     pyramid_msgs::EigenMultiDOFJointTrajectory desired_trajectory;
     pyramid_msgs::eigenMultiDOFJointTrajectoryFromMsg(trajectory_msg, &desired_trajectory);
@@ -57,7 +55,7 @@ void SlidingModeControlNode::DesiredTrajectoryCB(
 
 void SlidingModeControlNode::FeedbackOdometryCB(const nav_msgs::OdometryPtr& odometry_msg)
 {
-    ROS_INFO_ONCE("SystemCommander got first feedback odometry msg.");
+    ROS_INFO_ONCE("Recieved first odometry msg.");
 
     pyramid_msgs::EigenOdometry feedback_odometry;
     pyramid_msgs::eigenOdometryFromMsg(odometry_msg, &feedback_odometry);

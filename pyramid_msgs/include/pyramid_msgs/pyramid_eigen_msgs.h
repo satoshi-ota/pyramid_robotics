@@ -183,6 +183,10 @@ struct EigenTrajectoryPoint
         angular_acceleration.y() = 0.0;
         angular_acceleration.z() = yaw_acc;
     }
+    // ADD FOR PYRAMID ROBOTICS
+    inline void setFromAtt(const Eigen::Vector3d& att) {
+        orientation = quaternionFromAtt(att);
+    }
 };
 
 struct EigenOdometry {
@@ -218,7 +222,7 @@ struct EigenOdometry {
         vel.block<3, 1>(3, 0) = angular_velocity;
         return vel;
     }
-    
+
     inline Eigen::VectorXd getPosAtt() const
     {
         Eigen::Vector3d rpy;

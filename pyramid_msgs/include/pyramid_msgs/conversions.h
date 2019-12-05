@@ -115,6 +115,18 @@ inline void msgMultiDofJointTrajectoryFromPositionYaw(
     msgMultiDofJointTrajectoryFromEigen(point, msg);
 }
 
+inline void msgMultiDofJointTrajectoryFromPosAtt(const Eigen::Vector3d& position,
+                                                 const Eigen::Vector3d& attitude,    trajectory_msgs::MultiDOFJointTrajectory* msg)
+{
+    assert(msg != NULL);
+
+    EigenTrajectoryPoint point;
+    point.position = position;
+    point.setFromAtt(attitude);
+
+    msgMultiDofJointTrajectoryFromEigen(point, msg);
+}
+
 } //namespace pyramid_msgs
 
 #endif //PYRAMID_MSGS_CONVERSIONS_H

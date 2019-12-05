@@ -19,18 +19,19 @@ void PsuedoTetherPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
     }
 
     model_ = _model;
+    world_ = model_->GetWorld();
 
     rosnode_ = ros::NodeHandle();
 
-    for(auto &link: model_->GetLinks())
-    {
-        // if(link->GetName() == "pelican/base_link")
-        //     ee_link_ = link;
-        printf("parent:%s\n", link->GetName().c_str());
-    }
+    getSdfParam<std::string>(_sdf, "linkName", link_name_, link_name_, true);
 
-    // link_ = model_->GetLink("pelican/tether_0");
-    // printf("%s\n", link_->GetName().c_str());
+    link_ = model_->GetLink(link_name_);
+
+    child_links_ = link_->GetChildJointsLinks();
+    for(int i = 0; i < child_links_.size(); i++)
+    {
+
+    }
 
 
 
@@ -47,6 +48,12 @@ void PsuedoTetherPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
 
 void PsuedoTetherPlugin::Update()
 {
+    // tension_.force.X() = 0;
+    // tension_.force.Y() = 5;
+    // tension_.force.Z() = 15;
+    // //tension_.torque.Z() = 10;
+    // link_->AddForce(tension_.force);
+    //link_->AddTorque(tension_.torque);
     // if(command_received_)
     // {
     //     ee_link_->AddForceAtRelativePosition(external_force_.force, external_force_.point);

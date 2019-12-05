@@ -1,0 +1,46 @@
+#system parameters
+lambda_1: 1.0
+lambda_2: 1.0
+lambda_3: 1.0
+lambda_4: 1.0
+lambda_5: 1.0
+lambda_6: 1.0
+
+K_1: 5.0
+K_2: 5.0
+K_3: 5.0
+K_4: 5.0
+K_5: 5.0
+K_6: 5.0
+
+x: 0.0
+y: 0.0
+z: 0.0
+
+n_tether: 8
+
+tether_configuration:
+    '0':
+        attach_pos: {x: 0.4, y: -0.4, z: 0.15}
+        anchor_pos: {x: 5.0, y: 5.0, z: 0.0}
+    '1':
+        attach_pos: {x: 0.4, y: -0.4, z: -0.15}
+        anchor_pos: {x: -5.0, y: -5.0, z: 0.0}
+    '2':
+        attach_pos: {x: 0.4, y: 0.4, z: 0.15}
+        anchor_pos: {x: -5.0, y: 5.0, z: 0.0}
+    '3':
+        attach_pos: {x: 0.4, y: 0.4, z: -0.15}
+        anchor_pos: {x: 5.0, y: -5.0, z: 0.0}
+    '4':
+        attach_pos: {x: -0.4, y: -0.4, z: 0.15}
+        anchor_pos: {x: 5.0, y: -5.0, z: 0.0}
+    '5':
+        attach_pos: {x: -0.4, y: -0.4, z: -0.15}
+        anchor_pos: {x: -5.0, y: 5.0, z: 0.0}
+    '6':
+        attach_pos: {x: -0.4, y: 0.4, z: 0.15}
+        anchor_pos: {x: -5.0, y: -5.0, z: 0.0}
+    '7':
+        attach_pos: {x: -0.4, y: 0.4, z: -0.15}
+        anchor_pos: {x: 5.0, y: 5.0, z: 0.0}

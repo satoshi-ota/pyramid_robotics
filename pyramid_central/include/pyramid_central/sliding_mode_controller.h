@@ -63,13 +63,8 @@ private:
     Eigen::VectorXd v_error_;
     Eigen::VectorXd wrench_;
 
-    //goal
     pyramid_msgs::EigenMultiDOFJointTrajectory desired_trajectory_;
-
-    //feedback
     pyramid_msgs::EigenOdometry odometry_;
-
-    //countoller output
     pyramid_msgs::EigenThrust thrust_;
 };
 

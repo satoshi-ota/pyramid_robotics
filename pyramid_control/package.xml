@@ -1,17 +1,21 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>uav_control</name>
+  <name>pyramid_control</name>
   <version>0.0.0</version>
   <description>The uav_control package</description>
 
   <maintainer email="satoshi.ota928@gmail.com">Ota Satoshi</maintainer>
   <author>Ota Satoshi</author>
-  <license>MIT License</license>
+  <license>TODO</license>
 
   <buildtool_depend>catkin</buildtool_depend>
   <depend>geometry_msgs</depend>
+  <depend>nav_msgs</depend>
   <depend>roscpp</depend>
-  <depend>mav_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>trajectory_msgs</depend>
   <depend>pyramid_msgs</depend>
+  <depend>mav_msgs</depend>
+  <depend>ifopt</depend>
 
 </package>

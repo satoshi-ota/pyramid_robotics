@@ -41,6 +41,9 @@
   <xacro:property name="rotor_drag_coefficient" value="8.06428e-05" />
   <xacro:property name="rolling_moment_coefficient" value="0.000001" />
 
+  <xacro:property name="tether_attached_pos_horizontal" value="0.4" /> <!-- [m] -->
+  <xacro:property name="tether_attached_pos_vertical" value="0.15" /> <!-- [m] -->
+
   <!-- Property Blocks -->
   <xacro:property name="body_inertia">
     <inertia ixx="0.01" ixy="0.0" ixz="0.0" iyy="0.01" iyz="0.0" izz="0.02" /> <!-- [kg m^2] [kg m^2] [kg m^2] [kg m^2] [kg m^2] [kg m^2] -->
@@ -158,66 +161,78 @@
   <!-- ======================== PYRAMID ROBOTICS =========================-->
   <!-- ================================================================== -->
 
-    <!-- front_right -->
-    <xacro:tether_end
+    <!-- <xacro:tether_end
         robot_namespace="${namespace}"
-        x="0.2" y="-0.2" z="0.1"
+        x="${tether_attached_pos_horizontal}"
+        y="-${tether_attached_pos_horizontal}"
+        z="${tether_attached_pos_vertical}"
         tether_number="0"
         suffix="front_right_upper"
         color="Orange">
     </xacro:tether_end>
     <xacro:tether_end
         robot_namespace="${namespace}"
-        x="0.2" y="-0.2" z="-0.1"
+        x="${tether_attached_pos_horizontal}"
+        y="-${tether_attached_pos_horizontal}"
+        z="-${tether_attached_pos_vertical}"
         tether_number="1"
         suffix="front_right_lower"
         color="Blue">
     </xacro:tether_end>
-    <!-- front_left -->
     <xacro:tether_end
         robot_namespace="${namespace}"
-        x="0.2" y="0.2" z="0.1"
+        x="${tether_attached_pos_horizontal}"
+        y="${tether_attached_pos_horizontal}"
+        z="${tether_attached_pos_vertical}"
         tether_number="2"
         suffix="front_left_upper"
         color="Green">
     </xacro:tether_end>
     <xacro:tether_end
         robot_namespace="${namespace}"
-        x="0.2" y="0.2" z="-0.1"
+        x="${tether_attached_pos_horizontal}"
+        y="${tether_attached_pos_horizontal}"
+        z="-${tether_attached_pos_vertical}"
         tether_number="3"
         suffix="front_left_lower"
         color="Red">
     </xacro:tether_end>
-    <!-- back right -->
     <xacro:tether_end
         robot_namespace="${namespace}"
-        x="-0.2" y="-0.2" z="0.1"
+        x="-${tether_attached_pos_horizontal}"
+        y="-${tether_attached_pos_horizontal}"
+        z="${tether_attached_pos_vertical}"
         tether_number="4"
         suffix="back_right_upper"
         color="Red">
     </xacro:tether_end>
     <xacro:tether_end
         robot_namespace="${namespace}"
-        x="-0.2" y="-0.2" z="-0.1"
+        x="-${tether_attached_pos_horizontal}"
+        y="-${tether_attached_pos_horizontal}"
+        z="-${tether_attached_pos_vertical}"
         tether_number="5"
         suffix="back_right_lower"
         color="Green">
     </xacro:tether_end>
-    <!-- back left -->
     <xacro:tether_end
         robot_namespace="${namespace}"
-        x="-0.2" y="0.2" z="0.1"
+        x="-${tether_attached_pos_horizontal}"
+        y="${tether_attached_pos_horizontal}"
+        z="${tether_attached_pos_vertical}"
         tether_number="6"
         suffix="back_left_upper"
         color="Blue">
     </xacro:tether_end>
     <xacro:tether_end
         robot_namespace="${namespace}"
-        x="-0.2" y="0.2" z="-0.1"
+        x="-${tether_attached_pos_horizontal}"
+        y="${tether_attached_pos_horizontal}"
+        z="-${tether_attached_pos_vertical}"
         tether_number="7"
         suffix="back_left_lower"
         color="Orange">
-    </xacro:tether_end>
+    </xacro:tether_end> -->
 
   <!-- ================================================================== -->
   <!-- ======================== PYRAMID ROBOTICS =========================-->
