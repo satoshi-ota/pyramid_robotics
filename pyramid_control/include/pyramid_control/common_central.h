@@ -80,7 +80,7 @@ inline void calcCoriolisMatrix(const Eigen::Vector3d& angular_velocity,
     Eigen::Matrix3d skewMatrix;
     Eigen::Vector3d omega = angular_velocity;
     skewMatrixFromVector(omega, &skewMatrix);
-    
+
     Mat.block<3, 3>(3, 3) = toOmega.transpose() * globalInertia * toOmega_dot
                           + toOmega.transpose() * skewMatrix * globalInertia * toOmega;
 
@@ -135,7 +135,7 @@ inline void calcVelDelta(const pyramid_msgs::EigenOdometry& odometry,
                               const pyramid_msgs::EigenMultiDOFJointTrajectory& trajectory,
                                            Eigen::VectorXd* vError)
 {
-    *vError = trajectory.getVel() - odometry.getVel();
+    *vError = trajectory.getVel() - odometry.getGrobalVel();
 }
 
 inline void LimitTensions(Eigen::Vector4d* tensions)
@@ -149,7 +149,7 @@ inline Eigen::VectorXd sgn(Eigen::VectorXd& sliding_surface)
 {
     Eigen::VectorXd sgn_s = Eigen::VectorXd::Zero(6);
 
-    double alpha = 5;
+    double alpha = 10;
     for (unsigned int i=0;i<sliding_surface.size();++i)
         sgn_s(i) = tanh(alpha * sliding_surface(i));
 

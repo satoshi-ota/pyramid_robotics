@@ -16,26 +16,29 @@ TrajectoryCommanderNode::TrajectoryCommanderNode(
     srv_ = boost::make_shared
             <dynamic_reconfigure::Server<pyramid_control::TrajectoryGeneratorConfig>>(private_nh);
     dynamic_reconfigure::Server<pyramid_control::TrajectoryGeneratorConfig>::CallbackType cb
-        = boost::bind(&TrajectoryCommanderNode::trajectoryCB, this, _1, _2);
+        = boost::bind(&TrajectoryCommanderNode::trajectoryReconfig, this, _1, _2);
     srv_->setCallback(cb);
 }
 
 TrajectoryCommanderNode::~TrajectoryCommanderNode(){ }
 
-void TrajectoryCommanderNode::trajectoryCB(pyramid_control::TrajectoryGeneratorConfig &config,
+void TrajectoryCommanderNode::trajectoryReconfig(pyramid_control::TrajectoryGeneratorConfig &config,
                                               uint32_t level)
 {
-    system_reconfigure_.trajectoryReconfig(config);
+    pos_.x() = config.x;
+    pos_.y() = config.y;
+    pos_.z() = config.z;
+
+    att_.x() = config.roll;
+    att_.y() = config.pitch;
+    att_.z() = config.yaw;
 
     trajectory_msg.header.stamp = ros::Time::now();
 
-    pos_ = system_reconfigure_.getDesiredPos();
-    att_ = system_reconfigure_.getDesiredAtt();
-
     pyramid_msgs::msgMultiDofJointTrajectoryFromPosAtt(pos_, att_, &trajectory_msg);
 
-    ROS_INFO("Publishing waypoint on namespace %s: Pos[%f, %f, %f] Att[%f, %f, %f].",
-             nh_.getNamespace().c_str(), pos_.x(), pos_.y(), pos_.z(), att_.x(), att_.y(), att_.z());
+    // ROS_INFO("Publishing waypoint on namespace %s: Pos[%f, %f, %f] Att[%f, %f, %f].",
+    // nh_.getNamespace().c_str(), pos_.x(), pos_.y(), pos_.z(), att_.x(), att_.y(), att_.z());
 
     trajectory_pub_.publish(trajectory_msg);
 }

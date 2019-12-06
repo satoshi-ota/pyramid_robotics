@@ -8,13 +8,12 @@ SlidingModeControlNode::SlidingModeControlNode(
     :nh_(nh),
      private_nh_(private_nh)
 {
-    ROS_INFO_ONCE("GOOD41");
     GetSystemParameters(private_nh_, &(sliding_mode_controller_.system_parameters_));
 
     srv_ = boost::make_shared
-            <dynamic_reconfigure::Server<pyramid_control::SlidingModeControllerConfig>>( private_nh);
+            <dynamic_reconfigure::Server<pyramid_control::SlidingModeControllerConfig>>(private_nh);
     dynamic_reconfigure::Server<pyramid_control::SlidingModeControllerConfig>::CallbackType cb
-        = boost::bind(&SlidingModeControlNode::reconfigureCB, this, _1, _2);
+        = boost::bind(&SlidingModeControlNode::paramsReconfig, this, _1, _2);
     srv_->setCallback(cb);
 
 
@@ -26,15 +25,31 @@ SlidingModeControlNode::SlidingModeControlNode(
 
     thrust_pub_ = nh_.advertise<geometry_msgs::WrenchStamped>
                     (pyramid_msgs::default_topics::COMMAND_THRUST, 1);
-    ROS_INFO_ONCE("GOOD42");
 }
 
 SlidingModeControlNode::~SlidingModeControlNode(){ }
 
-void SlidingModeControlNode::reconfigureCB(pyramid_control::SlidingModeControllerConfig &config,
-                                           uint32_t level)
+void SlidingModeControlNode::paramsReconfig(pyramid_control::SlidingModeControllerConfig &config,
+                                            uint32_t level)
 {
-    system_reconfigure_.smcReconfig(config, &sliding_mode_controller_.system_parameters_);
+    // ROS_INFO("Reconfigure Request: Lambda[%f, %f, %f, %f, %f, %f] Gain_K[%f, %f, %f, %f, %f, %f]",
+    //          config.lambda_1, config.lambda_2, config.lambda_3,
+    //          config.lambda_4, config.lambda_5, config.lambda_6,
+    //          config.K_1, config.K_2, config.K_3, config.K_4, config.K_5, config.K_6);
+
+    sliding_mode_controller_.system_parameters_.Lambda_(0, 0) = config.lambda_1;
+    sliding_mode_controller_.system_parameters_.Lambda_(1, 1) = config.lambda_1;
+    sliding_mode_controller_.system_parameters_.Lambda_(2, 2) = config.lambda_1;
+    sliding_mode_controller_.system_parameters_.Lambda_(3, 3) = config.lambda_1;
+    sliding_mode_controller_.system_parameters_.Lambda_(4, 4) = config.lambda_1;
+    sliding_mode_controller_.system_parameters_.Lambda_(5, 5) = config.lambda_1;
+
+    sliding_mode_controller_.system_parameters_.K_(0, 0) = config.K_1;
+    sliding_mode_controller_.system_parameters_.K_(1, 1) = config.K_2;
+    sliding_mode_controller_.system_parameters_.K_(2, 2) = config.K_3;
+    sliding_mode_controller_.system_parameters_.K_(3, 3) = config.K_4;
+    sliding_mode_controller_.system_parameters_.K_(4, 4) = config.K_5;
+    sliding_mode_controller_.system_parameters_.K_(5, 5) = config.K_6;
 }
 
 void SlidingModeControlNode::trajectoryCB(

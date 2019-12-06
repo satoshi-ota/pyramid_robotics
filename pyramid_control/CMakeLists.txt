@@ -36,8 +36,7 @@ include_directories(
 include_directories("/usr/include/eigen3")
 
 add_library(pyramid_control
-    src/library/sliding_mode_controller.cpp
-    src/library/system_reconfiguration.cpp)
+    src/library/sliding_mode_controller.cpp)
 
 target_link_libraries(pyramid_control ${catkin_LIBRARIES})
 add_dependencies(pyramid_control ${catkin_EXPORTED_TARGETS})

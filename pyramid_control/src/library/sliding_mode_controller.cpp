@@ -55,7 +55,6 @@ void SlidingModeController::calcThrust()
     Eigen::VectorXd vel = odometry_.getVel();
     Eigen::VectorXd acc = trajectory_.getAcc();
 
-
     wrench_ = - massMatrix_
             * (acc + system_parameters_.Lambda_ * vError_ + system_parameters_.K_ * sgn_s)
             + coriolisMatrix_ * vel + kG;

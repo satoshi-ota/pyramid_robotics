@@ -223,6 +223,14 @@ struct EigenOdometry {
         return vel;
     }
 
+    inline Eigen::VectorXd getGrobalVel() const
+    {
+        Eigen::VectorXd vel = Eigen::VectorXd::Zero(6);
+        vel.block<3, 1>(0, 0) = orientation.toRotationMatrix() * velocity;
+        vel.block<3, 1>(3, 0) = angular_velocity;
+        return vel;
+    }
+
     inline Eigen::VectorXd getPosAtt() const
     {
         Eigen::Vector3d rpy;

@@ -39,7 +39,7 @@ public:
     virtual void Load(physics::ModelPtr _model, sdf::ElementPtr _sdf);
     virtual void Update();
 
-private: //member function
+private:
 
     void ForceCommandCB(const geometry_msgs::WrenchStampedConstPtr &msg)
     {
@@ -52,8 +52,7 @@ private: //member function
         command_received_ = true;
     }
 
-private: //data member
-    //general
+private:
     ros::NodeHandle rosnode_;
     ros::CallbackQueue callback_queue_;
     event::ConnectionPtr update_event_;
@@ -61,14 +60,13 @@ private: //data member
     double t_prev_;
     Force external_force_;
 
-    //model
+    ignition::math::Pose3d pose_;
+
     physics::ModelPtr model_;
 
-    //subscriber to thrust
     ros::Subscriber thrust_sub_;
     bool command_received_;
 
-    //publisher to end-effector state
     ros::Publisher ee_state_publisher_;
     gazebo_msgs::LinkState ee_state_;
     physics::LinkPtr ee_link_;

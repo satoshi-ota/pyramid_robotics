@@ -23,7 +23,6 @@ void PsuedoTetherPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
 
     rosnode_ = ros::NodeHandle();
 
-    getSdfParam<std::string>(_sdf, "linkName", link_name_, link_name_, true);
 
     link_ = model_->GetLink(link_name_);
 

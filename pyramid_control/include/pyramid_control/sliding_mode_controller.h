@@ -53,7 +53,7 @@ private:
     Eigen::MatrixXd jacobian_;
 
     Eigen::VectorXd slidingSurface_;
-    Eigen::VectorXd xError_, prevError_;
+    Eigen::VectorXd xError_;
     Eigen::VectorXd vError_;
     Eigen::VectorXd wrench_;
 

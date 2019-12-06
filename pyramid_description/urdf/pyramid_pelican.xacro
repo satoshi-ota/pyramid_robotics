@@ -161,7 +161,7 @@
   <!-- ======================== PYRAMID ROBOTICS =========================-->
   <!-- ================================================================== -->
 
-    <!-- <xacro:tether_end
+    <xacro:tether_end
         robot_namespace="${namespace}"
         x="${tether_attached_pos_horizontal}"
         y="-${tether_attached_pos_horizontal}"
@@ -232,7 +232,7 @@
         tether_number="7"
         suffix="back_left_lower"
         color="Orange">
-    </xacro:tether_end> -->
+    </xacro:tether_end>
 
   <!-- ================================================================== -->
   <!-- ======================== PYRAMID ROBOTICS =========================-->

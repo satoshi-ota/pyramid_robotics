@@ -1,4 +1,5 @@
 #include "pyramid_gazebo_plugins/gazebo_external_force_plugin.h"
+#define PRINT_MAT(X) std::cout << #X << ":\n" << X << std::endl << std::endl
 
 namespace gazebo
 {
@@ -18,10 +19,8 @@ void ExternalForcePlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
         return;
     }
 
-    //get model and name
     model_ = _model;
 
-    //register ROS node & time
     rosnode_ = ros::NodeHandle();
     t_prev_ = 0;
 
@@ -55,13 +54,11 @@ void ExternalForcePlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
 
 void ExternalForcePlugin::Update()
 {
-    //activate callbacks
     callback_queue_.callAvailable();
 
-    // deal with joint control
     if(command_received_)
     {
-        ee_link_->AddForceAtRelativePosition(external_force_.force, external_force_.point);
+        ee_link_->AddForce(external_force_.force);
         ee_link_->AddTorque(external_force_.torque);
     }
 
