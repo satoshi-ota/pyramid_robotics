@@ -20,7 +20,7 @@ static constexpr double kDefaultInertiaZz = 0.0977;
 static constexpr double kDefaultRotorForceConstant = 8.54858e-6;
 static constexpr double kDefaultRotorMomentConstant = 1.6e-2;
 
-// Default tether parameters
+const int kDefaultDoF = 6;
 const int kDefaultTetherNum = 8;
 
 //attach_posisons
@@ -47,25 +47,25 @@ const Eigen::Matrix<double, 6, 6> kDefaultGainK = Eigen::MatrixXd::Identity(6, 6
 static constexpr double kDefaultGravity = 9.81;
 
 struct Rotor {
-  Rotor()
-      : angle(0.0),
-        arm_length(kDefaultArmLength),
-        rotor_force_constant(kDefaultRotorForceConstant),
-        rotor_moment_constant(kDefaultRotorMomentConstant),
-        direction(1) {}
-  Rotor(double _angle, double _arm_length,
+    Rotor()
+    : angle(0.0),
+    arm_length(kDefaultArmLength),
+    rotor_force_constant(kDefaultRotorForceConstant),
+    rotor_moment_constant(kDefaultRotorMomentConstant),
+    direction(1) {}
+    Rotor(double _angle, double _arm_length,
         double _rotor_force_constant, double _rotor_moment_constant,
         int _direction)
-      : angle(_angle),
+        : angle(_angle),
         arm_length(_arm_length),
         rotor_force_constant(_rotor_force_constant),
         rotor_moment_constant(_rotor_moment_constant),
         direction(_direction) {}
-  double angle;
-  double arm_length;
-  double rotor_force_constant;
-  double rotor_moment_constant;
-  int direction;
+        double angle;
+        double arm_length;
+        double rotor_force_constant;
+        double rotor_moment_constant;
+        int direction;
 };
 
 struct RotorConfiguration {
@@ -110,14 +110,10 @@ struct PseudoTether
          world_pos(Eigen::Vector3d::Zero()),
          tension(0.0){ }
 
-    void calcWorldPos()
+    void update(const pyramid_msgs::EigenOdometry& odometry)
     {
-
-    }
-
-    void calcDirection()
-    {
-
+        world_pos = odometry.position + odometry.orientation.toRotationMatrix() * attach_pos;
+        direction = anchor_pos - attach_pos;
     }
 
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
@@ -155,6 +151,7 @@ public:
          inertia_(Eigen::Vector3d(kDefaultInertiaXx,
                                   kDefaultInertiaYy,
                                   kDefaultInertiaZz).asDiagonal()),
+         dof_(kDefaultDoF),
          n_tether_(kDefaultTetherNum),
          Lambda_(kDefaultLambda),
          K_(kDefaultGainK){ }
@@ -166,8 +163,9 @@ public:
     double mass_;
     double gravity_;
     Eigen::Matrix3d inertia_;
+    int dof_;
     int n_tether_;
-    
+
     Eigen::Matrix<double, 6, 6> Lambda_;
     Eigen::Matrix<double, 6, 6> K_;
 };

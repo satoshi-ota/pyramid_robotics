@@ -225,9 +225,17 @@ struct EigenOdometry {
 
     inline Eigen::VectorXd getGrobalVel() const
     {
+        Eigen::Vector3d rpy;
+        Eigen::Matrix3d toOmega;
+        getEulerAnglesFromQuaternion(orientation, &rpy);
+
+        toOmega << 1,  0,           -sin(rpy(1)),
+                   0,  cos(rpy(0)),  cos(rpy(1))*sin(rpy(0)),
+                   0, -sin(rpy(0)),  cos(rpy(1))*cos(rpy(0));
+
         Eigen::VectorXd vel = Eigen::VectorXd::Zero(6);
         vel.block<3, 1>(0, 0) = orientation.toRotationMatrix() * velocity;
-        vel.block<3, 1>(3, 0) = angular_velocity;
+        vel.block<3, 1>(3, 0) = inverse(toOmega) * angular_velocity;
         return vel;
     }
 

@@ -22,13 +22,11 @@ void SlidingModeController::updateModelConfig()
 {
     for(PseudoTether& pseudo_tether : system_parameters_.tether_configuration_.pseudo_tethers)
     {
-        pseudo_tether.calcWorldPos();
-        pseudo_tether.calcDirection();
+        pseudo_tether.update(odometry_);
     }
 
-    calcRotMatrix(odometry_.orientation, &rotMatrix_);
-
-    calcGlobalInertia(system_parameters_.inertia_, rotMatrix_, &globalInertia_);
+    rotMatrix_ = odometry_.orientation.toRotationMatrix();
+    globalInertia_ = rotMatrix_ * system_parameters_.inertia_ * rotMatrix_.transpose();
 
     calcToOmage(odometry_.orientation, &toOmega_);
 

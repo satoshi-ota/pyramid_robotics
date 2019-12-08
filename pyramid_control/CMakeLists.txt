@@ -36,7 +36,8 @@ include_directories(
 include_directories("/usr/include/eigen3")
 
 add_library(pyramid_control
-    src/library/sliding_mode_controller.cpp)
+    src/library/sliding_mode_controller.cpp
+    src/library/actuator_controller.cpp)
 
 target_link_libraries(pyramid_control ${catkin_LIBRARIES})
 add_dependencies(pyramid_control ${catkin_EXPORTED_TARGETS})
@@ -45,6 +46,10 @@ add_dependencies(pyramid_control ${catkin_EXPORTED_TARGETS})
 # add_dependencies(motor_speed_controller_node ${catkin_EXPORTED_TARGETS})
 # target_link_libraries(motor_speed_controller_node
 #     motor_speed_controller ${catkin_LIBRARIES})
+add_executable(commander_node src/nodes/commander_node.cpp)
+add_dependencies(commander_node pyramid_control_gencfg ${catkin_EXPORTED_TARGETS})
+target_link_libraries(commander_node pyramid_control ${catkin_LIBRARIES})
+
 add_executable(sliding_mode_control_node src/nodes/sliding_mode_control_node.cpp)
 add_dependencies(sliding_mode_control_node pyramid_control_gencfg ${catkin_EXPORTED_TARGETS})
 target_link_libraries(sliding_mode_control_node pyramid_control ${catkin_LIBRARIES})

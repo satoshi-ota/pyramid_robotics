@@ -1,14 +1,14 @@
-#ifndef MOTOR_SPEED_CONTROLLER_H
-#define MOTOR_SPEED_CONTROLLER_H
+#ifndef PYRAMID_CONTROL_MOTOR_SPEED_CONTROLLER_H
+#define PYRAMID_CONTROL_MOTOR_SPEED_CONTROLLER_H
 
 #include <ros/ros.h>
 #include <geometry_msgs/WrenchStamped.h>
 
-#include "uav_control/common.h"
-#include "uav_control/parameters.h"
-#include "uav_control/configurations.h"
+#include "pyramid_control/common.h"
+#include "pyramid_control/parameters.h"
+#include "pyramid_control/configurations.h"
 
-namespace motor_speed_control
+namespace pyramid_control
 {
 
 class MotorSpeedControllerParameters
@@ -41,15 +41,13 @@ public:
     VehicleParameters vehicle_parameters_;
 
 private:
-    //general
     bool initialized_params_;
     EigenWrenchStamped thrust_;
 
-    //inverse allocation matrix
     Eigen::MatrixX4d thrust_to_rotor_velocities_;
 
 };
 
-} //motor_speed_control
+} //namespace pyramid_control
 
-#endif //MOTOR_SPEED_CONTROLLER_H
+#endif //PYRAMID_CONTROL_MOTOR_SPEED_CONTROLLER_H

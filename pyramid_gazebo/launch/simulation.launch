@@ -23,7 +23,7 @@
             <arg name="log_file" value="$(arg log_file)"/>
             <arg name="enable_wind" value="$(arg enable_wind)"/>
         </include>
-        <node name="sliding_mode_control_node" pkg="pyramid_control" type="sliding_mode_control_node" output="screen">
+        <node name="commander_node" pkg="pyramid_control" type="commander_node" output="screen">
             <rosparam command="load" file="$(find pyramid_control)/params/sliding_mode_controller.yaml" />
             <rosparam command="load" file="$(find pyramid_control)/params/pyramid_$(arg mav_name).yaml" />
             <remap from="feedback/odometry" to="odometry_sensor1/odometry"/>

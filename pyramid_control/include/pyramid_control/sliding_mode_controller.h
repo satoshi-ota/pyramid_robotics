@@ -37,8 +37,8 @@ public:
     inline void setOdometry(const pyramid_msgs::EigenOdometry& odometry){odometry_ = odometry;};
     inline Eigen::VectorXd getWrench(){return wrench_;};
     inline Eigen::MatrixXd getJacobian(){return jacobian_;};
-    inline Eigen::Matrix3d getRotationMatrix(){return rotMatrix_;};
-    inline Eigen::Matrix3d getToOmegaMatrix(){return toOmega_dot_;};
+    inline Eigen::Matrix3d getRotMatrix(){return rotMatrix_;};
+    inline Eigen::Matrix3d getToOmega(){return toOmega_;};
 
     inline pyramid_msgs::EigenThrust getThrust(){return thrust_;};
 

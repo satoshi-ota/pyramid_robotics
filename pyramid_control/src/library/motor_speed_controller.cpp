@@ -1,6 +1,6 @@
-#include "uav_control/motor_speed_controller.h"
+#include "pyramid_control/motor_speed_controller.h"
 
-namespace motor_speed_control
+namespace pyramid_control
 {
 
 MotorSpeedController::MotorSpeedController()
@@ -13,10 +13,8 @@ MotorSpeedController::~MotorSpeedController(){ }
 
 void MotorSpeedController::InitializeParameters()
 {
-    //calculate allocation matrix from vehicle parameters
     calculateAllocationMatrix(vehicle_parameters_.rotor_configuration_, &(controller_parameters_.allocation_matrix_));
 
-    //calculate inverse allocation matrix
     thrust_to_rotor_velocities_.resize(vehicle_parameters_.rotor_configuration_.rotors.size(), 4);
 
     thrust_to_rotor_velocities_ = controller_parameters_.allocation_matrix_.transpose()
@@ -35,9 +33,7 @@ void MotorSpeedController::CalculateRotorVelocities(Eigen::VectorXd* rotor_veloc
 {
     assert(initialized_params_);
 
-    //Update vector for rotor number
     rotor_velocities->resize(vehicle_parameters_.rotor_configuration_.rotors.size());
-
 
     Eigen::Vector4d limited_thrust;
     limited_thrust.block<3, 1>(0, 0) = thrust_.getTorque();
@@ -48,4 +44,4 @@ void MotorSpeedController::CalculateRotorVelocities(Eigen::VectorXd* rotor_veloc
     *rotor_velocities = rotor_velocities->cwiseSqrt();
 }
 
-} //motor_speed_control
+} //namespace pyramid_control

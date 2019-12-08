@@ -2,6 +2,7 @@
 #define PYRAMID_MSGS_COMMON_H
 
 #include <Eigen/Eigen>
+#include <Eigen/LU>
 #include <geometry_msgs/Vector3.h>
 #include <geometry_msgs/Point.h>
 #include <geometry_msgs/Quaternion.h>
@@ -81,6 +82,12 @@ inline Eigen::Quaterniond quaternionFromAtt(const Eigen::Vector3d& att)
                                   * Eigen::AngleAxisd(att.z(), Eigen::Vector3d::UnitZ());
 
     return quaternion;
+}
+
+inline Eigen::MatrixXd inverse(const Eigen::Matrix3d& mat)
+{
+    Eigen::FullPivLU<Eigen::MatrixXd> lu(mat);
+    return lu.inverse();
 }
 
 } //namespace pyramid_msgs

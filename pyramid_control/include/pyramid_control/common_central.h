@@ -1,5 +1,5 @@
-#ifndef PYRAMID_CONTROL_COMMON_H
-#define PYRAMID_CONTROL_COMMON_H
+#ifndef PYRAMID_CONTROL_CENTRAL_COMMON_H
+#define PYRAMID_CONTROL_CENTRAL_COMMON_H
 
 #include <Eigen/Core>
 #include <Eigen/Geometry>
@@ -15,54 +15,43 @@
 namespace pyramid_control
 {
 
-inline void skewMatrixFromVector(Eigen::Vector3d& vector, Eigen::Matrix3d* skew_matrix)
+inline void skewMatrixFromVector(Eigen::Vector3d& vector, Eigen::Matrix3d* skewMatrix)
 {
-  *skew_matrix <<          0,-vector.z(),  vector.y(),
-                  vector.z(),          0, -vector.x(),
-                 -vector.y(), vector.x(),           0;
-}
-
-inline void calcRotMatrix(const Eigen::Quaterniond& orientation, Eigen::Matrix3d* rotMatrix)
-{
-    *rotMatrix = orientation.toRotationMatrix();
-}
-
-inline void calcGlobalInertia(const Eigen::Matrix3d& inertia,
-                              const Eigen::Matrix3d& rotMatrix,
-                                    Eigen::Matrix3d* globalInertia)
-{
-    *globalInertia = rotMatrix * inertia * rotMatrix.transpose();
+  *skewMatrix <<          0,-vector.z(),  vector.y(),
+                 vector.z(),          0, -vector.x(),
+                -vector.y(), vector.x(),           0;
 }
 
 inline void calcToOmage(const Eigen::Quaterniond& orientation, Eigen::Matrix3d* toOmega)
 {
-    Eigen::Vector3d angles;
-    pyramid_msgs::getEulerAnglesFromQuaternion(orientation, &angles);
+    Eigen::Vector3d rpy;
+    pyramid_msgs::getEulerAnglesFromQuaternion(orientation, &rpy);
 
-    *toOmega << 1,  0,              -sin(angles(1)),
-                0,  cos(angles(0)),  cos(angles(1))*sin(angles(0)),
-                0, -sin(angles(0)),  cos(angles(1))*cos(angles(0));
+    *toOmega << 1,  0,           -sin(rpy(1)),
+                0,  cos(rpy(0)),  cos(rpy(1))*sin(rpy(0)),
+                0, -sin(rpy(0)),  cos(rpy(1))*cos(rpy(0));
 }
 
 inline void calcToOmageDot(const Eigen::Quaterniond& orientation, Eigen::Matrix3d* toOmega_dot)
 {
-    Eigen::Vector3d angles;
-    pyramid_msgs::getEulerAnglesFromQuaternion(orientation, &angles);
+    Eigen::Vector3d rpy;
+    pyramid_msgs::getEulerAnglesFromQuaternion(orientation, &rpy);
 
     *toOmega_dot
-        << 0,  0,              -cos(angles(1)),
-           0, -sin(angles(0)), -sin(angles(1))*sin(angles(0))+cos(angles(1))*sin(angles(0)),
-           0, -cos(angles(0)), -sin(angles(1))*cos(angles(0))-cos(angles(1))*sin(angles(0));
+        << 0,  0,           -cos(rpy(1)),
+           0, -sin(rpy(0)), -sin(rpy(1))*sin(rpy(0))+cos(rpy(1))*sin(rpy(0)),
+           0, -cos(rpy(0)), -sin(rpy(1))*cos(rpy(0))-cos(rpy(1))*sin(rpy(0));
 }
 
 inline void calcMassMatrix(const SystemParameters& system_parameters,
-                                          const Eigen::Matrix3d& globalInertia,
-                                          const Eigen::Matrix3d& toOmega,
-                                                Eigen::MatrixXd* massMatrix)
+                           const Eigen::Matrix3d& globalInertia,
+                           const Eigen::Matrix3d& toOmega,
+                                 Eigen::MatrixXd* massMatrix)
 {
     Eigen::Matrix<double, 6, 6> Mat = Eigen::MatrixXd::Zero(6, 6);
 
     Eigen::Matrix3d kI = Eigen::Matrix3d::Identity();
+
     Mat.block<3, 3>(0, 0) = system_parameters.mass_ * kI.array();
     Mat.block<3, 3>(3, 3) = toOmega.transpose() * globalInertia * toOmega;
 
@@ -93,10 +82,14 @@ inline void calcJacobian(const TetherConfiguration& tether_configuration,
 {
     assert(jacobian != NULL);
 
-    jacobian->resize(8, 6);
+    int tether_num = tether_configuration.pseudo_tethers.size();
+
+    jacobian->resize(tether_num, 6);
     jacobian->setZero();
 
-    Eigen::Matrix<double, 6, 8> J = Eigen::MatrixXd::Zero(6, 8);
+    Eigen::MatrixXd J;
+    J.resize(6, tether_num);
+    J.setZero();
 
     unsigned int i = 0;
     for (const PseudoTether& pseudo_tether : tether_configuration.pseudo_tethers)
@@ -110,8 +103,8 @@ inline void calcJacobian(const TetherConfiguration& tether_configuration,
 }
 
 inline void calcJacobianTilde(const Eigen::Matrix3d& toOmega,
-                                   const Eigen::MatrixXd& jacobian,
-                                         Eigen::MatrixXd* jacobian_tilde)
+                              const Eigen::MatrixXd& jacobian,
+                                    Eigen::MatrixXd* jacobian_tilde)
 {
     jacobian_tilde->resize(4, 6);
     jacobian_tilde->setZero();
@@ -132,8 +125,8 @@ inline void calcPosAttDelta(const pyramid_msgs::EigenOdometry& odometry,
 }
 
 inline void calcVelDelta(const pyramid_msgs::EigenOdometry& odometry,
-                              const pyramid_msgs::EigenMultiDOFJointTrajectory& trajectory,
-                                           Eigen::VectorXd* vError)
+                         const pyramid_msgs::EigenMultiDOFJointTrajectory& trajectory,
+                                      Eigen::VectorXd* vError)
 {
     *vError = trajectory.getVel() - odometry.getGrobalVel();
 }
@@ -156,6 +149,26 @@ inline Eigen::VectorXd sgn(Eigen::VectorXd& sliding_surface)
     return sgn_s;
 }
 
+inline Eigen::MatrixXd calcRotorMatrix(const Eigen::Matrix3d& rotMatrix)
+{
+    double rot13 = rotMatrix(0, 2);
+    double rot23 = rotMatrix(1, 2);
+    double rot33 = rotMatrix(2, 2);
+
+    Eigen::MatrixXd Mat;
+    Mat.resize(6, 4);
+    Mat.setZero();
+
+    Mat << rot13, 0, 0, 0,
+           rot23, 0, 0, 0,
+           rot33, 0, 0, 0,
+               0, 1, 0, 0,
+               0, 0, 1, 0,
+               0, 0, 0, 1;
+
+    return Mat;
+}
+
 } //namespace pyramid_control
 
-#endif //PYRAMID_CONTROL_COMMON_H
+#endif //PYRAMID_CONTROL_CENTRAL_COMMON_H
