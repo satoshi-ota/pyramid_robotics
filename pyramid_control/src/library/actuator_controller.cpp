@@ -40,17 +40,12 @@ void ActuatorController::wrenchDistribution(const Eigen::VectorXd& wrench,
 
     Eigen::MatrixXd distributionMatrix = MatAB.transpose() * (MatAB * MatAB.transpose()).inverse();
 
-    // Eigen::MatrixXd Mat = MatAB * distributionMatrix;
-    // PRINT_MAT(Mat);
-
     distributedWrench_ = distributionMatrix * wrench;
 
     Eigen::FullPivLU<Eigen::MatrixXd> lu(MatAB);
     lu.setThreshold(1e-5);
     kernel_ = lu.kernel();
     rank_ = lu.rank();
-    // PRINT_MAT(wrench);
-    // PRINT_MAT(distributionMatrix);
 }
 
 void ActuatorController::optimize()
@@ -69,8 +64,6 @@ void ActuatorController::optimize()
             tension_ = distributedWrench_.block<8, 1>(0, 0);
             thrust_ = distributedWrench_.block<4, 1>(8, 0);
             thrust_ = thrust_.cwiseSqrt();
-            // PRINT_MAT(tension_);
-            // PRINT_MAT(thrust_);
 
             lpp_.Clear();
         }

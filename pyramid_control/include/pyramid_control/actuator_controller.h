@@ -36,8 +36,8 @@ public:
                             const Eigen::Matrix3d& toOmega);
     void optimize();
 
-    inline Eigen::Vector4d getTension(){return tension_;};
-    inline Eigen::Vector4d getThrust(){return thrust_;};
+    inline Eigen::VectorXd getTension(){return tension_;};
+    inline Eigen::VectorXd getThrust(){return thrust_;};
     inline bool feasibility(){return feasible_ = (distributedWrench_.array() >= 0).all();}
 
     SystemParameters system_parameters_;
