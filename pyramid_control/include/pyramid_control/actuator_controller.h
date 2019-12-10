@@ -37,7 +37,8 @@ public:
     void optimize();
 
     inline Eigen::VectorXd getTension(){return tension_;};
-    inline Eigen::VectorXd getThrust(){return thrust_;};
+    inline Eigen::VectorXd getMotorSpeed(){return motor_speed_;};
+    // inline Eigen::VectorXd getThrust(){return thrust_;};
     inline bool feasibility(){return feasible_ = (distributedWrench_.array() >= 0).all();}
 
     SystemParameters system_parameters_;
@@ -58,7 +59,8 @@ private:
     Eigen::VectorXd distributedWrench_;
 
     Eigen::VectorXd tension_;
-    Eigen::VectorXd thrust_;
+    Eigen::VectorXd motor_speed_;
+    // Eigen::VectorXd thrust_;
 
 
 };

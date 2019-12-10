@@ -82,7 +82,7 @@
         <rotorVelocitySlowdownSim>${rotor_velocity_slowdown_sim}</rotorVelocitySlowdownSim>
       </plugin>
       <!--plugin filename="libgazebo_disturbance_plugin.so" name="disturbance_plugin" /-->
-      <plugin filename="libgazebo_external_force_plugin.so" name="external_force_plugin" />
+      <!-- <plugin filename="libgazebo_external_force_plugin.so" name="external_force_plugin" /> -->
       <!-- <plugin filename="libgazebo_psuedo_tether_plugin.so" name="psuedo_tether_plugin" /> -->
     </gazebo>
   </xacro:macro>
@@ -177,6 +177,13 @@
                 </geometry>
             </collision>
         </link>
+        <gazebo>
+            <plugin filename="libgazebo_psuedo_tether_plugin.so" name="pseudo_tether_plugin">
+                <robotNamespace>${robot_namespace}</robotNamespace>
+                <linkName>${robot_namespace}/tether_end_${tether_number}</linkName>
+                <tetherNumber>${tether_number}</tetherNumber>
+            </plugin>
+        </gazebo>
         <gazebo reference="${robot_namespace}/tether_end_${tether_number}">
             <material>Gazebo/${color}</material>
         </gazebo>

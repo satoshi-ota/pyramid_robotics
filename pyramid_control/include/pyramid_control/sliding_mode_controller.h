@@ -30,6 +30,7 @@ public:
     void updateModelConfig();
     void calcThrust();
 
+    std::vector<Eigen::Vector3d> direction;
     SystemParameters system_parameters_;
 
     inline void setTrajectory(

@@ -18,26 +18,47 @@ void PsuedoTetherPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
         return;
     }
 
+    ros::SubscribeOptions ops = ros::SubscribeOptions::create<pyramid_msgs::Tensions>(
+                pyramid_msgs::default_topics::COMMAND_TENSIONS, 1,
+                boost::bind(&PsuedoTetherPlugin::TensionCommandCB, this, _1),
+                ros::VoidPtr(), &callback_queue_);
+    tension_sub_ = rosnode_.subscribe(ops);
+
     model_ = _model;
     world_ = model_->GetWorld();
 
     rosnode_ = ros::NodeHandle();
 
+    if(_sdf->HasElement("robotNamespace"))
+    {
+        namespace_ = _sdf->GetElement("robotNamespace")->Get<std::string>();
+    }
+    else
+    {
+        // namespace_ = parent_model_->GetName(); // default
+    }
+
+    if(_sdf->HasElement("linkName"))
+    {
+        link_name_ = _sdf->GetElement("linkName")->Get<std::string>();
+    }
+    else
+    {
+        // robot_description_ = "robot_description"; // default
+    }
+    if(_sdf->HasElement("tetherNumber"))
+    {
+        tether_number_ = _sdf->GetElement("tetherNumber")->Get<int>();
+    }
+    else
+    {
+        // robot_description_ = "robot_description"; // default
+    }
 
     link_ = model_->GetLink(link_name_);
 
-    child_links_ = link_->GetChildJointsLinks();
-    for(int i = 0; i < child_links_.size(); i++)
-    {
+    command_received_ = false;
 
-    }
-
-
-
-
-    direc_pub_ = rosnode_.advertise<geometry_msgs::Vector3>("tether_direction",1);
-
-    // Register plugin update
     update_event_
         = event::Events::ConnectWorldUpdateBegin(boost::bind(&PsuedoTetherPlugin::Update, this));
 
@@ -53,11 +74,10 @@ void PsuedoTetherPlugin::Update()
     // //tension_.torque.Z() = 10;
     // link_->AddForce(tension_.force);
     //link_->AddTorque(tension_.torque);
-    // if(command_received_)
-    // {
-    //     ee_link_->AddForceAtRelativePosition(external_force_.force, external_force_.point);
-    //     ee_link_->AddTorque(external_force_.torque);
-    // }
+    if(command_received_)
+    {
+        link_->AddForce(tension_.force);
+    }
 
     // auto ee_pose = ee_link_->WorldPose() - ee_link_->WorldPose();
     // ee_state_.pose.position.x = ee_pose.Pos().X();
@@ -78,6 +98,14 @@ void PsuedoTetherPlugin::Update()
     //
     // ee_state_publisher_.publish(ee_state_);
     ros::spinOnce();
+}
+
+void PsuedoTetherPlugin::TensionCommandCB(const pyramid_msgs::TensionsConstPtr &msg)
+{
+    tension_.force.X() = msg->tensions[tether_number_].x;
+    tension_.force.Y() = msg->tensions[tether_number_].y;
+    tension_.force.Z() = msg->tensions[tether_number_].z;
+    command_received_ = true;
 }
 
 GZ_REGISTER_MODEL_PLUGIN(PsuedoTetherPlugin);

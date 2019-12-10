@@ -1,11 +1,19 @@
 #ifndef PYRAMID_GAZEBO_PLUGINS_GAZEBO_PSUEDO_TETHER_PLUGIN_H
 #define PYRAMID_GAZEBO_PLUGINS_GAZEBO_PSUEDO_TETHER_PLUGIN_H
 
+#include <string>
+
+#include <gazebo/common/common.hh>
+#include <gazebo/common/Plugin.hh>
+#include <gazebo/gazebo.hh>
+#include <gazebo/physics/physics.hh>
+
 #include <ros/ros.h>
 #include <ros/callback_queue.h>
 #include <gazebo_msgs/LinkState.h>
 #include <geometry_msgs/WrenchStamped.h>
 #include <pyramid_msgs/default_topics.h>
+#include <pyramid_msgs/Tensions.h>
 
 #include <gazebo/gazebo.hh>
 #include <gazebo/common/Plugin.hh>
@@ -42,20 +50,29 @@ public:
 
 private:
     ros::NodeHandle rosnode_;
+    ros::CallbackQueue callback_queue_;
     event::ConnectionPtr update_event_;
+
+    ros::Subscriber tension_sub_;
 
     physics::WorldPtr world_;
     physics::ModelPtr model_;
     physics::LinkPtr link_;
     physics::Link_V child_links_;
 
+    std::string namespace_;
     std::string link_name_;
+    int tether_number_;
+
+    bool command_received_;
 
     Force tension_;
 
     //publisher to end-effector state
     ros::Publisher direc_pub_;
     std::vector<geometry_msgs::Point> winch_, tether_end_;
+
+    void TensionCommandCB(const pyramid_msgs::TensionsConstPtr &msg);
 
 };
 

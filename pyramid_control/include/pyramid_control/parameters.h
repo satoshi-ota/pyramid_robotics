@@ -114,6 +114,7 @@ struct PseudoTether
     {
         world_pos = odometry.position + odometry.orientation.toRotationMatrix() * attach_pos;
         direction = anchor_pos - attach_pos;
+        direction = direction.normalized();
     }
 
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW

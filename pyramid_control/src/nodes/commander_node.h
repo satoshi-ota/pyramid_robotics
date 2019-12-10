@@ -5,6 +5,8 @@
 
 #include <ros/ros.h>
 #include <nav_msgs/Odometry.h>
+#include <mav_msgs/Actuators.h>
+#include <pyramid_msgs/Tensions.h>
 #include <pyramid_msgs/conversions.h>
 #include <pyramid_msgs/default_topics.h>
 #include <geometry_msgs/WrenchStamped.h>
@@ -35,12 +37,18 @@ private:
 
     ros::Subscriber trajectory_sub_;
     ros::Subscriber odometry_sub_;
-    ros::Publisher thrust_pub_;
+    ros::Publisher motor_velocity_reference_pub_;
+    ros::Publisher tension_reference_pub_;
+
+    // ros::Publisher thrust_pub_;
 
     void paramsReconfig(pyramid_control::SlidingModeControllerConfig &config, uint32_t level);
     void trajectoryCB(const trajectory_msgs::MultiDOFJointTrajectoryPtr& trajectory_msg);
     void odometryCB(const nav_msgs::OdometryPtr& odometry_msg);
-    void sendThrust();
+
+    void sendRotorSpeed();
+    void sendTension();
+    // void sendThrust();
 };
 
 } //namespace pyramid_control

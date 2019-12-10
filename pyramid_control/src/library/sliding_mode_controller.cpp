@@ -20,9 +20,13 @@ SlidingModeController::~SlidingModeController(){ }
 
 void SlidingModeController::updateModelConfig()
 {
+    direction.clear();
+
+    int i = 0;
     for(PseudoTether& pseudo_tether : system_parameters_.tether_configuration_.pseudo_tethers)
     {
         pseudo_tether.update(odometry_);
+        direction.push_back(pseudo_tether.direction);
     }
 
     rotMatrix_ = odometry_.orientation.toRotationMatrix();

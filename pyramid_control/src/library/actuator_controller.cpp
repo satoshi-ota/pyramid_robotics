@@ -62,8 +62,8 @@ void ActuatorController::optimize()
             distributedWrench_ += kernel_ * x;
 
             tension_ = distributedWrench_.block<8, 1>(0, 0);
-            thrust_ = distributedWrench_.block<4, 1>(8, 0);
-            thrust_ = thrust_.cwiseSqrt();
+            motor_speed_ = distributedWrench_.block<4, 1>(8, 0);
+            motor_speed_ = motor_speed_.cwiseSqrt();
 
             lpp_.Clear();
         }
