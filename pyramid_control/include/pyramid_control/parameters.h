@@ -28,15 +28,15 @@ const Eigen::Vector3d kDefaultTether0AttachPos = Eigen::Vector3d( 0.4, -0.4,  0.
 const Eigen::Vector3d kDefaultTether1AttachPos = Eigen::Vector3d( 0.4, -0.4, -0.15);
 const Eigen::Vector3d kDefaultTether2AttachPos = Eigen::Vector3d( 0.4,  0.4,  0.15);
 const Eigen::Vector3d kDefaultTether3AttachPos = Eigen::Vector3d( 0.4,  0.4, -0.15);
-const Eigen::Vector3d kDefaultTether4AttachPos = Eigen::Vector3d(-0.4, -0.4,  0.15);
-const Eigen::Vector3d kDefaultTether5AttachPos = Eigen::Vector3d(-0.4, -0.4, -0.15);
-const Eigen::Vector3d kDefaultTether6AttachPos = Eigen::Vector3d(-0.4,  0.4,  0.15);
-const Eigen::Vector3d kDefaultTether7AttachPos = Eigen::Vector3d(-0.4,  0.4, -0.15);
+const Eigen::Vector3d kDefaultTether4AttachPos = Eigen::Vector3d(-0.4,  0.4,  0.15);
+const Eigen::Vector3d kDefaultTether5AttachPos = Eigen::Vector3d(-0.4,  0.4, -0.15);
+const Eigen::Vector3d kDefaultTether6AttachPos = Eigen::Vector3d(-0.4, -0.4,  0.15);
+const Eigen::Vector3d kDefaultTether7AttachPos = Eigen::Vector3d(-0.4, -0.4, -0.15);
 
 //anchor_positions
 const Eigen::Vector3d kDefaultAnchor0Pos = Eigen::Vector3d( 5.0,  5.0, 0.0);
-const Eigen::Vector3d kDefaultAnchor1Pos = Eigen::Vector3d(-5.0, -5.0, 0.0);
-const Eigen::Vector3d kDefaultAnchor2Pos = Eigen::Vector3d(-5.0,  5.0, 0.0);
+const Eigen::Vector3d kDefaultAnchor1Pos = Eigen::Vector3d(-5.0,  5.0, 0.0);
+const Eigen::Vector3d kDefaultAnchor2Pos = Eigen::Vector3d(-5.0, -5.0, 0.0);
 const Eigen::Vector3d kDefaultAnchor3Pos = Eigen::Vector3d( 5.0, -5.0, 0.0);
 
 //Sliding mode controller
@@ -113,7 +113,7 @@ struct PseudoTether
     void update(const pyramid_msgs::EigenOdometry& odometry)
     {
         world_pos = odometry.position + odometry.orientation.toRotationMatrix() * attach_pos;
-        direction = anchor_pos - attach_pos;
+        direction = anchor_pos - world_pos;
         direction = direction.normalized();
     }
 
@@ -132,13 +132,13 @@ struct TetherConfiguration
     TetherConfiguration()
     {
         pseudo_tethers.push_back(PseudoTether(kDefaultTether0AttachPos, kDefaultAnchor0Pos));
-        pseudo_tethers.push_back(PseudoTether(kDefaultTether1AttachPos, kDefaultAnchor1Pos));
-        pseudo_tethers.push_back(PseudoTether(kDefaultTether2AttachPos, kDefaultAnchor2Pos));
+        pseudo_tethers.push_back(PseudoTether(kDefaultTether1AttachPos, kDefaultAnchor2Pos));
+        pseudo_tethers.push_back(PseudoTether(kDefaultTether2AttachPos, kDefaultAnchor1Pos));
         pseudo_tethers.push_back(PseudoTether(kDefaultTether3AttachPos, kDefaultAnchor3Pos));
-        pseudo_tethers.push_back(PseudoTether(kDefaultTether4AttachPos, kDefaultAnchor0Pos));
-        pseudo_tethers.push_back(PseudoTether(kDefaultTether5AttachPos, kDefaultAnchor1Pos));
-        pseudo_tethers.push_back(PseudoTether(kDefaultTether6AttachPos, kDefaultAnchor2Pos));
-        pseudo_tethers.push_back(PseudoTether(kDefaultTether7AttachPos, kDefaultAnchor3Pos));
+        pseudo_tethers.push_back(PseudoTether(kDefaultTether4AttachPos, kDefaultAnchor2Pos));
+        pseudo_tethers.push_back(PseudoTether(kDefaultTether5AttachPos, kDefaultAnchor0Pos));
+        pseudo_tethers.push_back(PseudoTether(kDefaultTether6AttachPos, kDefaultAnchor3Pos));
+        pseudo_tethers.push_back(PseudoTether(kDefaultTether7AttachPos, kDefaultAnchor1Pos));
     }
     std::vector<PseudoTether> pseudo_tethers;
 };

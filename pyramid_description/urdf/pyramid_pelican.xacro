@@ -200,28 +200,10 @@
     <xacro:tether_end
         robot_namespace="${namespace}"
         x="-${tether_attached_pos_horizontal}"
-        y="-${tether_attached_pos_horizontal}"
+        y="${tether_attached_pos_horizontal}"
         z="${tether_attached_pos_vertical}"
         tether_number="4"
         suffix="back_right_upper"
-        color="Red">
-    </xacro:tether_end>
-    <xacro:tether_end
-        robot_namespace="${namespace}"
-        x="-${tether_attached_pos_horizontal}"
-        y="-${tether_attached_pos_horizontal}"
-        z="-${tether_attached_pos_vertical}"
-        tether_number="5"
-        suffix="back_right_lower"
-        color="Green">
-    </xacro:tether_end>
-    <xacro:tether_end
-        robot_namespace="${namespace}"
-        x="-${tether_attached_pos_horizontal}"
-        y="${tether_attached_pos_horizontal}"
-        z="${tether_attached_pos_vertical}"
-        tether_number="6"
-        suffix="back_left_upper"
         color="Blue">
     </xacro:tether_end>
     <xacro:tether_end
@@ -229,9 +211,27 @@
         x="-${tether_attached_pos_horizontal}"
         y="${tether_attached_pos_horizontal}"
         z="-${tether_attached_pos_vertical}"
+        tether_number="5"
+        suffix="back_right_lower"
+        color="Orange">
+    </xacro:tether_end>
+    <xacro:tether_end
+        robot_namespace="${namespace}"
+        x="-${tether_attached_pos_horizontal}"
+        y="-${tether_attached_pos_horizontal}"
+        z="${tether_attached_pos_vertical}"
+        tether_number="6"
+        suffix="back_left_upper"
+        color="Red">
+    </xacro:tether_end>
+    <xacro:tether_end
+        robot_namespace="${namespace}"
+        x="-${tether_attached_pos_horizontal}"
+        y="-${tether_attached_pos_horizontal}"
+        z="-${tether_attached_pos_vertical}"
         tether_number="7"
         suffix="back_left_lower"
-        color="Orange">
+        color="Green">
     </xacro:tether_end>
 
   <!-- ================================================================== -->

@@ -191,15 +191,6 @@ public:
             jac_block.coeffRef(11, 3) = kernel_(11, 3);
             jac_block.coeffRef(11, 4) = kernel_(11, 4);
             jac_block.coeffRef(11, 5) = kernel_(11, 5);
-
-            // for(int i = 0; i < 4; i++)
-            // {
-            //     for(int j = 0; j < 4; i++)
-            //     {
-            //         jac_block.coeffRef(i, j) = kernel_(i, j);
-            //     }
-            // }
-            ROS_INFO_ONCE("GOODOPT");
         }
     }
 

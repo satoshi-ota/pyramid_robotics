@@ -36,7 +36,7 @@ void ActuatorController::wrenchDistribution(const Eigen::VectorXd& wrench,
     MatS.block<3, 3>(0, 0) = Eigen::Matrix3d::Identity();
     MatS.block<3, 3>(3, 3) = toOmega;
 
-    MatAB = MatS * MatAB;
+    MatAB = MatS.transpose() * MatAB;
 
     Eigen::MatrixXd distributionMatrix = MatAB.transpose() * (MatAB * MatAB.transpose()).inverse();
 
@@ -62,7 +62,9 @@ void ActuatorController::optimize()
             distributedWrench_ += kernel_ * x;
 
             tension_ = distributedWrench_.block<8, 1>(0, 0);
+            tension_ = tension_.cwiseMax(Eigen::VectorXd::Zero(tension_.rows()));
             motor_speed_ = distributedWrench_.block<4, 1>(8, 0);
+            motor_speed_ = motor_speed_.cwiseMax(Eigen::VectorXd::Zero(motor_speed_.rows()));
             motor_speed_ = motor_speed_.cwiseSqrt();
 
             lpp_.Clear();

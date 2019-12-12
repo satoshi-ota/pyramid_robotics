@@ -103,7 +103,7 @@ void CommanderNode::sendRotorSpeed()
       actuator_msg->angular_velocities.push_back(ref_rotor_velocities[i]);
     actuator_msg->header.stamp = ros::Time::now();
 
-    // motor_velocity_reference_pub_.publish(actuator_msg);
+    motor_velocity_reference_pub_.publish(actuator_msg);
 }
 
 void CommanderNode::sendTension()

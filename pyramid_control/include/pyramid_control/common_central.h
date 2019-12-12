@@ -94,8 +94,8 @@ inline void calcJacobian(const TetherConfiguration& tether_configuration,
     unsigned int i = 0;
     for (const PseudoTether& pseudo_tether : tether_configuration.pseudo_tethers)
     {
-        J.block<3, 1>(0, i) =  pseudo_tether.direction;
-        J.block<3, 1>(3, i) = -pseudo_tether.direction.cross(rotMatrix*pseudo_tether.attach_pos);
+        J.block<3, 1>(0, i) = -pseudo_tether.direction;
+        J.block<3, 1>(3, i) =  pseudo_tether.direction.cross(rotMatrix*pseudo_tether.attach_pos);
 
         ++i;
     }
