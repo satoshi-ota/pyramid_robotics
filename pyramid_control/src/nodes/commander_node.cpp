@@ -32,6 +32,8 @@ CommanderNode::CommanderNode(
     tension_reference_pub_ = nh_.advertise<pyramid_msgs::Tensions>
                              (pyramid_msgs::default_topics::COMMAND_TENSIONS, 1);
 
+    marker_pub_ = nh_.advertise<visualization_msgs::MarkerArray>("marker_array_rotor", 1);
+
     // thrust_pub_ = nh_.advertise<geometry_msgs::WrenchStamped>
     //                 (pyramid_msgs::default_topics::COMMAND_THRUST, 1);
 }
@@ -104,6 +106,57 @@ void CommanderNode::sendRotorSpeed()
     actuator_msg->header.stamp = ros::Time::now();
 
     motor_velocity_reference_pub_.publish(actuator_msg);
+
+    visualization_msgs::MarkerArray marker_array;
+    marker_array.markers.resize(4);
+
+    for (int i = 0; i < ref_rotor_velocities.size(); i++)
+    {
+        geometry_msgs::Point linear_start;
+        linear_start.x = 0;
+        linear_start.y = 0;
+        linear_start.z = 0;
+
+        geometry_msgs::Point linear_end;
+        linear_end.x = 0;
+        linear_end.y = 0;
+        linear_end.z = ref_rotor_velocities[i] / 1000;
+
+        geometry_msgs::Vector3 arrow;
+        arrow.x = 0.02;
+        arrow.y = 0.04;
+        arrow.z = 0.1;
+
+        std::string rotor_num = std::to_string(i);
+        std::string frame_id = "/pelican/rotor_" + rotor_num;
+
+        marker_array.markers[i].header.frame_id = frame_id;
+        marker_array.markers[i].header.stamp = ros::Time::now();
+        marker_array.markers[i].ns = "/pelican";
+        marker_array.markers[i].id = i;
+        marker_array.markers[i].lifetime = ros::Duration();
+
+        marker_array.markers[i].type = visualization_msgs::Marker::ARROW;
+        marker_array.markers[i].action = visualization_msgs::Marker::ADD;
+        marker_array.markers[i].scale = arrow;
+
+        marker_array.markers[i].points.resize(2);
+        marker_array.markers[i].points[0] = linear_start;
+        marker_array.markers[i].points[1] = linear_end;
+
+        marker_array.markers[i].pose.orientation.x = 0.0;
+        marker_array.markers[i].pose.orientation.y = 0.0;
+        marker_array.markers[i].pose.orientation.z = 0.0;
+        marker_array.markers[i].pose.orientation.w = 1.0;
+
+        marker_array.markers[i].color.r = 1.0f;
+        marker_array.markers[i].color.g = 0.0f;
+        marker_array.markers[i].color.b = 0.0f;
+        marker_array.markers[i].color.a = 0.5f;
+    }
+
+
+    marker_pub_.publish(marker_array);
 }
 
 void CommanderNode::sendTension()

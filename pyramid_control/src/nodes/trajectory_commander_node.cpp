@@ -33,13 +33,41 @@ void TrajectoryCommanderNode::trajectoryReconfig(pyramid_control::TrajectoryGene
     att_.y() = config.pitch;
     att_.z() = config.yaw;
 
+    semiMinorAxis_ = config.semiMinorAxis;
+    semiMajorAxis_ = config.semiMajorAxis;
+}
+
+void TrajectoryCommanderNode::targetPosAtt()
+{
+    pos_.x() = config.x;
+    pos_.y() = config.y;
+    pos_.z() = config.z;
+
+    att_.x() = config.roll;
+    att_.y() = config.pitch;
+    att_.z() = config.yaw;
+}
+
+void TrajectoryCommanderNode::ellipticOrbit()
+{
+    t = ros::Time::now();
+
+    pos_.x() = semiMinorAxis_ * cos(t.toSec());
+    pos_.y() = semiMajorAxis_ * sin(t.toSec());
+    pos_.z() = config.z;
+
+    att_.x() = 0;
+    att_.y() = 0;
+    att_.z() = 0;
+}
+
+void TrajectoryCommanderNode::sendOrbit()
+{
+    if(trajectory_mode_ == "posatt") targetPosAtt();
+    if(trajectory_mode_ == "eliptic") ellipticOrbit();
+
     trajectory_msg.header.stamp = ros::Time::now();
-
     pyramid_msgs::msgMultiDofJointTrajectoryFromPosAtt(pos_, att_, &trajectory_msg);
-
-    // ROS_INFO("Publishing waypoint on namespace %s: Pos[%f, %f, %f] Att[%f, %f, %f].",
-    // nh_.getNamespace().c_str(), pos_.x(), pos_.y(), pos_.z(), att_.x(), att_.y(), att_.z());
-
     trajectory_pub_.publish(trajectory_msg);
 }
 
@@ -50,13 +78,18 @@ int main(int argc, char** argv) {
     ros::NodeHandle nh;
     ros::NodeHandle private_nh("~");
 
-    ROS_INFO("Started trajectory_commander_node.");
-
-    ros::Duration(5.0).sleep();
+    ros::Duration(1.0).sleep();
 
     pyramid_control::TrajectoryCommanderNode trajectory_commander_node(nh, private_nh);
 
-    ros::spin();
+    ros::Rate loop_rate(10);
+
+    while (ros::ok())
+    {
+        trajectory_commander_node.sendOrbit();
+        ros::spinOnce();
+        loop_rate.sleep();
+    }
 
     return 0;
 }

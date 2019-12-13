@@ -11,6 +11,7 @@
 #include <pyramid_msgs/default_topics.h>
 #include <geometry_msgs/WrenchStamped.h>
 #include <dynamic_reconfigure/server.h>
+#include <visualization_msgs/MarkerArray.h>
 
 #include "pyramid_control/common_central.h"
 #include "pyramid_control/actuator_controller.h"
@@ -39,6 +40,7 @@ private:
     ros::Subscriber odometry_sub_;
     ros::Publisher motor_velocity_reference_pub_;
     ros::Publisher tension_reference_pub_;
+    ros::Publisher marker_pub_;
 
     // ros::Publisher thrust_pub_;
 

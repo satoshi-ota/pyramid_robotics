@@ -22,6 +22,9 @@ public:
     ~TrajectoryCommanderNode();
 
     void trajectoryReconfig(pyramid_control::TrajectoryGeneratorConfig &config, uint32_t level);
+    void targetPosAtt();
+    void ellipticOrbit();
+    void sendOrbit();
 
 private:
     ros::NodeHandle nh_;
@@ -34,6 +37,9 @@ private:
 
     ros::Publisher trajectory_pub_;
     trajectory_msgs::MultiDOFJointTrajectory trajectory_msg;
+
+    std::string trajectory_mode_;
+    double semiMinorAxis_, semiMajorAxis_;
 };
 
 } //namespace pyramid_control

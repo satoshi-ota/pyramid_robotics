@@ -90,21 +90,29 @@ Visualization Manager:
         pelican/rotor_3:
           Value: false
         pelican/tether_end_0:
-          Value: true
+          Value: false
         pelican/tether_end_1:
-          Value: true
+          Value: false
         pelican/tether_end_2:
-          Value: true
+          Value: false
         pelican/tether_end_3:
-          Value: true
+          Value: false
         pelican/tether_end_4:
-          Value: true
+          Value: false
         pelican/tether_end_5:
-          Value: true
+          Value: false
         pelican/tether_end_6:
-          Value: true
+          Value: false
         pelican/tether_end_7:
-          Value: true
+          Value: false
+        winch_0:
+          Value: false
+        winch_1:
+          Value: false
+        winch_2:
+          Value: false
+        winch_3:
+          Value: false
         world:
           Value: true
       Marker Scale: 0.5
@@ -150,6 +158,14 @@ Visualization Manager:
             pelican/tether_end_7:
               {}
           pelican/odometry_sensor1:
+            {}
+          winch_0:
+            {}
+          winch_1:
+            {}
+          winch_2:
+            {}
+          winch_3:
             {}
       Update Interval: 0
       Value: true
@@ -350,6 +366,14 @@ Visualization Manager:
       Update Interval: 0
       Value: true
       Visual Enabled: true
+    - Class: rviz/MarkerArray
+      Enabled: true
+      Marker Topic: /pelican/marker_array_rotor
+      Name: MarkerArray
+      Namespaces:
+        /pelican: true
+      Queue Size: 100
+      Value: true
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -378,25 +402,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 8.410572052001953
+      Distance: 7.667903423309326
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.05999999865889549
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.0471489354968071
-        Y: 0.4667309522628784
-        Z: 0.22754158079624176
+        X: 0.3483302593231201
+        Y: -1.0127818584442139
+        Z: 1.7067369222640991
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.05000000074505806
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.009999999776482582
-      Pitch: 0.629797101020813
+      Pitch: 0.5547974705696106
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 4.675429344177246
+      Yaw: 4.083543300628662
     Saved: ~
 Window Geometry:
   Displays:

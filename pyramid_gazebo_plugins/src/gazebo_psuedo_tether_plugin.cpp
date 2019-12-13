@@ -134,7 +134,7 @@ void PsuedoTetherPlugin::TensionCommandCB(const pyramid_msgs::TensionsConstPtr &
     marker_array.markers[0].color.r = 0.0f;
     marker_array.markers[0].color.g = 1.0f;
     marker_array.markers[0].color.b = 0.0f;
-    marker_array.markers[0].color.a = 1.0f;
+    marker_array.markers[0].color.a = 0.5f;
 
     marker_pub_.publish(marker_array);
 }

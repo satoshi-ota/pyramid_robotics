@@ -24,16 +24,16 @@ DEPENDS
 link_directories(${GAZEBO_LIBRARY_DIRS})
 include_directories(include ${catkin_INCLUDE_DIRS} ${GAZEBO_INCLUDE_DIRS})
 
-add_library(gazebo_tensions_plugin
-    src/gazebo_tensions_plugin.cpp
-    include/pyramid_gazebo_plugins/gazebo_tensions_plugin.h)
-target_link_libraries(gazebo_tensions_plugin
-    ${catkin_LIBRARIES}
-    ${GAZEBO_LIBRARIES}
-    ${roscpp_LIBRARIES})
-add_dependencies(gazebo_tensions_plugin
-    ${${PROJECT_NAME}_EXPORTED_TARGETS}
-    ${catkin_EXPORTED_TARGETS})
+# add_library(gazebo_tensions_plugin
+#     src/gazebo_tensions_plugin.cpp
+#     include/pyramid_gazebo_plugins/gazebo_tensions_plugin.h)
+# target_link_libraries(gazebo_tensions_plugin
+#     ${catkin_LIBRARIES}
+#     ${GAZEBO_LIBRARIES}
+#     ${roscpp_LIBRARIES})
+# add_dependencies(gazebo_tensions_plugin
+#     ${${PROJECT_NAME}_EXPORTED_TARGETS}
+#     ${catkin_EXPORTED_TARGETS})
 
 add_library(gazebo_external_force_plugin
     src/gazebo_external_force_plugin.cpp
@@ -65,5 +65,16 @@ target_link_libraries(gazebo_psuedo_tether_plugin
     ${GAZEBO_LIBRARIES}
     ${roscpp_LIBRARIES})
 add_dependencies(gazebo_psuedo_tether_plugin
+    ${${PROJECT_NAME}_EXPORTED_TARGETS}
+    ${catkin_EXPORTED_TARGETS})
+
+add_library(gazebo_winch_plugin
+    src/gazebo_winch_plugin.cpp
+include/pyramid_gazebo_plugins/gazebo_winch_plugin.h)
+target_link_libraries(gazebo_winch_plugin
+    ${catkin_LIBRARIES}
+    ${GAZEBO_LIBRARIES}
+    ${roscpp_LIBRARIES})
+add_dependencies(gazebo_winch_plugin
     ${${PROJECT_NAME}_EXPORTED_TARGETS}
     ${catkin_EXPORTED_TARGETS})

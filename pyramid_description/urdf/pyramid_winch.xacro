@@ -20,6 +20,11 @@
                 </geometry>
             </visual>
         </link>
+        <gazebo>
+            <plugin filename="libgazebo_winch_plugin.so" name="winch_plugin">
+                <linkName>winch_${winch_number}</linkName>
+            </plugin>
+        </gazebo>
         <gazebo reference="winch_${winch_number}">
             <material>Gazebo/${color}</material>
         </gazebo>
