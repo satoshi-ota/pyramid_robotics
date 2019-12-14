@@ -22,8 +22,8 @@ public:
     ~TrajectoryCommanderNode();
 
     void trajectoryReconfig(pyramid_control::TrajectoryGeneratorConfig &config, uint32_t level);
-    void targetPosAtt();
     void ellipticOrbit();
+    void attitudeDemo();
     void sendOrbit();
 
 private:
@@ -32,6 +32,7 @@ private:
 
     boost::shared_ptr<dynamic_reconfigure::Server<pyramid_control::TrajectoryGeneratorConfig>> srv_;
 
+    Eigen::Vector3d max_;
     Eigen::Vector3d pos_;
     Eigen::Vector3d att_;
 
