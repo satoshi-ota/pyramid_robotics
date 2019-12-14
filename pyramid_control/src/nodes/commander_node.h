@@ -7,6 +7,7 @@
 #include <nav_msgs/Odometry.h>
 #include <mav_msgs/Actuators.h>
 #include <pyramid_msgs/Tensions.h>
+#include <pyramid_msgs/Positions.h>
 #include <pyramid_msgs/conversions.h>
 #include <pyramid_msgs/default_topics.h>
 #include <geometry_msgs/WrenchStamped.h>
@@ -33,14 +34,19 @@ private:
 
     boost::shared_ptr<dynamic_reconfigure::Server<pyramid_control::SlidingModeControllerConfig>> srv_;
 
-    SlidingModeController sliding_mode_controller_;
-    ActuatorController actuator_controller_;
+    SlidingModeController *sliding_mode_controller_;
+    ActuatorController *actuator_controller_;
+
+    SystemParameters system_parameters_;
 
     ros::Subscriber trajectory_sub_;
     ros::Subscriber odometry_sub_;
     ros::Publisher motor_velocity_reference_pub_;
     ros::Publisher tension_reference_pub_;
     ros::Publisher marker_pub_;
+    ros::Publisher winch_pub_;
+
+    std::vector<Eigen::Vector3d> winch_pos_;
 
     // ros::Publisher thrust_pub_;
 
@@ -50,6 +56,7 @@ private:
 
     void sendRotorSpeed();
     void sendTension();
+    void sendWinchPos();
     // void sendThrust();
 };
 

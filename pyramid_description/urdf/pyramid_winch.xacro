@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot name="winch" xmlns:xacro="http://ros.org/wiki/xacro">
 
+    <xacro:property name="namespace" value="$(arg namespace)" />
+
     <material name="Red">
         <color rgba="1.0 0.0 0.0 2.0"/>
     </material>
@@ -14,7 +16,7 @@
         <color rgba="1.0 0.64 0.0 1.0"/>
     </material>
 
-    <xacro:macro name="winch" params="x y z winch_number suffix color">
+    <xacro:macro name="winch" params="robot_namespace x y z winch_number suffix color">
         <joint name="winch_joint_${winch_number}" type="fixed">
             <origin xyz="${x} ${y} ${z}" rpy="0 0 0" />
             <parent link="world" />
@@ -36,7 +38,9 @@
         </link>
         <gazebo>
             <plugin filename="libgazebo_winch_plugin.so" name="winch_plugin">
+                <robotNamespace>${robot_namespace}</robotNamespace>
                 <linkName>winch_${winch_number}</linkName>
+                <winchNumber>${winch_number}</winchNumber>
             </plugin>
         </gazebo>
         <gazebo reference="winch_${winch_number}">
@@ -47,20 +51,23 @@
     <link name="world"/>
 
     <xacro:winch
-        x="5.0" y="-5.0" z="0"
+        robot_namespace="${namespace}"
+        x="5.0" y="5.0" z="0.05"
         winch_number="0"
         suffix="front_right"
-        color="Red">
-    </xacro:winch>
-
-    <xacro:winch
-        x="5.0" y="5.0" z="0"
-        winch_number="1"
-        suffix="front_left"
         color="Orange">
     </xacro:winch>
 
     <xacro:winch
+        robot_namespace="${namespace}"
+        x="-5.0" y="5.0" z="0"
+        winch_number="1"
+        suffix="front_left"
+        color="Green">
+    </xacro:winch>
+
+    <xacro:winch
+        robot_namespace="${namespace}"
         x="-5.0" y="-5.0" z="0"
         winch_number="2"
         suffix="back_right"
@@ -68,9 +75,10 @@
     </xacro:winch>
 
     <xacro:winch
-        x="-5.0" y="5.0" z="0"
+        robot_namespace="${namespace}"
+        x="5.0" y="-5.0" z="0"
         winch_number="3"
         suffix="back_left"
-        color="Green">
+        color="Red">
     </xacro:winch>
 </robot>

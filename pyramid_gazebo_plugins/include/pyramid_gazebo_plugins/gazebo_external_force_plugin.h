@@ -43,34 +43,29 @@ private:
 
     void ForceCommandCB(const geometry_msgs::WrenchStampedConstPtr &msg)
     {
+        command_received_ = true;
+
         external_force_.force.X() = msg->wrench.force.x;
         external_force_.force.Y() = msg->wrench.force.y;
         external_force_.force.Z() = msg->wrench.force.z;
         external_force_.torque.X() = msg->wrench.torque.x;
         external_force_.torque.Y() = msg->wrench.torque.y;
         external_force_.torque.Z() = msg->wrench.torque.z;
-        command_received_ = true;
     }
 
 private:
-    ros::NodeHandle rosnode_;
+    ros::NodeHandle nh_;
+    ros::Subscriber thrust_sub_;
     ros::CallbackQueue callback_queue_;
     event::ConnectionPtr update_event_;
-    double update_T_;
-    double t_prev_;
-    Force external_force_;
 
     ignition::math::Pose3d pose_;
 
     physics::ModelPtr model_;
+    physics::LinkPtr link_;
 
-    ros::Subscriber thrust_sub_;
+    Force external_force_;
     bool command_received_;
-
-    ros::Publisher ee_state_publisher_;
-    gazebo_msgs::LinkState ee_state_;
-    physics::LinkPtr ee_link_;
-
 };
 
 } //namespace gazebo

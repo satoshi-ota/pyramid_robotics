@@ -31,7 +31,7 @@ public:
     void calcThrust();
 
     std::vector<Eigen::Vector3d> direction;
-    SystemParameters system_parameters_;
+    SystemParameters *system_parameters_ = new SystemParameters();
 
     inline void setTrajectory(
         const pyramid_msgs::EigenMultiDOFJointTrajectory& trajectory){trajectory_ = trajectory;};

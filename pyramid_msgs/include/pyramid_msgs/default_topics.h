@@ -3,20 +3,22 @@
 
 namespace pyramid_msgs {
 namespace default_topics {
-//command
+
 static constexpr char COMMAND_TENSIONS[] = "/command/tension";
 static constexpr char COMMAND_THRUST[] = "/command/thrust";
 static constexpr char COMMAND_ACTUATORS[] = "command/motor_speed";
 static constexpr char COMMAND_TRAJECTORY[] = "command/trajectory";
 static constexpr char COMMAND_POSE[] = "command/pose";
+static constexpr char COMMAND_ANCHOR_POS[] = "command/anchor_pos";
 
-//state
 static constexpr char STATE_TETHER[] = "state/tether";
 static constexpr char STATE_ODOMETRY[] = "state/odometry";
 
-//feedback
 static constexpr char FEEDBACK_IMU[] = "feedback/imu";
 static constexpr char FEEDBACK_ODOMETRY[] = "feedback/odometry";
+
+static constexpr char MARKER_THURUST[] = "marker/thrust";
+static constexpr char MARKER_TENSION[] = "marker/tension";
 
 static constexpr char DISTURBANCE[] = "/wind/disturbance";
 }  // end namespace default_topics

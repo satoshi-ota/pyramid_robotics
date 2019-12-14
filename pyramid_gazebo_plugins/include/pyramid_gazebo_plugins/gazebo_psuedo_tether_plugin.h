@@ -50,33 +50,25 @@ public:
     virtual void Update();
 
 private:
-    ros::NodeHandle rosnode_;
+    ros::NodeHandle nh_;
     ros::CallbackQueue callback_queue_;
     event::ConnectionPtr update_event_;
 
     ros::Subscriber tension_sub_;
     ros::Publisher marker_pub_;
 
-    physics::WorldPtr world_;
     physics::ModelPtr model_;
     physics::LinkPtr link_;
-    physics::Link_V child_links_;
 
     std::string namespace_;
     std::string link_name_;
     std::string frame_id_;
     int tether_number_;
-
     bool command_received_;
 
     Force tension_;
 
-    //publisher to end-effector state
-    ros::Publisher direc_pub_;
-    std::vector<geometry_msgs::Point> winch_, tether_end_;
-
     void TensionCommandCB(const pyramid_msgs::TensionsConstPtr &msg);
-
 };
 
 } //namespace gazebo

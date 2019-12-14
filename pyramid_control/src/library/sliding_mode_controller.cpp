@@ -22,7 +22,6 @@ void SlidingModeController::updateModelConfig()
 {
     direction.clear();
 
-    int i = 0;
     for(PseudoTether& pseudo_tether : system_parameters_.tether_configuration_.pseudo_tethers)
     {
         pseudo_tether.update(odometry_);

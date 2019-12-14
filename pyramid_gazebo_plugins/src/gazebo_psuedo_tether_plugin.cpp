@@ -1,5 +1,4 @@
 #include "pyramid_gazebo_plugins/gazebo_psuedo_tether_plugin.h"
-#define PRINT_MAT(X) std::cout << #X << ":\n" << X << std::endl << std::endl
 
 namespace gazebo
 {
@@ -8,89 +7,63 @@ PsuedoTetherPlugin::PsuedoTetherPlugin(){ }
 
 PsuedoTetherPlugin::~PsuedoTetherPlugin()
 {
-    rosnode_.shutdown();
+    nh_.shutdown();
 }
 
 void PsuedoTetherPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
 {
-    if(!ros::isInitialized)
-    {
-        ROS_FATAL_STREAM("ROS node for Gazebo not established. Plugin failed.");
-        return;
-    }
+    nh_ = ros::NodeHandle();
 
     ros::SubscribeOptions ops = ros::SubscribeOptions::create<pyramid_msgs::Tensions>(
                 pyramid_msgs::default_topics::COMMAND_TENSIONS, 1,
                 boost::bind(&PsuedoTetherPlugin::TensionCommandCB, this, _1),
                 ros::VoidPtr(), &callback_queue_);
-    tension_sub_ = rosnode_.subscribe(ops);
-
-
+    tension_sub_ = nh_.subscribe(ops);
 
     model_ = _model;
-    world_ = model_->GetWorld();
-
-    rosnode_ = ros::NodeHandle();
 
     if(_sdf->HasElement("robotNamespace"))
-    {
         namespace_ = _sdf->GetElement("robotNamespace")->Get<std::string>();
-    }
-    else
-    {
-        // namespace_ = parent_model_->GetName(); // default
-    }
 
     if(_sdf->HasElement("linkName"))
-    {
         link_name_ = _sdf->GetElement("linkName")->Get<std::string>();
-    }
-    else
-    {
-        // robot_description_ = "robot_description"; // default
-    }
-    if(_sdf->HasElement("tetherNumber"))
-    {
-        tether_number_ = _sdf->GetElement("tetherNumber")->Get<int>();
-    }
-    else
-    {
-        // robot_description_ = "robot_description"; // default
-    }
 
-    marker_pub_   = rosnode_.advertise<visualization_msgs::MarkerArray>("marker_array" + link_name_, 1);
+    if(_sdf->HasElement("tetherNumber"))
+        tether_number_ = _sdf->GetElement("tetherNumber")->Get<int>();
 
     frame_id_ = link_name_;
 
-    link_ = model_->GetLink(link_name_);
+    marker_pub_  = nh_.advertise<visualization_msgs::MarkerArray>
+                   (pyramid_msgs::default_topics::MARKER_TENSION + link_name_, 1);
 
-    command_received_ = false;
+    link_ = model_->GetLink(link_name_);
 
     update_event_
         = event::Events::ConnectWorldUpdateBegin(boost::bind(&PsuedoTetherPlugin::Update, this));
 
-    ros::spinOnce();
+    command_received_ = false;
+
     ROS_INFO("Started PSUEDO TETHER Plugin for %s.", link_->GetName().c_str());
+
+    ros::spinOnce();
 }
 
 void PsuedoTetherPlugin::Update()
 {
     callback_queue_.callAvailable();
 
-    if(command_received_)
-    {
-        link_->AddForce(tension_.force);
-    }
+    if(command_received_ == true) link_->AddForce(tension_.force);
 
     ros::spinOnce();
 }
 
 void PsuedoTetherPlugin::TensionCommandCB(const pyramid_msgs::TensionsConstPtr &msg)
 {
+    command_received_ = true;
+
     tension_.force.X() = msg->tensions[tether_number_].x;
     tension_.force.Y() = msg->tensions[tether_number_].y;
     tension_.force.Z() = msg->tensions[tether_number_].z;
-    command_received_ = true;
 
     ignition::math::Vector3d start(link_->WorldPose().Pos());
 

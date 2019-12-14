@@ -4,10 +4,9 @@
 #include <ros/ros.h>
 #include <ros/callback_queue.h>
 #include <gazebo_msgs/LinkState.h>
-#include <geometry_msgs/WrenchStamped.h>
-#include <pyramid_msgs/default_topics.h>
-#include <sensor_msgs/JointState.h>
+#include <pyramid_msgs/Positions.h>
 #include <tf/transform_broadcaster.h>
+#include <pyramid_msgs/default_topics.h>
 
 #include <gazebo/gazebo.hh>
 #include <gazebo/common/Plugin.hh>
@@ -31,22 +30,23 @@ public:
 
 private:
     ros::NodeHandle nh_;
+    ros::Subscriber winch_sub_;
+    ros::CallbackQueue callback_queue_;
     event::ConnectionPtr update_event_;
-
-    ignition::math::Pose3d pose_;
-
-    physics::ModelPtr model_;
-
-    std::string link_name_;
-
-    ros::Publisher state_publisher_;
-    sensor_msgs::JointState state_;
-    physics::LinkPtr link_;
 
     tf::TransformBroadcaster broadcaster;
 
+    physics::ModelPtr model_;
+    physics::LinkPtr link_;
+
+    ignition::math::Pose3d pose_;
     geometry_msgs::TransformStamped odom_trans;
 
+    std::string namespace_;
+    std::string link_name_;
+    int winch_number_;
+
+    void winchCB(const pyramid_msgs::PositionsConstPtr &msg);
 };
 
 } //namespace gazebo

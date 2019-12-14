@@ -41,7 +41,9 @@
    respawn="false" output="screen">
   </node>
 
-  <param name="winch_description" command="$(find xacro)/xacro '$(arg winch)'"/>
+  <param name="winch_description" command="
+      $(find xacro)/xacro '$(arg winch)'
+      namespace:=$(arg namespace)"/>
 
     <node name="spawn_winch" pkg="gazebo_ros" type="spawn_model"
      args="-param winch_description

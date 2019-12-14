@@ -141,6 +141,10 @@ struct TetherConfiguration
         pseudo_tethers.push_back(PseudoTether(kDefaultTether7AttachPos, kDefaultAnchor1Pos));
     }
     std::vector<PseudoTether> pseudo_tethers;
+
+    void setAnchorPos(Eigen::Vector3d& anchor_pos, int i){
+        pseudo_tethers[i].anchor_pos = anchor_pos;
+    }
 };
 
 class SystemParameters
