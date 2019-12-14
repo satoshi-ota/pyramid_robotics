@@ -4,7 +4,8 @@
 namespace pyramid_control
 {
 
-ActuatorController::ActuatorController()
+ActuatorController::ActuatorController(SystemParameters* system_parameters)
+    :system_parameters_(system_parameters)
 {
     lpp_.AddVariableSet(std::make_shared<ExVariables>());
     lpp_.AddCostSet(std::make_shared<ExCost>());
@@ -19,22 +20,21 @@ ActuatorController::~ActuatorController(){ }
 
 void ActuatorController::InitializeParameters()
 {
-    calculateAllocationMatrix(system_parameters_.rotor_configuration_, &allocation_matrix_);
+    calculateAllocationMatrix(system_parameters_->rotor_configuration_, &allocation_matrix_);
 }
 
-void ActuatorController::wrenchDistribution(const Eigen::VectorXd& wrench,
-                                            const Eigen::MatrixXd& jacobian,
-                                            const Eigen::Matrix3d& rotMatrix,
-                                            const Eigen::Matrix3d& toOmega)
+void ActuatorController::wrenchDistribution(const Eigen::VectorXd& wrench)
 {
-    Eigen::MatrixXd MatA = -jacobian.transpose();
-    Eigen::MatrixXd MatB = calcRotorMatrix(rotMatrix) * allocation_matrix_;
+    Eigen::MatrixXd MatA = -system_parameters_->jacobian_.transpose();
+    Eigen::MatrixXd MatB = calcRotorMatrix(system_parameters_->rotMatrix_) * allocation_matrix_;
     Eigen::MatrixXd MatAB(MatA.rows(), MatA.cols()+MatB.cols());
     MatAB << MatA, MatB;
 
-    Eigen::Matrix<double, 6, 6> MatS = Eigen::MatrixXd::Zero(6, 6);
-    MatS.block<3, 3>(0, 0) = Eigen::Matrix3d::Identity();
-    MatS.block<3, 3>(3, 3) = toOmega;
+    Eigen::MatrixXd MatS;
+    MatS.resize(6, 6);
+    MatS.setZero();
+    MatS.topLeftCorner(3, 3) = Eigen::Matrix3d::Identity();
+    MatS.bottomRightCorner(3, 3) = system_parameters_->toOmega_;
 
     MatAB = MatS.transpose() * MatAB;
 
@@ -61,9 +61,9 @@ void ActuatorController::optimize()
 
             distributedWrench_ += kernel_ * x;
 
-            tension_ = distributedWrench_.block<8, 1>(0, 0);
+            tension_ = distributedWrench_.topLeftCorner(8, 1);
             tension_ = tension_.cwiseMax(Eigen::VectorXd::Zero(tension_.rows()));
-            motor_speed_ = distributedWrench_.block<4, 1>(8, 0);
+            motor_speed_ = distributedWrench_.bottomLeftCorner(4, 1);
             motor_speed_ = motor_speed_.cwiseMax(Eigen::VectorXd::Zero(motor_speed_.rows()));
             motor_speed_ = motor_speed_.cwiseSqrt();
 

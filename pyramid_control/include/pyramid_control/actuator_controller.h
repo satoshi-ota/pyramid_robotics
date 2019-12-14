@@ -12,7 +12,6 @@
 #include <ros/ros.h>
 
 #include "pyramid_control/common.h"
-#include "pyramid_control/common_central.h"
 #include "pyramid_control/configurations.h"
 #include "pyramid_control/tension_optimizer.h"
 
@@ -25,15 +24,14 @@ namespace pyramid_control
 class ActuatorController
 {
 public:
-    ActuatorController();
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
+
+    ActuatorController(SystemParameters* system_parameters);
     ~ActuatorController();
 
     void InitializeParameters();
 
-    void wrenchDistribution(const Eigen::VectorXd& wrench,
-                            const Eigen::MatrixXd& jacobian,
-                            const Eigen::Matrix3d& rotMatrix,
-                            const Eigen::Matrix3d& toOmega);
+    void wrenchDistribution(const Eigen::VectorXd& wrench);
     void optimize();
 
     inline Eigen::VectorXd getTension(){return tension_;};
@@ -41,28 +39,20 @@ public:
     // inline Eigen::VectorXd getThrust(){return thrust_;};
     inline bool feasibility(){return feasible_ = (distributedWrench_.array() >= 0).all();}
 
-    SystemParameters system_parameters_;
+    SystemParameters *system_parameters_ = new SystemParameters();
     Problem lpp_;
     IpoptSolver ipopt_;
 
 private:
-    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-
-    Eigen::Matrix4Xd allocation_matrix_;
-
     bool feasible_;
     unsigned int rank_;
 
+    Eigen::Matrix4Xd allocation_matrix_;
     Eigen::MatrixXd kernel_;
-    Eigen::MatrixXd jacobian_tilde_;
-
     Eigen::VectorXd distributedWrench_;
-
     Eigen::VectorXd tension_;
     Eigen::VectorXd motor_speed_;
     // Eigen::VectorXd thrust_;
-
-
 };
 
 } //pyramid_control

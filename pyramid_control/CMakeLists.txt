@@ -50,9 +50,9 @@ add_executable(commander_node src/nodes/commander_node.cpp)
 add_dependencies(commander_node pyramid_control_gencfg ${catkin_EXPORTED_TARGETS})
 target_link_libraries(commander_node pyramid_control ${catkin_LIBRARIES})
 
-add_executable(sliding_mode_control_node src/nodes/sliding_mode_control_node.cpp)
-add_dependencies(sliding_mode_control_node pyramid_control_gencfg ${catkin_EXPORTED_TARGETS})
-target_link_libraries(sliding_mode_control_node pyramid_control ${catkin_LIBRARIES})
+# add_executable(sliding_mode_control_node src/nodes/sliding_mode_control_node.cpp)
+# add_dependencies(sliding_mode_control_node pyramid_control_gencfg ${catkin_EXPORTED_TARGETS})
+# target_link_libraries(sliding_mode_control_node pyramid_control ${catkin_LIBRARIES})
 
 add_executable(trajectory_commander_node src/nodes/trajectory_commander_node.cpp)
 add_dependencies(trajectory_commander_node pyramid_control_gencfg ${catkin_EXPORTED_TARGETS})

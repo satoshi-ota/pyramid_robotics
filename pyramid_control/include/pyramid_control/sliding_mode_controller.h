@@ -11,7 +11,6 @@
 #include <trajectory_msgs/MultiDOFJointTrajectory.h>
 
 #include "pyramid_control/common.h"
-#include "pyramid_control/common_central.h"
 #include "pyramid_control/configurations.h"
 
 using namespace std;
@@ -24,45 +23,31 @@ class SlidingModeController
 public:
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-    SlidingModeController();
+    SlidingModeController(SystemParameters* system_parameters);
     ~SlidingModeController();
 
     void updateModelConfig();
     void calcThrust();
 
-    std::vector<Eigen::Vector3d> direction;
     SystemParameters *system_parameters_ = new SystemParameters();
 
-    inline void setTrajectory(
-        const pyramid_msgs::EigenMultiDOFJointTrajectory& trajectory){trajectory_ = trajectory;};
-    inline void setOdometry(const pyramid_msgs::EigenOdometry& odometry){odometry_ = odometry;};
-    inline Eigen::VectorXd getWrench(){return wrench_;};
-    inline Eigen::MatrixXd getJacobian(){return jacobian_;};
-    inline Eigen::Matrix3d getRotMatrix(){return rotMatrix_;};
-    inline Eigen::Matrix3d getToOmega(){return toOmega_;};
+    inline void setTrajectory(const pyramid_msgs::EigenMultiDOFJointTrajectory& trajectory){
+        trajectory_ = trajectory;
+    };
 
+    inline Eigen::VectorXd getWrench(){return wrench_;};
     inline pyramid_msgs::EigenThrust getThrust(){return thrust_;};
 
 private:
-    Eigen::Matrix3d rotMatrix_;
-    Eigen::Matrix3d globalInertia_;
-    Eigen::Matrix3d toOmega_;
-    Eigen::Matrix3d toOmega_dot_;
-
-    Eigen::MatrixXd massMatrix_;
-    Eigen::MatrixXd coriolisMatrix_;
-    Eigen::MatrixXd jacobian_;
-
     Eigen::VectorXd slidingSurface_;
     Eigen::VectorXd xError_;
     Eigen::VectorXd vError_;
     Eigen::VectorXd wrench_;
 
     pyramid_msgs::EigenMultiDOFJointTrajectory trajectory_;
-    pyramid_msgs::EigenOdometry odometry_;
     pyramid_msgs::EigenThrust thrust_;
 };
 
-}
+} //namespace pyramid_control
 
 #endif //PYRAMID_CONTROL_SLIDING_MODE_CONTROLLER_H

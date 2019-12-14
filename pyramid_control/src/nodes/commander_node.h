@@ -14,7 +14,6 @@
 #include <dynamic_reconfigure/server.h>
 #include <visualization_msgs/MarkerArray.h>
 
-#include "pyramid_control/common_central.h"
 #include "pyramid_control/actuator_controller.h"
 #include "pyramid_control/sliding_mode_controller.h"
 #include "pyramid_control/SlidingModeControllerConfig.h"

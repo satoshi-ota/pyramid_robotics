@@ -3,7 +3,6 @@
 
 namespace pyramid_control
 {
-// Default values for the Asctec Firefly rotor configuration.
 static constexpr double kDefaultRotor0Angle = 0.52359877559;
 static constexpr double kDefaultRotor1Angle = 1.57079632679;
 static constexpr double kDefaultRotor2Angle = 2.61799387799;
@@ -11,7 +10,6 @@ static constexpr double kDefaultRotor3Angle = -2.61799387799;
 static constexpr double kDefaultRotor4Angle = -1.57079632679;
 static constexpr double kDefaultRotor5Angle = -0.52359877559;
 
-// Default vehicle parameters for Asctec Firefly.
 static constexpr double kDefaultMass = 1.56779;
 static constexpr double kDefaultArmLength = 0.215;
 static constexpr double kDefaultInertiaXx = 0.0347563;
@@ -20,10 +18,8 @@ static constexpr double kDefaultInertiaZz = 0.0977;
 static constexpr double kDefaultRotorForceConstant = 8.54858e-6;
 static constexpr double kDefaultRotorMomentConstant = 1.6e-2;
 
-const int kDefaultDoF = 6;
 const int kDefaultTetherNum = 8;
 
-//attach_posisons
 const Eigen::Vector3d kDefaultTether0AttachPos = Eigen::Vector3d( 0.4, -0.4,  0.15);
 const Eigen::Vector3d kDefaultTether1AttachPos = Eigen::Vector3d( 0.4, -0.4, -0.15);
 const Eigen::Vector3d kDefaultTether2AttachPos = Eigen::Vector3d( 0.4,  0.4,  0.15);
@@ -33,17 +29,14 @@ const Eigen::Vector3d kDefaultTether5AttachPos = Eigen::Vector3d(-0.4,  0.4, -0.
 const Eigen::Vector3d kDefaultTether6AttachPos = Eigen::Vector3d(-0.4, -0.4,  0.15);
 const Eigen::Vector3d kDefaultTether7AttachPos = Eigen::Vector3d(-0.4, -0.4, -0.15);
 
-//anchor_positions
 const Eigen::Vector3d kDefaultAnchor0Pos = Eigen::Vector3d( 5.0,  5.0, 0.0);
 const Eigen::Vector3d kDefaultAnchor1Pos = Eigen::Vector3d(-5.0,  5.0, 0.0);
 const Eigen::Vector3d kDefaultAnchor2Pos = Eigen::Vector3d(-5.0, -5.0, 0.0);
 const Eigen::Vector3d kDefaultAnchor3Pos = Eigen::Vector3d( 5.0, -5.0, 0.0);
 
-//Sliding mode controller
 const Eigen::Matrix<double, 6, 6> kDefaultLambda = Eigen::MatrixXd::Identity(6, 6);
 const Eigen::Matrix<double, 6, 6> kDefaultGainK = Eigen::MatrixXd::Identity(6, 6);
 
-// Default physics parameters.
 static constexpr double kDefaultGravity = 9.81;
 
 struct Rotor {
@@ -156,23 +149,113 @@ public:
          inertia_(Eigen::Vector3d(kDefaultInertiaXx,
                                   kDefaultInertiaYy,
                                   kDefaultInertiaZz).asDiagonal()),
-         dof_(kDefaultDoF),
          n_tether_(kDefaultTetherNum),
          Lambda_(kDefaultLambda),
-         K_(kDefaultGainK){ }
+         K_(kDefaultGainK),
+         rotMatrix_(Eigen::Matrix3d::Zero()),
+         globalInertia_(Eigen::Matrix3d::Zero()),
+         toOmega_(Eigen::Matrix3d::Zero()),
+         toOmega_dot_(Eigen::Matrix3d::Zero()),
+         massMatrix_(Eigen::MatrixXd::Zero(6, 6)),
+         coriolisMatrix_(Eigen::MatrixXd::Zero(6, 6)){ }
+
+    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
     RotorConfiguration rotor_configuration_;
     TetherConfiguration tether_configuration_;
 
-    EIGEN_MAKE_ALIGNED_OPERATOR_NEW
-    double mass_;
-    double gravity_;
-    Eigen::Matrix3d inertia_;
-    int dof_;
-    int n_tether_;
+    pyramid_msgs::EigenOdometry odometry_;
+
+    Eigen::Matrix3d rotMatrix_;
+    Eigen::Matrix3d globalInertia_;
+    Eigen::Matrix3d toOmega_;
+    Eigen::Matrix3d toOmega_dot_;
+    Eigen::Matrix3d skewMatrix_;
+
+    Eigen::MatrixXd massMatrix_;
+    Eigen::MatrixXd coriolisMatrix_;
+    Eigen::MatrixXd jacobian_;
 
     Eigen::Matrix<double, 6, 6> Lambda_;
     Eigen::Matrix<double, 6, 6> K_;
+
+    double mass_;
+    double gravity_;
+    Eigen::Matrix3d inertia_;
+    int n_tether_;
+
+    inline void setOdom(const pyramid_msgs::EigenOdometry& odometry)
+    {
+        odometry_ = odometry;
+        rotMatrix_ = odometry_.orientation.toRotationMatrix();
+        globalInertia_ = rotMatrix_ * inertia_ * rotMatrix_.transpose();
+    }
+
+    inline void update()
+    {
+        for(PseudoTether& pseudo_tether : tether_configuration_.pseudo_tethers)
+        {
+            pseudo_tether.update(odometry_);
+        }
+    }
+
+    inline void calcskewMatrix()
+    {
+        Eigen::Vector3d vector = odometry_.angular_velocity;
+
+        skewMatrix_ <<          0,-vector.z(),  vector.y(),
+                       vector.z(),          0, -vector.x(),
+                      -vector.y(), vector.x(),           0;
+    }
+
+    inline void calcToOmage()
+    {
+        Eigen::Vector3d rpy;
+        pyramid_msgs::getEulerAnglesFromQuaternion(odometry_.orientation, &rpy);
+
+        toOmega_ << 1,  0,           -sin(rpy(1)),
+                    0,  cos(rpy(0)),  cos(rpy(1))*sin(rpy(0)),
+                    0, -sin(rpy(0)),  cos(rpy(1))*cos(rpy(0));
+    }
+
+    inline void calcMassMatrix()
+    {
+        Eigen::Matrix3d kI = Eigen::Matrix3d::Identity();
+
+        massMatrix_.setZero();
+        massMatrix_.topLeftCorner(3, 3) = mass_ * kI.array();
+        massMatrix_.bottomRightCorner(3, 3) = toOmega_.transpose() * globalInertia_ * toOmega_;
+    }
+
+    inline void calcCoriolisMatrix()
+    {
+        coriolisMatrix_.setZero();
+        coriolisMatrix_.bottomRightCorner(3, 3)
+            = toOmega_.transpose() * globalInertia_ * toOmega_dot_
+            + toOmega_.transpose() * skewMatrix_ * globalInertia_ * toOmega_;
+    }
+
+    inline void calcJacobian()
+    {
+        int tether_num = tether_configuration_.pseudo_tethers.size();
+
+        jacobian_.resize(tether_num, 6);
+        jacobian_.setZero();
+
+        Eigen::MatrixXd J;
+        J.resize(6, tether_num);
+        J.setZero();
+
+        unsigned int i = 0;
+        for (const PseudoTether& pseudo_tether : tether_configuration_.pseudo_tethers)
+        {
+            J.block<3, 1>(0, i) = -pseudo_tether.direction;
+            J.block<3, 1>(3, i) =  pseudo_tether.direction.cross(rotMatrix_*pseudo_tether.attach_pos);
+
+            ++i;
+        }
+        jacobian_ = J.transpose();
+    }
 };
 
 } //namespace pyramid_control

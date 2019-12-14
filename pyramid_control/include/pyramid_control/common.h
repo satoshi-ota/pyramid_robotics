@@ -1,8 +1,13 @@
 #ifndef PYRAMID_CONTROL_COMMON_H
 #define PYRAMID_CONTROL_COMMON_H
 
+#include <Eigen/Core>
+#include <Eigen/Geometry>
+
 #include <assert.h>
 
+#include <pyramid_msgs/common.h>
+#include <pyramid_msgs/pyramid_eigen_msgs.h>
 #include <pyramid_msgs/conversions.h>
 
 #include "pyramid_control/parameters.h"
@@ -65,6 +70,58 @@ inline void calculateAllocationMatrix(const RotorConfiguration& rotor_configurat
                     << ", it should have rank 4, to have a fully controllable system,"
                     << " check your configuration." << std::endl;
     }
+}
+
+inline void calcPosAttDelta(const pyramid_msgs::EigenOdometry& odometry,
+                            const pyramid_msgs::EigenMultiDOFJointTrajectory& trajectory,
+                                         Eigen::VectorXd* xError)
+{
+    *xError = trajectory.getPosAtt() - odometry.getPosAtt();
+}
+
+inline void calcVelDelta(const pyramid_msgs::EigenOdometry& odometry,
+                         const pyramid_msgs::EigenMultiDOFJointTrajectory& trajectory,
+                                      Eigen::VectorXd* vError)
+{
+    *vError = trajectory.getVel() - odometry.getGrobalVel();
+}
+
+inline void LimitTensions(Eigen::Vector4d* tensions)
+{
+    Eigen::Vector4d max_tensions(10.0, 10.0, 10.0, 10.0);
+    *tensions = tensions->cwiseMax(Eigen::VectorXd::Zero(tensions->rows()));
+    *tensions = tensions->cwiseMin(max_tensions);
+}
+
+inline Eigen::VectorXd sgn(Eigen::VectorXd& sliding_surface)
+{
+    Eigen::VectorXd sgn_s = Eigen::VectorXd::Zero(6);
+
+    double alpha = 10;
+    for (unsigned int i=0;i<sliding_surface.size();++i)
+        sgn_s(i) = tanh(alpha * sliding_surface(i));
+
+    return sgn_s;
+}
+
+inline Eigen::MatrixXd calcRotorMatrix(const Eigen::Matrix3d& rotMatrix)
+{
+    double rot13 = rotMatrix(0, 2);
+    double rot23 = rotMatrix(1, 2);
+    double rot33 = rotMatrix(2, 2);
+
+    Eigen::MatrixXd Mat;
+    Mat.resize(6, 4);
+    Mat.setZero();
+
+    Mat << rot13, 0, 0, 0,
+           rot23, 0, 0, 0,
+           rot33, 0, 0, 0,
+               0, 1, 0, 0,
+               0, 0, 1, 0,
+               0, 0, 0, 1;
+
+    return Mat;
 }
 
 } //namespace pyramid_control

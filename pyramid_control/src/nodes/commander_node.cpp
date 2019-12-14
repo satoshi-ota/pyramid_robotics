@@ -8,10 +8,12 @@ CommanderNode::CommanderNode(
     :nh_(nh),
      private_nh_(private_nh)
 {
-    GetSystemParameters(private_nh_, &(sliding_mode_controller_.system_parameters_));
-    GetSystemParameters(private_nh_, &(actuator_controller_.system_parameters_));
+    sliding_mode_controller_ = new SlidingModeController(&system_parameters_);
+    actuator_controller_ = new ActuatorController(&system_parameters_);
 
-    actuator_controller_.InitializeParameters();
+    GetSystemParameters(private_nh_, &system_parameters_);
+
+    actuator_controller_->InitializeParameters();
 
     srv_ = boost::make_shared
             <dynamic_reconfigure::Server<pyramid_control::SlidingModeControllerConfig>>(private_nh);
@@ -46,20 +48,20 @@ CommanderNode::~CommanderNode(){ }
 void CommanderNode::paramsReconfig(pyramid_control::SlidingModeControllerConfig &config,
                                             uint32_t level)
 {
-    sliding_mode_controller_.system_parameters_.Lambda_(0, 0) = config.lambda_1;
-    sliding_mode_controller_.system_parameters_.Lambda_(1, 1) = config.lambda_1;
-    sliding_mode_controller_.system_parameters_.Lambda_(2, 2) = config.lambda_1;
-    sliding_mode_controller_.system_parameters_.Lambda_(3, 3) = config.lambda_1;
-    sliding_mode_controller_.system_parameters_.Lambda_(4, 4) = config.lambda_1;
-    sliding_mode_controller_.system_parameters_.Lambda_(5, 5) = config.lambda_1;
+    system_parameters_.Lambda_(0, 0) = config.lambda_1;
+    system_parameters_.Lambda_(1, 1) = config.lambda_1;
+    system_parameters_.Lambda_(2, 2) = config.lambda_1;
+    system_parameters_.Lambda_(3, 3) = config.lambda_1;
+    system_parameters_.Lambda_(4, 4) = config.lambda_1;
+    system_parameters_.Lambda_(5, 5) = config.lambda_1;
 
-    sliding_mode_controller_.system_parameters_.K_(0, 0) = config.K_1;
-    sliding_mode_controller_.system_parameters_.K_(1, 1) = config.K_2;
-    sliding_mode_controller_.system_parameters_.K_(2, 2) = config.K_3;
-    sliding_mode_controller_.system_parameters_.K_(3, 3) = config.K_4;
-    sliding_mode_controller_.system_parameters_.K_(4, 4) = config.K_5;
-    sliding_mode_controller_.system_parameters_.K_(5, 5) = config.K_6;
-
+    system_parameters_.K_(0, 0) = config.K_1;
+    system_parameters_.K_(1, 1) = config.K_2;
+    system_parameters_.K_(2, 2) = config.K_3;
+    system_parameters_.K_(3, 3) = config.K_4;
+    system_parameters_.K_(4, 4) = config.K_5;
+    system_parameters_.K_(5, 5) = config.K_6;
+    //
     Eigen::Vector3d position;
 
     winch_pos_.clear();
@@ -83,15 +85,15 @@ void CommanderNode::paramsReconfig(pyramid_control::SlidingModeControllerConfig 
     position.y() = config.winch_4_y;
     position.z() = config.winch_4_z;
     winch_pos_.push_back(position);
-
-    sliding_mode_controller_.system_parameters_.tether_configuration_.setAnchorPos(winch_pos_[0], 0);
-    sliding_mode_controller_.system_parameters_.tether_configuration_.setAnchorPos(winch_pos_[2], 1);
-    sliding_mode_controller_.system_parameters_.tether_configuration_.setAnchorPos(winch_pos_[1], 2);
-    sliding_mode_controller_.system_parameters_.tether_configuration_.setAnchorPos(winch_pos_[3], 3);
-    sliding_mode_controller_.system_parameters_.tether_configuration_.setAnchorPos(winch_pos_[2], 4);
-    sliding_mode_controller_.system_parameters_.tether_configuration_.setAnchorPos(winch_pos_[0], 5);
-    sliding_mode_controller_.system_parameters_.tether_configuration_.setAnchorPos(winch_pos_[3], 6);
-    sliding_mode_controller_.system_parameters_.tether_configuration_.setAnchorPos(winch_pos_[1], 7);
+    //
+    // sliding_mode_controller_.system_parameters_.tether_configuration_.setAnchorPos(winch_pos_[0], 0);
+    // sliding_mode_controller_.system_parameters_.tether_configuration_.setAnchorPos(winch_pos_[2], 1);
+    // sliding_mode_controller_.system_parameters_.tether_configuration_.setAnchorPos(winch_pos_[1], 2);
+    // sliding_mode_controller_.system_parameters_.tether_configuration_.setAnchorPos(winch_pos_[3], 3);
+    // sliding_mode_controller_.system_parameters_.tether_configuration_.setAnchorPos(winch_pos_[2], 4);
+    // sliding_mode_controller_.system_parameters_.tether_configuration_.setAnchorPos(winch_pos_[0], 5);
+    // sliding_mode_controller_.system_parameters_.tether_configuration_.setAnchorPos(winch_pos_[3], 6);
+    // sliding_mode_controller_.system_parameters_.tether_configuration_.setAnchorPos(winch_pos_[1], 7);
 
     // sliding_mode_controller_.system_parameters_.tether_configuration_.pseudo_tethers[0].anchor_pos
     //     = winch_pos_[0];
@@ -120,7 +122,7 @@ void CommanderNode::trajectoryCB(
     pyramid_msgs::EigenMultiDOFJointTrajectory trajectory;
     pyramid_msgs::eigenMultiDOFJointTrajectoryFromMsg(trajectory_msg, &trajectory);
 
-    sliding_mode_controller_.setTrajectory(trajectory);
+    sliding_mode_controller_->setTrajectory(trajectory);
 }
 
 void CommanderNode::odometryCB(const nav_msgs::OdometryPtr& odometry_msg)
@@ -130,19 +132,16 @@ void CommanderNode::odometryCB(const nav_msgs::OdometryPtr& odometry_msg)
     pyramid_msgs::EigenOdometry odometry;
     pyramid_msgs::eigenOdometryFromMsg(odometry_msg, &odometry);
 
-    sliding_mode_controller_.setOdometry(odometry);
-    sliding_mode_controller_.updateModelConfig();
-    sliding_mode_controller_.calcThrust();
+    system_parameters_.setOdom(odometry);
+    sliding_mode_controller_->updateModelConfig();
+    sliding_mode_controller_->calcThrust();
 
     // sendThrust();
 
-    Eigen::VectorXd wrench = sliding_mode_controller_.getWrench();
-    Eigen::MatrixXd jacobian = sliding_mode_controller_.getJacobian();
-    Eigen::Matrix3d rotMatrix = sliding_mode_controller_.getRotMatrix();
-    Eigen::Matrix3d toOmega = sliding_mode_controller_.getToOmega();
+    Eigen::VectorXd wrench = sliding_mode_controller_->getWrench();
 
-    actuator_controller_.wrenchDistribution(wrench, jacobian, rotMatrix, toOmega);
-    actuator_controller_.optimize();
+    actuator_controller_->wrenchDistribution(wrench);
+    actuator_controller_->optimize();
 
     sendRotorSpeed();
     sendTension();
@@ -151,7 +150,7 @@ void CommanderNode::odometryCB(const nav_msgs::OdometryPtr& odometry_msg)
 
 void CommanderNode::sendRotorSpeed()
 {
-    Eigen::VectorXd ref_rotor_velocities = actuator_controller_.getMotorSpeed();
+    Eigen::VectorXd ref_rotor_velocities = actuator_controller_->getMotorSpeed();
 
     mav_msgs::ActuatorsPtr actuator_msg(new mav_msgs::Actuators);
 
@@ -217,16 +216,18 @@ void CommanderNode::sendTension()
 {
     geometry_msgs::Vector3 tension;
 
-    Eigen::VectorXd ref_tensions = actuator_controller_.getTension();
-
+    Eigen::VectorXd ref_tensions = actuator_controller_->getTension();
     pyramid_msgs::TensionsPtr tension_msg(new pyramid_msgs::Tensions);
 
     tension_msg->tensions.clear();
     for (int i = 0; i < ref_tensions.size(); i++)
     {
-        tension.x = ref_tensions[i] * sliding_mode_controller_.direction[i].x();
-        tension.y = ref_tensions[i] * sliding_mode_controller_.direction[i].y();
-        tension.z = ref_tensions[i] * sliding_mode_controller_.direction[i].z();
+        tension.x = ref_tensions[i] *
+            system_parameters_.tether_configuration_.pseudo_tethers[i].direction.x();
+        tension.y = ref_tensions[i] *
+            system_parameters_.tether_configuration_.pseudo_tethers[i].direction.y();
+        tension.z = ref_tensions[i] *
+            system_parameters_.tether_configuration_.pseudo_tethers[i].direction.z();
 
         tension_msg->tensions.push_back(tension);
     }
@@ -239,7 +240,6 @@ void CommanderNode::sendTension()
 void CommanderNode::sendWinchPos()
 {
     geometry_msgs::Vector3 position;
-
     pyramid_msgs::PositionsPtr position_msg(new pyramid_msgs::Positions);
 
     position_msg->positions.clear();
@@ -252,7 +252,6 @@ void CommanderNode::sendWinchPos()
 
         position_msg->positions.push_back(position);
     }
-
     position_msg->header.stamp = ros::Time::now();
 
     winch_pub_.publish(position_msg);
