@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <robot name="winch" xmlns:xacro="http://ros.org/wiki/xacro">
 
+    <material name="Red">
+        <color rgba="1.0 0.0 0.0 2.0"/>
+    </material>
+    <material name="Green">
+        <color rgba="0.0 1.0 0.0 2.0"/>
+    </material>
+    <material name="Blue">
+        <color rgba="0.0 0.0 1.0 2.0"/>
+    </material>
+    <material name="Orange">
+        <color rgba="1.0 0.64 0.0 1.0"/>
+    </material>
+
     <xacro:macro name="winch" params="x y z winch_number suffix color">
         <joint name="winch_joint_${winch_number}" type="fixed">
             <origin xyz="${x} ${y} ${z}" rpy="0 0 0" />
@@ -18,6 +31,7 @@
                 <geometry>
                     <box size="0.1 0.1 0.1"/>
                 </geometry>
+                <material name="${color}"/>
             </visual>
         </link>
         <gazebo>

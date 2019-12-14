@@ -374,6 +374,14 @@ Visualization Manager:
         /pelican: true
       Queue Size: 100
       Value: true
+    - Class: jsk_rviz_plugin/TFTrajectory
+      Enabled: true
+      Name: TFTrajectory
+      Value: true
+      color: 25; 255; 240
+      duration: 10
+      frame: pelican/base_link
+      line_width: 0.009999999776482582
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -438,5 +446,5 @@ Window Geometry:
   Views:
     collapsed: true
   Width: 1853
-  X: 1987
+  X: 67
   Y: 27

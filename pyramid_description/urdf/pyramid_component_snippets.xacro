@@ -22,6 +22,19 @@
 <robot xmlns:xacro="http://ros.org/wiki/xacro">
   <xacro:property name="pi" value="3.14159265359" />
 
+  <material name="Red">
+      <color rgba="1.0 0.0 0.0 2.0"/>
+  </material>
+  <material name="Green">
+      <color rgba="0.0 1.0 0.0 2.0"/>
+  </material>
+  <material name="Blue">
+      <color rgba="0.0 0.0 1.0 2.0"/>
+  </material>
+  <material name="Orange">
+      <color rgba="1.0 0.64 0.0 1.0"/>
+  </material>
+
   <!-- Macro to add logging to a bag file. -->
   <xacro:macro name="bag_plugin_macro"
     params="namespace bag_file rotor_velocity_slowdown_sim wait_to_record_bag">
