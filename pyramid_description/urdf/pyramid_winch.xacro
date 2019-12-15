@@ -52,7 +52,7 @@
 
     <xacro:winch
         robot_namespace="${namespace}"
-        x="5.0" y="5.0" z="0.05"
+        x="5.0" y="5.0" z="0.0"
         winch_number="0"
         suffix="front_right"
         color="Orange">
@@ -60,7 +60,7 @@
 
     <xacro:winch
         robot_namespace="${namespace}"
-        x="-5.0" y="5.0" z="0"
+        x="-5.0" y="5.0" z="0.0"
         winch_number="1"
         suffix="front_left"
         color="Green">
@@ -68,7 +68,7 @@
 
     <xacro:winch
         robot_namespace="${namespace}"
-        x="-5.0" y="-5.0" z="0"
+        x="-5.0" y="-5.0" z="0.0"
         winch_number="2"
         suffix="back_right"
         color="Blue">
@@ -76,7 +76,7 @@
 
     <xacro:winch
         robot_namespace="${namespace}"
-        x="5.0" y="-5.0" z="0"
+        x="5.0" y="-5.0" z="0.0"
         winch_number="3"
         suffix="back_left"
         color="Red">

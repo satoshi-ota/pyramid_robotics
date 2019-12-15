@@ -3,16 +3,9 @@
 
 #include <string>
 
-#include <gazebo/common/common.hh>
-#include <gazebo/common/Plugin.hh>
-#include <gazebo/gazebo.hh>
-#include <gazebo/physics/physics.hh>
-
 #include <ros/ros.h>
 #include <ros/callback_queue.h>
 #include <gazebo_msgs/LinkState.h>
-#include <geometry_msgs/WrenchStamped.h>
-#include <visualization_msgs/MarkerArray.h>
 #include <pyramid_msgs/default_topics.h>
 #include <pyramid_msgs/Tensions.h>
 
@@ -55,7 +48,6 @@ private:
     event::ConnectionPtr update_event_;
 
     ros::Subscriber tension_sub_;
-    ros::Publisher marker_pub_;
 
     physics::ModelPtr model_;
     physics::LinkPtr link_;

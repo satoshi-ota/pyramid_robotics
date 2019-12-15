@@ -4,8 +4,6 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
-        - /Global Options1
-        - /Status1
         - /TF1/Frames1
       Splitter Ratio: 0.4282238483428955
     Tree Height: 755
@@ -56,10 +54,10 @@ Visualization Manager:
       Value: true
     - Class: rviz/MarkerArray
       Enabled: true
-      Marker Topic: /marker_arraypelican/tether_end_0
+      Marker Topic: /pelican/marker/tension
       Name: MarkerArray
       Namespaces:
-        {}
+        pelican: true
       Queue Size: 100
       Value: true
     - Class: rviz/TF
@@ -168,62 +166,6 @@ Visualization Manager:
           winch_3:
             {}
       Update Interval: 0
-      Value: true
-    - Class: rviz/MarkerArray
-      Enabled: true
-      Marker Topic: /marker_arraypelican/tether_end_1
-      Name: MarkerArray
-      Namespaces:
-        {}
-      Queue Size: 100
-      Value: true
-    - Class: rviz/MarkerArray
-      Enabled: true
-      Marker Topic: /marker_arraypelican/tether_end_2
-      Name: MarkerArray
-      Namespaces:
-        {}
-      Queue Size: 100
-      Value: true
-    - Class: rviz/MarkerArray
-      Enabled: true
-      Marker Topic: /marker_arraypelican/tether_end_3
-      Name: MarkerArray
-      Namespaces:
-        {}
-      Queue Size: 100
-      Value: true
-    - Class: rviz/MarkerArray
-      Enabled: true
-      Marker Topic: /marker_arraypelican/tether_end_4
-      Name: MarkerArray
-      Namespaces:
-        {}
-      Queue Size: 100
-      Value: true
-    - Class: rviz/MarkerArray
-      Enabled: true
-      Marker Topic: /marker_arraypelican/tether_end_5
-      Name: MarkerArray
-      Namespaces:
-        {}
-      Queue Size: 100
-      Value: true
-    - Class: rviz/MarkerArray
-      Enabled: true
-      Marker Topic: /marker_arraypelican/tether_end_6
-      Name: MarkerArray
-      Namespaces:
-        {}
-      Queue Size: 100
-      Value: true
-    - Class: rviz/MarkerArray
-      Enabled: true
-      Marker Topic: /marker_arraypelican/tether_end_7
-      Name: MarkerArray
-      Namespaces:
-        {}
-      Queue Size: 100
       Value: true
     - Alpha: 1
       Class: rviz/RobotModel

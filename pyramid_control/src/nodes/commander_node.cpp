@@ -16,8 +16,8 @@ CommanderNode::CommanderNode(
     actuator_controller_->InitializeParameters();
 
     srv_ = boost::make_shared
-            <dynamic_reconfigure::Server<pyramid_control::SlidingModeControllerConfig>>(private_nh);
-    dynamic_reconfigure::Server<pyramid_control::SlidingModeControllerConfig>::CallbackType cb
+            <dynamic_reconfigure::Server<pyramid_control::SystemParametersConfig>>(private_nh);
+    dynamic_reconfigure::Server<pyramid_control::SystemParametersConfig>::CallbackType cb
         = boost::bind(&CommanderNode::paramsReconfig, this, _1, _2);
     srv_->setCallback(cb);
 
@@ -27,14 +27,17 @@ CommanderNode::CommanderNode(
     odometry_sub_ = nh_.subscribe(pyramid_msgs::default_topics::FEEDBACK_ODOMETRY, 1,
                                   &CommanderNode::odometryCB, this);
 
-    motor_velocity_reference_pub_ = nh_.advertise<mav_msgs::Actuators>
+    motor_speed_ref_pub_ = nh_.advertise<mav_msgs::Actuators>
                                     (pyramid_msgs::default_topics::COMMAND_ACTUATORS, 1);
 
-    tension_reference_pub_ = nh_.advertise<pyramid_msgs::Tensions>
+    tension_ref_pub_ = nh_.advertise<pyramid_msgs::Tensions>
                              (pyramid_msgs::default_topics::COMMAND_TENSIONS, 1);
 
-    marker_pub_ = nh_.advertise<visualization_msgs::MarkerArray>
+    motor_speed_marker_pub_ = nh_.advertise<visualization_msgs::MarkerArray>
                   (pyramid_msgs::default_topics::MARKER_THURUST, 1);
+
+    tension_marker_pub_ = nh_.advertise<visualization_msgs::MarkerArray>
+                          (pyramid_msgs::default_topics::MARKER_TENSION, 1);
 
     winch_pub_ = nh_.advertise<pyramid_msgs::Positions>
                  (pyramid_msgs::default_topics::COMMAND_ANCHOR_POS, 1);
@@ -45,73 +48,10 @@ CommanderNode::CommanderNode(
 
 CommanderNode::~CommanderNode(){ }
 
-void CommanderNode::paramsReconfig(pyramid_control::SlidingModeControllerConfig &config,
+void CommanderNode::paramsReconfig(pyramid_control::SystemParametersConfig &config,
                                             uint32_t level)
 {
-    system_parameters_.Lambda_(0, 0) = config.lambda_1;
-    system_parameters_.Lambda_(1, 1) = config.lambda_1;
-    system_parameters_.Lambda_(2, 2) = config.lambda_1;
-    system_parameters_.Lambda_(3, 3) = config.lambda_1;
-    system_parameters_.Lambda_(4, 4) = config.lambda_1;
-    system_parameters_.Lambda_(5, 5) = config.lambda_1;
-
-    system_parameters_.K_(0, 0) = config.K_1;
-    system_parameters_.K_(1, 1) = config.K_2;
-    system_parameters_.K_(2, 2) = config.K_3;
-    system_parameters_.K_(3, 3) = config.K_4;
-    system_parameters_.K_(4, 4) = config.K_5;
-    system_parameters_.K_(5, 5) = config.K_6;
-    //
-    Eigen::Vector3d position;
-
-    winch_pos_.clear();
-
-    position.x() = config.winch_1_x;
-    position.y() = config.winch_1_y;
-    position.z() = config.winch_1_z;
-    winch_pos_.push_back(position);
-
-    position.x() = config.winch_2_x;
-    position.y() = config.winch_2_y;
-    position.z() = config.winch_2_z;
-    winch_pos_.push_back(position);
-
-    position.x() = config.winch_3_x;
-    position.y() = config.winch_3_y;
-    position.z() = config.winch_3_z;
-    winch_pos_.push_back(position);
-
-    position.x() = config.winch_4_x;
-    position.y() = config.winch_4_y;
-    position.z() = config.winch_4_z;
-    winch_pos_.push_back(position);
-    //
-    // sliding_mode_controller_.system_parameters_.tether_configuration_.setAnchorPos(winch_pos_[0], 0);
-    // sliding_mode_controller_.system_parameters_.tether_configuration_.setAnchorPos(winch_pos_[2], 1);
-    // sliding_mode_controller_.system_parameters_.tether_configuration_.setAnchorPos(winch_pos_[1], 2);
-    // sliding_mode_controller_.system_parameters_.tether_configuration_.setAnchorPos(winch_pos_[3], 3);
-    // sliding_mode_controller_.system_parameters_.tether_configuration_.setAnchorPos(winch_pos_[2], 4);
-    // sliding_mode_controller_.system_parameters_.tether_configuration_.setAnchorPos(winch_pos_[0], 5);
-    // sliding_mode_controller_.system_parameters_.tether_configuration_.setAnchorPos(winch_pos_[3], 6);
-    // sliding_mode_controller_.system_parameters_.tether_configuration_.setAnchorPos(winch_pos_[1], 7);
-
-    // sliding_mode_controller_.system_parameters_.tether_configuration_.pseudo_tethers[0].anchor_pos
-    //     = winch_pos_[0];
-    // sliding_mode_controller_.system_parameters_.tether_configuration_.pseudo_tethers[1].anchor_pos
-    //     = winch_pos_[2];
-    // sliding_mode_controller_.system_parameters_.tether_configuration_.pseudo_tethers[2].anchor_pos
-    //     = winch_pos_[1];
-    // sliding_mode_controller_.system_parameters_.tether_configuration_.pseudo_tethers[3].anchor_pos
-    //     = winch_pos_[3];
-    // sliding_mode_controller_.system_parameters_.tether_configuration_.pseudo_tethers[4].anchor_pos
-    //     = winch_pos_[2];
-    // sliding_mode_controller_.system_parameters_.tether_configuration_.pseudo_tethers[5].anchor_pos
-    //     = winch_pos_[0];
-    // sliding_mode_controller_.system_parameters_.tether_configuration_.pseudo_tethers[6].anchor_pos
-    //     = winch_pos_[3];
-    // sliding_mode_controller_.system_parameters_.tether_configuration_.pseudo_tethers[7].anchor_pos
-    //     = winch_pos_[1];
-
+    system_parameters_.reconfig(config);
 }
 
 void CommanderNode::trajectoryCB(
@@ -159,7 +99,7 @@ void CommanderNode::sendRotorSpeed()
         actuator_msg->angular_velocities.push_back(ref_rotor_velocities[i]);
     actuator_msg->header.stamp = ros::Time::now();
 
-    motor_velocity_reference_pub_.publish(actuator_msg);
+    motor_speed_ref_pub_.publish(actuator_msg);
 
     visualization_msgs::MarkerArray marker_array;
     marker_array.markers.resize(4);
@@ -209,7 +149,7 @@ void CommanderNode::sendRotorSpeed()
         marker_array.markers[i].color.a = 0.5f;
     }
 
-    marker_pub_.publish(marker_array);
+    motor_speed_marker_pub_.publish(marker_array);
 }
 
 void CommanderNode::sendTension()
@@ -220,7 +160,7 @@ void CommanderNode::sendTension()
     pyramid_msgs::TensionsPtr tension_msg(new pyramid_msgs::Tensions);
 
     tension_msg->tensions.clear();
-    for (int i = 0; i < ref_tensions.size(); i++)
+    for(int i = 0; i < ref_tensions.size(); i++)
     {
         tension.x = ref_tensions[i] *
             system_parameters_.tether_configuration_.pseudo_tethers[i].direction.x();
@@ -234,7 +174,57 @@ void CommanderNode::sendTension()
 
     tension_msg->header.stamp = ros::Time::now();
 
-    tension_reference_pub_.publish(tension_msg);
+    tension_ref_pub_.publish(tension_msg);
+
+    visualization_msgs::MarkerArray marker_array;
+    marker_array.markers.resize(ref_tensions.size());
+
+    geometry_msgs::Vector3 arrow;
+    arrow.x = 0.02;
+    arrow.y = 0.04;
+    arrow.z = 0.1;
+
+    for(int i = 0; i < ref_tensions.size(); i++)
+    {
+        geometry_msgs::Point linear_start;
+        linear_start.x = system_parameters_.tether_configuration_.pseudo_tethers[i].world_pos.x();
+        linear_start.y = system_parameters_.tether_configuration_.pseudo_tethers[i].world_pos.y();
+        linear_start.z = system_parameters_.tether_configuration_.pseudo_tethers[i].world_pos.z();
+
+        geometry_msgs::Point linear_end;
+        linear_end.x = linear_start.x + ref_tensions[i] *
+            system_parameters_.tether_configuration_.pseudo_tethers[i].direction.x();
+        linear_end.y = linear_start.y + ref_tensions[i] *
+            system_parameters_.tether_configuration_.pseudo_tethers[i].direction.y();
+        linear_end.z = linear_start.z + ref_tensions[i] *
+            system_parameters_.tether_configuration_.pseudo_tethers[i].direction.z();
+
+        marker_array.markers[i].header.frame_id = "world";
+        marker_array.markers[i].header.stamp = ros::Time::now();
+        marker_array.markers[i].ns = "pelican";
+        marker_array.markers[i].id = i;
+        marker_array.markers[i].lifetime = ros::Duration();
+
+        marker_array.markers[i].type = visualization_msgs::Marker::ARROW;
+        marker_array.markers[i].action = visualization_msgs::Marker::ADD;
+        marker_array.markers[i].scale = arrow;
+
+        marker_array.markers[i].points.resize(2);
+        marker_array.markers[i].points[0] = linear_start;
+        marker_array.markers[i].points[1] = linear_end;
+
+        marker_array.markers[i].pose.orientation.x = 0.0;
+        marker_array.markers[i].pose.orientation.y = 0.0;
+        marker_array.markers[i].pose.orientation.z = 0.0;
+        marker_array.markers[i].pose.orientation.w = 1.0;
+
+        marker_array.markers[i].color.r = 0.0f;
+        marker_array.markers[i].color.g = 1.0f;
+        marker_array.markers[i].color.b = 0.0f;
+        marker_array.markers[i].color.a = 0.5f;
+    }
+
+    tension_marker_pub_.publish(marker_array);
 }
 
 void CommanderNode::sendWinchPos()
@@ -244,11 +234,11 @@ void CommanderNode::sendWinchPos()
 
     position_msg->positions.clear();
 
-    for (int i = 0; i < winch_pos_.size(); i++)
+    for (int i = 0; i < system_parameters_.n_anchor_; i++)
     {
-        position.x = winch_pos_[i].x();
-        position.y = winch_pos_[i].y();
-        position.z = winch_pos_[i].z();
+        position.x = system_parameters_.tether_configuration_.pseudo_tethers[2*i].anchor_pos.x();
+        position.y = system_parameters_.tether_configuration_.pseudo_tethers[2*i].anchor_pos.y();
+        position.z = system_parameters_.tether_configuration_.pseudo_tethers[2*i].anchor_pos.z();
 
         position_msg->positions.push_back(position);
     }

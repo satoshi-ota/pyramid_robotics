@@ -1,6 +1,8 @@
 #ifndef PYRAMID_CONTROL_PARAMETERS_H
 #define PYRAMID_CONTROL_PARAMETERS_H
 
+#include "pyramid_control/SystemParametersConfig.h"
+
 namespace pyramid_control
 {
 static constexpr double kDefaultRotor0Angle = 0.52359877559;
@@ -19,6 +21,7 @@ static constexpr double kDefaultRotorForceConstant = 8.54858e-6;
 static constexpr double kDefaultRotorMomentConstant = 1.6e-2;
 
 const int kDefaultTetherNum = 8;
+const int kDefaultAnchorNum = 4;
 
 const Eigen::Vector3d kDefaultTether0AttachPos = Eigen::Vector3d( 0.4, -0.4,  0.15);
 const Eigen::Vector3d kDefaultTether1AttachPos = Eigen::Vector3d( 0.4, -0.4, -0.15);
@@ -135,8 +138,11 @@ struct TetherConfiguration
     }
     std::vector<PseudoTether> pseudo_tethers;
 
-    void setAnchorPos(Eigen::Vector3d& anchor_pos, int i){
-        pseudo_tethers[i].anchor_pos = anchor_pos;
+    void setAnchorPos(const double& x, const double& y, const double& z, int i)
+    {
+        pseudo_tethers[i].anchor_pos.x() = x;
+        pseudo_tethers[i].anchor_pos.y() = y;
+        pseudo_tethers[i].anchor_pos.z() = z;
     }
 };
 
@@ -150,6 +156,7 @@ public:
                                   kDefaultInertiaYy,
                                   kDefaultInertiaZz).asDiagonal()),
          n_tether_(kDefaultTetherNum),
+         n_anchor_(kDefaultAnchorNum),
          Lambda_(kDefaultLambda),
          K_(kDefaultGainK),
          rotMatrix_(Eigen::Matrix3d::Zero()),
@@ -183,6 +190,33 @@ public:
     double gravity_;
     Eigen::Matrix3d inertia_;
     int n_tether_;
+    int n_anchor_;
+
+    inline void reconfig(pyramid_control::SystemParametersConfig& config)
+    {
+        Lambda_(0, 0) = config.lambda_1;
+        Lambda_(1, 1) = config.lambda_2;
+        Lambda_(2, 2) = config.lambda_3;
+        Lambda_(3, 3) = config.lambda_4;
+        Lambda_(4, 4) = config.lambda_5;
+        Lambda_(5, 5) = config.lambda_6;
+
+        K_(0, 0) = config.K_1;
+        K_(1, 1) = config.K_2;
+        K_(2, 2) = config.K_3;
+        K_(3, 3) = config.K_4;
+        K_(4, 4) = config.K_5;
+        K_(5, 5) = config.K_6;
+
+        tether_configuration_.setAnchorPos(config.anchor1_x, config.anchor1_y, config.anchor1_z, 0);
+        tether_configuration_.setAnchorPos(config.anchor3_x, config.anchor3_y, config.anchor3_z, 1);
+        tether_configuration_.setAnchorPos(config.anchor2_x, config.anchor2_y, config.anchor2_z, 2);
+        tether_configuration_.setAnchorPos(config.anchor4_x, config.anchor4_y, config.anchor4_z, 3);
+        tether_configuration_.setAnchorPos(config.anchor3_x, config.anchor3_y, config.anchor3_z, 4);
+        tether_configuration_.setAnchorPos(config.anchor1_x, config.anchor1_y, config.anchor1_z, 5);
+        tether_configuration_.setAnchorPos(config.anchor4_x, config.anchor4_y, config.anchor4_z, 6);
+        tether_configuration_.setAnchorPos(config.anchor2_x, config.anchor2_y, config.anchor2_z, 7);
+    }
 
     inline void setOdom(const pyramid_msgs::EigenOdometry& odometry)
     {
