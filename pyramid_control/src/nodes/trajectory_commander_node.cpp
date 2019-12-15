@@ -8,7 +8,9 @@ TrajectoryCommanderNode::TrajectoryCommanderNode(
     :nh_(nh),
      private_nh_(private_nh),
      pos_(Eigen::Vector3d::Zero()),
-     att_(Eigen::Vector3d::Zero())
+     att_(Eigen::Vector3d::Zero()),
+     takeoff_(false),
+     flyNow_(false)
 {
     trajectory_pub_ = nh_.advertise<trajectory_msgs::MultiDOFJointTrajectory>
                         (pyramid_msgs::default_topics::COMMAND_TRAJECTORY, 10);
@@ -27,9 +29,7 @@ void TrajectoryCommanderNode::trajectoryReconfig(pyramid_control::TrajectoryGene
 {
     trajectory_mode_ = config.trajectory_mode;
 
-    max_.x() = config.max_roll;
-    max_.y() = config.max_pitch;
-    max_.z() = config.max_yaw;
+    takeoff_ = config.takeoff;
 
     pos_.x() = config.x;
     pos_.y() = config.y;
@@ -41,6 +41,19 @@ void TrajectoryCommanderNode::trajectoryReconfig(pyramid_control::TrajectoryGene
 
     semiMinorAxis_ = config.semiMinorAxis;
     semiMajorAxis_ = config.semiMajorAxis;
+}
+
+
+void TrajectoryCommanderNode::takeOff()
+{
+    pos_ = Eigen::Vector3d::UnitZ();
+    att_.setZero();
+}
+
+void TrajectoryCommanderNode::landing()
+{
+    pos_.setZero();
+    att_.setZero();
 }
 
 void TrajectoryCommanderNode::ellipticOrbit()
@@ -62,19 +75,32 @@ void TrajectoryCommanderNode::attitudeDemo()
     pos_.x() = 0;
     pos_.y() = 0;
 
-    att_.x() = max_.x() * cos(t.toSec()/5);
-    att_.y() = max_.y() * sin(t.toSec()/5);
+    att_.x() = 0.3 * cos(t.toSec()/5);
+    att_.y() = 0.3 * sin(t.toSec()/5);
     att_.z() = 0;
 }
 
 void TrajectoryCommanderNode::sendOrbit()
 {
-    if(trajectory_mode_ == "elliptic") ellipticOrbit();
-    if(trajectory_mode_ == "rollpitch") attitudeDemo();
-
-    trajectory_msg.header.stamp = ros::Time::now();
-    pyramid_msgs::msgMultiDofJointTrajectoryFromPosAtt(pos_, att_, &trajectory_msg);
-    trajectory_pub_.publish(trajectory_msg);
+    if(takeoff_ &&  !flyNow_){
+        takeOff();
+        flyNow_ = true;
+        trajectory_msg.header.stamp = ros::Time::now();
+        pyramid_msgs::msgMultiDofJointTrajectoryFromPosAtt(pos_, att_, &trajectory_msg);
+        trajectory_pub_.publish(trajectory_msg);
+    } else if(!takeoff_ &&  flyNow_){
+        landing();
+        flyNow_ = false;
+        trajectory_msg.header.stamp = ros::Time::now();
+        pyramid_msgs::msgMultiDofJointTrajectoryFromPosAtt(pos_, att_, &trajectory_msg);
+        trajectory_pub_.publish(trajectory_msg);
+    } else if(takeoff_ &&  flyNow_) {
+        if(trajectory_mode_ == "elliptic") ellipticOrbit();
+        if(trajectory_mode_ == "rollpitch") attitudeDemo();
+        trajectory_msg.header.stamp = ros::Time::now();
+        pyramid_msgs::msgMultiDofJointTrajectoryFromPosAtt(pos_, att_, &trajectory_msg);
+        trajectory_pub_.publish(trajectory_msg);
+    }
 }
 
 } //namespace pyramid_control

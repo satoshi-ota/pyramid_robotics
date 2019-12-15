@@ -22,6 +22,8 @@ public:
     ~TrajectoryCommanderNode();
 
     void trajectoryReconfig(pyramid_control::TrajectoryGeneratorConfig &config, uint32_t level);
+    void takeOff();
+    void landing();
     void ellipticOrbit();
     void attitudeDemo();
     void sendOrbit();
@@ -32,7 +34,6 @@ private:
 
     boost::shared_ptr<dynamic_reconfigure::Server<pyramid_control::TrajectoryGeneratorConfig>> srv_;
 
-    Eigen::Vector3d max_;
     Eigen::Vector3d pos_;
     Eigen::Vector3d att_;
 
@@ -40,6 +41,9 @@ private:
     trajectory_msgs::MultiDOFJointTrajectory trajectory_msg;
 
     std::string trajectory_mode_;
+
+    bool flyNow_;
+    bool takeoff_;
     double semiMinorAxis_, semiMajorAxis_;
 };
 
