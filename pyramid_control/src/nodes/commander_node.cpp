@@ -10,6 +10,7 @@ CommanderNode::CommanderNode(
 {
     sliding_mode_controller_ = new SlidingModeController(&system_parameters_);
     actuator_controller_ = new ActuatorController(&system_parameters_);
+    observer_ = new Observer(&system_parameters_);
 
     GetSystemParameters(private_nh_, &system_parameters_);
 
@@ -82,6 +83,8 @@ void CommanderNode::odometryCB(const nav_msgs::OdometryPtr& odometry_msg)
 
     actuator_controller_->wrenchDistribution(wrench);
     actuator_controller_->optimize();
+
+    observer_->estimateDisturbance(wrench);
 
     sendRotorSpeed();
     sendTension();

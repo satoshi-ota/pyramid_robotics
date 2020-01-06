@@ -14,6 +14,7 @@
 #include <dynamic_reconfigure/server.h>
 #include <visualization_msgs/MarkerArray.h>
 
+#include "pyramid_control/observer.h"
 #include "pyramid_control/actuator_controller.h"
 #include "pyramid_control/sliding_mode_controller.h"
 #include "pyramid_control/SystemParametersConfig.h"
@@ -35,6 +36,7 @@ private:
 
     SlidingModeController *sliding_mode_controller_;
     ActuatorController *actuator_controller_;
+    Observer *observer_;
 
     SystemParameters system_parameters_;
 
