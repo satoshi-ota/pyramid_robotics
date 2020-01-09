@@ -81,7 +81,7 @@
         <linkName>${robot_namespace}/base_link</linkName>
         <rotorVelocitySlowdownSim>${rotor_velocity_slowdown_sim}</rotorVelocitySlowdownSim>
       </plugin>
-      <!--plugin filename="libgazebo_disturbance_plugin.so" name="disturbance_plugin" /-->
+      <plugin filename="libgazebo_disturbance_plugin.so" name="disturbance_plugin" />
       <!-- <plugin filename="libgazebo_external_force_plugin.so" name="external_force_plugin" /> -->
       <!-- <plugin filename="libgazebo_psuedo_tether_plugin.so" name="psuedo_tether_plugin" /> -->
     </gazebo>
@@ -160,8 +160,8 @@
         </joint>
         <link name="${robot_namespace}/tether_end_${tether_number}">
             <inertial>
-                <mass value="0.01"/>
-                <inertia ixx="0.01" iyy="0.01" izz="0.01" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <mass value="0.0001"/>
+                <inertia ixx="0.0001" iyy="0.0001" izz="0.0001" ixy="0.0" ixz="0.0" iyz="0.0"/>
                 <origin xyz="0 0 0" rpy="0 0 0"/>
             </inertial>
             <visual>

@@ -10,6 +10,7 @@ static constexpr char COMMAND_ACTUATORS[] = "command/motor_speed";
 static constexpr char COMMAND_TRAJECTORY[] = "command/trajectory";
 static constexpr char COMMAND_POSE[] = "command/pose";
 static constexpr char COMMAND_ANCHOR_POS[] = "command/anchor_pos";
+static constexpr char COMMAND_DISTURBANCE[] = "command/disturbance";
 
 static constexpr char STATE_TETHER[] = "state/tether";
 static constexpr char STATE_ODOMETRY[] = "state/odometry";

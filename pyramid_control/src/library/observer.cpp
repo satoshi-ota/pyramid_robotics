@@ -16,57 +16,55 @@ Observer::Observer(SystemParameters* system_parameters)
     PEst_.resize(9, 9);
     PEst_ = Eigen::MatrixXd::Identity(9, 9);
 
-    matA_.resize(9, 9);
-    matA_.setZero();
-    matA_ = Eigen::MatrixXd::Identity(9, 9);
-    matA_.block(0, 3, 3, 3) = Eigen::Vector3d(kdt, kdt, kdt).asDiagonal();
-    matA_.block(3, 6, 3, 3) = Eigen::Vector3d(kdt, kdt, kdt).asDiagonal();
+    kA_.resize(9, 9);
+    kA_ = Eigen::MatrixXd::Identity(9, 9);
+    kA_.block(0, 3, 3, 3) = Eigen::Vector3d(kDt, kDt, kDt).asDiagonal();
+    kA_.block(3, 6, 3, 3) = Eigen::Vector3d(kDt, kDt, kDt).asDiagonal();
 
-    matB_.resize(9, 3);
-    matB_.setZero();
-    matB_.block(3, 0, 3, 3) = Eigen::Vector3d(kdt, kdt, kdt).asDiagonal();
+    kBu_.resize(9, 3);
+    kBu_.setZero();
+    kBu_.block(3, 0, 3, 3) = Eigen::Vector3d(kDt, kDt, kDt).asDiagonal();
 
-    matC_.resize(3, 9);
-    matC_.setZero();
-    matC_.block(0, 0, 3, 3) = Eigen::Matrix3d::Identity();
+    kB_.resize(9, 9);
+    kB_.setZero();
+    kB_ = Eigen::MatrixXd::Identity(9, 9);
+    kB_ = kB_.array() * kDt;
 
+    kC_.resize(3, 9);
+    kC_.setZero();
+    kC_.block(0, 0, 3, 3) = Eigen::Matrix3d::Identity();
 
-    covQ << 0.1, 0.0, 0.0,
-            0.0, 0.1, 0.0,
-            0.0, 0.0, 0.1;
+    kQ_.resize(9, 9);
+    kQ_ = Eigen::MatrixXd::Identity(9, 9);
 
-    covR << 0.1, 0.0, 0.0,
-            0.0, 0.1, 0.0,
-            0.0, 0.0, 0.1;
+    kR_.resize(3, 3);
+    kR_ = Eigen::Matrix3d::Identity();
 }
 
 Observer::~Observer(){ }
 
 void Observer::estimateDisturbance(const Eigen::VectorXd& wrench)
 {
-    Eigen::VectorXd x;
-    Eigen::MatrixXd cov;
-
     Eigen::VectorXd kG(9);
-    kG << 0.0, 0.0, 0.0, 0.0, 0.0, -kDefaultGravity*kdt, 0.0, 0.0, 0.0;
+    kG << 0.0, 0.0, 0.0, 0.0, 0.0, -kDefaultGravity*kDt, 0.0, 0.0, 0.0;
 
-    x = matA_ * xEst_ + matB_ * wrench.topLeftCorner(3, 1) + kG;
-    cov = matA_ * PEst_ * matA_.transpose() + matB_ * covQ * matB_.transpose();
+    Eigen::VectorXd xPred = kA_ * xEst_ + kBu_ * wrench.topLeftCorner(3, 1) + kG;
+    Eigen::MatrixXd PPred = kA_ * PEst_ * kA_.transpose() + kB_ * kQ_ * kB_.transpose();
 
-    Eigen::MatrixXd kalmanGain;
+    Eigen::MatrixXd kalmanGain
+        = PPred * kC_.transpose() * (kC_ * PPred * kC_.transpose() + kR_).inverse();
 
-    kalmanGain = cov * matC_.transpose() * (matC_ * cov * matC_.transpose() + covR).inverse();
-    xEst_ = x + kalmanGain * (system_parameters_->odometry_.position - matC_ * x);
-    PEst_ = (Eigen::MatrixXd::Identity(9, 9) - kalmanGain * matC_) * cov;
+    xEst_ = xPred + kalmanGain * (system_parameters_->odometry_.position - kC_ * xPred);
+    PEst_ = (Eigen::MatrixXd::Identity(9, 9) - kalmanGain * kC_) * PPred;
 
-    // PRINT_MAT(matA_);
-    // PRINT_MAT(matB_);
-    // PRINT_MAT(matC_);
+    PRINT_MAT(wrench);
+    // PRINT_MAT(kB_);
+    // PRINT_MAT(kC_);
     PRINT_MAT(xEst_);
 
     beta_ += torqueOBSGain_ * (wrench.bottomLeftCorner(3, 1) - system_parameters_->skewMatrix_ * system_parameters_->inertia_ * system_parameters_->odometry_.angular_velocity - torqueDisturbance_);
 
-    beta_ = beta_.array() * kdt;
+    beta_ = beta_.array() * kDt;
 
     torqueDisturbance_ = beta_ + torqueOBSGain_ * system_parameters_->inertia_ * system_parameters_->odometry_.angular_velocity;
 

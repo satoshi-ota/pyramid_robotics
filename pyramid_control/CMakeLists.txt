@@ -23,7 +23,7 @@ generate_dynamic_reconfigure_options(
 
 catkin_package(
     INCLUDE_DIRS include ${Eigen3_INCLUDE_DIRS}
-    LIBRARIES uav_control
+    LIBRARIES pyramid_control
     CATKIN_DEPENDS geometry_msgs nav_msgs roscpp sensor_msgs trajectory_msgs pyramid_msgs mav_msgs
     DEPENDS
 )

@@ -1,0 +1,44 @@
+<launch>
+    <arg name="mav_name" default="pelican"/>
+    <arg name="world_name" default="basic"/>
+    <arg name="enable_logging" default="false"/>
+    <arg name="enable_ground_truth" default="true"/>
+    <arg name="log_file" default="$(arg mav_name)"/>
+    <arg name="use_tether" default="true"/>
+    <arg name="enable_wind" default="false"/>
+    <arg name="enable_rviz" default="true"/>
+    <arg name="plot_status" default="false"/>
+
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" value="$(find pyramid_gazebo)/worlds/pyramid_$(arg world_name).world"/>
+        <arg name="paused" value="false" />
+    </include>
+
+    <group ns="$(arg mav_name)">
+        <include file="$(find pyramid_gazebo)/launch/pyramid_robotics_spawn.launch">
+            <arg name="mav_name" value="$(arg mav_name)" />
+            <arg name="model" value="$(find pyramid_description)/urdf/pyramid_robotics.xacro" />
+            <arg name="enable_logging" value="$(arg enable_logging)" />
+            <arg name="enable_ground_truth" value="$(arg enable_ground_truth)" />
+            <arg name="log_file" value="$(arg log_file)"/>
+            <arg name="enable_wind" value="$(arg enable_wind)"/>
+        </include>
+        <node name="commander_node" pkg="pyramid_control" type="commander_node" output="screen">
+            <rosparam command="load" file="$(find pyramid_control)/params/sliding_mode_controller.yaml" />
+            <rosparam command="load" file="$(find pyramid_control)/params/pyramid_$(arg mav_name).yaml" />
+            <rosparam command="load" file="$(find pyramid_control)/params/tether_config.yaml" />
+            <remap from="feedback/odometry" to="odometry_sensor1/odometry"/>
+        </node>
+        <node name="trajectory_commander_node" pkg="pyramid_control" type="trajectory_commander_node" output="screen"/>
+        <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+        <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
+    </group>
+
+    <node name="disturbance_gen_node" pkg="pyramid_evaluation" type="disturbance_gen_node"/>
+    
+    <group if="$(arg enable_rviz)">
+        <node name="rviz" pkg="rviz" type="rviz" required="true" args="-d $(find pyramid_viz)/rviz/rev.rviz"/>
+    </group>
+
+    <node name="rqt_reconfigure" pkg="rqt_reconfigure" type="rqt_reconfigure" />
+</launch>

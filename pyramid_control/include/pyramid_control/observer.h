@@ -18,8 +18,8 @@ using namespace std;
 namespace pyramid_control
 {
 
-const double kdt = 0.1;
-Eigen::Matrix3d DT = Eigen::Vector3d(kdt, kdt, kdt).asDiagonal();
+const double kDt = 0.1;
+Eigen::Matrix3d DT = Eigen::Vector3d(kDt, kDt, kDt).asDiagonal();
 
 class Observer
 {
@@ -39,20 +39,18 @@ private:
     Eigen::Matrix3d forceOBSGain_;
     Eigen::Matrix3d torqueOBSGain_;
 
-    Eigen::Matrix3d covQ, covR;
-
     Eigen::VectorXd xEst_;
+    Eigen::MatrixXd PEst_;
 
     Eigen::Vector3d beta_;
 
-    Eigen::MatrixXd matA_;
-    Eigen::MatrixXd matB_;
-    Eigen::MatrixXd matC_;
+    Eigen::MatrixXd kA_;
+    Eigen::MatrixXd kBu_;
+    Eigen::MatrixXd kB_;
+    Eigen::MatrixXd kC_;
 
-    Eigen::MatrixXd matQ_;
-    Eigen::MatrixXd matR_;
-
-    Eigen::MatrixXd PEst_;
+    Eigen::MatrixXd kQ_;
+    Eigen::MatrixXd kR_;
 };
 
 } //namespace pyramid_control

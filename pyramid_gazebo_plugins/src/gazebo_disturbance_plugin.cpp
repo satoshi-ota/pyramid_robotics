@@ -4,12 +4,7 @@ namespace gazebo
 {
 
 DisturbancePlugin::DisturbancePlugin()
-    :enable_disturbance_(true),
-     t_(ros::Time::now()),
-     x_mu_(0.0),
-     x_sig_(0.5),
-     y_mu_(0.0),
-     y_sig_(0.5){ }
+    :enable_disturbance_(true){}
 
 DisturbancePlugin::~DisturbancePlugin()
 {
@@ -18,13 +13,6 @@ DisturbancePlugin::~DisturbancePlugin()
 
 void DisturbancePlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
 {
-    if(!ros::isInitialized)
-    {
-        ROS_FATAL_STREAM("ROS node for Gazebo not established. Plugin failed.");
-        return;
-    }
-
-    //get model and name
     model_ = _model;
 
     for(auto &link: model_->GetLinks())
@@ -33,15 +21,16 @@ void DisturbancePlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
             base_link_ = link;
     }
 
-    //register ROS node & time
     nh_ = ros::NodeHandle();
 
-    disturbance_pub_ = nh_.advertise<geometry_msgs::WrenchStamped>
-                                    (pyramid_msgs::default_topics::DISTURBANCE,1);
+    ros::SubscribeOptions ops = ros::SubscribeOptions::create<geometry_msgs::WrenchStamped>(
+                pyramid_msgs::default_topics::COMMAND_DISTURBANCE, 1,
+                boost::bind(&DisturbancePlugin::disturbanceCommandCB, this, _1),
+                ros::VoidPtr(), &callback_queue_);
+    disturbance_sub_ = nh_.subscribe(ops);
 
-    // Register plugin update
     update_event_ = event::Events::ConnectWorldUpdateBegin
-                                        (boost::bind(&DisturbancePlugin::Update, this));
+                    (boost::bind(&DisturbancePlugin::Update, this));
 
     ros::spinOnce();
     ROS_INFO("Started disturbance wind Plugin for %s.", _model->GetName().c_str());
@@ -49,25 +38,24 @@ void DisturbancePlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
 
 void DisturbancePlugin::Update()
 {
-    DisturbanceGen();
+    callback_queue_.callAvailable();
 
-    if(enable_disturbance_)
-    {
-        base_link_->AddForceAtRelativePosition(force_.force, force_.point);
-        base_link_->AddTorque(force_.torque);
-    }
-
-    disturbance_.header.stamp = ros::Time::now();
-    disturbance_.header.frame_id = "pelican/base_link";
-    disturbance_.wrench.force.x = force_.force.X();
-    disturbance_.wrench.force.y = force_.force.Y();
-    disturbance_.wrench.force.z = force_.force.Z();
-    disturbance_.wrench.torque.x = force_.torque.X();
-    disturbance_.wrench.torque.y = force_.torque.Y();
-    disturbance_.wrench.torque.z = force_.torque.Z();
-    disturbance_pub_.publish(disturbance_);
+    base_link_->AddForceAtRelativePosition(disturbance_.force, disturbance_.point);
+    base_link_->AddTorque(disturbance_.torque);
 
     ros::spinOnce();
 }
+
+void DisturbancePlugin::disturbanceCommandCB(const geometry_msgs::WrenchStampedConstPtr &msg)
+{
+    disturbance_.force.X() = msg->wrench.force.x;
+    disturbance_.force.Y() = msg->wrench.force.y;
+    disturbance_.force.Z() = msg->wrench.force.z;
+
+    disturbance_.torque.X() = msg->wrench.torque.x;
+    disturbance_.torque.Y() = msg->wrench.torque.y;
+    disturbance_.torque.Z() = msg->wrench.torque.z;
+}
+
 GZ_REGISTER_MODEL_PLUGIN(DisturbancePlugin);
 } //namespace gazebo
