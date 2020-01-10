@@ -1,20 +1,15 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>pyramid_gazebo_plugins</name>
+  <name>pyramid_evaluation</name>
   <version>0.0.0</version>
-  <description>The pyramid_gazebo_plugins package</description>
+  <description>The pyramid_evaluation package</description>
 
   <maintainer email="satoshi.ota928@gmail.com">Ota Satoshi</maintainer>
-  <author>Ota Satoshi</author>
-  <license>MIT License</license>
+  <license>TODO</license>
 
   <buildtool_depend>catkin</buildtool_depend>
   <depend>geometry_msgs</depend>
   <depend>roscpp</depend>
-  <depend>sensor_msgs</depend>
-  <depend>gazebo_ros</depend>
-  <depend>roslib</depend>
   <depend>pyramid_msgs</depend>
-  <depend>std_msgs</depend>
 
 </package>

@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<robot name="winch" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <xacro:property name="namespace" value="$(arg namespace)" />
+
+    <material name="Red">
+        <color rgba="1.0 0.0 0.0 2.0"/>
+    </material>
+    <material name="Green">
+        <color rgba="0.0 1.0 0.0 2.0"/>
+    </material>
+    <material name="Blue">
+        <color rgba="0.0 0.0 1.0 2.0"/>
+    </material>
+    <material name="Orange">
+        <color rgba="1.0 0.64 0.0 1.0"/>
+    </material>
+
+    <xacro:macro name="winch" params="robot_namespace x y z winch_number suffix color">
+        <joint name="winch_joint_${winch_number}" type="fixed">
+            <origin xyz="${x} ${y} ${z}" rpy="0 0 0" />
+            <parent link="world" />
+            <child link="winch_${winch_number}" />
+        </joint>
+        <link name="winch_${winch_number}">
+            <inertial>
+                <mass value="1"/>
+                <inertia ixx="1" iyy="1" izz="1" ixy="0.0" ixz="0.0" iyz="0.0"/>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+            </inertial>
+            <visual>
+                <origin rpy="0 0 0" xyz="0 0 0"/>
+                <geometry>
+                    <box size="0.1 0.1 0.1"/>
+                </geometry>
+                <material name="${color}"/>
+            </visual>
+        </link>
+        <gazebo>
+            <plugin filename="libgazebo_winch_plugin.so" name="winch_plugin">
+                <robotNamespace>${robot_namespace}</robotNamespace>
+                <linkName>winch_${winch_number}</linkName>
+                <winchNumber>${winch_number}</winchNumber>
+            </plugin>
+        </gazebo>
+        <gazebo reference="winch_${winch_number}">
+            <material>Gazebo/${color}</material>
+        </gazebo>
+    </xacro:macro>
+
+    <link name="world"/>
+
+    <xacro:winch
+        robot_namespace="${namespace}"
+        x="5.0" y="5.0" z="0.0"
+        winch_number="0"
+        suffix="front_right"
+        color="Orange">
+    </xacro:winch>
+
+    <xacro:winch
+        robot_namespace="${namespace}"
+        x="-5.0" y="5.0" z="0.0"
+        winch_number="1"
+        suffix="front_left"
+        color="Green">
+    </xacro:winch>
+
+    <xacro:winch
+        robot_namespace="${namespace}"
+        x="-5.0" y="-5.0" z="0.0"
+        winch_number="2"
+        suffix="back_right"
+        color="Blue">
+    </xacro:winch>
+
+    <xacro:winch
+        robot_namespace="${namespace}"
+        x="5.0" y="-5.0" z="0.0"
+        winch_number="3"
+        suffix="back_left"
+        color="Red">
+    </xacro:winch>
+</robot>

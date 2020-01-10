@@ -1,0 +1,18 @@
+#system parameters
+lambda_1: 1.0
+lambda_2: 1.0
+lambda_3: 1.0
+lambda_4: 1.0
+lambda_5: 1.0
+lambda_6: 1.0
+
+K_1: 2.0
+K_2: 2.0
+K_3: 2.0
+K_4: 2.0
+K_5: 2.0
+K_6: 2.0
+
+x: 0.0
+y: 0.0
+z: 0.0

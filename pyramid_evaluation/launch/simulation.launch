@@ -34,6 +34,8 @@
         <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" />
     </group>
 
+    <node name="disturbance_gen_node" pkg="pyramid_evaluation" type="disturbance_gen_node"/>
+    
     <group if="$(arg enable_rviz)">
         <node name="rviz" pkg="rviz" type="rviz" required="true" args="-d $(find pyramid_viz)/rviz/rev.rviz"/>
     </group>
