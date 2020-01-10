@@ -27,7 +27,7 @@ public:
     ~SlidingModeController();
 
     void updateModelConfig();
-    void calcThrust();
+    void calcThrust(Eigen::VectorXd* wrench);
 
     SystemParameters *system_parameters_ = new SystemParameters();
 
@@ -35,17 +35,8 @@ public:
         trajectory_ = trajectory;
     };
 
-    inline Eigen::VectorXd getWrench(){return wrench_;};
-    inline pyramid_msgs::EigenThrust getThrust(){return thrust_;};
-
 private:
-    Eigen::VectorXd slidingSurface_;
-    Eigen::VectorXd xError_;
-    Eigen::VectorXd vError_;
-    Eigen::VectorXd wrench_;
-
     pyramid_msgs::EigenMultiDOFJointTrajectory trajectory_;
-    pyramid_msgs::EigenThrust thrust_;
 };
 
 } //namespace pyramid_control

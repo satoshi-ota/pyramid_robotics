@@ -47,17 +47,18 @@ private:
     ros::Publisher tension_ref_pub_;
     ros::Publisher tension_marker_pub_;
     ros::Publisher winch_pub_;
-
-    // ros::Publisher thrust_pub_;
+    ros::Publisher disturbance_pub_;
+    ros::Publisher thrust_pub_;
 
     void paramsReconfig(pyramid_control::SystemParametersConfig &config, uint32_t level);
     void trajectoryCB(const trajectory_msgs::MultiDOFJointTrajectoryPtr& trajectory_msg);
     void odometryCB(const nav_msgs::OdometryPtr& odometry_msg);
 
-    void sendRotorSpeed();
-    void sendTension();
+    void sendRotorSpeed(const Eigen::VectorXd& motor_speed);
+    void sendTension(const Eigen::VectorXd& ref_tensions);
     void sendWinchPos();
-    // void sendThrust();
+    void sendEstDisturbance(const Eigen::VectorXd& disturbance);
+    void sendThrust(const Eigen::VectorXd& wrench);
 };
 
 } //namespace pyramid_control

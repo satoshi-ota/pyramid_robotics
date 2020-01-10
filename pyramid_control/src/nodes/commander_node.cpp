@@ -43,8 +43,11 @@ CommanderNode::CommanderNode(
     winch_pub_ = nh_.advertise<pyramid_msgs::Positions>
                  (pyramid_msgs::default_topics::COMMAND_ANCHOR_POS, 1);
 
-    // thrust_pub_ = nh_.advertise<geometry_msgs::WrenchStamped>
-    //                 (pyramid_msgs::default_topics::COMMAND_THRUST, 1);
+    disturbance_pub_ = nh_.advertise<geometry_msgs::WrenchStamped>
+                       (pyramid_msgs::default_topics::ESTIMATE_DISTURBANCE, 10);
+
+    thrust_pub_ = nh_.advertise<geometry_msgs::WrenchStamped>
+                  (pyramid_msgs::default_topics::COMMAND_THRUST, 1);
 }
 
 CommanderNode::~CommanderNode(){ }
@@ -74,27 +77,28 @@ void CommanderNode::odometryCB(const nav_msgs::OdometryPtr& odometry_msg)
     pyramid_msgs::eigenOdometryFromMsg(odometry_msg, &odometry);
 
     system_parameters_.setOdom(odometry);
+
+    Eigen::VectorXd wrench;
     sliding_mode_controller_->updateModelConfig();
-    sliding_mode_controller_->calcThrust();
+    sliding_mode_controller_->calcThrust(&wrench);
 
-    // sendThrust();
+    Eigen::VectorXd disturbance;
+    observer_->estimateDisturbance(wrench, &disturbance);
 
-    Eigen::VectorXd wrench = sliding_mode_controller_->getWrench();
+    Eigen::VectorXd ref_tensions;
+    Eigen::VectorXd ref_rotor_velocities;
+    actuator_controller_->wrenchDistribution(wrench, disturbance);
+    actuator_controller_->optimize(&ref_tensions, &ref_rotor_velocities);
 
-    actuator_controller_->wrenchDistribution(wrench);
-    actuator_controller_->optimize();
-
-    observer_->estimateDisturbance(wrench);
-
-    sendRotorSpeed();
-    sendTension();
+    sendThrust(wrench);
+    sendRotorSpeed(ref_rotor_velocities);
+    sendTension(ref_tensions);
     sendWinchPos();
+    sendEstDisturbance(disturbance);
 }
 
-void CommanderNode::sendRotorSpeed()
+void CommanderNode::sendRotorSpeed(const Eigen::VectorXd& ref_rotor_velocities)
 {
-    Eigen::VectorXd ref_rotor_velocities = actuator_controller_->getMotorSpeed();
-
     mav_msgs::ActuatorsPtr actuator_msg(new mav_msgs::Actuators);
 
     actuator_msg->angular_velocities.clear();
@@ -155,11 +159,10 @@ void CommanderNode::sendRotorSpeed()
     motor_speed_marker_pub_.publish(marker_array);
 }
 
-void CommanderNode::sendTension()
+void CommanderNode::sendTension(const Eigen::VectorXd& ref_tensions)
 {
     geometry_msgs::Vector3 tension;
 
-    Eigen::VectorXd ref_tensions = actuator_controller_->getTension();
     pyramid_msgs::TensionsPtr tension_msg(new pyramid_msgs::Tensions);
 
     tension_msg->tensions.clear();
@@ -250,16 +253,39 @@ void CommanderNode::sendWinchPos()
     winch_pub_.publish(position_msg);
 }
 
-// void CommanderNode::sendThrust()
-// {
-//     geometry_msgs::WrenchStamped thrust_msg;
-//
-//     pyramid_msgs::EigenThrust thrust = sliding_mode_controller_.getThrust();
-//     thrust_msg.header.stamp = ros::Time::now();
-//     pyramid_msgs::eigenThrustToMsg(thrust, thrust_msg);
-//
-//     thrust_pub_.publish(thrust_msg);
-// }
+void CommanderNode::sendEstDisturbance(const Eigen::VectorXd& disturbance)
+{
+    Eigen::Vector3d force = disturbance.topLeftCorner(3, 1);
+    Eigen::Vector3d torque = disturbance.bottomLeftCorner(3, 1);
+
+    geometry_msgs::WrenchStamped disturbance_msg;
+    disturbance_msg.header.stamp = ros::Time::now();
+    disturbance_msg.wrench.force.x = force.x();
+    disturbance_msg.wrench.force.y = force.y();
+    disturbance_msg.wrench.force.z = force.z();
+    disturbance_msg.wrench.torque.x = torque.x();
+    disturbance_msg.wrench.torque.y = torque.y();
+    disturbance_msg.wrench.torque.z = torque.z();
+
+    disturbance_pub_.publish(disturbance_msg);
+}
+
+void CommanderNode::sendThrust(const Eigen::VectorXd& wrench)
+{
+    Eigen::Vector3d force = wrench.topLeftCorner(3, 1);
+    Eigen::Vector3d torque = wrench.bottomLeftCorner(3, 1);
+
+    geometry_msgs::WrenchStamped thrust_msg;
+    thrust_msg.header.stamp = ros::Time::now();
+    thrust_msg.wrench.force.x = force.x();
+    thrust_msg.wrench.force.y = force.y();
+    thrust_msg.wrench.force.z = force.z();
+    thrust_msg.wrench.torque.x = torque.x();
+    thrust_msg.wrench.torque.y = torque.y();
+    thrust_msg.wrench.torque.z = torque.z();
+
+    thrust_pub_.publish(thrust_msg);
+}
 
 } // namespace pyramid_control
 

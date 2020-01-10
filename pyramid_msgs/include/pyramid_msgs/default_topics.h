@@ -21,7 +21,7 @@ static constexpr char FEEDBACK_ODOMETRY[] = "feedback/odometry";
 static constexpr char MARKER_THURUST[] = "marker/thrust";
 static constexpr char MARKER_TENSION[] = "marker/tension";
 
-static constexpr char DISTURBANCE[] = "/wind/disturbance";
+static constexpr char ESTIMATE_DISTURBANCE[] = "estimate/disturbance";
 }  // end namespace default_topics
 }  // end namespace mav_msgs
 

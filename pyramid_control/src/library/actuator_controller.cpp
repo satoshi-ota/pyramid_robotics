@@ -23,7 +23,8 @@ void ActuatorController::InitializeParameters()
     calculateAllocationMatrix(system_parameters_->rotor_configuration_, &allocation_matrix_);
 }
 
-void ActuatorController::wrenchDistribution(const Eigen::VectorXd& wrench)
+void ActuatorController::wrenchDistribution(const Eigen::VectorXd& wrench,
+                                            const Eigen::VectorXd& disturbance)
 {
     Eigen::MatrixXd MatA = -system_parameters_->jacobian_.transpose();
     Eigen::MatrixXd MatB = calcRotorMatrix(system_parameters_->rotMatrix_) * allocation_matrix_;
@@ -48,7 +49,7 @@ void ActuatorController::wrenchDistribution(const Eigen::VectorXd& wrench)
     rank_ = lu.rank();
 }
 
-void ActuatorController::optimize()
+void ActuatorController::optimize(Eigen::VectorXd* ref_tensions, Eigen::VectorXd* ref_rotor_velocities)
 {
     if (feasibility() == false)
     {
@@ -61,11 +62,12 @@ void ActuatorController::optimize()
 
             distributedWrench_ += kernel_ * x;
 
-            tension_ = distributedWrench_.topLeftCorner(8, 1);
-            tension_ = tension_.cwiseMax(Eigen::VectorXd::Zero(tension_.rows()));
-            motor_speed_ = distributedWrench_.bottomLeftCorner(4, 1);
-            motor_speed_ = motor_speed_.cwiseMax(Eigen::VectorXd::Zero(motor_speed_.rows()));
-            motor_speed_ = motor_speed_.cwiseSqrt();
+            *ref_tensions = distributedWrench_.topLeftCorner(8, 1);
+            *ref_tensions = ref_tensions->cwiseMax(Eigen::VectorXd::Zero(ref_tensions->rows()));
+            *ref_rotor_velocities = distributedWrench_.bottomLeftCorner(4, 1);
+            *ref_rotor_velocities
+                = ref_rotor_velocities->cwiseMax(Eigen::VectorXd::Zero(ref_rotor_velocities->rows()));
+            *ref_rotor_velocities = ref_rotor_velocities->cwiseSqrt();
 
             lpp_.Clear();
         }

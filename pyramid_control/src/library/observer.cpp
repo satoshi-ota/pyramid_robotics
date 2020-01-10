@@ -1,12 +1,10 @@
 #include "pyramid_control/observer.h"
-#define PRINT_MAT(X) cout << #X << ":\n" << X << endl << endl
 
 namespace pyramid_control
 {
 
 Observer::Observer(SystemParameters* system_parameters)
     :system_parameters_(system_parameters),
-     forceDisturbance_(Eigen::Vector3d::Zero()),
      torqueDisturbance_(Eigen::Vector3d::Zero()),
      torqueOBSGain_(Eigen::Matrix3d::Identity())
 {
@@ -43,8 +41,11 @@ Observer::Observer(SystemParameters* system_parameters)
 
 Observer::~Observer(){ }
 
-void Observer::estimateDisturbance(const Eigen::VectorXd& wrench)
+void Observer::estimateDisturbance(const Eigen::VectorXd& wrench,
+                                         Eigen::VectorXd* disturbance)
 {
+    assert(disturbance != NULL);
+
     Eigen::VectorXd kG(9);
     kG << 0.0, 0.0, 0.0, 0.0, 0.0, -kDefaultGravity*kDt, 0.0, 0.0, 0.0;
 
@@ -57,18 +58,15 @@ void Observer::estimateDisturbance(const Eigen::VectorXd& wrench)
     xEst_ = xPred + kalmanGain * (system_parameters_->odometry_.position - kC_ * xPred);
     PEst_ = (Eigen::MatrixXd::Identity(9, 9) - kalmanGain * kC_) * PPred;
 
-    PRINT_MAT(wrench);
-    // PRINT_MAT(kB_);
-    // PRINT_MAT(kC_);
-    PRINT_MAT(xEst_);
-
     beta_ += torqueOBSGain_ * (wrench.bottomLeftCorner(3, 1) - system_parameters_->skewMatrix_ * system_parameters_->inertia_ * system_parameters_->odometry_.angular_velocity - torqueDisturbance_);
 
     beta_ = beta_.array() * kDt;
 
     torqueDisturbance_ = beta_ + torqueOBSGain_ * system_parameters_->inertia_ * system_parameters_->odometry_.angular_velocity;
 
-    // PRINT_MAT(torqueDisturbance_);
+    disturbance->resize(6, 1);
+    disturbance->topLeftCorner(3, 1) = xEst_.bottomLeftCorner(3, 1);
+    disturbance->bottomLeftCorner(3, 1) = torqueDisturbance_;
 }
 
 } //namespace pyramid_control
