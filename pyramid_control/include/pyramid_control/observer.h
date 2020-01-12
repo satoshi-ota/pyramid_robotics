@@ -16,9 +16,6 @@ using namespace std;
 namespace pyramid_control
 {
 
-const double kDt = 0.1;
-Eigen::Matrix3d DT = Eigen::Vector3d(kDt, kDt, kDt).asDiagonal();
-
 class Observer
 {
 public:
@@ -32,8 +29,9 @@ public:
     SystemParameters *system_parameters_ = new SystemParameters();
 
 private:
-    Eigen::Vector3d torqueDisturbance_;
     Eigen::Matrix3d torqueOBSGain_;
+
+    Eigen::VectorXd disturbance_;
 
     Eigen::VectorXd xEst_;
     Eigen::MatrixXd PEst_;
@@ -44,9 +42,13 @@ private:
     Eigen::MatrixXd kBu_;
     Eigen::MatrixXd kB_;
     Eigen::MatrixXd kC_;
+    Eigen::VectorXd kG_;
 
     Eigen::MatrixXd kQ_;
     Eigen::MatrixXd kR_;
+
+    void fEst(const Eigen::VectorXd& u);
+    void tEst(const Eigen::VectorXd& u);
 };
 
 } //namespace pyramid_control

@@ -14,6 +14,11 @@ ActuatorController::ActuatorController(SystemParameters* system_parameters)
     ipopt_.SetOption("linear_solver", "mumps");
     ipopt_.SetOption("jacobian_approximation", "exact");
     ipopt_.SetOption("print_level", 1);
+
+    max_tension_.resize(system_parameters->tether_configuration_.pseudo_tethers.size(), 1);
+
+    for(int i = 0; i < system_parameters->tether_configuration_.pseudo_tethers.size(); i++)
+        max_tension_(i) = system_parameters->tether_configuration_.pseudo_tethers[i].max_tension;
 }
 
 ActuatorController::~ActuatorController(){ }
@@ -41,7 +46,7 @@ void ActuatorController::wrenchDistribution(const Eigen::VectorXd& wrench,
 
     Eigen::MatrixXd distributionMatrix = MatAB.transpose() * (MatAB * MatAB.transpose()).inverse();
 
-    distributedWrench_ = distributionMatrix * wrench;
+    distributedWrench_ = distributionMatrix * (wrench - disturbance);
 
     Eigen::FullPivLU<Eigen::MatrixXd> lu(MatAB);
     lu.setThreshold(1e-5);
@@ -64,6 +69,7 @@ void ActuatorController::optimize(Eigen::VectorXd* ref_tensions, Eigen::VectorXd
 
             *ref_tensions = distributedWrench_.topLeftCorner(8, 1);
             *ref_tensions = ref_tensions->cwiseMax(Eigen::VectorXd::Zero(ref_tensions->rows()));
+            *ref_tensions = ref_tensions->cwiseMin(max_tension_);
             *ref_rotor_velocities = distributedWrench_.bottomLeftCorner(4, 1);
             *ref_rotor_velocities
                 = ref_rotor_velocities->cwiseMax(Eigen::VectorXd::Zero(ref_rotor_velocities->rows()));

@@ -16,6 +16,8 @@ void SlidingModeController::updateModelConfig()
     system_parameters_->calcMassMatrix();
     system_parameters_->calcCoriolisMatrix();
     system_parameters_->calcJacobian();
+    system_parameters_->calcMomentum();
+    system_parameters_->calcOmegaxMomentum();
 }
 
 void SlidingModeController::calcThrust(Eigen::VectorXd* wrench)

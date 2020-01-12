@@ -22,6 +22,7 @@ static constexpr double kDefaultRotorMomentConstant = 1.6e-2;
 
 const int kDefaultTetherNum = 8;
 const int kDefaultAnchorNum = 4;
+const double kDefaultMaxTension = 5.0;
 
 const Eigen::Vector3d kDefaultTether0AttachPos = Eigen::Vector3d( 0.4, -0.4,  0.15);
 const Eigen::Vector3d kDefaultTether1AttachPos = Eigen::Vector3d( 0.4, -0.4, -0.15);
@@ -96,7 +97,7 @@ struct PseudoTether
          direction(Eigen::Vector3d::Zero()),
          anchor_pos(Eigen::Vector3d::Zero()),
          world_pos(Eigen::Vector3d::Zero()),
-         tension(0.0){ }
+         max_tension(kDefaultMaxTension){ }
 
     PseudoTether(const Eigen::Vector3d& _attach_pos,
                  const Eigen::Vector3d& _anchor_pos)
@@ -104,7 +105,7 @@ struct PseudoTether
          direction(Eigen::Vector3d::Zero()),
          anchor_pos(_anchor_pos),
          world_pos(Eigen::Vector3d::Zero()),
-         tension(0.0){ }
+         max_tension(kDefaultMaxTension){ }
 
     void update(const pyramid_msgs::EigenOdometry& odometry)
     {
@@ -115,8 +116,7 @@ struct PseudoTether
 
     EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 
-    double tension;
-    double maxTension, minTension;
+    double max_tension;
     Eigen::Vector3d attach_pos;
     Eigen::Vector3d direction;
     Eigen::Vector3d anchor_pos;
@@ -172,6 +172,10 @@ public:
     TetherConfiguration tether_configuration_;
 
     pyramid_msgs::EigenOdometry odometry_;
+
+    Eigen::Vector3d omega_;
+    Eigen::Vector3d momentum_;
+    Eigen::Vector3d omegaXmomentum_;
 
     Eigen::Matrix3d rotMatrix_;
     Eigen::Matrix3d globalInertia_;
@@ -240,6 +244,16 @@ public:
         skewMatrix_ <<          0,-vector.z(),  vector.y(),
                        vector.z(),          0, -vector.x(),
                       -vector.y(), vector.x(),           0;
+    }
+
+    inline void calcMomentum()
+    {
+        momentum_ =  inertia_ * odometry_.angular_velocity;
+    }
+
+    inline void calcOmegaxMomentum()
+    {
+        omegaXmomentum_ = skewMatrix_ * momentum_;
     }
 
     inline void calcToOmage()

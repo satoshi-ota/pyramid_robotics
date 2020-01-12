@@ -15,7 +15,7 @@ void PsuedoTetherPlugin::Load(physics::ModelPtr _model, sdf::ElementPtr _sdf)
     nh_ = ros::NodeHandle();
 
     ros::SubscribeOptions ops = ros::SubscribeOptions::create<pyramid_msgs::Tensions>(
-                pyramid_msgs::default_topics::COMMAND_TENSIONS, 1,
+                pyramid_msgs::default_topics::COMMAND_GZ_TENSIONS, 1,
                 boost::bind(&PsuedoTetherPlugin::TensionCommandCB, this, _1),
                 ros::VoidPtr(), &callback_queue_);
     tension_sub_ = nh_.subscribe(ops);

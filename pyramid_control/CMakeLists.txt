@@ -3,6 +3,7 @@ project(pyramid_control)
 add_compile_options(-std=c++11)
 
 find_package(catkin REQUIRED COMPONENTS
+    std_msgs
     geometry_msgs
     nav_msgs
     roscpp
@@ -24,7 +25,7 @@ generate_dynamic_reconfigure_options(
 catkin_package(
     INCLUDE_DIRS include ${Eigen3_INCLUDE_DIRS}
     LIBRARIES pyramid_control
-    CATKIN_DEPENDS geometry_msgs nav_msgs roscpp sensor_msgs trajectory_msgs pyramid_msgs mav_msgs
+    CATKIN_DEPENDS std_msgs geometry_msgs nav_msgs roscpp sensor_msgs trajectory_msgs pyramid_msgs mav_msgs
     DEPENDS
 )
 

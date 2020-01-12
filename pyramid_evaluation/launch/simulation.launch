@@ -28,6 +28,7 @@
             <rosparam command="load" file="$(find pyramid_control)/params/pyramid_$(arg mav_name).yaml" />
             <rosparam command="load" file="$(find pyramid_control)/params/tether_config.yaml" />
             <remap from="feedback/odometry" to="odometry_sensor1/odometry"/>
+            <remap from="feedback/imu" to="imu"/>
         </node>
         <node name="trajectory_commander_node" pkg="pyramid_control" type="trajectory_commander_node" output="screen"/>
         <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
@@ -35,7 +36,7 @@
     </group>
 
     <node name="disturbance_gen_node" pkg="pyramid_evaluation" type="disturbance_gen_node"/>
-    
+
     <group if="$(arg enable_rviz)">
         <node name="rviz" pkg="rviz" type="rviz" required="true" args="-d $(find pyramid_viz)/rviz/rev.rviz"/>
     </group>

@@ -44,9 +44,10 @@ private:
     bool feasible_;
     unsigned int rank_;
 
-    Eigen::Matrix4Xd allocation_matrix_;
     Eigen::MatrixXd kernel_;
+    Eigen::Matrix4Xd allocation_matrix_;
     Eigen::VectorXd distributedWrench_;
+    Eigen::VectorXd max_tension_;
 };
 
 } //pyramid_control

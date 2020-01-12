@@ -12,6 +12,8 @@ CommanderNode::CommanderNode(
     actuator_controller_ = new ActuatorController(&system_parameters_);
     observer_ = new Observer(&system_parameters_);
 
+    enable_observer_ = false;
+
     GetSystemParameters(private_nh_, &system_parameters_);
 
     actuator_controller_->InitializeParameters();
@@ -23,16 +25,22 @@ CommanderNode::CommanderNode(
     srv_->setCallback(cb);
 
     trajectory_sub_ = nh_.subscribe(pyramid_msgs::default_topics::COMMAND_TRAJECTORY, 1,
-                                    &CommanderNode::trajectoryCB, this);
+                      &CommanderNode::trajectoryCB, this);
 
     odometry_sub_ = nh_.subscribe(pyramid_msgs::default_topics::FEEDBACK_ODOMETRY, 1,
-                                  &CommanderNode::odometryCB, this);
+                    &CommanderNode::odometryCB, this);
+
+    // imu_sub_ = nh_.subscribe(pyramid_msgs::default_topics::FEEDBACK_IMU, 1,
+    //            &CommanderNode::imuCB, this);
 
     motor_speed_ref_pub_ = nh_.advertise<mav_msgs::Actuators>
-                                    (pyramid_msgs::default_topics::COMMAND_ACTUATORS, 1);
+                           (pyramid_msgs::default_topics::COMMAND_ACTUATORS, 1);
 
-    tension_ref_pub_ = nh_.advertise<pyramid_msgs::Tensions>
-                             (pyramid_msgs::default_topics::COMMAND_TENSIONS, 1);
+    gz_tension_ref_pub_ = nh_.advertise<pyramid_msgs::Tensions>
+                          (pyramid_msgs::default_topics::COMMAND_GZ_TENSIONS, 1);
+
+    tension_ref_pub_ = nh_.advertise<std_msgs::Float64MultiArray>
+                       (pyramid_msgs::default_topics::COMMAND_TENSIONS, 1);
 
     motor_speed_marker_pub_ = nh_.advertise<visualization_msgs::MarkerArray>
                   (pyramid_msgs::default_topics::MARKER_THURUST, 1);
@@ -55,6 +63,7 @@ CommanderNode::~CommanderNode(){ }
 void CommanderNode::paramsReconfig(pyramid_control::SystemParametersConfig &config,
                                             uint32_t level)
 {
+    enable_observer_ = config.enable_observer;
     system_parameters_.reconfig(config);
 }
 
@@ -83,7 +92,13 @@ void CommanderNode::odometryCB(const nav_msgs::OdometryPtr& odometry_msg)
     sliding_mode_controller_->calcThrust(&wrench);
 
     Eigen::VectorXd disturbance;
-    observer_->estimateDisturbance(wrench, &disturbance);
+    disturbance.resize(6, 1);
+    if(enable_observer_)
+    {
+        observer_->estimateDisturbance(wrench, &disturbance);
+    } else {
+        disturbance.setZero();
+    }
 
     Eigen::VectorXd ref_tensions;
     Eigen::VectorXd ref_rotor_velocities;
@@ -162,10 +177,9 @@ void CommanderNode::sendRotorSpeed(const Eigen::VectorXd& ref_rotor_velocities)
 void CommanderNode::sendTension(const Eigen::VectorXd& ref_tensions)
 {
     geometry_msgs::Vector3 tension;
+    pyramid_msgs::TensionsPtr gz_tension_msg(new pyramid_msgs::Tensions);
 
-    pyramid_msgs::TensionsPtr tension_msg(new pyramid_msgs::Tensions);
-
-    tension_msg->tensions.clear();
+    gz_tension_msg->tensions.clear();
     for(int i = 0; i < ref_tensions.size(); i++)
     {
         tension.x = ref_tensions[i] *
@@ -175,10 +189,18 @@ void CommanderNode::sendTension(const Eigen::VectorXd& ref_tensions)
         tension.z = ref_tensions[i] *
             system_parameters_.tether_configuration_.pseudo_tethers[i].direction.z();
 
-        tension_msg->tensions.push_back(tension);
+        gz_tension_msg->tensions.push_back(tension);
     }
 
-    tension_msg->header.stamp = ros::Time::now();
+    gz_tension_msg->header.stamp = ros::Time::now();
+
+    gz_tension_ref_pub_.publish(gz_tension_msg);
+
+    std_msgs::Float64MultiArrayPtr tension_msg(new std_msgs::Float64MultiArray);
+
+    tension_msg->data.clear();
+    for(int i = 0; i < ref_tensions.size(); i++)
+        tension_msg->data.push_back(ref_tensions[i]);
 
     tension_ref_pub_.publish(tension_msg);
 

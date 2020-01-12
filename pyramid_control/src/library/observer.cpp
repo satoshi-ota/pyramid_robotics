@@ -5,9 +5,14 @@ namespace pyramid_control
 
 Observer::Observer(SystemParameters* system_parameters)
     :system_parameters_(system_parameters),
-     torqueDisturbance_(Eigen::Vector3d::Zero()),
-     torqueOBSGain_(Eigen::Matrix3d::Identity())
+     torqueOBSGain_(Eigen::Vector3d(0.1, 0.1, 0.1).asDiagonal()),
+     beta_(Eigen::Vector3d::Zero())
 {
+    const double kDt = 0.1;
+
+    disturbance_.resize(6, 1);
+    disturbance_.setZero();
+
     xEst_.resize(9, 1);
     xEst_.setZero();
 
@@ -32,6 +37,9 @@ Observer::Observer(SystemParameters* system_parameters)
     kC_.setZero();
     kC_.block(0, 0, 3, 3) = Eigen::Matrix3d::Identity();
 
+    kG_.resize(9, 1);
+    kG_ << 0.0, 0.0, 0.0, 0.0, 0.0, -kDefaultGravity*kDt, 0.0, 0.0, 0.0;
+
     kQ_.resize(9, 9);
     kQ_ = Eigen::MatrixXd::Identity(9, 9);
 
@@ -46,10 +54,17 @@ void Observer::estimateDisturbance(const Eigen::VectorXd& wrench,
 {
     assert(disturbance != NULL);
 
-    Eigen::VectorXd kG(9);
-    kG << 0.0, 0.0, 0.0, 0.0, 0.0, -kDefaultGravity*kDt, 0.0, 0.0, 0.0;
+    Eigen::VectorXd u = wrench - disturbance_;
 
-    Eigen::VectorXd xPred = kA_ * xEst_ + kBu_ * wrench.topLeftCorner(3, 1) + kG;
+    fEst(u);
+    tEst(u);
+
+    *disturbance = disturbance_;
+}
+
+void Observer::fEst(const Eigen::VectorXd& u)
+{
+    Eigen::VectorXd xPred = kA_ * xEst_ + kBu_ * u.topLeftCorner(3, 1) + kG_;
     Eigen::MatrixXd PPred = kA_ * PEst_ * kA_.transpose() + kB_ * kQ_ * kB_.transpose();
 
     Eigen::MatrixXd kalmanGain
@@ -58,15 +73,14 @@ void Observer::estimateDisturbance(const Eigen::VectorXd& wrench,
     xEst_ = xPred + kalmanGain * (system_parameters_->odometry_.position - kC_ * xPred);
     PEst_ = (Eigen::MatrixXd::Identity(9, 9) - kalmanGain * kC_) * PPred;
 
-    beta_ += torqueOBSGain_ * (wrench.bottomLeftCorner(3, 1) - system_parameters_->skewMatrix_ * system_parameters_->inertia_ * system_parameters_->odometry_.angular_velocity - torqueDisturbance_);
+    disturbance_.topLeftCorner(3, 1) = xEst_.bottomLeftCorner(3, 1);
+}
 
-    beta_ = beta_.array() * kDt;
+void Observer::tEst(const Eigen::VectorXd& u)
+{
+    beta_ += torqueOBSGain_ * (system_parameters_->omegaXmomentum_ - u.bottomLeftCorner(3, 1) - disturbance_.bottomLeftCorner(3, 1));
 
-    torqueDisturbance_ = beta_ + torqueOBSGain_ * system_parameters_->inertia_ * system_parameters_->odometry_.angular_velocity;
-
-    disturbance->resize(6, 1);
-    disturbance->topLeftCorner(3, 1) = xEst_.bottomLeftCorner(3, 1);
-    disturbance->bottomLeftCorner(3, 1) = torqueDisturbance_;
+    disturbance_.bottomLeftCorner(3, 1) = beta_ + torqueOBSGain_ * system_parameters_->momentum_;
 }
 
 } //namespace pyramid_control
