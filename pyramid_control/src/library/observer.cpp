@@ -54,10 +54,8 @@ void Observer::estimateDisturbance(const Eigen::VectorXd& wrench,
 {
     assert(disturbance != NULL);
 
-    Eigen::VectorXd u = wrench - disturbance_;
-
-    fEst(u);
-    tEst(u);
+    fEst(wrench - disturbance_);
+    tEst(wrench - disturbance_);
 
     *disturbance = disturbance_;
 }

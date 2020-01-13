@@ -77,11 +77,20 @@ inline void vectorEigenToMsg(const Eigen::Vector3d& eigen,
 
 inline Eigen::Quaterniond quaternionFromAtt(const Eigen::Vector3d& att)
 {
-    Eigen::Quaterniond quaternion = Eigen::AngleAxisd(att.x(), Eigen::Vector3d::UnitX())
-                                  * Eigen::AngleAxisd(att.y(), Eigen::Vector3d::UnitY())
-                                  * Eigen::AngleAxisd(att.z(), Eigen::Vector3d::UnitZ());
+    double cy = cos(att.z() * 0.5);
+    double sy = sin(att.z() * 0.5);
+    double cp = cos(att.y() * 0.5);
+    double sp = sin(att.y() * 0.5);
+    double cr = cos(att.x() * 0.5);
+    double sr = sin(att.x() * 0.5);
 
-    return quaternion;
+    Eigen::Quaterniond q;
+    q.w() = cy * cp * cr + sy * sp * sr;
+    q.x() = cy * cp * sr - sy * sp * cr;
+    q.y() = sy * cp * sr + cy * sp * cr;
+    q.z() = sy * cp * cr - cy * sp * sr;
+
+    return q;
 }
 
 inline Eigen::MatrixXd inverse(const Eigen::Matrix3d& mat)
