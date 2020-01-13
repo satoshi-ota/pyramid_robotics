@@ -74,8 +74,6 @@ inline void GetTetherConfiguration(const ros::NodeHandle& nh,
             pseudo_tether.anchor_pos.y());
         nh.getParam(tether_configuration_string + std::to_string(i) + "/anchor_pos/y",
             pseudo_tether.anchor_pos.z());
-        nh.getParam(tether_configuration_string + std::to_string(i) + "/max_tension",
-            pseudo_tether.max_tension);
 
         tether_configuration->pseudo_tethers.push_back(pseudo_tether);
         ++i;
@@ -109,11 +107,6 @@ inline void GetSystemParameters(const ros::NodeHandle& nh, SystemParameters* sys
     GetRosParameter(nh, "inertia/zz",
         system_parameters->inertia_(2, 2),
         &system_parameters->inertia_(2, 2));
-
-    //tether number
-    GetRosParameter(nh, "n_tether",
-        system_parameters->n_tether_,
-        &system_parameters->n_tether_);
 
     //Sliding Mode Controller parameters Lambda
     GetRosParameter(nh, "lambda_1",

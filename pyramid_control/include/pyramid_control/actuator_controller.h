@@ -47,7 +47,7 @@ private:
     Eigen::MatrixXd kernel_;
     Eigen::Matrix4Xd allocation_matrix_;
     Eigen::VectorXd distributedWrench_;
-    Eigen::VectorXd max_tension_;
+    Eigen::VectorXd upperLimmit_;
 };
 
 } //pyramid_control

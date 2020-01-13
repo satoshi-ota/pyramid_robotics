@@ -1,8 +1,10 @@
 #ifndef PYRAMID_CONTROL_COMMON_H
 #define PYRAMID_CONTROL_COMMON_H
+#define PRINT_MAT(X) std::cout << std::setprecision(6) << #X << ":\n" << X << std::endl << std::endl
 
 #include <Eigen/Core>
 #include <Eigen/Geometry>
+#include <iomanip>
 
 #include <assert.h>
 
@@ -84,13 +86,6 @@ inline void calcVelDelta(const pyramid_msgs::EigenOdometry& odometry,
                                       Eigen::VectorXd* vError)
 {
     *vError = trajectory.getVel() - odometry.getGrobalVel();
-}
-
-inline void LimitTensions(Eigen::Vector4d* tensions)
-{
-    Eigen::Vector4d max_tensions(10.0, 10.0, 10.0, 10.0);
-    *tensions = tensions->cwiseMax(Eigen::VectorXd::Zero(tensions->rows()));
-    *tensions = tensions->cwiseMin(max_tensions);
 }
 
 inline Eigen::VectorXd sgn(Eigen::VectorXd& sliding_surface)

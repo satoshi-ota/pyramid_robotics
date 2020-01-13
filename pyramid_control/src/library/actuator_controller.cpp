@@ -1,5 +1,4 @@
 #include "pyramid_control/actuator_controller.h"
-#define PRINT_MAT(X) cout << #X << ":\n" << X << endl << endl
 
 namespace pyramid_control
 {
@@ -7,7 +6,11 @@ namespace pyramid_control
 ActuatorController::ActuatorController(SystemParameters* system_parameters)
     :system_parameters_(system_parameters)
 {
-    lpp_.AddVariableSet(std::make_shared<ExVariables>());
+    Eigen::VectorXd initVal;
+    initVal.resize(6, 1);
+    initVal.setZero();
+
+    lpp_.AddVariableSet(std::make_shared<ExVariables>("var_set1", initVal, 6));
     lpp_.AddCostSet(std::make_shared<ExCost>());
     lpp_.PrintCurrent();
 
@@ -15,10 +18,7 @@ ActuatorController::ActuatorController(SystemParameters* system_parameters)
     ipopt_.SetOption("jacobian_approximation", "exact");
     ipopt_.SetOption("print_level", 1);
 
-    max_tension_.resize(system_parameters->tether_configuration_.pseudo_tethers.size(), 1);
-
-    for(int i = 0; i < system_parameters->tether_configuration_.pseudo_tethers.size(); i++)
-        max_tension_(i) = system_parameters->tether_configuration_.pseudo_tethers[i].max_tension;
+    upperLimmit_.resize(12, 1);
 }
 
 ActuatorController::~ActuatorController(){ }
@@ -31,18 +31,10 @@ void ActuatorController::InitializeParameters()
 void ActuatorController::wrenchDistribution(const Eigen::VectorXd& wrench,
                                             const Eigen::VectorXd& disturbance)
 {
-    Eigen::MatrixXd MatA = -system_parameters_->jacobian_.transpose();
+    Eigen::MatrixXd MatA = system_parameters_->jacobian_.transpose();
     Eigen::MatrixXd MatB = calcRotorMatrix(system_parameters_->rotMatrix_) * allocation_matrix_;
     Eigen::MatrixXd MatAB(MatA.rows(), MatA.cols()+MatB.cols());
     MatAB << MatA, MatB;
-
-    Eigen::MatrixXd MatS;
-    MatS.resize(6, 6);
-    MatS.setZero();
-    MatS.topLeftCorner(3, 3) = Eigen::Matrix3d::Identity();
-    MatS.bottomRightCorner(3, 3) = system_parameters_->toOmega_;
-
-    MatAB = MatS.transpose() * MatAB;
 
     Eigen::MatrixXd distributionMatrix = MatAB.transpose() * (MatAB * MatAB.transpose()).inverse();
 
@@ -60,8 +52,10 @@ void ActuatorController::optimize(Eigen::VectorXd* ref_tensions, Eigen::VectorXd
     {
         if(rank_ == 6)
         {
-            lpp_.AddConstraintSet(std::make_shared<ExConstraint>("constraint1",
-                                                                 kernel_, distributedWrench_));
+            lpp_.AddConstraintSet(std::make_shared<ExConstraint>("constraint1", 12,
+                                                                 kernel_,
+                                                                 distributedWrench_,
+                                                                 upperLimmit_));
             ipopt_.Solve(lpp_);
             Eigen::VectorXd x = lpp_.GetOptVariables()->GetValues();
 
@@ -69,7 +63,6 @@ void ActuatorController::optimize(Eigen::VectorXd* ref_tensions, Eigen::VectorXd
 
             *ref_tensions = distributedWrench_.topLeftCorner(8, 1);
             *ref_tensions = ref_tensions->cwiseMax(Eigen::VectorXd::Zero(ref_tensions->rows()));
-            *ref_tensions = ref_tensions->cwiseMin(max_tension_);
             *ref_rotor_velocities = distributedWrench_.bottomLeftCorner(4, 1);
             *ref_rotor_velocities
                 = ref_rotor_velocities->cwiseMax(Eigen::VectorXd::Zero(ref_rotor_velocities->rows()));

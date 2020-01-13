@@ -30,6 +30,8 @@ void SlidingModeController::calcThrust(Eigen::VectorXd* wrench)
     calcPosAttDelta(system_parameters_->odometry_, trajectory_, &xError);
     calcVelDelta(system_parameters_->odometry_, trajectory_, &vError);
 
+    PRINT_MAT(xError);
+
     Eigen::VectorXd slidingSurface = - vError - system_parameters_->Lambda_ * xError;
 
     Eigen::VectorXd kG(6);

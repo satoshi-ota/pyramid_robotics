@@ -234,8 +234,8 @@ struct EigenOdometry {
                    0, -sin(rpy(0)),  cos(rpy(1))*cos(rpy(0));
 
         Eigen::VectorXd vel = Eigen::VectorXd::Zero(6);
-        vel.block<3, 1>(0, 0) = orientation.toRotationMatrix() * velocity;
-        vel.block<3, 1>(3, 0) = inverse(toOmega) * angular_velocity;
+        vel.topLeftCorner(3, 1) = orientation.toRotationMatrix() * velocity;
+        vel.bottomLeftCorner(3, 1) = inverse(toOmega) * angular_velocity;
         return vel;
     }
 
@@ -244,8 +244,8 @@ struct EigenOdometry {
         Eigen::Vector3d rpy;
         getEulerAnglesFromQuaternion(orientation, &rpy);
         Eigen::VectorXd posatt = Eigen::VectorXd::Zero(6);
-        posatt.block<3, 1>(0, 0) = position;
-        posatt.block<3, 1>(3, 0) = rpy;
+        posatt.topLeftCorner(3, 1) = position;
+        posatt.bottomLeftCorner(3, 1) = rpy;
         return posatt;
     }
 };

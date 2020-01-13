@@ -262,7 +262,7 @@ void CommanderNode::sendWinchPos()
 
     position_msg->positions.clear();
 
-    for (int i = 0; i < system_parameters_.n_anchor_; i++)
+    for (int i = 0; i < 4; i++)
     {
         position.x = system_parameters_.tether_configuration_.pseudo_tethers[2*i].anchor_pos.x();
         position.y = system_parameters_.tether_configuration_.pseudo_tethers[2*i].anchor_pos.y();
